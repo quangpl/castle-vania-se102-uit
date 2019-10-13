@@ -10,3 +10,9 @@ void DebugOut(wchar_t *fmt, ...)
 	va_end(argp);
 	OutputDebugString(dbg_out);
 }
+
+void showConsole() {
+	AllocConsole();
+	freopen_s((FILE**)stdout, "CONOUT$", "w", stdout);
+	std::cout << "- GAME CONSOLE DEBUGGING -" << std::endl;
+}

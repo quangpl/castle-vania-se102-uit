@@ -254,7 +254,7 @@ void LoadResources()
 
 		brick = new CBrick();
 		brick->AddAnimation(601);
-		brick->SetPosition(84.0f + i*60.0f, 90.0f);
+		brick->SetPosition(30.0f + i*60.0f, 90.0f);
 		objects.push_back(brick);
 	}
 
@@ -427,19 +427,18 @@ int Run()
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow)
 {
 	HWND hWnd = CreateGameWindow(hInstance, nCmdShow, SCREEN_WIDTH, SCREEN_HEIGHT);
-
+	
 	game = CGame::GetInstance();
 	game->Init(hWnd);
 
 	keyHandler = new CSampleKeyHander();
 	game->InitKeyboard(keyHandler);
-
-
+	showConsole();
 	LoadResources();
 
 	SetWindowPos(hWnd, 0, 0, 0, SCREEN_WIDTH*2, SCREEN_HEIGHT*2, SWP_NOMOVE | SWP_NOOWNERZORDER | SWP_NOZORDER);
-
+	
 	Run();
-
+	
 	return 0;
 }
