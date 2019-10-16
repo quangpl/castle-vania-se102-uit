@@ -31,23 +31,14 @@
 #include "Brick.h"
 #include "Goomba.h"
 
-#define WINDOW_CLASS_NAME L"SampleWindow"
-#define MAIN_WINDOW_TITLE L"04 - Collision"
-
-#define BACKGROUND_COLOR D3DCOLOR_XRGB(255, 255, 200)
-#define SCREEN_WIDTH 320
-#define SCREEN_HEIGHT 240
-
-#define MAX_FRAME_RATE 120
-
-#define ID_TEX_MARIO 0
-#define ID_TEX_ENEMY 10
-#define ID_TEX_MISC 20
+#include "Map.h"
+#include "Constants.h"
 
 CGame *game;
 
 CMario *mario;
 CGoomba *goomba;
+Map* map;
 
 vector<LPGAMEOBJECT> objects;
 
@@ -117,13 +108,16 @@ void LoadResources()
 {
 	CTextures * textures = CTextures::GetInstance();
 
-	textures->Add(ID_TEX_MARIO, L"textures\\mario.png",D3DCOLOR_XRGB(255, 255, 255));
-	textures->Add(ID_TEX_MISC, L"textures\\misc.png", D3DCOLOR_XRGB(176, 224, 248));
-	textures->Add(ID_TEX_ENEMY, L"textures\\enemies.png", D3DCOLOR_XRGB(3, 26, 110));
+	textures->Add(ID_TEX_MARIO, "textures\\mario.png",D3DCOLOR_XRGB(255, 255, 255));
+	textures->Add(ID_TEX_MISC, "textures\\misc.png", D3DCOLOR_XRGB(176, 224, 248));
+	textures->Add(ID_TEX_ENEMY, "textures\\enemies.png", D3DCOLOR_XRGB(3, 26, 110));
+	textures->Add(123, "textures\\tileset_map1.png", D3DCOLOR_XRGB(255, 255, 0));
 
+	textures->Add(ID_TEX_BBOX, "textures\\bbox.png", D3DCOLOR_XRGB(255, 255, 255));
 
-	textures->Add(ID_TEX_BBOX, L"textures\\bbox.png", D3DCOLOR_XRGB(255, 255, 255));
-
+	map = new Map(123, "textures\\tileset_map1.png", D3DCOLOR_XRGB(255, 255, 0));
+	map->ReadMapTXT("textures\\Map1.txt");
+	map->LoadTile();
 
 	CSprites * sprites = CSprites::GetInstance();
 	CAnimations * animations = CAnimations::GetInstance();
@@ -326,10 +320,9 @@ void Render()
 		d3ddv->ColorFill(bb, NULL, BACKGROUND_COLOR);
 
 		spriteHandler->Begin(D3DXSPRITE_ALPHABLEND);
-
-		for (int i = 0; i < objects.size(); i++)
-			objects[i]->Render();
-
+		map->Render();
+	/*	for (int i = 0; i < objects.size(); i++)
+			objects[i]->Render();*/
 		spriteHandler->End();
 		d3ddv->EndScene();
 	}
