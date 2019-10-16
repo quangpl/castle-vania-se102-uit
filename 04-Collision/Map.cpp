@@ -47,7 +47,6 @@ void Map::Render() {
 	float cx = CGame::GetInstance()->GetCamPos_x();
 	int beginColumn = cx;
 	int endColumn = cx + SCREEN_WIDTH / frameWidth + 1; //SCREEN_WIDTH
-	cout << rowMap << columnMap << endl;
 	for (int i = 0; i < rowMap; i++) {
 		for (int j = 0; j < columnMap; j++) {
 			DebugOut(L"\ntiles: %d", tileMap[i][j]);

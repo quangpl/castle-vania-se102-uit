@@ -1,8 +1,8 @@
 
 #define WINDOW_CLASS_NAME L"SampleWindow"
-#define MAIN_WINDOW_TITLE L"04 - Collision"
+#define MAIN_WINDOW_TITLE L"CastleVania"
 
-#define BACKGROUND_COLOR D3DCOLOR_XRGB(255, 255, 200)
+#define BACKGROUND_COLOR D3DCOLOR_XRGB(0,0,0)
 #define SCREEN_WIDTH 320
 #define SCREEN_HEIGHT 240
 
@@ -11,3 +11,7 @@
 #define ID_TEX_MARIO 0
 #define ID_TEX_ENEMY 10
 #define ID_TEX_MISC 20
+#define ID_TEXT_MAP 1000
+
+
+#define TILE_MAP_SIZE 500

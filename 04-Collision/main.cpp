@@ -111,11 +111,11 @@ void LoadResources()
 	textures->Add(ID_TEX_MARIO, "textures\\mario.png",D3DCOLOR_XRGB(255, 255, 255));
 	textures->Add(ID_TEX_MISC, "textures\\misc.png", D3DCOLOR_XRGB(176, 224, 248));
 	textures->Add(ID_TEX_ENEMY, "textures\\enemies.png", D3DCOLOR_XRGB(3, 26, 110));
-	textures->Add(123, "textures\\tileset_map1.png", D3DCOLOR_XRGB(255, 255, 0));
+	textures->Add(ID_TEXT_MAP, "textures\\tileset_map1.png", D3DCOLOR_XRGB(255, 0, 255));
 
 	textures->Add(ID_TEX_BBOX, "textures\\bbox.png", D3DCOLOR_XRGB(255, 255, 255));
 
-	map = new Map(123, "textures\\tileset_map1.png", D3DCOLOR_XRGB(255, 255, 0));
+	map = new Map(ID_TEXT_MAP, "textures\\tileset_map1.png", D3DCOLOR_XRGB(255, 0, 255));
 	map->ReadMapTXT("textures\\Map1.txt");
 	map->LoadTile();
 
@@ -234,23 +234,7 @@ void LoadResources()
 	mario->SetPosition(50.0f, 0);
 	objects.push_back(mario);
 
-	for (int i = 0; i < 5; i++)
-	{
-		CBrick *brick = new CBrick();
-		brick->AddAnimation(601);
-		brick->SetPosition(100.0f + i*60.0f, 74.0f);
-		objects.push_back(brick);
 
-		brick = new CBrick();
-		brick->AddAnimation(601);
-		brick->SetPosition(100.0f + i*60.0f, 90.0f);
-		objects.push_back(brick);
-
-		brick = new CBrick();
-		brick->AddAnimation(601);
-		brick->SetPosition(30.0f + i*60.0f, 90.0f);
-		objects.push_back(brick);
-	}
 
 
 	for (int i = 0; i < 30; i++)
@@ -302,7 +286,7 @@ void Update(DWORD dt)
 	cx -= SCREEN_WIDTH / 2;
 	cy -= SCREEN_HEIGHT / 2;
 
-	CGame::GetInstance()->SetCamPos(cx, 0.0f /*cy*/);
+	CGame::GetInstance()->SetCamPos(0.0f,10.0f /*cy*/);
 }
 
 /*
@@ -321,8 +305,8 @@ void Render()
 
 		spriteHandler->Begin(D3DXSPRITE_ALPHABLEND);
 		map->Render();
-	/*	for (int i = 0; i < objects.size(); i++)
-			objects[i]->Render();*/
+		for (int i = 0; i < objects.size(); i++)
+			objects[i]->Render();
 		spriteHandler->End();
 		d3ddv->EndScene();
 	}

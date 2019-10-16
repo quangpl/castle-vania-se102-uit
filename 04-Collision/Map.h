@@ -19,8 +19,8 @@ class Map
 
 	int columnTileSet, rowTileSet, columnMap, rowMap;
 
-	int drawPositionX, drawPositionY, boardHeight;
-	int tileMap[500][500];
+	int drawPositionX, drawPositionY;
+	int tileMap[TILE_MAP_SIZE][TILE_MAP_SIZE];
 
 	LPDIRECT3DTEXTURE9 tex;
 	D3DXIMAGE_INFO info;
