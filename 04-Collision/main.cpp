@@ -111,11 +111,12 @@ void LoadResources()
 	textures->Add(ID_TEX_MARIO, "textures\\mario.png",D3DCOLOR_XRGB(255, 255, 255));
 	textures->Add(ID_TEX_MISC, "textures\\misc.png", D3DCOLOR_XRGB(176, 224, 248));
 	textures->Add(ID_TEX_ENEMY, "textures\\enemies.png", D3DCOLOR_XRGB(3, 26, 110));
-	textures->Add(ID_TEXT_MAP, "textures\\tileset_map1.png", D3DCOLOR_XRGB(255, 0, 255));
-
+	textures->Add(ID_TEX_MAP, "textures\\tileset_map1.png", D3DCOLOR_XRGB(255, 0, 255));
 	textures->Add(ID_TEX_BBOX, "textures\\bbox.png", D3DCOLOR_XRGB(255, 255, 255));
+	textures->Add(ID_TEX_SIMON, "Resources\\simon\\simon.png", D3DCOLOR_XRGB(255, 255, 255));
 
-	map = new Map(ID_TEXT_MAP, "textures\\tileset_map1.png", D3DCOLOR_XRGB(255, 0, 255));
+
+	map = new Map(ID_TEX_MAP, "textures\\tileset_map1.png", D3DCOLOR_XRGB(255, 0, 255));
 	map->ReadMapTXT("textures\\Map1.txt");
 	map->LoadTile();
 
@@ -123,18 +124,20 @@ void LoadResources()
 	CAnimations * animations = CAnimations::GetInstance();
 	
 	LPDIRECT3DTEXTURE9 texMario = textures->Get(ID_TEX_MARIO);
+	LPDIRECT3DTEXTURE9 texSimon = textures->Get(ID_TEX_SIMON);
+
 
 	// big
-	sprites->Add(10001, 246, 154, 260, 181, texMario);		// idle right
+	sprites->Add(10001, 163, 41, 180, 71, texSimon);		// idle right
 
-	sprites->Add(10002, 275, 154, 290, 181, texMario);		// walk
-	sprites->Add(10003, 304, 154, 321, 181, texMario);
+	sprites->Add(10002, 205, 40, 217, 70, texSimon);		// walk
+	sprites->Add(10003, 244, 41, 259, 70, texSimon);
 
-	sprites->Add(10011, 186, 154, 200, 181, texMario);		// idle left
-	sprites->Add(10012, 155, 154, 170, 181, texMario);		// walk
-	sprites->Add(10013, 125, 154, 140, 181, texMario);
+	sprites->Add(10011, 123, 40, 140, 71, texSimon);		// idle left
+	sprites->Add(10012, 86, 41, 98, 71, texSimon);		// walk
+	sprites->Add(10013, 44, 41, 60, 70, texSimon);
 
-	sprites->Add(10099, 215, 120, 231, 135, texMario);		// die 
+	sprites->Add(10099, 215, 120, 231, 135, texSimon);		// die 
 
 	// small
 	sprites->Add(10021, 247, 0, 259, 15, texMario);			// idle small right
@@ -241,7 +244,7 @@ void LoadResources()
 	{
 		CBrick *brick = new CBrick();
 		brick->AddAnimation(601);
-		brick->SetPosition(0 + i*16.0f, 150);
+		brick->SetPosition(0 + i*16.0f, SCREEN_HEIGHT-45);
 		objects.push_back(brick);
 	}
 
@@ -251,7 +254,7 @@ void LoadResources()
 		goomba = new CGoomba();
 		goomba->AddAnimation(701);
 		goomba->AddAnimation(702);
-		goomba->SetPosition(200 + i*60, 135);
+		goomba->SetPosition(200 + i*60, SCREEN_HEIGHT - 45);
 		goomba->SetState(GOOMBA_STATE_WALKING);
 		objects.push_back(goomba);
 	}
@@ -285,7 +288,6 @@ void Update(DWORD dt)
 
 	cx -= SCREEN_WIDTH / 2;
 	cy -= SCREEN_HEIGHT / 2;
-
 	CGame::GetInstance()->SetCamPos(0.0f,10.0f /*cy*/);
 }
 

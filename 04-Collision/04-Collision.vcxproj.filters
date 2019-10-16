@@ -69,6 +69,7 @@
     <ClInclude Include="resource.h">
       <Filter>Util</Filter>
     </ClInclude>
+    <ClInclude Include="resource1.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Brick.cpp">
@@ -102,5 +103,8 @@
     <ClCompile Include="Map.cpp">
       <Filter>Framework\Map</Filter>
     </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="CastleVania1.rc" />
   </ItemGroup>
 </Project>

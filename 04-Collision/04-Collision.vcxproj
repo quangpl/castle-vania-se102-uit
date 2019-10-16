@@ -125,6 +125,7 @@
   <ItemGroup>
     <ClInclude Include="Brick.h" />
     <ClInclude Include="Constants.h" />
+    <ClInclude Include="resource1.h" />
     <ClInclude Include="Tile.h" />
     <ClInclude Include="Map.h" />
     <ClInclude Include="debug.h" />
@@ -148,6 +149,9 @@
     <ClCompile Include="Mario.cpp" />
     <ClCompile Include="Sprites.cpp" />
     <ClCompile Include="Textures.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="CastleVania1.rc" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
