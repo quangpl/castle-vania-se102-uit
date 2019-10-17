@@ -54,3 +54,11 @@ void Map::Render() {
 		}
 	}
 };
+
+int Map::getMapWidth() {
+	return columnMap * frameWidth;
+};
+int Map::getMapHeight() {
+	return rowMap * frameHeight;
+};
+

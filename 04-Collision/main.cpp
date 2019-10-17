@@ -1,4 +1,4 @@
-/* =============================================================
+﻿/* =============================================================
 	INTRODUCTION TO GAME PROGRAMMING SE102
 	
 	SAMPLE 04 - COLLISION
@@ -151,7 +151,7 @@ void LoadResources()
 
 
 	LPDIRECT3DTEXTURE9 texMisc = textures->Get(ID_TEX_MISC);
-	sprites->Add(20001, 408, 225, 424, 241, texMisc);
+	sprites->Add(20001, 408, 245, 420, 255, texMisc);
 
 	LPDIRECT3DTEXTURE9 texEnemy = textures->Get(ID_TEX_ENEMY);
 	sprites->Add(30001, 5, 14, 21, 29, texEnemy);
@@ -212,14 +212,14 @@ void LoadResources()
 	ani->Add(20001);
 	animations->Add(601, ani);
 
-	ani = new CAnimation(300);		// Goomba walk
-	ani->Add(30001);
-	ani->Add(30002);
-	animations->Add(701, ani);
+	//ani = new CAnimation(300);		// Goomba walk
+	//ani->Add(30001);
+	//ani->Add(30002);
+	//animations->Add(701, ani);
 
-	ani = new CAnimation(1000);		// Goomba dead
-	ani->Add(30003);
-	animations->Add(702, ani);
+	//ani = new CAnimation(1000);		// Goomba dead
+	//ani->Add(30003);
+	//animations->Add(702, ani);
 
 	mario = new CMario();
 	mario->AddAnimation(400);		// idle right big
@@ -240,7 +240,7 @@ void LoadResources()
 
 
 
-	for (int i = 0; i < 30; i++)
+	for (int i = 0; i < 48; i++)
 	{
 		CBrick *brick = new CBrick();
 		brick->AddAnimation(601);
@@ -249,7 +249,7 @@ void LoadResources()
 	}
 
 	// and Goombas 
-	for (int i = 0; i < 4; i++)
+	/*for (int i = 0; i < 4; i++)
 	{
 		goomba = new CGoomba();
 		goomba->AddAnimation(701);
@@ -257,7 +257,7 @@ void LoadResources()
 		goomba->SetPosition(200 + i*60, SCREEN_HEIGHT - 45);
 		goomba->SetState(GOOMBA_STATE_WALKING);
 		objects.push_back(goomba);
-	}
+	}*/
 
 }
 
@@ -278,18 +278,31 @@ void Update(DWORD dt)
 
 	for (int i = 0; i < objects.size(); i++)
 	{
-		objects[i]->Update(dt,&coObjects);
+		objects[i]->Update(dt, &coObjects);
 	}
 
 
 	// Update camera to follow mario
 	float cx, cy;
 	mario->GetPosition(cx, cy);
+	cout << cx<< endl;
 
+	
 	cx -= SCREEN_WIDTH / 2;
-	cy -= SCREEN_HEIGHT / 2;
-	CGame::GetInstance()->SetCamPos(0.0f,10.0f /*cy*/);
+	cout << cx << endl;
+	//cy -= SCREEN_HEIGHT / 2;
+	if (cx >= -20) { //Khoảng cách để Simon vô giữa màn hình
+		CGame::GetInstance()->SetCamPos(cx + 20, 10.0f /*cy*/);
+		if (cx >= 422) {   //Vị trí của Simon khi ở map phần cuối cùng show trên màn hình
+			CGame::GetInstance()->SetCamPos(440, 10.0f /*cy*/);
+		}
+	}
+	else {
+		CGame::GetInstance()->SetCamPos(0, 10.0f /*cy*/);
+	}
+	
 }
+
 
 /*
 	Render a frame 

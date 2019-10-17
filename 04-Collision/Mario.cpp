@@ -1,6 +1,6 @@
-#include <algorithm>
+﻿#include <algorithm>
 #include "debug.h"
-
+#include "Constants.h"
 #include "Mario.h"
 #include "Game.h"
 
@@ -8,8 +8,17 @@
 
 void CMario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 {
+
 	// Calculate dx, dy 
 	CGameObject::Update(dt);
+	//Ngăn không cho Simon rớt ra khỏi màn hình
+	if (x <= 0) {
+		x = 0;
+	}
+	if (x >= 735) {
+		x = 735;   //735 là frame width
+	}
+
 
 	// Simple fall down
 	vy += MARIO_GRAVITY*dt;
@@ -157,7 +166,7 @@ void CMario::GetBoundingBox(float &left, float &top, float &right, float &bottom
 	left = x;
 	top = y; 
 
-	if (level==MARIO_LEVEL_BIG)
+	/*if (level==MARIO_LEVEL_BIG)
 	{
 		right = x + MARIO_BIG_BBOX_WIDTH;
 		bottom = y + MARIO_BIG_BBOX_HEIGHT;
@@ -166,6 +175,9 @@ void CMario::GetBoundingBox(float &left, float &top, float &right, float &bottom
 	{
 		right = x + MARIO_SMALL_BBOX_WIDTH;
 		bottom = y + MARIO_SMALL_BBOX_HEIGHT;
-	}
+	}*/
+
+	right = x + MARIO_BIG_BBOX_WIDTH;
+	bottom = y + MARIO_BIG_BBOX_HEIGHT;
 }
 

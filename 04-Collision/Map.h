@@ -36,6 +36,8 @@ public:
 	void SetMapPosition(int offsetX, int offsetY);
 
 	void Render();
+	int getMapWidth();
+	int getMapHeight();
 
 };
 
