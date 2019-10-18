@@ -27,7 +27,7 @@
 #include "GameObject.h"
 #include "Textures.h"
 
-#include "Mario.h"
+#include "Simon.h"
 #include "Brick.h"
 #include "Goomba.h"
 
@@ -36,8 +36,7 @@
 
 CGame *game;
 
-CMario *mario;
-CGoomba *goomba;
+CSimon *simon;
 Map* map;
 
 vector<LPGAMEOBJECT> objects;
@@ -57,13 +56,13 @@ void CSampleKeyHander::OnKeyDown(int KeyCode)
 	switch (KeyCode)
 	{
 	case DIK_SPACE:
-		mario->SetState(MARIO_STATE_JUMP);
+		simon->SetState(SIMON_STATE_JUMP);
 		break;
 	case DIK_A: // reset
-		mario->SetState(MARIO_STATE_IDLE);
-		mario->SetLevel(MARIO_LEVEL_BIG);
-		mario->SetPosition(50.0f,0.0f);
-		mario->SetSpeed(0, 0);
+		simon->SetState(SIMON_STATE_IDLE);
+		simon->SetLevel(SIMON_LEVEL_BIG);
+		simon->SetPosition(50.0f,0.0f);
+		simon->SetSpeed(0, 0);
 		break;
 	}
 }
@@ -75,14 +74,14 @@ void CSampleKeyHander::OnKeyUp(int KeyCode)
 
 void CSampleKeyHander::KeyState(BYTE *states)
 {
-	// disable control key when Mario die 
-	if (mario->GetState() == MARIO_STATE_DIE) return;
+	// disable control key when SIMON die 
+	if (simon->GetState() == SIMON_STATE_DIE) return;
 	if (game->IsKeyDown(DIK_RIGHT))
-		mario->SetState(MARIO_STATE_WALKING_RIGHT);
+		simon->SetState(SIMON_STATE_WALKING_RIGHT);
 	else if (game->IsKeyDown(DIK_LEFT))
-		mario->SetState(MARIO_STATE_WALKING_LEFT);
+		simon->SetState(SIMON_STATE_WALKING_LEFT);
 	else
-		mario->SetState(MARIO_STATE_IDLE);
+		simon->SetState(SIMON_STATE_IDLE);
 }
 
 LRESULT CALLBACK WinProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
@@ -100,7 +99,7 @@ LRESULT CALLBACK WinProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 
 /*
 	Load all game resources 
-	In this example: load textures, sprites, animations and mario object
+	In this example: load textures, sprites, animations and SIMON object
 
 	TO-DO: Improve this function by loading texture,sprite,animation,object from file
 */
@@ -108,9 +107,6 @@ void LoadResources()
 {
 	CTextures * textures = CTextures::GetInstance();
 
-	textures->Add(ID_TEX_MARIO, "textures\\mario.png",D3DCOLOR_XRGB(255, 255, 255));
-	textures->Add(ID_TEX_MISC, "textures\\misc.png", D3DCOLOR_XRGB(176, 224, 248));
-	textures->Add(ID_TEX_ENEMY, "textures\\enemies.png", D3DCOLOR_XRGB(3, 26, 110));
 	textures->Add(ID_TEX_MAP, "textures\\tileset_map1.png", D3DCOLOR_XRGB(255, 0, 255));
 	textures->Add(ID_TEX_BBOX, "textures\\bbox.png", D3DCOLOR_XRGB(255, 255, 255));
 	textures->Add(ID_TEX_SIMON, "Resources\\simon\\simon.png", D3DCOLOR_XRGB(255, 255, 255));
@@ -123,31 +119,43 @@ void LoadResources()
 	CSprites * sprites = CSprites::GetInstance();
 	CAnimations * animations = CAnimations::GetInstance();
 	
-	LPDIRECT3DTEXTURE9 texMario = textures->Get(ID_TEX_MARIO);
 	LPDIRECT3DTEXTURE9 texSimon = textures->Get(ID_TEX_SIMON);
 
 
-	// big
+	// Simon
 	sprites->Add(10001, 163, 41, 180, 71, texSimon);		// idle right
 
-	sprites->Add(10002, 205, 40, 217, 70, texSimon);		// walk
+	sprites->Add(10002, 205, 40, 217, 70, texSimon);		// walk right
 	sprites->Add(10003, 244, 41, 259, 70, texSimon);
 
 	sprites->Add(10011, 123, 40, 140, 71, texSimon);		// idle left
-	sprites->Add(10012, 86, 41, 98, 71, texSimon);		// walk
+	sprites->Add(10012, 86, 41, 98, 71, texSimon);		// walk left
 	sprites->Add(10013, 44, 41, 60, 70, texSimon);
 
-	sprites->Add(10099, 215, 120, 231, 135, texSimon);		// die 
+	sprites->Add(10099, 35, 8, 68, 22, texSimon);		// die left
+	sprites->Add(10098, 235, 8, 268, 22, texSimon);		// die right
 
-	// small
-	sprites->Add(10021, 247, 0, 259, 15, texMario);			// idle small right
-	sprites->Add(10022, 275, 0, 291, 15, texMario);			// walk 
-	sprites->Add(10023, 306, 0, 320, 15, texMario);			// 
+	sprites->Add(10199, 83, 1, 99, 29, texSimon);		// jump left
+	sprites->Add(10198, 203, 1, 220, 29, texSimon);		// jump right
 
-	sprites->Add(10031, 187, 0, 198, 15, texMario);			// idle small left
+	sprites->Add(10299, 4,44, 20, 67, texSimon);		// sit left
+	sprites->Add(10298, 283, 44, 300, 66, texSimon);		// sit right
 
-	sprites->Add(10032, 155, 0, 170, 15, texMario);			// walk
-	sprites->Add(10033, 125, 0, 139, 15, texMario);			// 
+	// Simon transparent
+
+	sprites->Add(100011, 163, 641, 180, 670, texSimon);		// idle right
+	sprites->Add(100021, 205, 641, 217, 670, texSimon);		// walk right
+	sprites->Add(100031, 244, 641, 259, 670, texSimon);
+
+	sprites->Add(100111, 123, 641, 140, 670, texSimon);		// idle left
+	sprites->Add(100121, 85, 641, 98, 670, texSimon);		// walk left
+	sprites->Add(100131, 44, 641, 60, 670, texSimon);
+
+
+	sprites->Add(100991, 4, 644, 20, 667, texSimon);		// sit left
+	sprites->Add(100981, 283, 644, 300, 665, texSimon);		// sit right
+
+
 
 
 	LPDIRECT3DTEXTURE9 texMisc = textures->Get(ID_TEX_MISC);
@@ -161,50 +169,53 @@ void LoadResources()
 
 	LPANIMATION ani;
 
-	ani = new CAnimation(100);	// idle big right
+	ani = new CAnimation(100);	// idle right
 	ani->Add(10001);
 	animations->Add(400, ani);
 
-	ani = new CAnimation(100);	// idle big left
+	ani = new CAnimation(100);	// idle left
 	ani->Add(10011);
 	animations->Add(401, ani);
 
-	ani = new CAnimation(100);	// idle small right
-	ani->Add(10021);
-	animations->Add(402, ani);
+	ani = new CAnimation(100);	// jump left
+	ani->Add(10199);
+	animations->Add(700, ani);
 
-	ani = new CAnimation(100);	// idle small left
-	ani->Add(10031);
-	animations->Add(403, ani);
+	ani = new CAnimation(100);	// jump right
+	ani->Add(10198);
+	animations->Add(701, ani);
 
-	ani = new CAnimation(100);	// walk right big
+	ani = new CAnimation(100);	// sit left
+	ani->Add(10299);
+	animations->Add(800, ani);
+
+	ani = new CAnimation(100);	// sit right
+	ani->Add(10298);
+	animations->Add(801, ani);
+
+
+
+	ani = new CAnimation(100);	// walk right 
 	ani->Add(10001);
 	ani->Add(10002);
 	ani->Add(10003);
 	animations->Add(500, ani);
 
-	ani = new CAnimation(100);	// // walk left big
+	ani = new CAnimation(100);	// // walk left 
 	ani->Add(10011);
 	ani->Add(10012);
 	ani->Add(10013);
 	animations->Add(501, ani);
 
-	ani = new CAnimation(100);	// walk right small
-	ani->Add(10021);
-	ani->Add(10022);
-	ani->Add(10023);
-	animations->Add(502, ani);
-
-	ani = new CAnimation(100);	// walk left small
-	ani->Add(10031);
-	ani->Add(10032);
-	ani->Add(10033);
-	animations->Add(503, ani);
 
 
-	ani = new CAnimation(100);		// Mario die
+	ani = new CAnimation(100);		// Simon die left
 	ani->Add(10099);
 	animations->Add(599, ani);
+
+	ani = new CAnimation(100);		// Simon die right
+	ani->Add(10098);
+	animations->Add(598, ani);
 
 	
 
@@ -212,30 +223,26 @@ void LoadResources()
 	ani->Add(20001);
 	animations->Add(601, ani);
 
-	//ani = new CAnimation(300);		// Goomba walk
-	//ani->Add(30001);
-	//ani->Add(30002);
-	//animations->Add(701, ani);
 
-	//ani = new CAnimation(1000);		// Goomba dead
-	//ani->Add(30003);
-	//animations->Add(702, ani);
+	simon = new CSimon();
+	simon->AddAnimation(400);		// idle right 
+	simon->AddAnimation(401);		// idle left big
+	simon->AddAnimation(599);		// die left
+	simon->AddAnimation(598);		// die right
+	simon->AddAnimation(500);		// walk right big
+	simon->AddAnimation(501);		// walk left big
 
-	mario = new CMario();
-	mario->AddAnimation(400);		// idle right big
-	mario->AddAnimation(401);		// idle left big
-	mario->AddAnimation(402);		// idle right small
-	mario->AddAnimation(403);		// idle left small
+	
 
-	mario->AddAnimation(500);		// walk right big
-	mario->AddAnimation(501);		// walk left big
-	mario->AddAnimation(502);		// walk right small
-	mario->AddAnimation(503);		// walk left big
+	simon->AddAnimation(700);		// jump left
+	simon->AddAnimation(701);		// jump right
 
-	mario->AddAnimation(599);		// die
+	simon->AddAnimation(800);		// sit left
+	simon->AddAnimation(801);		// sit right
 
-	mario->SetPosition(50.0f, 0);
-	objects.push_back(mario);
+
+	simon->SetPosition(50.0f, 0);
+	objects.push_back(simon);
 
 
 
@@ -248,17 +255,6 @@ void LoadResources()
 		objects.push_back(brick);
 	}
 
-	// and Goombas 
-	/*for (int i = 0; i < 4; i++)
-	{
-		goomba = new CGoomba();
-		goomba->AddAnimation(701);
-		goomba->AddAnimation(702);
-		goomba->SetPosition(200 + i*60, SCREEN_HEIGHT - 45);
-		goomba->SetState(GOOMBA_STATE_WALKING);
-		objects.push_back(goomba);
-	}*/
-
 }
 
 /*
@@ -267,7 +263,7 @@ void LoadResources()
 */
 void Update(DWORD dt)
 {
-	// We know that Mario is the first object in the list hence we won't add him into the colliable object list
+	// We know that SIMON is the first object in the list hence we won't add him into the colliable object list
 	// TO-DO: This is a "dirty" way, need a more organized way 
 
 	vector<LPGAMEOBJECT> coObjects;
@@ -282,24 +278,29 @@ void Update(DWORD dt)
 	}
 
 
-	// Update camera to follow mario
+	// Update camera to follow SIMON
 	float cx, cy;
-	mario->GetPosition(cx, cy);
-	cout << cx<< endl;
+	simon->GetPosition(cx, cy);
 
 	
-	cx -= SCREEN_WIDTH / 2;
-	cout << cx << endl;
-	//cy -= SCREEN_HEIGHT / 2;
-	if (cx >= -20) { //Khoảng cách để Simon vô giữa màn hình
-		CGame::GetInstance()->SetCamPos(cx + 20, 10.0f /*cy*/);
-		if (cx >= 422) {   //Vị trí của Simon khi ở map phần cuối cùng show trên màn hình
-			CGame::GetInstance()->SetCamPos(440, 10.0f /*cy*/);
-		}
+	
+	//Khoảng cách để Simon vô giữa màn hình
+	if (cx >= SCREEN_WIDTH / 2) { 
+		cx -= SCREEN_WIDTH / 2;
 	}
 	else {
-		CGame::GetInstance()->SetCamPos(0, 10.0f /*cy*/);
+		cx = 0;
 	}
+
+	if (cy > SCREEN_HEIGHT) {
+		cy -= SCREEN_HEIGHT / 2;
+	}
+	else {
+		cy = 10.0f;
+	}
+
+	CGame::GetInstance()->SetCamPos(cx, cy); //Khoảng cách để Simon đứng ngay giữa màn hình không bị lệch 
+
 	
 }
 

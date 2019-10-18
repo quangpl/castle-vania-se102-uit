@@ -39,9 +39,6 @@
     <ClInclude Include="Goomba.h">
       <Filter>GameObject</Filter>
     </ClInclude>
-    <ClInclude Include="Mario.h">
-      <Filter>GameObject</Filter>
-    </ClInclude>
     <ClInclude Include="debug.h">
       <Filter>Framework\Debug</Filter>
     </ClInclude>
@@ -70,15 +67,15 @@
       <Filter>Util</Filter>
     </ClInclude>
     <ClInclude Include="resource1.h" />
+    <ClInclude Include="Simon.h">
+      <Filter>GameObject</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Brick.cpp">
       <Filter>GameObject</Filter>
     </ClCompile>
     <ClCompile Include="Goomba.cpp">
-      <Filter>GameObject</Filter>
-    </ClCompile>
-    <ClCompile Include="Mario.cpp">
       <Filter>GameObject</Filter>
     </ClCompile>
     <ClCompile Include="main.cpp" />
@@ -102,6 +99,9 @@
     </ClCompile>
     <ClCompile Include="Map.cpp">
       <Filter>Framework\Map</Filter>
+    </ClCompile>
+    <ClCompile Include="Simon.cpp">
+      <Filter>GameObject</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
