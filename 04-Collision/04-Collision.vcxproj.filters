@@ -70,6 +70,9 @@
     <ClInclude Include="Simon.h">
       <Filter>GameObject</Filter>
     </ClInclude>
+    <ClInclude Include="Candle.h">
+      <Filter>GameObject</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Brick.cpp">
@@ -101,6 +104,9 @@
       <Filter>Framework\Map</Filter>
     </ClCompile>
     <ClCompile Include="Simon.cpp">
+      <Filter>GameObject</Filter>
+    </ClCompile>
+    <ClCompile Include="Candle.cpp">
       <Filter>GameObject</Filter>
     </ClCompile>
   </ItemGroup>

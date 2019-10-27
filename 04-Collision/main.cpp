@@ -30,14 +30,16 @@
 #include "Simon.h"
 #include "Brick.h"
 #include "Goomba.h"
+#include "Candle.h"
+
 
 #include "Map.h"
 #include "Constants.h"
 
 CGame *game;
-
+CCandle* candle;
 CSimon *simon;
-Map* map;
+Map* map1;
 
 vector<LPGAMEOBJECT> objects;
 
@@ -111,16 +113,21 @@ void LoadResources()
 	textures->Add(ID_TEX_MAP, "textures\\tileset_map1.png", D3DCOLOR_XRGB(255, 0, 255));
 	textures->Add(ID_TEX_BBOX, "textures\\bbox.png", D3DCOLOR_XRGB(255, 255, 255));
 	textures->Add(ID_TEX_SIMON, "Resources\\simon\\simon.png", D3DCOLOR_XRGB(255, 255, 255));
+	textures->Add(ID_TEX_CANDLE, "textures\\object.png", D3DCOLOR_XRGB(34, 177, 76));
 
-
-	map = new Map(ID_TEX_MAP, "textures\\tileset_map1.png", D3DCOLOR_XRGB(255, 0, 255));
-	map->ReadMapTXT("textures\\Map1.txt");
-	map->LoadTile();
+	
+	
+	map1 = new Map(ID_TEX_MAP, "textures\\tileset_map1.png", D3DCOLOR_XRGB(255, 0, 255));
+	map1->ReadMapTXT("textures\\Map1.txt");
+	map1->LoadTile();
 
 	CSprites * sprites = CSprites::GetInstance();
 	CAnimations * animations = CAnimations::GetInstance();
 	
 	LPDIRECT3DTEXTURE9 texSimon = textures->Get(ID_TEX_SIMON);
+	LPDIRECT3DTEXTURE9 texCandle = textures->Get(ID_TEX_CANDLE);
+
+
 
 
 	// Simon
@@ -136,8 +143,9 @@ void LoadResources()
 	sprites->Add(10099, 35, 8, 68, 22, texSimon);		// die left
 	sprites->Add(10098, 235, 8, 268, 22, texSimon);		// die right
 
-	sprites->Add(10199, 83, 1, 99, 29, texSimon);		// jump left
-	sprites->Add(10198, 203, 1, 220, 29, texSimon);		// jump right
+	sprites->Add(10199, 3, 44, 19, 67, texSimon);		// jump left
+	sprites->Add(10198, 283, 43, 300, 66, texSimon);		// jump right
+
 
 	sprites->Add(10299, 4,44, 20, 67, texSimon);		// sit left
 	sprites->Add(10298, 283, 44, 300, 66, texSimon);		// sit right
@@ -155,8 +163,12 @@ void LoadResources()
 
 	sprites->Add(100991, 4, 644, 20, 667, texSimon);		// sit left
 	sprites->Add(100981, 283, 644, 300, 665, texSimon);		// sit right
-
-
+	
+															
+															
+															// Candle 
+	sprites->Add(100211, 48, 26, 64, 56, texCandle);		// candle first state
+	sprites->Add(100212, 75, 26, 91, 56, texCandle);		// candle second state
 
 
 	LPDIRECT3DTEXTURE9 texMisc = textures->Get(ID_TEX_MISC);
@@ -225,6 +237,20 @@ void LoadResources()
 	animations->Add(601, ani);
 
 
+	ani = new CAnimation(100);	// candle firing
+	ani->Add(100211);
+	ani->Add(100212);
+	animations->Add(900, ani);
+
+
+	
+	for (int i = 1; i <= 5; i++) {
+		candle = new CCandle();
+		candle->AddAnimation(900);
+		candle->SetPosition(i * 100, 167);
+		objects.push_back(candle);
+	}
+
 	simon = new CSimon();
 	simon->AddAnimation(400);		// idle right 
 	simon->AddAnimation(401);		// idle left big
@@ -255,6 +281,8 @@ void LoadResources()
 		brick->SetPosition(0 + i*16.0f, SCREEN_HEIGHT-45);
 		objects.push_back(brick);
 	}
+
+	
 
 
 }
@@ -322,7 +350,7 @@ void Render()
 		d3ddv->ColorFill(bb, NULL, BACKGROUND_COLOR);
 
 		spriteHandler->Begin(D3DXSPRITE_ALPHABLEND);
-		map->Render();
+		map1->Render();
 		for (int i = 0; i < objects.size(); i++)
 			objects[i]->Render();
 		spriteHandler->End();
@@ -422,9 +450,9 @@ int Run()
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow)
 {
 	HWND hWnd = CreateGameWindow(hInstance, nCmdShow, SCREEN_WIDTH, SCREEN_HEIGHT);
-	
 	game = CGame::GetInstance();
 	game->Init(hWnd);
+
 
 	keyHandler = new CSampleKeyHander();
 	game->InitKeyboard(keyHandler);
