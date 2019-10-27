@@ -60,7 +60,7 @@ void CSampleKeyHander::OnKeyDown(int KeyCode)
 		break;
 	case DIK_A: // reset
 		simon->SetState(SIMON_STATE_IDLE);
-		simon->SetLevel(SIMON_LEVEL_BIG);
+		simon->SetLevel(SIMON_LEVEL);
 		simon->SetPosition(50.0f,0.0f);
 		simon->SetSpeed(0, 0);
 		break;
@@ -76,6 +76,7 @@ void CSampleKeyHander::KeyState(BYTE *states)
 {
 	// disable control key when SIMON die 
 	if (simon->GetState() == SIMON_STATE_DIE) return;
+
 	if (game->IsKeyDown(DIK_RIGHT))
 		simon->SetState(SIMON_STATE_WALKING_RIGHT);
 	else if (game->IsKeyDown(DIK_LEFT))
@@ -246,14 +247,15 @@ void LoadResources()
 
 
 
-
 	for (int i = 0; i < 48; i++)
 	{
+		float l, t, r, b;
 		CBrick *brick = new CBrick();
 		brick->AddAnimation(601);
 		brick->SetPosition(0 + i*16.0f, SCREEN_HEIGHT-45);
 		objects.push_back(brick);
 	}
+
 
 }
 

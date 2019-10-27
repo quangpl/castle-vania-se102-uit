@@ -20,10 +20,9 @@ void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 	if (y <= BOARD_HEIGHT) {
 		y = BOARD_HEIGHT;
 	}
-
-
 	// Simple fall down
 	vy += SIMON_GRAVITY*dt;
+	
 
 	vector<LPCOLLISIONEVENT> coEvents;
 	vector<LPCOLLISIONEVENT> coEventsResult;
@@ -40,6 +39,8 @@ void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 		untouchable_start = 0;
 		untouchable = 0;
 	}
+
+	cout << y << endl;
 
 	// No collision occured, proceed normally
 	if (coEvents.size()==0)
@@ -61,45 +62,49 @@ void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 		if (ny!=0) vy = 0;
 
 		// Collision logic with Goombas
-		for (UINT i = 0; i < coEventsResult.size(); i++)
-		{
-			LPCOLLISIONEVENT e = coEventsResult[i];
+		//for (UINT i = 0; i < coEventsResult.size(); i++)
+		//{
+		//	LPCOLLISIONEVENT e = coEventsResult[i];
 
-			if (dynamic_cast<CGoomba *>(e->obj)) // if e->obj is Goomba 
-			{
-				CGoomba *goomba = dynamic_cast<CGoomba *>(e->obj);
+		//	if (dynamic_cast<CGoomba *>(e->obj)) // if e->obj is Goomba 
+		//	{
+		//		CGoomba *goomba = dynamic_cast<CGoomba *>(e->obj);
 
-				// jump on top >> kill Goomba and deflect a bit 
-				if (e->ny < 0)
-				{
-					if (goomba->GetState()!= GOOMBA_STATE_DIE)
-					{
-						goomba->SetState(GOOMBA_STATE_DIE);
-						vy = -SIMON_JUMP_DEFLECT_SPEED;
-					}
-				}
-				else if (e->nx != 0)
-				{
-					if (untouchable==0)
-					{
-						if (goomba->GetState()!=GOOMBA_STATE_DIE)
-						{
-							if (level > SIMON_LEVEL_SMALL)
-							{
-								level = SIMON_LEVEL_SMALL;
-								StartUntouchable();
-							}
-							else 
-								SetState(SIMON_STATE_DIE);
-						}
-					}
-				}
-			}
-		}
+		//		// jump on top >> kill Goomba and deflect a bit 
+		//		if (e->ny < 0)
+		//		{
+		//			if (goomba->GetState()!= GOOMBA_STATE_DIE)
+		//			{
+		//				goomba->SetState(GOOMBA_STATE_DIE);
+		//				vy = -SIMON_JUMP_DEFLECT_SPEED;
+		//			}
+		//		}
+		//		else if (e->nx != 0)
+		//		{
+		//			if (untouchable==0)
+		//			{
+		//				if (goomba->GetState()!=GOOMBA_STATE_DIE)
+		//				{
+		//					if (level > SIMON_LEVEL_SMALL)
+		//					{
+		//						level = SIMON_LEVEL_SMALL;
+		//						StartUntouchable();
+		//					}
+		//					else 
+		//						SetState(SIMON_STATE_DIE);
+		//				}
+		//			}
+		//		}
+		//	}
+		//}
+
+		//Xử lý sau khi nhảy 
+		jumpReset();
+	
 	}
-
+	
 	// clean up collision events
-	for (UINT i = 0; i < coEvents.size(); i++) delete coEvents[i];
+	//for (UINT i = 0; i < coEvents.size(); i++) delete coEvents[i];
 }
 
 void CSimon::Render()
@@ -110,58 +115,97 @@ void CSimon::Render()
 	{
 		ani = SIMON_ANI_DIE;
 	}
- 
 	else {
 		if (vx == 0)
 		{
 			if (nx > 0) {
-				ani = SIMON_ANI_BIG_IDLE_RIGHT;
+				ani = SIMON_ANI_IDLE_RIGHT;
+				if (isJump) {
+					ani = SIMON_ANI_JUMP_RIGHT;
+				}
 			}
 			else {
-				ani = SIMON_ANI_BIG_IDLE_LEFT;
+				ani = SIMON_ANI_IDLE_LEFT;
+				if (isJump) {
+					ani = SIMON_ANI_JUMP_LEFT;
+				}
 			}
 		}
 		else if (vx > 0)
 		{
-			ani = SIMON_ANI_BIG_WALKING_RIGHT;
+			ani = SIMON_ANI_WALKING_RIGHT;
+			if (isJump) {
+				ani = SIMON_ANI_JUMP_RIGHT;
+			}
 		}
 		else {
-			ani = SIMON_ANI_BIG_WALKING_LEFT;
+			ani = SIMON_ANI_WALKING_LEFT;
+			if (isJump) {
+				ani = SIMON_ANI_JUMP_LEFT;
+			}
 		}
 	}
 
 	int alpha = 255;
 	if (untouchable) alpha = 128;
 
-	if (ani == SIMON_ANI_JUMP_RIGHT) {
-		cout << "ani dung ne" << endl;
-	}
-	CAnimations::GetInstance()->Get(ani)->Render(x, y, alpha);
 
+	CAnimations::GetInstance()->Get(ani)->Render(x, y, alpha);
 	RenderBoundingBox();
 }
+void CSimon::goRight() {
+	vx = SIMON_WALKING_SPEED;
+	nx = 1;
+}
 
+void CSimon::goLeft() {
+	vx = -SIMON_WALKING_SPEED;
+	nx = -1;
+}
+
+void CSimon::jump() {
+	if (canJump) {
+		state = SIMON_STATE_JUMP;
+		isJump = true;
+		canJump = false;
+		vy = -SIMON_JUMP_SPEED_Y;
+	}
+}
+
+void CSimon::jumpReset() {
+	if (vy >= 0) {
+		isJump = false;
+	}
+	canJump = true;
+}
+
+void CSimon::idle() {
+	vx = 0;
+}
+
+void CSimon::die() {
+	vy = -SIMON_DIE_DEFLECT_SPEED;
+}
 void CSimon::SetState(int state)
 {
 	CGameObject::SetState(state);
-
 	switch (state)
 	{
 	case SIMON_STATE_WALKING_RIGHT:
-		vx = SIMON_WALKING_SPEED;
-		nx = 1;
+		goRight();
 		break;
 	case SIMON_STATE_WALKING_LEFT: 
-		vx = -SIMON_WALKING_SPEED;
-		nx = -1;
+		goLeft();
 		break;
-	case SIMON_STATE_JUMP: 
-		vy = -SIMON_JUMP_SPEED_Y;
+	case SIMON_STATE_JUMP:
+		cout << "jum state setted" << endl;
+		jump();
+		break;
 	case SIMON_STATE_IDLE: 
-		vx = 0;
+		idle();
 		break;
 	case SIMON_STATE_DIE:
-		vy = -SIMON_DIE_DEFLECT_SPEED;
+		die();
 		break;
 	}
 }
@@ -182,7 +226,7 @@ void CSimon::GetBoundingBox(float &left, float &top, float &right, float &bottom
 		bottom = y + SIMON_SMALL_BBOX_HEIGHT;
 	}*/
 
-	right = x + SIMON_BIG_BBOX_WIDTH;
-	bottom = y + SIMON_BIG_BBOX_HEIGHT;
+	right = x + SIMON_BBOX_WIDTH;
+	bottom = y + SIMON_BBOX_HEIGHT;
 }
 
