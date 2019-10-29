@@ -56,13 +56,15 @@ class CSampleKeyHander: public CKeyEventHandler
 
 CSampleKeyHander * keyHandler; 
 
-void CSampleKeyHander::OnKeyDown(int KeyCode)
+void CSampleKeyHander::OnKeyDown(int KeyCode)   //short event
 {
 	DebugOut(L"[INFO] KeyDown: %d\n", KeyCode);
 	switch (KeyCode)
 	{
 	case DIK_SPACE:
-		simon->SetState(SIMON_STATE_JUMP);
+		if (simon->GetState() != SIMON_STATE_SIT) {
+			simon->SetState(SIMON_STATE_JUMP);
+		}
 		break;
 	case DIK_A: // reset
 		simon->SetState(SIMON_STATE_IDLE);
@@ -71,24 +73,37 @@ void CSampleKeyHander::OnKeyDown(int KeyCode)
 		simon->SetSpeed(0, 0);
 		break;
 	}
+	
 }
 
-void CSampleKeyHander::OnKeyUp(int KeyCode)
+void CSampleKeyHander::OnKeyUp(int KeyCode)   //short event
 {
 	DebugOut(L"[INFO] KeyUp: %d\n", KeyCode);
+	switch (KeyCode)
+	{
+	case DIK_DOWN:
+		simon->SetState(SIMON_STATE_SIT_RELEASE);
+		break;
+	}
+
 }
 
-void CSampleKeyHander::KeyState(BYTE *states)
+
+void CSampleKeyHander::KeyState(BYTE *states)   //long event
 {
 	// disable control key when SIMON die 
 	if (simon->GetState() == SIMON_STATE_DIE) return;
-
-	if (game->IsKeyDown(DIK_RIGHT))
+	if (game->IsKeyDown(DIK_RIGHT)&&simon->GetState() != SIMON_STATE_SIT)
 		simon->SetState(SIMON_STATE_WALKING_RIGHT);
-	else if (game->IsKeyDown(DIK_LEFT))
+	else if (game->IsKeyDown(DIK_LEFT) && simon->GetState() != SIMON_STATE_SIT)
 		simon->SetState(SIMON_STATE_WALKING_LEFT);
 	else
 		simon->SetState(SIMON_STATE_IDLE);
+	if (game->IsKeyDown(DIK_DOWN)) {
+		simon->SetState(SIMON_STATE_SIT);
+		cout << "Sit" << endl;
+	}
+	
 }
 
 LRESULT CALLBACK WinProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
@@ -307,7 +322,6 @@ void Update(DWORD dt)
 	{
 		if (objects[i]->getType() == TYPE_OBJECT_PLAYER || objects[i]->getType() == TYPE_OBJECT_BACKGROUND) {
 			coObjects.push_back(objects[i]);
-			cout << objects[i]->getType() << endl;
 		}
 	}
 

@@ -6,7 +6,7 @@
 
 #include "Goomba.h"
 
-void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
+void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
 
 	// Calculate dx, dy 
@@ -21,8 +21,8 @@ void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 		y = BOARD_HEIGHT;
 	}
 	// Simple fall down
-	vy += SIMON_GRAVITY*dt;
-	
+	vy += SIMON_GRAVITY * dt;
+
 
 	vector<LPCOLLISIONEVENT> coEvents;
 	vector<LPCOLLISIONEVENT> coEventsResult;
@@ -30,20 +30,20 @@ void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 	coEvents.clear();
 
 	// turn off collision when die 
-	if (state!=SIMON_STATE_DIE)
+	if (state != SIMON_STATE_DIE)
 		CalcPotentialCollisions(coObjects, coEvents);
 
 	// reset untouchable timer if untouchable time has passed
-	if ( GetTickCount() - untouchable_start > SIMON_UNTOUCHABLE_TIME) 
+	if (GetTickCount() - untouchable_start > SIMON_UNTOUCHABLE_TIME)
 	{
 		untouchable_start = 0;
 		untouchable = 0;
 	}
 
 	// No collision occured, proceed normally
-	if (coEvents.size()==0)
+	if (coEvents.size() == 0)
 	{
-		x += dx; 
+		x += dx;
 		y += dy;
 	}
 	else
@@ -53,11 +53,11 @@ void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 		FilterCollision(coEvents, coEventsResult, min_tx, min_ty, nx, ny);
 
 		// block 
-		x += min_tx*dx + nx*0.4f;		// nx*0.4f : need to push out a bit to avoid overlapping next frame
-		y += min_ty*dy + ny*0.4f;
-		
-		if (nx!=0) vx = 0;
-		if (ny!=0) vy = 0;
+		x += min_tx * dx + nx * 0.4f;		// nx*0.4f : need to push out a bit to avoid overlapping next frame
+		y += min_ty * dy + ny * 0.4f;
+
+		if (nx != 0) vx = 0;
+		if (ny != 0) vy = 0;
 
 		// Collision logic with Goombas
 		//for (UINT i = 0; i < coEventsResult.size(); i++)
@@ -98,9 +98,9 @@ void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 
 		//Xử lý sau khi nhảy 
 		jumpReset();
-	
+
 	}
-	
+
 	// clean up collision events
 	for (UINT i = 0; i < coEvents.size(); i++) delete coEvents[i];
 }
@@ -113,18 +113,27 @@ void CSimon::Render()
 	{
 		ani = SIMON_ANI_DIE;
 	}
+	else if (state == SIMON_STATE_SIT && isSit == true) {
+		if (nx > 0) {
+			ani = SIMON_ANI_JUMP_RIGHT;
+		}
+		else {
+			ani = SIMON_ANI_JUMP_LEFT;
+		}
+	}
 	else {
 		if (vx == 0)
 		{
 			if (nx > 0) {
 				ani = SIMON_ANI_IDLE_RIGHT;
-				if (isJump) {
+				if (isJump && !isSit) {
 					ani = SIMON_ANI_JUMP_RIGHT;
 				}
+
 			}
 			else {
 				ani = SIMON_ANI_IDLE_LEFT;
-				if (isJump) {
+				if (isJump && !isSit) {
 					ani = SIMON_ANI_JUMP_LEFT;
 				}
 			}
@@ -132,13 +141,13 @@ void CSimon::Render()
 		else if (vx > 0)
 		{
 			ani = SIMON_ANI_WALKING_RIGHT;
-			if (isJump) {
+			if (isJump && !isSit) {
 				ani = SIMON_ANI_JUMP_RIGHT;
 			}
 		}
 		else {
 			ani = SIMON_ANI_WALKING_LEFT;
-			if (isJump) {
+			if (isJump && !isSit) {
 				ani = SIMON_ANI_JUMP_LEFT;
 			}
 		}
@@ -147,26 +156,25 @@ void CSimon::Render()
 	int alpha = 255;
 	if (untouchable) alpha = 128;
 
-
 	CAnimations::GetInstance()->Get(ani)->Render(x, y, alpha);
 	RenderBoundingBox();
 }
 void CSimon::goRight() {
-	if (!isJump) {
+	if (!isJump && !isSit) {
 		vx = SIMON_WALKING_SPEED;
 		nx = 1;
 	}
 }
 
 void CSimon::goLeft() {
-	if (!isJump) {
+	if (!isJump && !isSit) {
 		vx = -SIMON_WALKING_SPEED;
 		nx = -1;
 	}
 }
 
 void CSimon::jump() {
-	if (canJump) {
+	if (canJump&&!isSit) {
 		state = SIMON_STATE_JUMP;
 		isJump = true;
 		canJump = false;
@@ -188,6 +196,21 @@ void CSimon::idle() {
 void CSimon::die() {
 	vy = -SIMON_DIE_DEFLECT_SPEED;
 }
+
+void CSimon::sit() {
+	if (!isJump) {
+		isSit = true;
+		vx = 0;
+	}
+}
+
+void CSimon::sitRelease() {
+	if (isSit) {
+		isSit = false;
+		y = y - 10;
+	}
+}
+
 void CSimon::SetState(int state)
 {
 	CGameObject::SetState(state);
@@ -196,26 +219,31 @@ void CSimon::SetState(int state)
 	case SIMON_STATE_WALKING_RIGHT:
 		goRight();
 		break;
-	case SIMON_STATE_WALKING_LEFT: 
+	case SIMON_STATE_WALKING_LEFT:
 		goLeft();
 		break;
 	case SIMON_STATE_JUMP:
-		cout << "jum state setted" << endl;
 		jump();
 		break;
-	case SIMON_STATE_IDLE: 
+	case SIMON_STATE_IDLE:
 		idle();
 		break;
 	case SIMON_STATE_DIE:
 		die();
 		break;
+	case SIMON_STATE_SIT:
+		sit();
+		break;
+	case SIMON_STATE_SIT_RELEASE:
+		sitRelease();
+		break;
 	}
 }
 
-void CSimon::GetBoundingBox(float &left, float &top, float &right, float &bottom)
+void CSimon::GetBoundingBox(float& left, float& top, float& right, float& bottom)
 {
 	left = x;
-	top = y; 
+	top = y;
 
 	/*if (level==SIMON_LEVEL_BIG)
 	{
@@ -230,5 +258,10 @@ void CSimon::GetBoundingBox(float &left, float &top, float &right, float &bottom
 
 	right = x + SIMON_BBOX_WIDTH;
 	bottom = y + SIMON_BBOX_HEIGHT;
+	if (isSit) {
+		bottom = y + SIMON_SIT_BBOX_HEIGHT;
+
+	}
+
 }
 

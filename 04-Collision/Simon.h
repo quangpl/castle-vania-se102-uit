@@ -13,6 +13,10 @@
 #define SIMON_STATE_WALKING_LEFT	200
 #define SIMON_STATE_JUMP			300
 #define SIMON_STATE_DIE				400
+#define SIMON_STATE_SIT				500
+#define SIMON_STATE_SIT_RELEASE		501
+
+
 
 #define SIMON_ANI_IDLE_RIGHT		400
 #define SIMON_ANI_IDLE_LEFT			401
@@ -23,6 +27,9 @@
 #define SIMON_ANI_JUMP_LEFT			700
 #define SIMON_ANI_JUMP_RIGHT		701
 
+#define SIMON_ANI_SIT_LEFT			700
+#define SIMON_ANI_SIT_RIGHT		701
+
 
 
 #define SIMON_ANI_DIE				8
@@ -31,9 +38,12 @@
 
 #define SIMON_BBOX_WIDTH  15
 #define SIMON_BBOX_HEIGHT 27
+#define SIMON_SIT_BBOX_HEIGHT 20
+
 
 #define SIMON_UNTOUCHABLE_TIME 5000
 
+#define PULL_UP 1
 
 class CSimon : public CGameObject
 {
@@ -41,7 +51,9 @@ class CSimon : public CGameObject
 	int untouchable;
 	DWORD untouchable_start;
 	boolean isJump;
+	boolean isSit;
 	boolean canJump = true;
+	int stateBackup;
 public: 
 	CSimon() : CGameObject()
 	{
@@ -60,6 +72,10 @@ public:
 	void jumpReset();
 	void idle();
 	void die();
+	void sit();
+	void sitRelease();
+
+
 
 	virtual void GetBoundingBox(float &left, float &top, float &right, float &bottom);
 };
