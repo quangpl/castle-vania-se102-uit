@@ -3,7 +3,7 @@
 #include <Windows.h>
 #include <d3dx9.h>
 #include <vector>
-
+#include "Constants.h"
 #include "Sprites.h"
 
 
@@ -48,6 +48,7 @@ public:
 	int state;
 
 	DWORD dt; 
+	int type;   
 
 	vector<LPANIMATION> animations;
 
@@ -56,9 +57,9 @@ public:
 	void SetSpeed(float vx, float vy) { this->vx = vx, this->vy = vy; }
 	void GetPosition(float &x, float &y) { x = this->x; y = this->y; }
 	void GetSpeed(float &vx, float &vy) { vx = this->vx; vy = this->vy; }
-
 	int GetState() { return this->state; }
-
+	int getType() { return this->type; };
+	void setType(int type) { this->type = type; };
 	void RenderBoundingBox();
 
 	LPCOLLISIONEVENT SweptAABBEx(LPGAMEOBJECT coO);

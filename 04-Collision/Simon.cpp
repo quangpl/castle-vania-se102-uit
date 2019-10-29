@@ -40,8 +40,6 @@ void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 		untouchable = 0;
 	}
 
-	cout << y << endl;
-
 	// No collision occured, proceed normally
 	if (coEvents.size()==0)
 	{
@@ -104,7 +102,7 @@ void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 	}
 	
 	// clean up collision events
-	//for (UINT i = 0; i < coEvents.size(); i++) delete coEvents[i];
+	for (UINT i = 0; i < coEvents.size(); i++) delete coEvents[i];
 }
 
 void CSimon::Render()
@@ -154,13 +152,17 @@ void CSimon::Render()
 	RenderBoundingBox();
 }
 void CSimon::goRight() {
-	vx = SIMON_WALKING_SPEED;
-	nx = 1;
+	if (!isJump) {
+		vx = SIMON_WALKING_SPEED;
+		nx = 1;
+	}
 }
 
 void CSimon::goLeft() {
-	vx = -SIMON_WALKING_SPEED;
-	nx = -1;
+	if (!isJump) {
+		vx = -SIMON_WALKING_SPEED;
+		nx = -1;
+	}
 }
 
 void CSimon::jump() {

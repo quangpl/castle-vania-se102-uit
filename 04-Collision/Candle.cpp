@@ -1,9 +1,9 @@
 #include "Candle.h"
-
+#include "Simon.h"
 void CCandle::Render()
 {	
 	animations[0]->Render(x,y);
-	//RenderBoundingBox();
+	RenderBoundingBox();
 }
 
 void CCandle::GetBoundingBox(float& l, float& t, float& r, float& b)

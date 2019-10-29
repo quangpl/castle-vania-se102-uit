@@ -41,7 +41,11 @@ CCandle* candle;
 CSimon *simon;
 Map* map1;
 
-vector<LPGAMEOBJECT> objects;
+vector<CGameObject*> objects;
+
+vector<LPGAMEOBJECT> coObjects;
+vector<LPGAMEOBJECT> coGroundObjects;
+vector<LPGAMEOBJECT> coPlayerObject;
 
 class CSampleKeyHander: public CKeyEventHandler
 {
@@ -247,7 +251,7 @@ void LoadResources()
 	for (int i = 1; i <= 5; i++) {
 		candle = new CCandle();
 		candle->AddAnimation(900);
-		candle->SetPosition(i * 100, 167);
+		candle->SetPosition(i * 130, 167);
 		objects.push_back(candle);
 	}
 
@@ -297,14 +301,21 @@ void Update(DWORD dt)
 	// TO-DO: This is a "dirty" way, need a more organized way 
 
 	vector<LPGAMEOBJECT> coObjects;
-	for (int i = 1; i < objects.size(); i++)
+
+
+	for (int i = 0; i < objects.size(); i++)
 	{
-		coObjects.push_back(objects[i]);
+		if (objects[i]->getType() == TYPE_OBJECT_PLAYER || objects[i]->getType() == TYPE_OBJECT_BACKGROUND) {
+			coObjects.push_back(objects[i]);
+			cout << objects[i]->getType() << endl;
+		}
 	}
 
 	for (int i = 0; i < objects.size(); i++)
 	{
-		objects[i]->Update(dt, &coObjects);
+		
+			objects[i]->Update(dt, &coObjects);
+		
 	}
 
 

@@ -1,6 +1,6 @@
 #pragma once
 #include "GameObject.h"
-
+#include "Constants.h"
 #define SIMON_WALKING_SPEED		0.1f 
 //0.1f
 #define SIMON_JUMP_SPEED_Y		0.4f
@@ -47,6 +47,7 @@ public:
 	{
 		level = SIMON_LEVEL;
 		untouchable = 0;
+		setType(TYPE_OBJECT_PLAYER);
 	}
 	virtual void Update(DWORD dt, vector<LPGAMEOBJECT> *colliable_objects = NULL);
 	virtual void Render();
