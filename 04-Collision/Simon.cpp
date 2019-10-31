@@ -6,23 +6,29 @@
 
 #include "Goomba.h"
 
+
 void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
 
 	// Calculate dx, dy 
 
 	CGameObject::Update(dt);
-
 	//Ngăn không cho Simon rớt ra khỏi màn hình
 	if (x <= 0) {
 		x = 0;
 	}
+	//Không cho simon rớt ra theo chiều x 
+	/*if (x > 700) {
+		x = 700;
+	}*/
 	if (y <= BOARD_HEIGHT) {
 		y = BOARD_HEIGHT;
 	}
 	// Simple fall down
 	vy += SIMON_GRAVITY * dt;
-
+	if (vy != 0) {
+		cout << vy << endl;
+	}
 
 	vector<LPCOLLISIONEVENT> coEvents;
 	vector<LPCOLLISIONEVENT> coEventsResult;
@@ -121,6 +127,14 @@ void CSimon::Render()
 			ani = SIMON_ANI_JUMP_LEFT;
 		}
 	}
+	//else if (state == SIMON_STATE_HIT && isHit == true) {
+	//	if (nx > 0) {
+	//		ani = SIMON_ANI_HIT_RIGHT;
+	//	}
+	//	else {
+	//		ani = SIMON_ANI_HIT_LEFT;
+	//	}
+	//}
 	else {
 		if (vx == 0)
 		{
@@ -183,14 +197,17 @@ void CSimon::jump() {
 }
 
 void CSimon::jumpReset() {
-	if (vy >= 0) {
+	
+	if (vy <= 0) {
 		isJump = false;
 	}
 	canJump = true;
 }
 
 void CSimon::idle() {
-	vx = 0;
+	if (!isJump) {
+		vx = 0;
+	}
 }
 
 void CSimon::die() {
@@ -204,12 +221,17 @@ void CSimon::sit() {
 	}
 }
 
+void CSimon::hit() {
+	isHit = true;
+}
+
 void CSimon::sitRelease() {
 	if (isSit) {
 		isSit = false;
 		y = y - 10;
 	}
 }
+
 
 void CSimon::SetState(int state)
 {
@@ -237,6 +259,9 @@ void CSimon::SetState(int state)
 	case SIMON_STATE_SIT_RELEASE:
 		sitRelease();
 		break;
+	/*case SIMON_STATE_HIT:
+		hit();
+		break;*/
 	}
 }
 

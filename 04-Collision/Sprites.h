@@ -1,6 +1,7 @@
 #pragma once
 #include <Windows.h>
 #include <d3dx9.h>
+#include "Constants.h"
 #include <unordered_map>
 
 using namespace std;
@@ -8,7 +9,7 @@ using namespace std;
 class CSprite
 {
 	int id;				// Sprite ID in the sprite database
-
+	LPD3DXSPRITE spriteHandler;
 	int left; 
 	int top;
 	int right;
@@ -19,6 +20,7 @@ public:
 	CSprite(int id, int left, int top, int right, int bottom, LPDIRECT3DTEXTURE9 tex);
 
 	void Draw(float x, float y, int alpha = 255);
+	void DrawFlipX(float x, float y, float offsetX, int alpha);
 };
 
 typedef CSprite * LPSPRITE;
@@ -29,7 +31,6 @@ typedef CSprite * LPSPRITE;
 class CSprites
 {
 	static CSprites * __instance;
-
 	unordered_map<int, LPSPRITE> sprites;
 
 public:
@@ -66,6 +67,7 @@ public:
 	CAnimation(int defaultTime) { this->defaultTime = defaultTime; lastFrameTime = -1; currentFrame = -1; }
 	void Add(int spriteId, DWORD time = 0);
 	void Render(float x, float y, int alpha=255);
+
 };
 
 typedef CAnimation *LPANIMATION;

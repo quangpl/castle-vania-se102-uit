@@ -15,6 +15,12 @@
 #define SIMON_STATE_DIE				400
 #define SIMON_STATE_SIT				500
 #define SIMON_STATE_SIT_RELEASE		501
+#define SIMON_STATE_SIT_RELEASE		501
+
+#define SIMON_STATE_SIT_RELEASE		501
+#define SIMON_STATE_SIT_RELEASE		501
+
+
 
 
 
@@ -52,6 +58,7 @@ class CSimon : public CGameObject
 	DWORD untouchable_start;
 	boolean isJump;
 	boolean isSit;
+	boolean isHit;
 	boolean canJump = true;
 	int stateBackup;
 public: 
@@ -73,6 +80,7 @@ public:
 	void idle();
 	void die();
 	void sit();
+	void hit();
 	void sitRelease();
 
 

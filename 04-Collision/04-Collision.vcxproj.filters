@@ -31,6 +31,9 @@
     <Filter Include="Framework\Tile">
       <UniqueIdentifier>{785faa02-5b28-468f-bea6-210e5fd667bd}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Lib">
+      <UniqueIdentifier>{949d0046-3103-477b-841f-e327728895cd}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Brick.h">
@@ -73,6 +76,12 @@
     <ClInclude Include="Candle.h">
       <Filter>GameObject</Filter>
     </ClInclude>
+    <ClInclude Include="tinystr.h">
+      <Filter>Lib</Filter>
+    </ClInclude>
+    <ClInclude Include="tinyxml.h">
+      <Filter>Lib</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Brick.cpp">
@@ -108,6 +117,18 @@
     </ClCompile>
     <ClCompile Include="Candle.cpp">
       <Filter>GameObject</Filter>
+    </ClCompile>
+    <ClCompile Include="tinystr.cpp">
+      <Filter>Lib</Filter>
+    </ClCompile>
+    <ClCompile Include="tinyxml.cpp">
+      <Filter>Lib</Filter>
+    </ClCompile>
+    <ClCompile Include="tinyxmlerror.cpp">
+      <Filter>Lib</Filter>
+    </ClCompile>
+    <ClCompile Include="tinyxmlparser.cpp">
+      <Filter>Lib</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
