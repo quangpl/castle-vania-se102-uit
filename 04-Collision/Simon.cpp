@@ -111,26 +111,47 @@ void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 void CSimon::Render()
 {
 	int ani;
+
 	switch (state)
 	{
 	case SIMON_STATE_DIE:
 		ani = SIMON_ANI_DIE;
 		break;
 	case SIMON_STATE_SIT:
-		ani = SIMON_ANI_SIT;
+		if (isHit) {
+			cout << "state sit" << endl;
+			ani = SIMON_ANI_SIT_HIT;
+		}
+		else {
+			ani = SIMON_ANI_SIT;
+		}
 		break;
 	case SIMON_STATE_JUMP:
 		cout << "state jump" << endl;
 		ani = SIMON_ANI_JUMP;
 		break;
+	case SIMON_STATE_HIT:
+		ani = SIMON_ANI_HIT;
+		if (isSit) {
+			ani = SIMON_ANI_SIT_HIT;
+		}
+		break;
 	default:
 		if (!isJump) {
 			if (vx == 0)
 			{
+				if (isHit) {
+					ani = SIMON_ANI_HIT;
+				}
 				ani = SIMON_ANI_IDLE;
 			}
 			else {
-				ani = SIMON_ANI_WALKING;
+				if (isHit) {
+					ani = SIMON_ANI_HIT;
+				}
+				else {
+					ani = SIMON_ANI_WALKING;
+				}
 			}
 		}
 		else {
@@ -146,16 +167,24 @@ void CSimon::Render()
 	RenderBoundingBox();
 }
 void CSimon::goRight() {
-	if (!isJump && !isSit) {
-		vx = SIMON_WALKING_SPEED;
+	isGoLeft = false;
+	isGoRight = true;
+	if (!isJump) {
 		nx = 1;
+	}
+	if (!isJump && !isSit && !isHit) {
+		vx = SIMON_WALKING_SPEED;
 	}
 }
 
 void CSimon::goLeft() {
-	if (!isJump && !isSit) {
-		vx = -SIMON_WALKING_SPEED;
+	isGoLeft = true;
+	isGoRight = false;
+	if (!isJump) {
 		nx = -1;
+	}
+	if (!isJump && !isSit && !isHit) {
+		vx = -SIMON_WALKING_SPEED;
 	}
 }
 
@@ -195,6 +224,14 @@ void CSimon::sit() {
 
 void CSimon::hit() {
 	isHit = true;
+	if ((isGoLeft || isGoRight) && !isJump) {
+		vx = 0;
+	}
+	state = SIMON_STATE_HIT;
+}
+
+void CSimon::hitRelease() {
+	isHit = false;
 }
 
 void CSimon::sitRelease() {
@@ -231,9 +268,12 @@ void CSimon::SetState(int state)
 	case SIMON_STATE_SIT_RELEASE:
 		sitRelease();
 		break;
-	/*case SIMON_STATE_HIT:
+	case SIMON_STATE_HIT:
 		hit();
-		break;*/
+		break;
+	case SIMON_STATE_HIT_RELEASE:
+		hitRelease();
+		break;
 	}
 }
 

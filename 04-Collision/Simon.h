@@ -11,17 +11,14 @@
 #define SIMON_STATE_IDLE			0
 #define SIMON_STATE_WALKING_RIGHT	100
 #define SIMON_STATE_WALKING_LEFT	200
+
 #define SIMON_STATE_JUMP			300
 #define SIMON_STATE_DIE				400
 #define SIMON_STATE_SIT				500
 #define SIMON_STATE_SIT_RELEASE		501
-#define SIMON_STATE_SIT_RELEASE		501
 
-#define SIMON_STATE_SIT_RELEASE		501
-#define SIMON_STATE_SIT_RELEASE		501
-
-
-
+#define SIMON_STATE_HIT		600
+#define SIMON_STATE_HIT_RELEASE 601
 
 
 #define SIMON_ANI_IDLE_RIGHT		400
@@ -42,6 +39,10 @@
 #define SIMON_ANI_SIT_LEFT			700
 #define SIMON_ANI_SIT_RIGHT		701
 #define SIMON_ANI_SIT		505
+
+#define SIMON_ANI_HIT		507
+#define SIMON_ANI_SIT_HIT		518
+
 
 
 #define SIMON_ANI_DIE				8
@@ -64,6 +65,10 @@ class CSimon : public CGameObject
 	DWORD untouchable_start;
 	boolean isJump;
 	boolean isSit;
+
+	boolean isGoLeft;
+	boolean isGoRight;
+
 	boolean isHit;
 	boolean canJump = true;
 	int stateBackup;
@@ -86,8 +91,10 @@ public:
 	void idle();
 	void die();
 	void sit();
-	void hit();
 	void sitRelease();
+	void hit();
+	void hitRelease();
+
 
 
 
