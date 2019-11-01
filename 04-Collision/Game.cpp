@@ -1,4 +1,4 @@
-#include "Game.h"
+﻿#include "Game.h"
 #include "debug.h"
 
 CGame * CGame::__instance = NULL;
@@ -10,7 +10,7 @@ CGame * CGame::__instance = NULL;
 	- hWnd: Application window handle
 */
 void CGame::Init(HWND hWnd)
-{
+{// khởi tạo các thông tin cơ bản
 	LPDIRECT3D9 d3d = Direct3DCreate9(D3D_SDK_VERSION);
 
 	this->hWnd = hWnd;									

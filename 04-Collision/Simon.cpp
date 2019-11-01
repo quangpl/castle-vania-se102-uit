@@ -26,9 +26,6 @@ void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	}
 	// Simple fall down
 	vy += SIMON_GRAVITY * dt;
-	if (vy != 0) {
-		cout << vy << endl;
-	}
 
 	vector<LPCOLLISIONEVENT> coEvents;
 	vector<LPCOLLISIONEVENT> coEventsResult;
@@ -114,63 +111,38 @@ void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 void CSimon::Render()
 {
 	int ani;
-
-	if (state == SIMON_STATE_DIE)
+	switch (state)
 	{
+	case SIMON_STATE_DIE:
 		ani = SIMON_ANI_DIE;
-	}
-	else if (state == SIMON_STATE_SIT && isSit == true) {
-		if (nx > 0) {
-			ani = SIMON_ANI_JUMP_RIGHT;
-		}
-		else {
-			ani = SIMON_ANI_JUMP_LEFT;
-		}
-	}
-	//else if (state == SIMON_STATE_HIT && isHit == true) {
-	//	if (nx > 0) {
-	//		ani = SIMON_ANI_HIT_RIGHT;
-	//	}
-	//	else {
-	//		ani = SIMON_ANI_HIT_LEFT;
-	//	}
-	//}
-	else {
-		if (vx == 0)
-		{
-			if (nx > 0) {
-				ani = SIMON_ANI_IDLE_RIGHT;
-				if (isJump && !isSit) {
-					ani = SIMON_ANI_JUMP_RIGHT;
-				}
-
+		break;
+	case SIMON_STATE_SIT:
+		ani = SIMON_ANI_SIT;
+		break;
+	case SIMON_STATE_JUMP:
+		cout << "state jump" << endl;
+		ani = SIMON_ANI_JUMP;
+		break;
+	default:
+		if (!isJump) {
+			if (vx == 0)
+			{
+				ani = SIMON_ANI_IDLE;
 			}
 			else {
-				ani = SIMON_ANI_IDLE_LEFT;
-				if (isJump && !isSit) {
-					ani = SIMON_ANI_JUMP_LEFT;
-				}
-			}
-		}
-		else if (vx > 0)
-		{
-			ani = SIMON_ANI_WALKING_RIGHT;
-			if (isJump && !isSit) {
-				ani = SIMON_ANI_JUMP_RIGHT;
+				ani = SIMON_ANI_WALKING;
 			}
 		}
 		else {
-			ani = SIMON_ANI_WALKING_LEFT;
-			if (isJump && !isSit) {
-				ani = SIMON_ANI_JUMP_LEFT;
-			}
+			ani = SIMON_ANI_JUMP;
 		}
+	break;
 	}
 
 	int alpha = 255;
 	if (untouchable) alpha = 128;
 
-	CAnimations::GetInstance()->Get(ani)->Render(x, y, alpha);
+	CAnimations::GetInstance()->Get(ani)->RenderFlip(-nx,x, y,24,alpha);
 	RenderBoundingBox();
 }
 void CSimon::goRight() {

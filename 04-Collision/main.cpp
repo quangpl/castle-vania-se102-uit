@@ -21,21 +21,23 @@
 #include <windows.h>
 #include <d3d9.h>
 #include <d3dx9.h>
-
+#include <fstream>
 #include "debug.h"
 #include "Game.h"
 #include "GameObject.h"
 #include "Textures.h"
-
+#include "tinyxml.h"
 #include "Simon.h"
 #include "Brick.h"
 #include "Goomba.h"
 #include "Candle.h"
-
-
+#include <iostream>
+#include <istream>
+#include <string>
 #include "Map.h"
+#include <sstream> 
 #include "Constants.h"
-
+using namespace std;
 CGame *game;
 CCandle* candle;
 CSimon *simon;
@@ -131,7 +133,7 @@ void LoadResources()
 
 	textures->Add(ID_TEX_MAP, "textures\\tileset_map1.png", D3DCOLOR_XRGB(255, 0, 255));
 	textures->Add(ID_TEX_BBOX, "textures\\bbox.png", D3DCOLOR_XRGB(255, 255, 255));
-	textures->Add(ID_TEX_SIMON, "Resources\\simon\\simon.png", D3DCOLOR_XRGB(255, 255, 255));
+	textures->Add(ID_TEX_SIMON, "textures\\TexturesV3.png", D3DCOLOR_XRGB(34, 177, 76));
 	textures->Add(ID_TEX_CANDLE, "textures\\object.png", D3DCOLOR_XRGB(34, 177, 76));
 
 	
@@ -146,149 +148,221 @@ void LoadResources()
 	LPDIRECT3DTEXTURE9 texSimon = textures->Get(ID_TEX_SIMON);
 	LPDIRECT3DTEXTURE9 texCandle = textures->Get(ID_TEX_CANDLE);
 
+	//Load tất cả animations
+	LPDIRECT3DTEXTURE9 directTexture;
+	TiXmlDocument doc("XML/Textures.xml");
+	if (!doc.LoadFile())
+	{
+		DebugOut(L"Can't read XML file");
+		MessageBox(NULL, L"Can't Read XML File", L"Error", MB_OK);
+		return;
+	}
+	else
+	{
+		DebugOut(L"[INFO]Read XML success\n");
+	}
+	// get info root
+	TiXmlElement* root = doc.RootElement();
+	TiXmlElement* sprite = nullptr;
+	TiXmlElement* animation = nullptr;
+	TiXmlElement* texture = nullptr;
+	LPANIMATION ani;
+	// gameObjectId = 0 -- Simon
+	for (texture = root->FirstChildElement(); texture != NULL; texture = texture->NextSiblingElement())
+	{
+		int textureId;
+		int gameObjectId;
+		texture->QueryIntAttribute("textureId", &textureId);
+		texture->QueryIntAttribute("gameObjectId", &gameObjectId);
+
+		directTexture = textures->Get(textureId);
+		for (animation = texture->FirstChildElement(); animation != NULL; animation = animation->NextSiblingElement())
+		{
+			int aniId, frameTime;
+			animation->QueryIntAttribute("frameTime", &frameTime);
+			
+			ani = new CAnimation(frameTime);
+			for (sprite = animation->FirstChildElement(); sprite != NULL; sprite = sprite->NextSiblingElement())
+			{
+				int left, top, right, bottom, id;
+				sprite->QueryIntAttribute("id", &id);
+				sprite->QueryIntAttribute("top", &top);
+				sprite->QueryIntAttribute("left", &left);
+				sprite->QueryIntAttribute("right", &right);
+				sprite->QueryIntAttribute("bottom", &bottom);
+				sprites->Add(id, left, top, right, bottom, directTexture);
+				ani->Add(id);
+			}
+			animation->QueryIntAttribute("aniId", &aniId);
+			animations->Add(aniId, ani);
+			if (gameObjectId == 0)
+			{
+				simon->AddAnimation(aniId);
+			}
+		};
+
+		
+	}
+	simon->AddAnimation(500);
+
 
 
 
 	// Simon
-	sprites->Add(10001, 163, 41, 180, 71, texSimon);		// idle right
+	sprites->Add(999, 20, 22, 38, 53, texSimon);		// idle right
 
-	sprites->Add(10002, 205, 40, 217, 70, texSimon);		// walk right
-	sprites->Add(10003, 244, 41, 259, 70, texSimon);
+	//sprites->Add(10002, 205, 40, 217, 70, texSimon);		// walk right
+	//sprites->Add(10003, 244, 41, 259, 70, texSimon);
 
-	sprites->Add(10011, 123, 40, 140, 71, texSimon);		// idle left
-	sprites->Add(10012, 86, 41, 98, 71, texSimon);		// walk left
-	sprites->Add(10013, 44, 41, 60, 70, texSimon);
+	////waking
+	//sprites->Add(10014, 4, 24, 82, 54, texSimon);		// idle left
+	//sprites->Add(10015, 86, 24, 164, 54, texSimon);		// walk left
 
-	sprites->Add(10099, 35, 8, 68, 22, texSimon);		// die left
-	sprites->Add(10098, 235, 8, 268, 22, texSimon);		// die right
+	//sprites->Add(10011, 123, 40, 140, 71, texSimon);		// idle left
+	//sprites->Add(10012, 86, 41, 98, 71, texSimon);		// walk left
+	//sprites->Add(10013, 44, 41, 60, 70, texSimon);
 
-	sprites->Add(10199, 3, 44, 19, 67, texSimon);		// jump left
-	sprites->Add(10198, 283, 43, 300, 66, texSimon);		// jump right
+	//sprites->Add(10099, 35, 8, 68, 22, texSimon);		// die left
+	//sprites->Add(10098, 235, 8, 268, 22, texSimon);		// die right
 
-
-	sprites->Add(10299, 4,44, 20, 67, texSimon);		// sit left
-	sprites->Add(10298, 283, 44, 300, 66, texSimon);		// sit right
-
-	// Simon transparent
-
-	sprites->Add(100011, 163, 641, 180, 670, texSimon);		// idle right
-	sprites->Add(100021, 205, 641, 217, 670, texSimon);		// walk right
-	sprites->Add(100031, 244, 641, 259, 670, texSimon);
-
-	sprites->Add(100111, 123, 641, 140, 670, texSimon);		// idle left
-	sprites->Add(100121, 85, 641, 98, 670, texSimon);		// walk left
-	sprites->Add(100131, 44, 641, 60, 670, texSimon);
+	//sprites->Add(10199, 3, 44, 19, 67, texSimon);		// jump left
+	//sprites->Add(10198, 283, 43, 300, 66, texSimon);		// jump right
 
 
-	sprites->Add(100991, 4, 644, 20, 667, texSimon);		// sit left
-	sprites->Add(100981, 283, 644, 300, 665, texSimon);		// sit right
-	
-															
+	//sprites->Add(10299, 4,44, 20, 67, texSimon);		// sit left
+	//sprites->Add(10298, 283, 44, 300, 66, texSimon);		// sit right
+
+	//// Simon transparent
+
+	//sprites->Add(100011, 163, 641, 180, 670, texSimon);		// idle right
+	//sprites->Add(100021, 205, 641, 217, 670, texSimon);		// walk right
+	//sprites->Add(100031, 244, 641, 259, 670, texSimon);
+
+	//sprites->Add(100111, 123, 641, 140, 670, texSimon);		// idle left
+	//sprites->Add(100121, 85, 641, 98, 670, texSimon);		// walk left
+	//sprites->Add(100131, 44, 641, 60, 670, texSimon);
+
+
+	//sprites->Add(100991, 4, 644, 20, 667, texSimon);		// sit left
+	//sprites->Add(100981, 283, 644, 300, 665, texSimon);		// sit right
+
+	//sprites->Add(10080, 4, 644, 20, 667, texSimon);		// sit left
+	//sprites->Add(10081, 283, 644, 300, 665, texSimon);		// sit right
+	//
+	//														
 															
 															// Candle 
-	sprites->Add(100211, 48, 26, 64, 56, texCandle);		// candle first state
-	sprites->Add(100212, 75, 26, 91, 56, texCandle);		// candle second state
+	//sprites->Add(100211, 48, 26, 64, 56, texCandle);		// candle first state
+	//sprites->Add(100212, 75, 26, 91, 56, texCandle);		// candle second state
 
 
 	LPDIRECT3DTEXTURE9 texMisc = textures->Get(ID_TEX_MISC);
 	sprites->Add(20001, 408, 245, 420, 255, texMisc);
 
-	LPDIRECT3DTEXTURE9 texEnemy = textures->Get(ID_TEX_ENEMY);
-	sprites->Add(30001, 5, 14, 21, 29, texEnemy);
-	sprites->Add(30002, 25, 14, 41, 29, texEnemy);
+	//LPDIRECT3DTEXTURE9 texEnemy = textures->Get(ID_TEX_ENEMY);
+	//sprites->Add(30001, 5, 14, 21, 29, texEnemy);
+	//sprites->Add(30002, 25, 14, 41, 29, texEnemy);
 
-	sprites->Add(30003, 45, 21, 61, 29, texEnemy); // die sprite
+	//sprites->Add(30003, 45, 21, 61, 29, texEnemy); // die sprite
 
-	LPANIMATION ani;
+	//LPANIMATION ani;
 
-	ani = new CAnimation(100);	// idle right
-	ani->Add(10001);
-	animations->Add(400, ani);
+	//ani = new CAnimation(100);	// idle right
+	//ani->Add(10001);
+	//animations->Add(400, ani);
 
-	ani = new CAnimation(100);	// idle left
-	ani->Add(10011);
-	animations->Add(401, ani);
+	//ani = new CAnimation(100);	// waking
+	//ani->Add(10014);
+	//ani->Add(10015);
+	//animations->Add(1000, ani);
 
-	ani = new CAnimation(100);	// jump left
-	ani->Add(10199);
-	animations->Add(700, ani);
+	//ani = new CAnimation(100);	// idle left
+	//ani->Add(10011);
+	//animations->Add(401, ani);
 
-	ani = new CAnimation(100);	// jump right
-	ani->Add(10198);
-	animations->Add(701, ani);
+	//ani = new CAnimation(100);	// jump left
+	//ani->Add(10199);
+	//animations->Add(700, ani);
 
-	ani = new CAnimation(100);	// sit left
-	ani->Add(10299);
-	animations->Add(800, ani);
+	//ani = new CAnimation(100);	// jump right
+	//ani->Add(10198);
+	//animations->Add(701, ani);
 
-	ani = new CAnimation(100);	// sit right
-	ani->Add(10298);
-	animations->Add(801, ani);
+	//ani = new CAnimation(100);	// sit left
+	//ani->Add(10299);
+	//animations->Add(800, ani);
 
-
-
-	ani = new CAnimation(100);	// walk right 
-	ani->Add(10001);
-	ani->Add(10002);
-	ani->Add(10003);
-	animations->Add(500, ani);
-
-	ani = new CAnimation(100);	// // walk left 
-	ani->Add(10011);
-	ani->Add(10012);
-	ani->Add(10013);
-	animations->Add(501, ani);
+	//ani = new CAnimation(100);	// sit right
+	//ani->Add(10298);
+	//animations->Add(801, ani);
 
 
 
-	ani = new CAnimation(100);		// Simon die left
-	ani->Add(10099);
-	animations->Add(599, ani);
+	//ani = new CAnimation(100);	// walk right 
+	//ani->Add(10001);
+	//ani->Add(10002);
+	//ani->Add(10003);
+	//animations->Add(500, ani);
 
-	ani = new CAnimation(100);		// Simon die right
-	ani->Add(10098);
-	animations->Add(598, ani);
+	//ani = new CAnimation(100);	// // walk left 
+	//ani->Add(10011);
+	//ani->Add(10012);
+	//ani->Add(10013);
+	//animations->Add(501, ani);
 
-	
+
+
+	//ani = new CAnimation(100);		// Simon die left
+	//ani->Add(10099);
+	//animations->Add(599, ani);
+
+	//ani = new CAnimation(100);		// Simon die right
+	//ani->Add(10098);
+	//animations->Add(598, ani);
+
+	//
 
 	ani = new CAnimation(100);		// brick
 	ani->Add(20001);
 	animations->Add(601, ani);
 
 
-	ani = new CAnimation(100);	// candle firing
-	ani->Add(100211);
-	ani->Add(100212);
-	animations->Add(900, ani);
-
-
-	
-	for (int i = 1; i <= 5; i++) {
-		candle = new CCandle();
-		candle->AddAnimation(900);
-		candle->SetPosition(i * 130, 167);
-		objects.push_back(candle);
-	}
-
-	simon = new CSimon();
-	simon->AddAnimation(400);		// idle right 
-	simon->AddAnimation(401);		// idle left big
-	simon->AddAnimation(599);		// die left
-	simon->AddAnimation(598);		// die right
-	simon->AddAnimation(500);		// walk right big
-	simon->AddAnimation(501);		// walk left big
-
-	
-
-	simon->AddAnimation(700);		// jump left
-	simon->AddAnimation(701);		// jump right
-
-	simon->AddAnimation(800);		// sit left
-	simon->AddAnimation(801);		// sit right
-
-
 	simon->SetPosition(50.0f, 0);
 	objects.push_back(simon);
+
+	//ani = new CAnimation(100);	// candle firing
+	//ani->Add(100211);
+	//ani->Add(100212);
+	//animations->Add(900, ani);
+
+
+	//
+	//for (int i = 1; i <= 5; i++) {
+	//	candle = new CCandle();
+	//	candle->AddAnimation(900);
+	//	candle->SetPosition(i * 130, 167);
+	//	objects.push_back(candle);
+	//}
+
+	//simon = new CSimon();
+	//simon->AddAnimation(1000);		// waking
+
+	//simon->AddAnimation(400);		// idle right 
+	//simon->AddAnimation(401);		// idle left big
+	//simon->AddAnimation(599);		// die left
+	//simon->AddAnimation(598);		// die right
+	//simon->AddAnimation(500);		// walk right big
+	//simon->AddAnimation(501);		// walk left big
+
+	//
+
+	//simon->AddAnimation(700);		// jump left
+	//simon->AddAnimation(701);		// jump right
+
+	//simon->AddAnimation(800);		// sit left
+	//simon->AddAnimation(801);		// sit right
+
+
 
 
 
@@ -300,9 +374,6 @@ void LoadResources()
 		brick->SetPosition(0 + i*16.0f, SCREEN_HEIGHT-45);
 		objects.push_back(brick);
 	}
-
-	
-
 
 }
 
@@ -475,7 +546,9 @@ int Run()
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow)
 {
 	HWND hWnd = CreateGameWindow(hInstance, nCmdShow, SCREEN_WIDTH, SCREEN_HEIGHT);
+
 	game = CGame::GetInstance();
+	simon = new CSimon();
 	game->Init(hWnd);
 
 

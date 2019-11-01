@@ -26,7 +26,7 @@ void CSprite::Draw(float x, float y, int alpha)
 	game->Draw(x, y, texture, left, top, right, bottom, alpha);
 }
 
-void CSprite::DrawFlipX(float x, float y, float offsetX, int alpha)
+void CSprite::DrawFlip(int nx, float x, float y, float offsetX, int alpha)
 {
 	//to-do-lqs
 	spriteHandler = CGame::GetInstance()->GetSpriteHandler();
@@ -40,8 +40,12 @@ void CSprite::DrawFlipX(float x, float y, float offsetX, int alpha)
 	r.bottom = bottom;
 	D3DXMATRIX oldTransform, middleTransform;
 	spriteHandler->GetTransform(&oldTransform);
-	D3DXMatrixTransformation2D(&middleTransform, &D3DXVECTOR2(p.x + offsetX, p.x), 0.0f, &D3DXVECTOR2(-1.0f, 1.0f), NULL, 0.0f, NULL);
+
+	D3DXVECTOR2 rotate = D3DXVECTOR2(nx > 0 ? -1 : 1, 1);
+	D3DXMatrixTransformation2D(&middleTransform, &D3DXVECTOR2(p.x + offsetX, p.x), 0.0f, &rotate, NULL, 0.0f, NULL);
+	//D3DXMatrixTransformation2D(&middleTransform, &D3DXVECTOR2(p.x + offsetX, p.x), 0.0f, &rotate, NULL, 0.0f, NULL);
 	D3DXMATRIX newTransform = oldTransform * middleTransform;
+
 	spriteHandler->SetTransform(&newTransform);
 	spriteHandler->Draw(texture, &r, NULL, &p, D3DCOLOR_XRGB(255, 255, 255));
 	spriteHandler->SetTransform(&oldTransform);
@@ -91,13 +95,30 @@ void CAnimation::Render(float x, float y, int alpha)
 		
 	}
 	frames[currentFrame]->GetSprite()->Draw(x, y, alpha);
-	/*if (isFlipX) {
-		frames[currentFrame]->GetSprite()->DrawFlipX(x, y, offSetFlipX, alpha);
-	}
-	else {
-		frames[currentFrame]->GetSprite()->Draw(x, y, alpha);
-	}*/
 }
+
+void CAnimation::RenderFlip(int nx, float x, float y, float offsetX, int alpha)
+{
+	DWORD now = GetTickCount();
+	if (currentFrame == -1)
+	{
+		currentFrame = 0;
+		lastFrameTime = now;
+	}
+	else
+	{
+		DWORD t = frames[currentFrame]->GetTime();
+		if (now - lastFrameTime > t)
+		{
+			currentFrame++;
+			lastFrameTime = now;
+			if (currentFrame == frames.size()) currentFrame = 0;
+		}
+
+	}
+	frames[currentFrame]->GetSprite()->DrawFlip(nx, x, y, offsetX, alpha);
+}
+
 
 CAnimations * CAnimations::__instance = NULL;
 
