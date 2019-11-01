@@ -23,6 +23,7 @@
 #include <d3dx9.h>
 #include <fstream>
 #include "debug.h"
+#include "Weapon.h"
 #include "Game.h"
 #include "GameObject.h"
 #include "Textures.h"
@@ -38,9 +39,11 @@
 #include <sstream> 
 #include "Constants.h"
 using namespace std;
+
 CGame *game;
 CCandle* candle;
-CSimon *simon;
+CWeapon* weapon = CWeapon::GetInstance();
+CSimon *simon = CSimon::GetInstance();
 Map* map1;
 
 vector<CGameObject*> objects;
@@ -87,6 +90,7 @@ void CSampleKeyHander::OnKeyUp(int KeyCode)   //short event
 	case DIK_Z:
 		simon->SetState(SIMON_STATE_HIT_RELEASE);
 		cout << "Tha phim hit" << endl;
+		weapon->SetState(WEAPON_STATE_NO_WEAPON);
 		break;
 	}
 
@@ -105,17 +109,17 @@ void CSampleKeyHander::KeyState(BYTE *states)   //long event
 		simon->SetState(SIMON_STATE_IDLE);
 	if (game->IsKeyDown(DIK_DOWN))
 	{
-		
 		if (simon->GetState() == SIMON_STATE_HIT) {
+			weapon->SetState(WEAPON_STATE_ROPE);
 			simon->SetState(SIMON_STATE_HIT);
 		}
 		simon->SetState(SIMON_STATE_SIT);
 	}
 	if (game->IsKeyDown(DIK_Z))
 	{
+		weapon->SetState(WEAPON_STATE_ROPE);
 		simon->SetState(SIMON_STATE_HIT);
 	}
-	
 }
 
 LRESULT CALLBACK WinProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
@@ -209,17 +213,18 @@ void LoadResources()
 			{
 				simon->AddAnimation(aniId);
 			}
+			else if (gameObjectId == 100) {
+				weapon->AddAnimation(aniId);
+			}
 		};
 
 		
 	}
-	simon->AddAnimation(500);
-
 
 
 
 	// Simon
-	sprites->Add(999, 20, 22, 38, 53, texSimon);		// idle right
+	//sprites->Add(999, 20, 22, 38, 53, texSimon);		// idle right
 
 	//sprites->Add(10002, 205, 40, 217, 70, texSimon);		// walk right
 	//sprites->Add(10003, 244, 41, 259, 70, texSimon);
@@ -262,8 +267,8 @@ void LoadResources()
 	//														
 															
 															// Candle 
-	//sprites->Add(100211, 48, 26, 64, 56, texCandle);		// candle first state
-	//sprites->Add(100212, 75, 26, 91, 56, texCandle);		// candle second state
+	sprites->Add(100211, 48, 26, 64, 56, texCandle);		// candle first state
+	sprites->Add(100212, 75, 26, 91, 56, texCandle);		// candle second state
 
 
 	LPDIRECT3DTEXTURE9 texMisc = textures->Get(ID_TEX_MISC);
@@ -340,19 +345,23 @@ void LoadResources()
 	simon->SetPosition(50.0f, 0);
 	objects.push_back(simon);
 
-	//ani = new CAnimation(100);	// candle firing
-	//ani->Add(100211);
-	//ani->Add(100212);
-	//animations->Add(900, ani);
+	weapon->SetPosition(50.0f, 0);
+	weapon->setType(WEAPON_TYPE_NO_WEAPON);
+	objects.push_back(weapon);
+
+	ani = new CAnimation(100);	// candle firing
+	ani->Add(100211);
+	ani->Add(100212);
+	animations->Add(900, ani);
 
 
-	//
-	//for (int i = 1; i <= 5; i++) {
-	//	candle = new CCandle();
-	//	candle->AddAnimation(900);
-	//	candle->SetPosition(i * 130, 167);
-	//	objects.push_back(candle);
-	//}
+	
+	for (int i = 1; i <= 5; i++) {
+		candle = new CCandle();
+		candle->AddAnimation(900);
+		candle->SetPosition(i * 130, 167);
+		objects.push_back(candle);
+	}
 
 	//simon = new CSimon();
 	//simon->AddAnimation(1000);		// waking
@@ -558,7 +567,6 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	HWND hWnd = CreateGameWindow(hInstance, nCmdShow, SCREEN_WIDTH, SCREEN_HEIGHT);
 
 	game = CGame::GetInstance();
-	simon = new CSimon();
 	game->Init(hWnd);
 
 

@@ -1,6 +1,9 @@
 #pragma once
 #include "GameObject.h"
 #include "Constants.h"
+#include "Weapon.h"
+
+
 #define SIMON_WALKING_SPEED		0.1f 
 //0.1f
 #define SIMON_JUMP_SPEED_Y		0.4f
@@ -45,6 +48,8 @@
 
 
 
+
+
 #define SIMON_ANI_DIE				8
 
 #define	SIMON_LEVEL	2
@@ -60,6 +65,7 @@
 
 class CSimon : public CGameObject
 {
+	static CSimon* __instance;
 	int level;
 	int untouchable;
 	DWORD untouchable_start;
@@ -79,11 +85,13 @@ public:
 		untouchable = 0;
 		setType(TYPE_OBJECT_PLAYER);
 	}
+	static CSimon* GetInstance();
 	virtual void Update(DWORD dt, vector<LPGAMEOBJECT> *colliable_objects = NULL);
 	virtual void Render();
 	void SetState(int state);
 	void SetLevel(int l) { level = l; }
 	void StartUntouchable() { untouchable = 1; untouchable_start = GetTickCount(); }
+	int getDirection() { return this->nx; }
 	void goLeft();
 	void goRight();
 	void jump();
@@ -94,8 +102,6 @@ public:
 	void sitRelease();
 	void hit();
 	void hitRelease();
-
-
 
 
 	virtual void GetBoundingBox(float &left, float &top, float &right, float &bottom);

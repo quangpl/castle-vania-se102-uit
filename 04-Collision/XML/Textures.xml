@@ -46,7 +46,34 @@
       <sprite id="10016" left="360" top="122" right="438" bottom="152" frameTime="100"/>
       <sprite id="10017" left="442" top="122" right="520" bottom="152" frameTime="100"/>
     </Animation>
-    <!-- Animation LEVEL_ONE_ATTACK_STAND -->
+    
+    <!-- Animation FLASH -->
+    <Animation aniId="517" frameTime="25" name="FLASH">
+      <sprite id="10061" left="86" top="24" right="164" bottom="54" frameTime="100"/>
+      <sprite id="10062" left="278" top="73" right="256" bottom="103"/>
+      <sprite id="10063" left="360" top="73" right="438" bottom="103"/>
+      <sprite id="10064" left="442" top="73" right="520" bottom="103"/>
+
+      <sprite id="10065" left="86" top="24" right="164" bottom="54" frameTime="100"/>
+      <sprite id="10066" left="278" top="73" right="256" bottom="103"/>
+      <sprite id="10067" left="360" top="73" right="438" bottom="103"/>
+      <sprite id="10068" left="442" top="73" right="520" bottom="103"/>
+      
+      <sprite id="10069" left="86" top="24" right="164" bottom="54" frameTime="100"/>
+      <sprite id="10070" left="278" top="73" right="256" bottom="103"/>
+      <sprite id="10071" left="360" top="73" right="438" bottom="103"/>
+      <sprite id="10072" left="442" top="73" right="520" bottom="103"/>
+    </Animation>
+      <!-- Animation SIT_THROW -->
+    <Animation aniId="518" frameTime="100" name="SIT_THROW">
+      <sprite id="10008" left="169" top="30" right="247" bottom="54" frameTime="100"/>
+      <sprite id="10073" left="4" top="118" right="82" bottom="148" frameTime="100"/>
+      <sprite id="10074" left="86" top="118" right="164" bottom="148" frameTime="100"/>
+      <sprite id="10075" left="169" top="118" right="247" bottom="148" frameTime="100"/>
+    </Animation>
+  </Texture>
+  <Texture textureId ="30" gameObjectId ="100">
+  <!-- Animation LEVEL_ONE_ATTACK_STAND -->
     <Animation aniId="509" frameTime="100" name="LEVEL_ONE_ATTACK_STAND">
       <sprite id="99999" left="0" top="0" right="0" bottom="0" frameTime="100"/>
       <sprite id="10019" left="5" top="159" right="83" bottom="189" frameTime="100"/>
@@ -104,30 +131,6 @@
       <sprite id="10058" left="278" top="248" right="356" bottom="278" frameTime="100"/>
       <sprite id="10059" left="360" top="248" right="438" bottom="278" frameTime="100"/>
       <sprite id="10060" left="442" top="248" right="521" bottom="278" frameTime="100"/>
-    </Animation>
-    <!-- Animation FLASH -->
-    <Animation aniId="517" frameTime="25" name="FLASH">
-      <sprite id="10061" left="86" top="24" right="164" bottom="54" frameTime="100"/>
-      <sprite id="10062" left="278" top="73" right="256" bottom="103"/>
-      <sprite id="10063" left="360" top="73" right="438" bottom="103"/>
-      <sprite id="10064" left="442" top="73" right="520" bottom="103"/>
-
-      <sprite id="10065" left="86" top="24" right="164" bottom="54" frameTime="100"/>
-      <sprite id="10066" left="278" top="73" right="256" bottom="103"/>
-      <sprite id="10067" left="360" top="73" right="438" bottom="103"/>
-      <sprite id="10068" left="442" top="73" right="520" bottom="103"/>
-      
-      <sprite id="10069" left="86" top="24" right="164" bottom="54" frameTime="100"/>
-      <sprite id="10070" left="278" top="73" right="256" bottom="103"/>
-      <sprite id="10071" left="360" top="73" right="438" bottom="103"/>
-      <sprite id="10072" left="442" top="73" right="520" bottom="103"/>
-    </Animation>
-      <!-- Animation SIT_THROW -->
-    <Animation aniId="518" frameTime="100" name="SIT_THROW">
-      <sprite id="10008" left="169" top="30" right="247" bottom="54" frameTime="100"/>
-      <sprite id="10073" left="4" top="118" right="82" bottom="148" frameTime="100"/>
-      <sprite id="10074" left="86" top="118" right="164" bottom="148" frameTime="100"/>
-      <sprite id="10075" left="169" top="118" right="247" bottom="148" frameTime="100"/>
     </Animation>
   </Texture>
   

@@ -6,6 +6,14 @@
 
 #include "Goomba.h"
 
+CSimon* CSimon::__instance = NULL;
+
+
+CSimon* CSimon::GetInstance()
+{
+	if (__instance == NULL) __instance = new CSimon();
+	return __instance;
+}
 
 void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
