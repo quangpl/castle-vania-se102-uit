@@ -48,9 +48,6 @@ Map* map1;
 
 vector<CGameObject*> objects;
 
-vector<LPGAMEOBJECT> coObjects;
-vector<LPGAMEOBJECT> coGroundObjects;
-vector<LPGAMEOBJECT> coPlayerObject;
 
 class CSampleKeyHander: public CKeyEventHandler
 {
@@ -89,7 +86,6 @@ void CSampleKeyHander::OnKeyUp(int KeyCode)   //short event
 		break;
 	case DIK_Z:
 		simon->SetState(SIMON_STATE_HIT_RELEASE);
-		cout << "Tha phim hit" << endl;
 		weapon->SetState(WEAPON_STATE_NO_WEAPON);
 		break;
 	}
@@ -269,6 +265,8 @@ void LoadResources()
 															// Candle 
 	sprites->Add(100211, 48, 26, 64, 56, texCandle);		// candle first state
 	sprites->Add(100212, 75, 26, 91, 56, texCandle);		// candle second state
+	sprites->Add(100210, 1,1,1,1, texCandle);		// candle second state
+
 
 
 	LPDIRECT3DTEXTURE9 texMisc = textures->Get(ID_TEX_MISC);
@@ -346,19 +344,25 @@ void LoadResources()
 	objects.push_back(simon);
 
 	weapon->SetPosition(50.0f, 0);
-	weapon->setType(WEAPON_TYPE_NO_WEAPON);
+	weapon->setTypeWeapon(WEAPON_TYPE_NO_WEAPON);
 	objects.push_back(weapon);
 
-	ani = new CAnimation(100);	// candle firing
+	ani = new CAnimation(100);	// candle firing show
 	ani->Add(100211);
 	ani->Add(100212);
 	animations->Add(900, ani);
+
+	ani = new CAnimation(100);	// candle firing hide
+	ani->Add(100210);
+	animations->Add(901, ani);
 
 
 	
 	for (int i = 1; i <= 5; i++) {
 		candle = new CCandle();
 		candle->AddAnimation(900);
+		candle->AddAnimation(901);
+		candle->SetState(CANDLE_STATE_SHOW);
 		candle->SetPosition(i * 130, 167);
 		objects.push_back(candle);
 	}
@@ -405,23 +409,34 @@ void Update(DWORD dt)
 	// We know that SIMON is the first object in the list hence we won't add him into the colliable object list
 	// TO-DO: This is a "dirty" way, need a more organized way 
 
-	vector<LPGAMEOBJECT> coObjects;
+	vector<LPGAMEOBJECT> coPlayerAndBackground;
+	vector<LPGAMEOBJECT> coWeaponAndCandle;
+
+
+
 
 
 	for (int i = 0; i < objects.size(); i++)
 	{
-		if (objects[i]->getType() == TYPE_OBJECT_PLAYER || objects[i]->getType() == TYPE_OBJECT_BACKGROUND) {
-			coObjects.push_back(objects[i]);
+		if (dynamic_cast<CBrick*>(objects[i])|| dynamic_cast<CSimon*>(objects[i])) {
+			coPlayerAndBackground.push_back(objects[i]);
+		}
+		
+		if(dynamic_cast<CWeapon*>(objects[i]) || dynamic_cast<CCandle*>(objects[i])) {
+			coWeaponAndCandle.push_back(objects[i]);
 		}
 	}
 
 	for (int i = 0; i < objects.size(); i++)
-	{
-		
-			objects[i]->Update(dt, &coObjects);
-		
-	}
+	{	
+		if (dynamic_cast<CBrick*>(objects[i]) || dynamic_cast<CSimon*>(objects[i])) {
+			objects[i]->Update(dt, &coPlayerAndBackground);
+		}
 
+		if (dynamic_cast<CWeapon*>(objects[i]) || dynamic_cast<CCandle*>(objects[i])) {
+			objects[i]->Update(dt, &coWeaponAndCandle);
+		}
+	}
 
 	// Update camera to follow SIMON
 	float cx, cy;

@@ -68,7 +68,6 @@ public:
 	LPDIRECT3DDEVICE9 GetDirect3DDevice() { return this->d3ddv; }
 	LPDIRECT3DSURFACE9 GetBackBuffer() { return backBuffer; }
 	LPD3DXSPRITE GetSpriteHandler() { return this->spriteHandler; }
-
 	void SetCamPos(float x, float y) { cam_x = x; cam_y = y; }
 	float GetCamPos_x() { return cam_x; }
 	float GetCamPos_y() { return cam_y; }

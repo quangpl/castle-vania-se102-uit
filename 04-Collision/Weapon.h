@@ -1,12 +1,14 @@
 #pragma once
 #include "GameObject.h"
 #include "Simon.h"
+#include "Candle.h"
+
 
 // ROPE
 #define ROPE_SPEED_X 0
 #define ROPE_SPEED_Y 0
 #define ROPE_BBOX_HEIGHT 6
-#define ROPE_BBOX_LEVEL1_WIDTH 26
+#define ROPE_BBOX_LEVEL1_WIDTH 30
 #define ROPE_BBOX_LEVEL2_WIDTH 30
 #define ROPE_BBOX_LEVEL3_WIDTH 40
 
@@ -24,15 +26,7 @@
 #define ROPE_LEVEL_2 2
 #define ROPE_LEVEL_3 3
 
-#define ROPE_OFFSET_Y_TO_HAND_SIMON 8
-#define ROPE_OFFSET_X_TO_HAND_LEFT_SIMON_LEVEL_1 29
-#define ROPE_OFFSET_X_TO_HAND_RIGHT_SIMON_LEVEL_1 36
-
-#define ROPE_OFFSET_X_TO_HAND_LEFT_SIMON_LEVEL_2 35
-#define ROPE_OFFSET_X_TO_HAND_RIGHT_SIMON_LEVEL_2 40
-
-#define ROPE_OFFSET_X_TO_HAND_LEFT_SIMON_LEVEL_3 45
-#define ROPE_OFFSET_X_TO_HAND_RIGHT_SIMON_LEVEL_3 37
+#define ROPE_PUSH_TO_RIGHT 32
 
 
 
@@ -43,21 +37,27 @@
 #define WEAPON_STATE_NO_WEAPON 0
 
 
+
 class CWeapon : public CGameObject
 {
 	virtual void GetBoundingBox(float& left, float& top, float& right, float& bottom);
 	virtual void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects);
 	virtual void Render();
 	static CWeapon* __instance;
-	int type;
+	int typeWeapon;
 	int level;
 
 public:
+	CWeapon() : CGameObject()
+	{
+		setType(TYPE_OBJECT_WEAPON);
+	}
+
 	virtual void SetState(int state);
 	static CWeapon* GetInstance();
 
-	void setType(int type) { this->type = type; };
-	int getType() { return this->type; };
+	void setTypeWeapon(int type) { this->typeWeapon = type; };
+	int getTypeWeapon() { return this->typeWeapon; };
 
 	void setLevel(int level) { this->level = level; };
 	int getLevel() { return this->level; };

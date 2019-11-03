@@ -15,6 +15,11 @@ CGameObject::CGameObject()
 	nx = 1;	
 }
 
+bool CGameObject::checkAABB(float left_a, float top_a, float right_a, float bottom_a, float left_b, float top_b, float right_b, float bottom_b)
+{
+	return left_a < right_b && right_a > left_b && top_a < bottom_b && bottom_a > top_b;
+}
+
 void CGameObject::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 {
 	this->dt = dt;
@@ -128,7 +133,7 @@ void CGameObject::RenderBoundingBox()
 	rect.right = (int)r - (int)l;
 	rect.bottom = (int)b - (int)t;
 
-	CGame::GetInstance()->Draw(x, y, bbox, rect.left, rect.top, rect.right, rect.bottom, 32);
+	CGame::GetInstance()->Draw(x, y, bbox, rect.left, rect.top, rect.right, rect.bottom, 128);
 }
 
 void CGameObject::AddAnimation(int aniId)

@@ -25,13 +25,6 @@ void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	if (x <= 0) {
 		x = 0;
 	}
-	//Không cho simon rớt ra theo chiều x 
-	/*if (x > 700) {
-		x = 700;
-	}*/
-	if (y <= BOARD_HEIGHT) {
-		y = BOARD_HEIGHT;
-	}
 	// Simple fall down
 	vy += SIMON_GRAVITY * dt;
 
@@ -75,34 +68,13 @@ void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		//{
 		//	LPCOLLISIONEVENT e = coEventsResult[i];
 
-		//	if (dynamic_cast<CGoomba *>(e->obj)) // if e->obj is Goomba 
+		//	if (dynamic_cast<CCandle*>(e->obj)) // if e->obj is Goomba 
 		//	{
-		//		CGoomba *goomba = dynamic_cast<CGoomba *>(e->obj);
-
-		//		// jump on top >> kill Goomba and deflect a bit 
-		//		if (e->ny < 0)
-		//		{
-		//			if (goomba->GetState()!= GOOMBA_STATE_DIE)
-		//			{
-		//				goomba->SetState(GOOMBA_STATE_DIE);
-		//				vy = -SIMON_JUMP_DEFLECT_SPEED;
-		//			}
-		//		}
-		//		else if (e->nx != 0)
-		//		{
-		//			if (untouchable==0)
-		//			{
-		//				if (goomba->GetState()!=GOOMBA_STATE_DIE)
-		//				{
-		//					if (level > SIMON_LEVEL_SMALL)
-		//					{
-		//						level = SIMON_LEVEL_SMALL;
-		//						StartUntouchable();
-		//					}
-		//					else 
-		//						SetState(SIMON_STATE_DIE);
-		//				}
-		//			}
+		//		CCandle* candle = dynamic_cast<CCandle*>(e->obj);
+		//		x += dx;
+		//		y += dy - 0.1f;
+		//		if (y >= Y_BASE) {
+		//			y = Y_BASE;
 		//		}
 		//	}
 		//}
@@ -172,7 +144,7 @@ void CSimon::Render()
 	if (untouchable) alpha = 128;
 
 	CAnimations::GetInstance()->Get(ani)->RenderFlip(-nx,x, y,24,alpha);
-	RenderBoundingBox();
+	//RenderBoundingBox();
 }
 void CSimon::goRight() {
 	isGoLeft = false;
@@ -301,11 +273,10 @@ void CSimon::GetBoundingBox(float& left, float& top, float& right, float& bottom
 		bottom = y + SIMON_SMALL_BBOX_HEIGHT;
 	}*/
 
-	right = x + SIMON_BBOX_WIDTH;
+	right = x + SIMON_BBOX_WIDTH ;
 	bottom = y + SIMON_BBOX_HEIGHT;
 	if (isSit) {
 		bottom = y + SIMON_SIT_BBOX_HEIGHT;
-
 	}
 
 }

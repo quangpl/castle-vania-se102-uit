@@ -2,6 +2,8 @@
 #include "GameObject.h"
 #include "Constants.h"
 #include "Weapon.h"
+#include "Candle.h"
+
 
 
 #define SIMON_WALKING_SPEED		0.1f 
@@ -54,14 +56,15 @@
 
 #define	SIMON_LEVEL	2
 
-#define SIMON_BBOX_WIDTH  15
-#define SIMON_BBOX_HEIGHT 27
+#define SIMON_BBOX_WIDTH  23
+#define SIMON_BBOX_HEIGHT 28
 #define SIMON_SIT_BBOX_HEIGHT 20
 
 
 #define SIMON_UNTOUCHABLE_TIME 5000
 
 #define PULL_UP 1
+#define Y_BASE 166.6
 
 class CSimon : public CGameObject
 {

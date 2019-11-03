@@ -1,5 +1,5 @@
 #include "Goomba.h"
-
+#include <iostream>
 void CGoomba::GetBoundingBox(float &left, float &top, float &right, float &bottom)
 {
 	left = x;

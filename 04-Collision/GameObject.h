@@ -48,7 +48,7 @@ public:
 	int state;
 
 	DWORD dt; 
-	int type;   
+	int typeObject;   
 
 	vector<LPANIMATION> animations;
 
@@ -58,8 +58,8 @@ public:
 	void GetPosition(float &x, float &y) { x = this->x; y = this->y; }
 	void GetSpeed(float &vx, float &vy) { vx = this->vx; vy = this->vy; }
 	int GetState() { return this->state; }
-	int getType() { return this->type; };
-	void setType(int type) { this->type = type; };
+	int getType() { return this->typeObject; };
+	void setType(int type) { this->typeObject = type; };
 	void RenderBoundingBox();
 
 	LPCOLLISIONEVENT SweptAABBEx(LPGAMEOBJECT coO);
@@ -75,7 +75,7 @@ public:
 	void AddAnimation(int aniId);
 
 	CGameObject();
-
+	bool checkAABB(float left_a, float top_a, float right_a, float bottom_a, float left_b, float top_b, float right_b, float bottom_b);
 	virtual void GetBoundingBox(float &left, float &top, float &right, float &bottom) = 0;
 	virtual void Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects = NULL);
 	virtual void Render() = 0;
