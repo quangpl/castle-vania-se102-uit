@@ -132,9 +132,15 @@ void CGameObject::RenderBoundingBox()
 	rect.top = 0;
 	rect.right = (int)r - (int)l;
 	rect.bottom = (int)b - (int)t;
-
-	CGame::GetInstance()->Draw(x, y, bbox, rect.left, rect.top, rect.right, rect.bottom, 128);
+	if (xRender == 999999 && yRender == 999999) {
+		CGame::GetInstance()->Draw(x, y, bbox, rect.left, rect.top, rect.right, rect.bottom, 128);
+	}
+	else {
+		CGame::GetInstance()->Draw(xRender, yRender, bbox, rect.left, rect.top, rect.right, rect.bottom, 128);
+	}
+	
 }
+	
 
 void CGameObject::AddAnimation(int aniId)
 {

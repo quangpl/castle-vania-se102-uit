@@ -10,7 +10,7 @@
 using namespace std;
 
 #define ID_TEX_BBOX -100		// special texture to draw object bounding box
-
+#define RENDER_POSITION_TEMP 999999.0f;
 class CGameObject; 
 typedef CGameObject * LPGAMEOBJECT;
 
@@ -37,6 +37,10 @@ public:
 	float x; 
 	float y;
 
+	float xRender = RENDER_POSITION_TEMP;
+	float yRender = RENDER_POSITION_TEMP;
+
+
 	float dx;	// dx = vx*dt
 	float dy;	// dy = vy*dt
 
@@ -54,6 +58,10 @@ public:
 
 public: 
 	void SetPosition(float x, float y) { this->x = x, this->y = y; }
+
+	void setPositionCustom(float x, float y) { this->xRender = x, this->yRender = y; }
+	void getPositionCustom(float& x, float& y) { x = this->xRender;  y = this->yRender; }
+
 	void SetSpeed(float vx, float vy) { this->vx = vx, this->vy = vy; }
 	void GetPosition(float &x, float &y) { x = this->x; y = this->y; }
 	void GetSpeed(float &vx, float &vy) { vx = this->vx; vy = this->vy; }

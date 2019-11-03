@@ -9,9 +9,8 @@ void CCandle::Render()
 	else {
 		ani = CANDLE_ANI_SHOW;
 	}
-	cout << ani << endl;
 	CAnimations::GetInstance()->Get(ani)->Render(x,y);
-	//RenderBoundingBox();
+	RenderBoundingBox();
 }
 
 void CCandle::hide()
