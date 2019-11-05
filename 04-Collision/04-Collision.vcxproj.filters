@@ -85,6 +85,9 @@
     <ClInclude Include="Weapon.h">
       <Filter>GameObject</Filter>
     </ClInclude>
+    <ClInclude Include="Items.h">
+      <Filter>GameObject</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Brick.cpp">
@@ -134,6 +137,9 @@
       <Filter>Lib</Filter>
     </ClCompile>
     <ClCompile Include="Weapon.cpp">
+      <Filter>GameObject</Filter>
+    </ClCompile>
+    <ClCompile Include="Items.cpp">
       <Filter>GameObject</Filter>
     </ClCompile>
   </ItemGroup>

@@ -135,12 +135,21 @@
   </Texture>
   
              <!--Texture Item-->
+  <!-- Tat ca ITEMS CO OBJECT ID la 2-->
+ <!-- Animation HIDE -->
+  <Texture  textureId ="1" gameObjectId ="2">
+    <Animation aniId="5401" frameTime="100" name="HIDE">
+      <sprite id="10107" left="0" top="0" right="0" bottom="0" frameTime="100"/>
+    </Animation>
+  </Texture>
+
   <!-- Animation WHIP_UPGRADE -->
-  <Texture  textureId ="1" gameObjectId ="1">
+  <Texture  textureId ="1" gameObjectId ="2">
     <Animation aniId="540" frameTime="100" name="WHIP_UPGRADE">
       <sprite id="10108" left="44" top="43" right="61" bottom="60" frameTime="100"/>
     </Animation>
   </Texture>
+
   <!-- Animation SMALL_HEART -->
   <Texture  textureId ="1" gameObjectId ="2">
     <Animation aniId="541" frameTime="100" name="SMALL_HEART">
@@ -148,14 +157,14 @@
     </Animation>
   </Texture>
   <!-- Animation LARGE_HEART -->
-  <Texture  textureId ="1" gameObjectId ="3">
+  <Texture  textureId ="1" gameObjectId ="2">
     <Animation aniId="542" frameTime="100" name="LARGE_HEART">
       <sprite id="10110" left="124" top="59" right="136" bottom="69"/>
     </Animation>
   </Texture>
   <!-- Animation DANGGER -->
-  <Texture  textureId ="1" gameObjectId ="4">
-    <Animation aniId="543" frameTime="100" name="DANGGER">
+  <Texture  textureId ="1" gameObjectId ="2">
+    <Animation aniId="543" frameTime="100" name="DAGGER">
     <sprite id="10111" left="177" top="40" right="194" bottom="49"/>
   </Animation>
   </Texture>

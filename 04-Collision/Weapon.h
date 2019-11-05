@@ -3,7 +3,6 @@
 #include "Simon.h"
 #include "Candle.h"
 
-
 // ROPE
 #define ROPE_SPEED_X 0
 #define ROPE_SPEED_Y 0

@@ -1,32 +1,19 @@
 ﻿#include "Candle.h"
 #include "Simon.h"
+
+CItems* listItem= CItems::GetInstance();
 void CCandle::Render()
 {
-	int ani;
-	if (!isShow) {
-		ani = CANDLE_ANI_HIDE;
+	int ani = CANDLE_ANI_SHOW;
+
+	if (isShowState) {
+		CAnimations::GetInstance()->Get(ani)->Render(x, y);
 	}
-	else {
-		ani = CANDLE_ANI_SHOW;
-	}
-	CAnimations::GetInstance()->Get(ani)->Render(x,y);
-	RenderBoundingBox();
+	//RenderBoundingBox();
 }
 
-void CCandle::hide()
-{
-	isShow = false;
-}
-void CCandle::show()
-{
-	isShow = true;
-}
 void CCandle::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
-
-	 //Calculate dx, dy 
-
-	CGameObject::Update(dt);
 
 	 //Calculate dx, dy 
 
@@ -43,12 +30,48 @@ for (int i = 0; i < coObjects->size(); i++) {
 		(*coObjects)[i]->GetBoundingBox(lWeapon, tWeapon, rWeapon, bWeapon);
 	}
 }
-
+vector<int> listIdItem;
 for (int i = 1; i < coObjects->size(); i++) {
-	
 	(*coObjects)[i]->GetBoundingBox(lCandle, tCandle, rCandle, bCandle);
 	if (checkAABB(lWeapon, tWeapon, rWeapon, bWeapon, lCandle, tCandle, rCandle, bCandle)) {
-		 dynamic_cast<CCandle*>(coObjects->at(i))->hide();
+		listIdItem.push_back(i);
+		(*coObjects)[i]->hide();
+		 float xCandle, yCandle;
+		 (*coObjects)[i]->GetPosition(xCandle, yCandle);
+		if (i == 1) {
+			 listItem->Get(1)->SetPosition(xCandle, yCandle);
+			 listItem->Get(1)->setTypeItem(ITEM_TYPE_LARGE_HEART);
+			 listItem->Get(1)->SetState(ITEM_STATE_SHOW);
+			 listItem->Get(1)->setTimeAppear(GetTickCount());
+		}
+		
+		 if (i == 2) {
+			 listItem->Get(2)->SetPosition(xCandle, yCandle);
+			 listItem->Get(2)->setTypeItem(ITEM_TYPE_WHIP_UPGRADE);
+			 listItem->Get(2)->SetState(ITEM_STATE_SHOW);
+			 listItem->Get(2)->setTimeAppear(GetTickCount());
+
+		 }
+		 if (i ==3) {
+			 listItem->Get(3)->SetPosition(xCandle, yCandle);
+			 listItem->Get(3)->setTypeItem(ITEM_TYPE_WHIP_UPGRADE);
+			 listItem->Get(3)->SetState(ITEM_STATE_SHOW);
+			 listItem->Get(3)->setTimeAppear(GetTickCount());
+
+		 }
+		 if (i == 4) {
+			 listItem->Get(4)->setTypeItem(ITEM_TYPE_LARGE_HEART);
+			 listItem->Get(4)->SetState(ITEM_STATE_SHOW);
+			 listItem->Get(4)->SetPosition(xCandle, yCandle);
+			 listItem->Get(4)->setTimeAppear(GetTickCount());
+
+		 }
+		 if(i==5) {
+			 listItem->Get(5)->setTypeItem(ITEM_TYPE_DAGGER);
+			 listItem->Get(5)->SetPosition(xCandle, yCandle);
+			 listItem->Get(5)->SetState(ITEM_STATE_SHOW);
+			 listItem->Get(5)->setTimeAppear(GetTickCount());
+		 }
 	}
 }
 }

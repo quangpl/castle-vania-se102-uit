@@ -16,6 +16,8 @@
 #define ID_TEX_MAP 1000
 #define ID_TEX_SIMON 30
 #define ID_TEX_CANDLE 50
+#define ID_TEX_ITEM 1
+
 
 
 

@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 #include <Windows.h>
 #include <d3dx9.h>
@@ -40,6 +40,7 @@ public:
 	float xRender = RENDER_POSITION_TEMP;
 	float yRender = RENDER_POSITION_TEMP;
 
+	bool isShowState = true;
 
 	float dx;	// dx = vx*dt
 	float dy;	// dy = vy*dt
@@ -88,6 +89,10 @@ public:
 	virtual void Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects = NULL);
 	virtual void Render() = 0;
 	virtual void SetState(int state) { this->state = state; }
+
+	void show() { isShowState = true; };
+	void hide() { isShowState = false; };
+	bool isShow() { return this->isShowState; };
 
 
 	~CGameObject();

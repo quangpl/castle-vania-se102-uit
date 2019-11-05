@@ -36,12 +36,14 @@
 #include <istream>
 #include <string>
 #include "Map.h"
+#include "Items.h"
 #include <sstream> 
 #include "Constants.h"
 using namespace std;
 
 CGame *game;
 CCandle* candle;
+CItems* items = CItems::GetInstance();
 CWeapon* weapon = CWeapon::GetInstance();
 CSimon *simon = CSimon::GetInstance();
 Map* map1;
@@ -145,6 +147,8 @@ void LoadResources()
 	textures->Add(ID_TEX_BBOX, "textures\\bbox.png", D3DCOLOR_XRGB(255, 255, 255));
 	textures->Add(ID_TEX_SIMON, "textures\\TexturesV3.png", D3DCOLOR_XRGB(34, 177, 76));
 	textures->Add(ID_TEX_CANDLE, "textures\\object.png", D3DCOLOR_XRGB(34, 177, 76));
+	textures->Add(ID_TEX_ITEM, "textures\\Items.png", D3DCOLOR_XRGB(128, 0, 0));
+
 
 	
 	
@@ -177,6 +181,7 @@ void LoadResources()
 	TiXmlElement* animation = nullptr;
 	TiXmlElement* texture = nullptr;
 	LPANIMATION ani;
+	int nItem = 1;
 	// gameObjectId = 0 -- Simon
 	for (texture = root->FirstChildElement(); texture != NULL; texture = texture->NextSiblingElement())
 	{
@@ -211,6 +216,14 @@ void LoadResources()
 			}
 			else if (gameObjectId == 100) {
 				weapon->AddAnimation(aniId);
+			}
+			else if (gameObjectId == 2) {
+				CItem* item = new CItem();
+				item->AddAnimation(aniId);
+				item->SetState(ITEM_STATE_HIDE);
+				objects.push_back(item);
+				items->Add(nItem, item);
+				nItem++;
 			}
 		};
 
@@ -340,8 +353,9 @@ void LoadResources()
 	animations->Add(601, ani);
 
 
-	simon->SetPosition(50.0f, 0);
+	simon->SetPosition(50.0f, 0); //simon
 	objects.push_back(simon);
+
 
 	weapon->SetPosition(50.0f, 0);
 	weapon->setTypeWeapon(WEAPON_TYPE_NO_WEAPON);
@@ -397,7 +411,6 @@ void LoadResources()
 		brick->SetPosition(0 + i*16.0f, SCREEN_HEIGHT-45);
 		objects.push_back(brick);
 	}
-
 }
 
 /*
@@ -414,22 +427,20 @@ void Update(DWORD dt)
 
 
 
-
-
 	for (int i = 0; i < objects.size(); i++)
 	{
-		if (dynamic_cast<CBrick*>(objects[i])|| dynamic_cast<CSimon*>(objects[i])) {
-			coPlayerAndBackground.push_back(objects[i]);
-		}
-		
-		if(dynamic_cast<CWeapon*>(objects[i]) || dynamic_cast<CCandle*>(objects[i])) {
-			coWeaponAndCandle.push_back(objects[i]);
-		}
+			if (dynamic_cast<CBrick*>(objects[i]) || dynamic_cast<CSimon*>(objects[i]) || dynamic_cast<CItem*>(objects[i])) {
+				coPlayerAndBackground.push_back(objects[i]);
+			}
+
+			if (dynamic_cast<CWeapon*>(objects[i]) || dynamic_cast<CCandle*>(objects[i])) {
+				coWeaponAndCandle.push_back(objects[i]);
+			}
 	}
 
 	for (int i = 0; i < objects.size(); i++)
 	{	
-		if (dynamic_cast<CBrick*>(objects[i]) || dynamic_cast<CSimon*>(objects[i])) {
+		if (dynamic_cast<CBrick*>(objects[i]) || dynamic_cast<CSimon*>(objects[i])|| dynamic_cast<CItem*>(objects[i])) {
 			objects[i]->Update(dt, &coPlayerAndBackground);
 		}
 
