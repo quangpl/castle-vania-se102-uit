@@ -119,11 +119,11 @@ void CItem::Render()
 		}
 	}
 
-	if (isShowState) {
+	if (this->isShow()) {
 		CAnimations::GetInstance()->Get(ani)->Render(x, y, 255);
-
 	}
 	RenderBoundingBox();
+	
 }
 
 void CItem::SetState(int state)
@@ -151,6 +151,26 @@ void CItem::checkTimeoutAppear()
 	}
 }
 
+int CItem::collisionWithSimon()
+{
+	switch (typeItem)
+	{
+	case ITEM_TYPE_LARGE_HEART:
+		cout << "Hit heart" << endl;
+		break;
+	case ITEM_TYPE_WHIP_UPGRADE:
+		cout << "hit whip upgrade" << endl;
+		break;
+	case ITEM_TYPE_DAGGER:
+		cout << "hit dagger" << endl;
+		break;
+	default:
+		break;
+	}
+	hide();
+	return typeItem;
+}
+
 CItems* CItems::__instance = NULL;
 
 
@@ -166,8 +186,35 @@ void CItems::Add(int id, CItem* item)
 	items[id] = item;
 }
 
+
+
 CItem* CItems::Get(int id)
 {
 	return items[id];
+}
+
+int CItems::getTypItemFromIndex(int i) {
+	int type;
+	switch (i)
+	{
+	case 1:
+		type = ITEM_TYPE_LARGE_HEART;
+		break;
+	case 2:
+		type = ITEM_TYPE_WHIP_UPGRADE;
+		break;
+	case 3:
+		type = ITEM_TYPE_WHIP_UPGRADE;
+		break;
+	case 4:
+		type = ITEM_TYPE_LARGE_HEART;
+		break;
+	case 5:
+		type = ITEM_TYPE_DAGGER;
+		break;
+	default:
+		break;
+	}
+	return type;
 }
 

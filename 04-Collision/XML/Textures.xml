@@ -19,6 +19,10 @@
       <sprite id="10004" left="4" top="24" right="82" bottom="54" frameTime="100"/>
       <sprite id="10005" left="86" top="24" right="164" bottom="54" frameTime="100"/>
     </Animation>
+     <!-- Animation MOVE_INVISIBLE_SINGLE -->
+    <Animation aniId="5041" frameTime="125" name="MOVE">
+      <sprite id="10007" left="360" top="166" right="438" bottom="196" frameTime="100"/>
+    </Animation>
     <!-- Animation MOVE_INVISIBLE -->
     <Animation aniId="504" frameTime="125" name="MOVE">
       <sprite id="10006" left="278" top="166" right="356" bottom="196" frameTime="100"/>

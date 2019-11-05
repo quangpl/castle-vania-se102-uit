@@ -40,7 +40,8 @@ public:
 	float xRender = RENDER_POSITION_TEMP;
 	float yRender = RENDER_POSITION_TEMP;
 
-	bool isShowState = true;
+	bool isShowState = true; //Trạng thái ẩn /hiện của đối tượng
+	bool isFreeze = false; //Mặc định gameObject sẽ không bị đóng băng
 
 	float dx;	// dx = vx*dt
 	float dy;	// dy = vy*dt
@@ -51,6 +52,7 @@ public:
 	int nx;	 
 
 	int state;
+	int stateBackup;
 
 	DWORD dt; 
 	int typeObject;   
@@ -90,9 +92,15 @@ public:
 	virtual void Render() = 0;
 	virtual void SetState(int state) { this->state = state; }
 
+	void setFreeze(bool isFree) { this->isFreeze = isFree; };
+	bool getFreeze() { return this->isFreeze; };
+
 	void show() { isShowState = true; };
 	void hide() { isShowState = false; };
 	bool isShow() { return this->isShowState; };
+
+	void setStateBackup(int state) { this->stateBackup = state; };
+	int getStateBackup() { return this->stateBackup; };
 
 
 	~CGameObject();

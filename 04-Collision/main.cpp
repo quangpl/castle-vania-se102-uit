@@ -31,7 +31,7 @@
 #include "Simon.h"
 #include "Brick.h"
 #include "Goomba.h"
-#include "Candle.h"
+#include "Candles.h"
 #include <iostream>
 #include <istream>
 #include <string>
@@ -42,7 +42,7 @@
 using namespace std;
 
 CGame *game;
-CCandle* candle;
+CCandles* candles = CCandles::GetInstance();
 CItems* items = CItems::GetInstance();
 CWeapon* weapon = CWeapon::GetInstance();
 CSimon *simon = CSimon::GetInstance();
@@ -62,6 +62,9 @@ CSampleKeyHander * keyHandler;
 
 void CSampleKeyHander::OnKeyDown(int KeyCode)   //short event
 {
+	if (simon->getFreeze()) {
+		return;
+	}
 	DebugOut(L"[INFO] KeyDown: %d\n", KeyCode);
 	switch (KeyCode)
 	{
@@ -80,6 +83,9 @@ void CSampleKeyHander::OnKeyDown(int KeyCode)   //short event
 
 void CSampleKeyHander::OnKeyUp(int KeyCode)   //short event
 {
+	if (simon->getFreeze()) {
+		return;
+	}
 	DebugOut(L"[INFO] KeyUp: %d\n", KeyCode);
 	switch (KeyCode)
 	{
@@ -96,7 +102,10 @@ void CSampleKeyHander::OnKeyUp(int KeyCode)   //short event
 
 
 void CSampleKeyHander::KeyState(BYTE *states)   //long event
-{
+{ //Khóa phím khi simon đóng băng
+	if (simon->getFreeze()) {
+		return;
+	}
 	// disable control key when SIMON die 
 	if (simon->GetState() == SIMON_STATE_DIE) return;
 	if (game->IsKeyDown(DIK_RIGHT))
@@ -113,9 +122,15 @@ void CSampleKeyHander::KeyState(BYTE *states)   //long event
 		}
 		simon->SetState(SIMON_STATE_SIT);
 	}
+
 	if (game->IsKeyDown(DIK_Z))
 	{
 		weapon->SetState(WEAPON_STATE_ROPE);
+		simon->SetState(SIMON_STATE_HIT);
+	}
+	if (game->IsKeyDown(DIK_X) && weapon->getHasDagger())
+	{
+		weapon->SetState(WEAPON_STATE_DAGGER);
 		simon->SetState(SIMON_STATE_HIT);
 	}
 }
@@ -358,6 +373,7 @@ void LoadResources()
 
 
 	weapon->SetPosition(50.0f, 0);
+	weapon->setLevel(1);
 	weapon->setTypeWeapon(WEAPON_TYPE_NO_WEAPON);
 	objects.push_back(weapon);
 
@@ -373,11 +389,13 @@ void LoadResources()
 
 	
 	for (int i = 1; i <= 5; i++) {
-		candle = new CCandle();
+		CCandle *candle = new CCandle();
 		candle->AddAnimation(900);
 		candle->AddAnimation(901);
 		candle->SetState(CANDLE_STATE_SHOW);
 		candle->SetPosition(i * 130, 167);
+		candle->setId(i);
+		candles->Add(candle);
 		objects.push_back(candle);
 	}
 
@@ -429,6 +447,7 @@ void Update(DWORD dt)
 
 	for (int i = 0; i < objects.size(); i++)
 	{
+		if (objects[i]->isShow()) {
 			if (dynamic_cast<CBrick*>(objects[i]) || dynamic_cast<CSimon*>(objects[i]) || dynamic_cast<CItem*>(objects[i])) {
 				coPlayerAndBackground.push_back(objects[i]);
 			}
@@ -436,6 +455,7 @@ void Update(DWORD dt)
 			if (dynamic_cast<CWeapon*>(objects[i]) || dynamic_cast<CCandle*>(objects[i])) {
 				coWeaponAndCandle.push_back(objects[i]);
 			}
+		}
 	}
 
 	for (int i = 0; i < objects.size(); i++)

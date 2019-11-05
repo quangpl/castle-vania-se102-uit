@@ -16,6 +16,7 @@
 
 class CCandle : public CGameObject
 {
+	int id;
 public:
 	CCandle() : CGameObject()
 	{
@@ -25,4 +26,21 @@ public:
 	virtual void GetBoundingBox(float& l, float& t, float& r, float& b);
 	virtual void Update(DWORD dt, vector<LPGAMEOBJECT>* colliable_objects = NULL);
 	void SetState(int state);
+	void setId(int id) { this->id = id; };
+	int getId() { return this->id; };
 };
+
+
+class CCandles
+{
+	static CCandles* __instance;
+	
+	vector<CCandle*> items;
+
+public:
+	void Add(CCandle* candle);
+	static CCandles* GetInstance();
+	CCandle* getByIndex(int pos) { return items.at(pos); }
+	int getSize() { return items.size(); }
+};
+

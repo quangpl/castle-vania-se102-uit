@@ -73,9 +73,6 @@
     <ClInclude Include="Simon.h">
       <Filter>GameObject</Filter>
     </ClInclude>
-    <ClInclude Include="Candle.h">
-      <Filter>GameObject</Filter>
-    </ClInclude>
     <ClInclude Include="tinystr.h">
       <Filter>Lib</Filter>
     </ClInclude>
@@ -86,6 +83,9 @@
       <Filter>GameObject</Filter>
     </ClInclude>
     <ClInclude Include="Items.h">
+      <Filter>GameObject</Filter>
+    </ClInclude>
+    <ClInclude Include="Candles.h">
       <Filter>GameObject</Filter>
     </ClInclude>
   </ItemGroup>
@@ -121,9 +121,6 @@
     <ClCompile Include="Simon.cpp">
       <Filter>GameObject</Filter>
     </ClCompile>
-    <ClCompile Include="Candle.cpp">
-      <Filter>GameObject</Filter>
-    </ClCompile>
     <ClCompile Include="tinystr.cpp">
       <Filter>Lib</Filter>
     </ClCompile>
@@ -140,6 +137,9 @@
       <Filter>GameObject</Filter>
     </ClCompile>
     <ClCompile Include="Items.cpp">
+      <Filter>GameObject</Filter>
+    </ClCompile>
+    <ClCompile Include="Candles.cpp">
       <Filter>GameObject</Filter>
     </ClCompile>
   </ItemGroup>

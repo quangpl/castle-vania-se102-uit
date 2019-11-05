@@ -2,9 +2,8 @@
 #include "GameObject.h"
 #include "Constants.h"
 #include "Weapon.h"
-#include "Candle.h"
-
-
+#include "Candles.h"
+#include "Items.h"
 
 #define SIMON_WALKING_SPEED		0.1f 
 //0.1f
@@ -16,6 +15,7 @@
 #define SIMON_STATE_IDLE			0
 #define SIMON_STATE_WALKING_RIGHT	100
 #define SIMON_STATE_WALKING_LEFT	200
+#define SIMON_STATE_WALKING_BLINK_SINGLE	2001
 
 #define SIMON_STATE_JUMP			300
 #define SIMON_STATE_DIE				400
@@ -34,6 +34,7 @@
 #define SIMON_ANI_WALKING_RIGHT			500
 #define SIMON_ANI_WALKING_LEFT			501
 #define SIMON_ANI_WALKING			503
+#define SIMON_ANI_WALKING_BLINK_SINGLE		517
 
 
 #define SIMON_ANI_JUMP_LEFT			700
@@ -52,6 +53,7 @@
 
 
 
+
 #define SIMON_ANI_DIE				8
 
 #define	SIMON_LEVEL	2
@@ -65,6 +67,7 @@
 
 #define PULL_UP 1
 #define Y_BASE 166.6
+#define TIME_BLINK 1300
 
 class CSimon : public CGameObject
 {
@@ -81,6 +84,7 @@ class CSimon : public CGameObject
 	boolean isHit;
 	boolean canJump = true;
 	int stateBackup;
+	DWORD timeStartBlink;
 public: 
 	CSimon() : CGameObject()
 	{
@@ -105,6 +109,9 @@ public:
 	void sitRelease();
 	void hit();
 	void hitRelease();
+
+	void collisionWithItem(int type);
+	void checkBlink();
 
 
 	virtual void GetBoundingBox(float &left, float &top, float &right, float &bottom);

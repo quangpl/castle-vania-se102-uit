@@ -3,7 +3,6 @@
 #include "Constants.h"
 #include "Simon.h"
 #include "Game.h"
-
 #include "Goomba.h"
 
 CSimon* CSimon::__instance = NULL;
@@ -21,6 +20,7 @@ void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	// Calculate dx, dy 
 
 	CGameObject::Update(dt);
+	checkBlink();
 	//Ngăn không cho Simon rớt ra khỏi màn hình
 	if (x <= 0) {
 		x = 0;
@@ -53,7 +53,7 @@ void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	else
 	{
 		float min_tx, min_ty, nx = 0, ny;
-
+		
 		FilterCollision(coEvents, coEventsResult, min_tx, min_ty, nx, ny);
 
 		// block 
@@ -64,21 +64,19 @@ void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		if (ny != 0) vy = 0;
 
 		// Collision logic with Goombas
-		//for (UINT i = 0; i < coEventsResult.size(); i++)
-		//{
-		//	LPCOLLISIONEVENT e = coEventsResult[i];
-
-		//	if (dynamic_cast<CCandle*>(e->obj)) // if e->obj is Goomba 
-		//	{
-		//		CCandle* candle = dynamic_cast<CCandle*>(e->obj);
-		//		x += dx;
-		//		y += dy - 0.1f;
-		//		if (y >= Y_BASE) {
-		//			y = Y_BASE;
-		//		}
-		//	}
-		//}
-
+		for (UINT i = 0; i < coEventsResult.size(); i++)
+		{
+			LPCOLLISIONEVENT e = coEventsResult[i];
+			if (dynamic_cast<CItem*>(e->obj) && (dynamic_cast<CItem*>(e->obj)->isShow())) // if e->obj is Item 
+			{
+				int typeItem = dynamic_cast<CItem*>(e->obj)->collisionWithSimon();
+				collisionWithItem(typeItem);
+			}
+			if (dynamic_cast<CWeapon*>(e->obj)) // if e->obj is Item 
+			{
+				cout << "Va cham vu khi" << endl;
+			}
+		}
 		//Xử lý sau khi nhảy 
 		jumpReset();
 
@@ -105,6 +103,9 @@ void CSimon::Render()
 		else {
 			ani = SIMON_ANI_SIT;
 		}
+		break;
+	case SIMON_STATE_WALKING_BLINK_SINGLE:
+		ani = SIMON_ANI_WALKING_BLINK_SINGLE;
 		break;
 	case SIMON_STATE_JUMP:
 		cout << "state jump" << endl;
@@ -221,6 +222,37 @@ void CSimon::sitRelease() {
 	}
 }
 
+void CSimon::collisionWithItem(int type) {
+	CWeapon* weapon = CWeapon::GetInstance();
+	switch (type)
+	{
+	case ITEM_TYPE_LARGE_HEART:
+		cout << "Va cham heart tu simon";
+		break;
+	case ITEM_TYPE_WHIP_UPGRADE:
+		timeStartBlink = GetTickCount();
+		weapon->setLevel(weapon->getLevel()+1);
+		setFreeze(true);
+		setStateBackup(this->state);
+		SetState(SIMON_STATE_WALKING_BLINK_SINGLE);
+		break;
+	case ITEM_TYPE_DAGGER:
+		weapon->setHasDagger(true);
+		weapon->setTypeWeapon(WEAPON_TYPE_DAGGER);
+		break;
+	default:
+		break;
+	}
+}
+
+void CSimon::checkBlink() {
+	if (getFreeze()) {
+		if (GetTickCount() - timeStartBlink > TIME_BLINK) {
+			setFreeze(false);
+			SetState(getStateBackup());
+		}
+	}
+}
 
 void CSimon::SetState(int state)
 {

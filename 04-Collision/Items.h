@@ -37,13 +37,17 @@ class CItem : public CGameObject
 	virtual void Render();
 	int typeItem;
 	DWORD timeAppear;
-	bool isShow;
 public:
-
+	CItem() : CGameObject()
+	{
+		setType(TYPE_OBJECT_ITEM);
+	}
 	void setTypeItem(int type) { this->typeItem = type; };
+	int getTypeItem() { return this->typeItem; };
 	virtual void SetState(int state);
 	void setTimeAppear(DWORD time) { this->timeAppear = time; };
 	void checkTimeoutAppear();
+	int collisionWithSimon();
 };
 
 
@@ -57,5 +61,6 @@ public:
 	void Add(int id, CItem* item);
 	CItem* Get(int id);
 	static CItems* GetInstance();
+	int getTypItemFromIndex(int index);
 };
 
