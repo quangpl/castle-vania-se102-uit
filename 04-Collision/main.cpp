@@ -96,6 +96,11 @@ void CSampleKeyHander::OnKeyUp(int KeyCode)   //short event
 		simon->SetState(SIMON_STATE_HIT_RELEASE);
 		weapon->SetState(WEAPON_STATE_NO_WEAPON);
 		break;
+	case DIK_X:
+		simon->SetState(SIMON_STATE_HIT_RELEASE);
+		break;
+	default:
+		break;
 	}
 
 }
@@ -128,8 +133,10 @@ void CSampleKeyHander::KeyState(BYTE *states)   //long event
 		weapon->SetState(WEAPON_STATE_ROPE);
 		simon->SetState(SIMON_STATE_HIT);
 	}
-	if (game->IsKeyDown(DIK_X) && weapon->getHasDagger())
+	if (game->IsKeyDown(DIK_X) && weapon->getHasDagger() && !weapon->isShow())
 	{
+		weapon->show();
+		weapon->setTypeWeapon(WEAPON_TYPE_DAGGER);
 		weapon->SetState(WEAPON_STATE_DAGGER);
 		simon->SetState(SIMON_STATE_HIT);
 	}
@@ -239,6 +246,17 @@ void LoadResources()
 				objects.push_back(item);
 				items->Add(nItem, item);
 				nItem++;
+			}
+			else if (gameObjectId == 21) {
+				for (int i = 1; i <= 5; i++) {
+					CCandle* candle = new CCandle();
+					candle->AddAnimation(aniId);
+					candle->SetState(CANDLE_STATE_SHOW);
+					candle->SetPosition(i * 130, 167);
+					candle->setId(i);
+					candles->Add(candle);
+					objects.push_back(candle);
+				}
 			}
 		};
 
@@ -387,7 +405,7 @@ void LoadResources()
 	animations->Add(901, ani);
 
 
-	
+	/*
 	for (int i = 1; i <= 5; i++) {
 		CCandle *candle = new CCandle();
 		candle->AddAnimation(900);
@@ -397,7 +415,9 @@ void LoadResources()
 		candle->setId(i);
 		candles->Add(candle);
 		objects.push_back(candle);
-	}
+	}*/
+
+	
 
 	//simon = new CSimon();
 	//simon->AddAnimation(1000);		// waking
@@ -437,14 +457,17 @@ void LoadResources()
 */
 void Update(DWORD dt)
 {
-	// We know that SIMON is the first object in the list hence we won't add him into the colliable object list
-	// TO-DO: This is a "dirty" way, need a more organized way 
+	float xWeapon, yWeapon;
+	weapon->GetPosition(xWeapon, yWeapon);
+	if (xWeapon <= 0 || xWeapon >= map1->getMapWidth()) {
+		weapon->hide();
+	}
 
 	vector<LPGAMEOBJECT> coPlayerAndBackground;
 	vector<LPGAMEOBJECT> coWeaponAndCandle;
 
 
-
+	
 	for (int i = 0; i < objects.size(); i++)
 	{
 		if (objects[i]->isShow()) {
@@ -469,12 +492,18 @@ void Update(DWORD dt)
 		}
 	}
 
-	// Update camera to follow SIMON
-	float cx, cy;
-	simon->GetPosition(cx, cy);
 
-	
-	
+	// Update camera to follow SIMON
+	float cx, cy,camX,camY;
+	simon->GetPosition(cx, cy);
+	camX = CGame::GetInstance()->GetCamPos_x();
+	camY = CGame::GetInstance()->GetCamPos_y();
+	cout << camX << endl;
+	if (camX+SCREEN_WIDTH >= map1->getMapWidth()) {
+		CGame::GetInstance()->SetCamPos(camX, CAM_Y_DEFAULT);
+		return;
+	}
+
 	//Khoảng cách để Simon vô giữa màn hình
 	if (cx >= SCREEN_WIDTH / 2) { 
 		cx -= SCREEN_WIDTH / 2;
@@ -483,16 +512,7 @@ void Update(DWORD dt)
 		cx = 0;
 	}
 
-	if (cy > SCREEN_HEIGHT) {
-		cy -= SCREEN_HEIGHT / 2;
-	}
-	else {
-		cy = 10.0f;
-	}
-
-	CGame::GetInstance()->SetCamPos(cx, cy); //Khoảng cách để Simon đứng ngay giữa màn hình không bị lệch 
-
-	
+	CGame::GetInstance()->SetCamPos(cx, CAM_Y_DEFAULT); //Khoảng cách để Simon đứng ngay giữa màn hình không bị lệch 
 }
 
 

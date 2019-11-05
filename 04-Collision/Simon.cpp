@@ -145,7 +145,7 @@ void CSimon::Render()
 	if (untouchable) alpha = 128;
 
 	CAnimations::GetInstance()->Get(ani)->RenderFlip(-nx,x, y,24,alpha);
-	//RenderBoundingBox();
+	RenderBoundingBox();
 }
 void CSimon::goRight() {
 	isGoLeft = false;
@@ -237,8 +237,9 @@ void CSimon::collisionWithItem(int type) {
 		SetState(SIMON_STATE_WALKING_BLINK_SINGLE);
 		break;
 	case ITEM_TYPE_DAGGER:
+		weapon->hide();
 		weapon->setHasDagger(true);
-		weapon->setTypeWeapon(WEAPON_TYPE_DAGGER);
+		weapon->setTypeWeapon(WEAPON_TYPE_NO_WEAPON);
 		break;
 	default:
 		break;

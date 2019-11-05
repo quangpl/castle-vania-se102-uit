@@ -47,7 +47,14 @@ void CWeapon::GetBoundingBox(float& left, float& top, float& right, float& botto
 			break;
 		}
 	}
-
+	else if(typeWeapon== WEAPON_TYPE_DAGGER) {
+		left = x + 40;
+		right = x + 50;
+		if (x <= 0) {
+			this->hide();
+		}
+	}
+	
 	bottom = y + ROPE_BBOX_HEIGHT;
 	setPositionCustom(left, top);
 }
@@ -94,15 +101,24 @@ void CWeapon::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 			list_items->Get(idCandle)->SetState(ITEM_STATE_SHOW);
 			list_items->Get(idCandle)->setTimeAppear(GetTickCount());
 			list_items->Get(idCandle)->setTimeAppear(GetTickCount());
+			if (typeWeapon == WEAPON_TYPE_DAGGER) {
+				cout << "xu ly an" << endl;
+				this->setTypeWeapon(WEAPON_TYPE_NO_WEAPON);
+				this->hide();
+			}
 		}
 	}
 	//Nếu là roi thì roi sẽ dính vào simon
-		
+	if (typeWeapon==WEAPON_TYPE_ROPE) {
 		CSimon* simon = CSimon::GetInstance();
 		this->nx = simon->getDirection();
 		simon->GetPosition(this->x, this->y);
+	}
+	else {
 		//WEAPON chạy theo Simon
 		x += dx;
+	}
+		
 }
 
 void CWeapon::Render()
@@ -157,6 +173,9 @@ void CWeapon::SetState(int state)
 }
 void CWeapon::throwDagger()
 {
+	CSimon* simon = CSimon::GetInstance();
+	this->nx = simon->getDirection();
+	simon->GetPosition(this->x, this->y);
 	cout << "throw" << endl;
-	vx = 0.2f;
+	vx = nx * DAGGER_THROW_SPEED; //Lấy chiều phóng của Simon áp dụng Dagger 
 }

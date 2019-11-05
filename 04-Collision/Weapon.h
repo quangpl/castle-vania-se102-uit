@@ -40,6 +40,7 @@
 #define WEAPON_TYPE_DAGGER 2
 #define WEAPON_STATE_DAGGER 2
 
+#define DAGGER_THROW_SPEED 0.2f
 
 
 class CWeapon : public CGameObject

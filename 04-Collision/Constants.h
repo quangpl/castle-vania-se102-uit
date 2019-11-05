@@ -15,7 +15,7 @@
 #define ID_TEX_MISC 20
 #define ID_TEX_MAP 1000
 #define ID_TEX_SIMON 30
-#define ID_TEX_CANDLE 50
+#define ID_TEX_CANDLE 2
 #define ID_TEX_ITEM 1
 
 
@@ -35,3 +35,5 @@
 
 //SIMON CONSTANTS
 #define OFFSET_FLIP_X 24
+
+#define CAM_Y_DEFAULT 10.0f
