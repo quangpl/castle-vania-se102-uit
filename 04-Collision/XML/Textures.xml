@@ -290,6 +290,13 @@
       <sprite id="10137" left="75" top="26" right="91" bottom="56"/>
     </Animation>
   </Texture>
+
+   <!-- Animation LARGE_CANDLE -->
+  <Texture  textureId ="2" gameObjectId ="21">
+    <Animation aniId="5601" frameTime="100" name="LARGE_CANDLE">
+      <sprite id="10136" left="0" top="0" right="0" bottom="0"/>
+    </Animation>
+  </Texture>
   <!-- Animation DOORS -->
   <Texture  textureId ="2" gameObjectId ="22">
     <Animation aniId="561" frameTime="100" name="DOORS">
@@ -337,6 +344,12 @@
     </Animation>
     <Animation aniId="567" frameTime="100" name="WOLF_JUMP">
       <sprite id="20166" left="168" top="19" right="200" bottom="32"/>
+    </Animation>
+  </Texture>
+   <!-- Animation BRICKS -->
+  <Texture  textureId ="2" gameObjectId ="28">
+    <Animation aniId="565" frameTime="100" name="BRICKS">
+      <sprite id="10165" left="1" top="1" right="1" bottom="1"/>
     </Animation>
   </Texture>
             <!--Texture Simon Attack -->

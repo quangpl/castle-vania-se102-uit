@@ -42,6 +42,8 @@
 
 #define DAGGER_THROW_SPEED 0.2f
 
+#define TIME_THROW 550
+
 
 class CWeapon : public CGameObject
 {
@@ -52,6 +54,9 @@ class CWeapon : public CGameObject
 	int typeWeapon;
 	int level;
 	bool hasDagger;
+	bool isFinishThrow;
+	bool isThrowingRope;
+	DWORD lastTimeThrowRope;
 
 public:
 	CWeapon() : CGameObject()
@@ -72,5 +77,8 @@ public:
 	void setHasDagger(bool _hasDagger) { this->hasDagger = _hasDagger; };
 	bool getHasDagger() { return this->hasDagger; };
 
+	void setFinishThrow(bool finish) { this->isFinishThrow = finish; };
+	bool getFinishThrow() { return this->isFinishThrow; };
+	bool isFinishThrowRope();
 
 };

@@ -37,3 +37,9 @@
 #define OFFSET_FLIP_X 24
 
 #define CAM_Y_DEFAULT 10.0f
+
+#define NUMBER_OF_CANDLE 5
+#define NUMBER_OF_BRICK 48
+
+#define Y_BASE 167
+#define DISTANCE_BETWEEN_CANDLE 130

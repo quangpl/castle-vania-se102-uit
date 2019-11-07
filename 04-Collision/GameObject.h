@@ -54,6 +54,8 @@ public:
 	int state;
 	int stateBackup;
 
+	int currentAni;
+
 	DWORD dt; 
 	int typeObject;   
 
@@ -98,10 +100,13 @@ public:
 	void show() { isShowState = true; };
 	void hide() { isShowState = false; };
 	bool isShow() { return this->isShowState; };
+	
 
 	void setStateBackup(int state) { this->stateBackup = state; };
 	int getStateBackup() { return this->stateBackup; };
 
+	void setCurrentAni(int ani) { this->currentAni = ani; };
+	int getCurrentAni() { return this->currentAni; };
 
 	~CGameObject();
 };

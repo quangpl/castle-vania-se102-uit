@@ -16,7 +16,7 @@ CSimon* CSimon::GetInstance()
 
 void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
-
+	
 	// Calculate dx, dy 
 
 	CGameObject::Update(dt);
@@ -30,9 +30,13 @@ void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 
 	vector<LPCOLLISIONEVENT> coEvents;
 	vector<LPCOLLISIONEVENT> coEventsResult;
-
+	
 	coEvents.clear();
-
+	if (isHit) {
+		if (CAnimations::GetInstance()->Get(getCurrentAni())->getCurrentFrame() == CAnimations::GetInstance()->Get(getCurrentAni())->getNumberOfFrame()-1) {
+			isHit = false;
+		}
+	}
 	// turn off collision when die 
 	if (state != SIMON_STATE_DIE)
 		CalcPotentialCollisions(coObjects, coEvents);
@@ -72,10 +76,10 @@ void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 				int typeItem = dynamic_cast<CItem*>(e->obj)->collisionWithSimon();
 				collisionWithItem(typeItem);
 			}
-			if (dynamic_cast<CWeapon*>(e->obj)) // if e->obj is Item 
-			{
-				cout << "Va cham vu khi" << endl;
-			}
+			//if (dynamic_cast<CWeapon*>(e->obj)) // if e->obj is Item 
+			//{
+			//	cout << "Va cham vu khi" << endl;
+			//}
 		}
 		//Xử lý sau khi nhảy 
 		jumpReset();
@@ -89,7 +93,7 @@ void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 void CSimon::Render()
 {
 	int ani;
-
+	
 	switch (state)
 	{
 	case SIMON_STATE_DIE:
@@ -118,13 +122,18 @@ void CSimon::Render()
 		}
 		break;
 	default:
+		
 		if (!isJump) {
+			
 			if (vx == 0)
 			{
 				if (isHit) {
 					ani = SIMON_ANI_HIT;
 				}
-				ani = SIMON_ANI_IDLE;
+				else {
+					ani = SIMON_ANI_IDLE;
+				}
+				
 			}
 			else {
 				if (isHit) {
@@ -145,6 +154,8 @@ void CSimon::Render()
 	if (untouchable) alpha = 128;
 
 	CAnimations::GetInstance()->Get(ani)->RenderFlip(-nx,x, y,24,alpha);
+	setCurrentAni(ani);
+	setCurrentAni(ani);
 	RenderBoundingBox();
 }
 void CSimon::goRight() {
@@ -211,8 +222,10 @@ void CSimon::hit() {
 	state = SIMON_STATE_HIT;
 }
 
-void CSimon::hitRelease() {
-	isHit = false;
+void CSimon::hitRelease() 
+	//todo fix
+{
+		//isHit = false;
 }
 
 void CSimon::sitRelease() {
@@ -285,6 +298,7 @@ void CSimon::SetState(int state)
 		hit();
 		break;
 	case SIMON_STATE_HIT_RELEASE:
+		cout << "hit release";
 		hitRelease();
 		break;
 	}
