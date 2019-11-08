@@ -11,15 +11,12 @@ void CCandle::Render()
 	else if (state == CANDLE_STATE_HIDE) {
 		ani = CANDLE_ANI_HIDE;
 	}
-	//if (isShowState) {
 		CAnimations::GetInstance()->Get(ani)->Render(x, y);
-	//}
 	//RenderBoundingBox();
 }
 void CCandle::checkTimeoutHit()
 {
 	if (GetTickCount() - startHit >= TIME_HIT && isHit) {
-		cout << "An" << endl;
 		SetState(CANDLE_STATE_HIDE);
 	}
 
@@ -27,7 +24,6 @@ void CCandle::checkTimeoutHit()
 void CCandle::hit(DWORD time)
 {
 	isHit = true;
-	cout << "dang hit" << endl;
 	this->startHit = time;
 	SetState(CANDLE_STATE_HIT);
 }

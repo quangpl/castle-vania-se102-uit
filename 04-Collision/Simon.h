@@ -50,15 +50,11 @@
 #define SIMON_ANI_SIT_HIT		518
 
 
-
-
-
-
 #define SIMON_ANI_DIE				8
 
 #define	SIMON_LEVEL	2
 
-#define SIMON_BBOX_WIDTH  23
+#define SIMON_BBOX_WIDTH  35
 #define SIMON_BBOX_HEIGHT 28
 #define SIMON_SIT_BBOX_HEIGHT 20
 
@@ -68,6 +64,9 @@
 #define PULL_UP 1
 #define Y_BASE 166.6
 #define TIME_BLINK 1300
+#define DEFAULT_OFFSET_X 24
+
+#define SIMON_BBOX_MARGIN_LEFT 15
 
 class CSimon : public CGameObject
 {

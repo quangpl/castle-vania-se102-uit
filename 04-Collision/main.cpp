@@ -39,7 +39,6 @@
 #include "Items.h"
 #include <sstream> 
 #include "Constants.h"
-#include "Effects.h"
 using namespace std;
 
 CGame *game;
@@ -136,7 +135,7 @@ void CSampleKeyHander::KeyState(BYTE *states)   //long event
 	}
 	if (game->IsKeyDown(DIK_X) && weapon->getHasDagger() && !weapon->isShow())
 	{
-		weapon->show();
+		//weapon->show();
 		weapon->setTypeWeapon(WEAPON_TYPE_DAGGER);
 		weapon->SetState(WEAPON_STATE_DAGGER);
 		simon->SetState(SIMON_STATE_HIT);
@@ -337,9 +336,6 @@ void Update(DWORD dt)
 
 		if (dynamic_cast<CWeapon*>(objects[i]) || dynamic_cast<CCandle*>(objects[i])) {
 			objects[i]->Update(dt, &coWeaponAndCandle);
-		}
-		if (dynamic_cast<CEffects*>(objects[i])) {
-			objects[i]->Update(dt, &coEffects);
 		}
 	}
 

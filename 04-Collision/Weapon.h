@@ -30,6 +30,28 @@
 #define ROPE_PUSH_TO_RIGHT 32
 
 
+#define ROPE_LEVEL_1_RIGHT_LTR 60
+#define ROPE_LEVEL_1_LEFT_LTR 42   // LTR : Left to right
+#define ROPE_LEVEL_1_RIGHT_RTL 13
+#define ROPE_LEVEL_1_LEFT_RTL 5
+
+#define ROPE_LEVEL_2_RIGHT_LTR 69
+#define ROPE_LEVEL_2_LEFT_LTR 48   // LTR : Left to right
+#define ROPE_LEVEL_2_RIGHT_RTL 10
+#define ROPE_LEVEL_2_LEFT_RTL 22
+
+#define ROPE_LEVEL_3_RIGHT_LTR 77
+#define ROPE_LEVEL_3_LEFT_LTR 48  // LTR : Left to right
+#define ROPE_LEVEL_3_RIGHT_RTL 28
+#define ROPE_LEVEL_3_LEFT_RTL 5
+
+#define DAGGER_LEFT 40
+#define DAGGER_RIGHT 50
+
+
+
+
+
 
 #define WEAPON_TYPE_ROPE 1
 #define WEAPON_STATE_ROPE 1

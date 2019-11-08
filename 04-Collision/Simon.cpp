@@ -35,6 +35,7 @@ void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	if (isHit) {
 		if (CAnimations::GetInstance()->Get(getCurrentAni())->getCurrentFrame() == CAnimations::GetInstance()->Get(getCurrentAni())->getNumberOfFrame()-1) {
 			isHit = false;
+			cout << "Set hit false" << endl;
 		}
 	}
 	// turn off collision when die 
@@ -149,14 +150,13 @@ void CSimon::Render()
 		}
 	break;
 	}
-
+	cout << ani << endl;
 	int alpha = 255;
 	if (untouchable) alpha = 128;
 
-	CAnimations::GetInstance()->Get(ani)->RenderFlip(-nx,x, y,24,alpha);
+	CAnimations::GetInstance()->Get(ani)->RenderFlip(-nx,x, y, DEFAULT_OFFSET_X,alpha);
 	setCurrentAni(ani);
-	setCurrentAni(ani);
-	RenderBoundingBox();
+	//RenderBoundingBox();
 }
 void CSimon::goRight() {
 	isGoLeft = false;
@@ -215,6 +215,7 @@ void CSimon::sit() {
 }
 
 void CSimon::hit() {
+	cout << "hit hit" << endl;
 	isHit = true;
 	if ((isGoLeft || isGoRight) && !isJump) {
 		vx = 0;
@@ -223,7 +224,6 @@ void CSimon::hit() {
 }
 
 void CSimon::hitRelease() 
-	//todo fix
 {
 		//isHit = false;
 }
@@ -306,7 +306,7 @@ void CSimon::SetState(int state)
 
 void CSimon::GetBoundingBox(float& left, float& top, float& right, float& bottom)
 {
-	left = x + 15;
+	left = x + SIMON_BBOX_MARGIN_LEFT;
 	top = y;
 	setPositionCustom(left, top);
 	/*if (level==SIMON_LEVEL_BIG)
@@ -320,7 +320,7 @@ void CSimon::GetBoundingBox(float& left, float& top, float& right, float& bottom
 		bottom = y + SIMON_SMALL_BBOX_HEIGHT;
 	}*/
 
-	right = x + SIMON_BBOX_WIDTH + 12 ;
+	right = x + SIMON_BBOX_WIDTH ;
 	bottom = y + SIMON_BBOX_HEIGHT;
 	if (isSit) {
 		bottom = y + SIMON_SIT_BBOX_HEIGHT;

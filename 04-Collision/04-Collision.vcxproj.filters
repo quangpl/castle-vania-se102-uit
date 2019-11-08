@@ -88,9 +88,6 @@
     <ClInclude Include="Candles.h">
       <Filter>GameObject</Filter>
     </ClInclude>
-    <ClInclude Include="Effects.h">
-      <Filter>GameObject</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Brick.cpp">
@@ -143,9 +140,6 @@
       <Filter>GameObject</Filter>
     </ClCompile>
     <ClCompile Include="Candles.cpp">
-      <Filter>GameObject</Filter>
-    </ClCompile>
-    <ClCompile Include="Effects.cpp">
       <Filter>GameObject</Filter>
     </ClCompile>
   </ItemGroup>

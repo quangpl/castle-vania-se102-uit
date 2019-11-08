@@ -19,39 +19,39 @@ void CWeapon::GetBoundingBox(float& left, float& top, float& right, float& botto
 		{
 		case 1:
 			if (nx > 0) {
-				left = x + 42;
-				right = x + ROPE_BBOX_LEVEL1_WIDTH;
+				left = x + ROPE_LEVEL_1_LEFT_LTR;
+				right = x + ROPE_LEVEL_1_RIGHT_LTR;
 			}
 			else {
-				left = x - 13;
-				right = x + 5;
+				left = x - ROPE_LEVEL_1_RIGHT_RTL;
+				right = x + ROPE_LEVEL_1_LEFT_RTL;
 			}
 			break;
 		case 2:
 			if (nx > 0) {
-				left = x + 48;
-				right = x + 69;
+				left = x + ROPE_LEVEL_2_LEFT_LTR;
+				right = x + ROPE_LEVEL_2_RIGHT_LTR;
 			}
 			else {
-				left = x - 22;
-				right = x + 10;
+				left = x - ROPE_LEVEL_2_LEFT_RTL;
+				right = x + ROPE_LEVEL_2_RIGHT_RTL;
 			}
 			break;
 		default:
 			if (nx > 0) {
-				left = x + 48;
-				right = x + 77;
+				left = x + ROPE_LEVEL_3_LEFT_LTR;
+				right = x + ROPE_LEVEL_3_RIGHT_LTR;
 			}
 			else {
-				left = x - 28;
-				right = x + 5;
+				left = x - ROPE_LEVEL_3_RIGHT_RTL;
+				right = x + ROPE_LEVEL_3_LEFT_RTL;
 			}
 			break;
 		}
 	}
 	else if(typeWeapon== WEAPON_TYPE_DAGGER) {
-		left = x + 40;
-		right = x + 50;
+		left = x + DAGGER_LEFT;
+		right = x + DAGGER_RIGHT;
 		if (x <= 0) {
 			this->hide();
 		}
@@ -157,7 +157,7 @@ void CWeapon::Render()
 	}
 	if (typeWeapon) {
 		CAnimations::GetInstance()->Get(ani)->RenderFlip(-nx, x, y, 24, 128); // 128 : default alpha
-		RenderBoundingBox();
+		//RenderBoundingBox();
 		setCurrentAni(ani);
 	}
 }

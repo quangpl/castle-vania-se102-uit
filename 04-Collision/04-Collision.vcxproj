@@ -126,7 +126,6 @@
     <ClInclude Include="Brick.h" />
     <ClInclude Include="Candles.h" />
     <ClInclude Include="Constants.h" />
-    <ClInclude Include="Effects.h" />
     <ClInclude Include="Items.h" />
     <ClInclude Include="resource1.h" />
     <ClInclude Include="Tile.h" />
@@ -146,7 +145,6 @@
   <ItemGroup>
     <ClCompile Include="Brick.cpp" />
     <ClCompile Include="Candles.cpp" />
-    <ClCompile Include="Effects.cpp" />
     <ClCompile Include="Items.cpp" />
     <ClCompile Include="Tile.cpp" />
     <ClCompile Include="Map.cpp" />
