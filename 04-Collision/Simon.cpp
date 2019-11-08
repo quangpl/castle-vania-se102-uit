@@ -306,9 +306,9 @@ void CSimon::SetState(int state)
 
 void CSimon::GetBoundingBox(float& left, float& top, float& right, float& bottom)
 {
-	left = x;
+	left = x + 15;
 	top = y;
-
+	setPositionCustom(left, top);
 	/*if (level==SIMON_LEVEL_BIG)
 	{
 		right = x + SIMON_BIG_BBOX_WIDTH;
@@ -320,7 +320,7 @@ void CSimon::GetBoundingBox(float& left, float& top, float& right, float& bottom
 		bottom = y + SIMON_SMALL_BBOX_HEIGHT;
 	}*/
 
-	right = x + SIMON_BBOX_WIDTH ;
+	right = x + SIMON_BBOX_WIDTH + 12 ;
 	bottom = y + SIMON_BBOX_HEIGHT;
 	if (isSit) {
 		bottom = y + SIMON_SIT_BBOX_HEIGHT;
