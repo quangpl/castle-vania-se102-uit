@@ -39,6 +39,7 @@
 #include "Items.h"
 #include <sstream> 
 #include "Constants.h"
+#include "Effects.h"
 using namespace std;
 
 CGame *game;
@@ -299,6 +300,8 @@ void Update(DWORD dt)
 
 	vector<LPGAMEOBJECT> coPlayerAndBackground;
 	vector<LPGAMEOBJECT> coWeaponAndCandle;
+	vector<LPGAMEOBJECT> coEffects;
+
 
 
 	
@@ -313,6 +316,17 @@ void Update(DWORD dt)
 				coWeaponAndCandle.push_back(objects[i]);
 			}
 		}
+		/*else {
+			if (dynamic_cast<CCandle*>(objects[i])) {
+				CEffects* effects = new CEffects();
+				effects->setTimeStartAppear(GetTickCount());
+				float x, y;
+				objects[i]->GetPosition(x, y);
+				effects->SetPosition(x, y);
+				coEffects.push_back(effects);
+				objects.push_back(effects);
+			}
+		}*/
 	}
 
 	for (int i = 0; i < objects.size(); i++)
@@ -323,6 +337,9 @@ void Update(DWORD dt)
 
 		if (dynamic_cast<CWeapon*>(objects[i]) || dynamic_cast<CCandle*>(objects[i])) {
 			objects[i]->Update(dt, &coWeaponAndCandle);
+		}
+		if (dynamic_cast<CEffects*>(objects[i])) {
+			objects[i]->Update(dt, &coEffects);
 		}
 	}
 
@@ -340,8 +357,6 @@ void Update(DWORD dt)
 	else {
 		cx = 0;
 	}
-	cout << cx << endl;
-	cout << map1->getMapWidth() - SCREEN_WIDTH / 2 << endl;
 	CGame::GetInstance()->SetCamPos(cx, CAM_Y_DEFAULT); //Khoảng cách để Simon đứng ngay giữa màn hình không bị lệch 
 	
 	if (camX+SCREEN_WIDTH >= map1->getMapWidth()&& cx >= map1->getMapWidth()-SCREEN_WIDTH) {

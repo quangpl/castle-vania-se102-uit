@@ -81,8 +81,9 @@ void CWeapon::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 			for (int i = 0; i < list_candles->getSize(); i++) {
 				list_candles->getByIndex(i)->GetBoundingBox(lCandle, tCandle, rCandle, bCandle);
 				if (checkAABB(lWeapon, tWeapon, rWeapon, bWeapon, lCandle, tCandle, rCandle, bCandle) && list_candles->getByIndex(i)->isShow()) {
-
+					
 					list_candles->getByIndex(i)->hide();
+					list_candles->getByIndex(i)->hit(GetTickCount());
 					int idCandle = list_candles->getByIndex(i)->getId();
 					float xCandle, yCandle;
 					list_candles->getByIndex(i)->GetPosition(xCandle, yCandle);
@@ -102,6 +103,7 @@ void CWeapon::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 				if (checkAABB(lWeapon, tWeapon, rWeapon, bWeapon, lCandle, tCandle, rCandle, bCandle) && list_candles->getByIndex(i)->isShow()) {
 
 					list_candles->getByIndex(i)->hide();
+					list_candles->getByIndex(i)->hit(GetTickCount());
 					int idCandle = list_candles->getByIndex(i)->getId();
 					float xCandle, yCandle;
 					list_candles->getByIndex(i)->GetPosition(xCandle, yCandle);

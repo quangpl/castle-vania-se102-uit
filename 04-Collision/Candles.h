@@ -12,10 +12,18 @@
 #define CANDLE_STATE_SHOW 1
 #define CANDLE_STATE_HIDE 0
 
+#define CANDLE_STATE_HIT 3
+#define CANDLE_ANI_HIT 564
+
+#define TIME_HIT 200
+
+
 
 class CCandle : public CGameObject
 {
+	DWORD startHit;
 	int id;
+	bool isHit;
 public:
 	CCandle() : CGameObject()
 	{
@@ -27,6 +35,8 @@ public:
 	void SetState(int state);
 	void setId(int id) { this->id = id; };
 	int getId() { return this->id; };
+	void checkTimeoutHit();
+	void hit(DWORD time);
 };
 
 
