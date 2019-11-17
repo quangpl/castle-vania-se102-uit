@@ -37,6 +37,9 @@
     <Filter Include="Framework\Scenes">
       <UniqueIdentifier>{2ba24a7b-7160-478b-8044-915f80fa3bd6}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Framework\Keyboard">
+      <UniqueIdentifier>{5b862792-cbe3-44b0-a019-0788868b9a77}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Brick.h">
@@ -62,9 +65,6 @@
     </ClInclude>
     <ClInclude Include="Tile.h">
       <Filter>Framework\Tile</Filter>
-    </ClInclude>
-    <ClInclude Include="Map.h">
-      <Filter>Framework\Map</Filter>
     </ClInclude>
     <ClInclude Include="Constants.h">
       <Filter>Util</Filter>
@@ -97,6 +97,12 @@
     <ClInclude Include="SceneGame.h">
       <Filter>Framework\Scenes</Filter>
     </ClInclude>
+    <ClInclude Include="Keyboard.h">
+      <Filter>Framework\Keyboard</Filter>
+    </ClInclude>
+    <ClInclude Include="Maps.h">
+      <Filter>Framework\Map</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Brick.cpp">
@@ -123,9 +129,6 @@
     </ClCompile>
     <ClCompile Include="Tile.cpp">
       <Filter>Framework\Tile</Filter>
-    </ClCompile>
-    <ClCompile Include="Map.cpp">
-      <Filter>Framework\Map</Filter>
     </ClCompile>
     <ClCompile Include="Simon.cpp">
       <Filter>GameObject</Filter>
@@ -156,6 +159,12 @@
     </ClCompile>
     <ClCompile Include="SceneGame.cpp">
       <Filter>Framework\Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="Keyboard.cpp">
+      <Filter>Framework\Keyboard</Filter>
+    </ClCompile>
+    <ClCompile Include="Maps.cpp">
+      <Filter>Framework\Map</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

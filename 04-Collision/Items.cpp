@@ -122,7 +122,9 @@ void CItem::Render()
 	if (this->isShow()) {
 		CAnimations::GetInstance()->Get(ani)->Render(x, y, 255);
 	}
-	//RenderBoundingBox();
+	if (CGame::GetInstance()->getDebug()) {
+		RenderBoundingBox();
+	}
 	
 }
 

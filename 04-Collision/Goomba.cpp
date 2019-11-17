@@ -40,7 +40,9 @@ void CGoomba::Render()
 	}
 
 	animations[ani]->Render(x,y);
-	//RenderBoundingBox();
+	if (CGame::GetInstance()->getDebug()) {
+		RenderBoundingBox();
+	}
 }
 
 void CGoomba::SetState(int state)

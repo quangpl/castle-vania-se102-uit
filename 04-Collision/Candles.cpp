@@ -12,7 +12,9 @@ void CCandle::Render()
 		ani = CANDLE_ANI_HIDE;
 	}
 		CAnimations::GetInstance()->Get(ani)->Render(x, y);
-	//RenderBoundingBox();
+		if (CGame::GetInstance()->getDebug()) {
+			RenderBoundingBox();
+		}
 }
 void CCandle::checkTimeoutHit()
 {

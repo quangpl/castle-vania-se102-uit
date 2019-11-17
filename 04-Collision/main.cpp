@@ -17,121 +17,16 @@
 #include <iostream>
 #include <istream>
 #include <string>
-#include "Map.h"
+#include "Maps.h"
 #include "Items.h"
 #include <sstream> 
 #include "Constants.h"
+#include "Keyboard.h"
 
 using namespace std;
 CScenes* scenes = CScenes::GetInstance();
 CSceneGame* sceneGame = CSceneGame::GetInstance();
-
-class CSampleKeyHander : public CKeyEventHandler
-{
-	virtual void KeyState(BYTE* states);
-	virtual void OnKeyDown(int KeyCode);
-	virtual void OnKeyUp(int KeyCode);
-};
-
-CSampleKeyHander* keyHandler;
-
-void CSampleKeyHander::OnKeyDown(int KeyCode)   //short event
-{
-	CGame* game;
-	CCandles* candles = CCandles::GetInstance();
-	CItems* items = CItems::GetInstance();
-	CWeapon* weapon = CWeapon::GetInstance();
-	CSimon* simon = CSimon::GetInstance();
-	if (simon->getFreeze()) {
-		return;
-	}
-	DebugOut(L"[INFO] KeyDown: %d\n", KeyCode);
-	switch (KeyCode)
-	{
-	case DIK_SPACE:
-		simon->SetState(SIMON_STATE_JUMP);
-		break;
-	case DIK_A: // reset
-		simon->SetState(SIMON_STATE_IDLE);
-		simon->SetLevel(SIMON_LEVEL);
-		simon->SetPosition(50.0f, 0.0f);
-		simon->SetSpeed(0, 0);
-		break;
-	}
-
-}
-
-void CSampleKeyHander::OnKeyUp(int KeyCode)   //short event
-{
-	CGame* game;
-	CCandles* candles = CCandles::GetInstance();
-	CItems* items = CItems::GetInstance();
-	CWeapon* weapon = CWeapon::GetInstance();
-	CSimon* simon = CSimon::GetInstance();
-	if (simon->getFreeze()) {
-		return;
-	}
-	DebugOut(L"[INFO] KeyUp: %d\n", KeyCode);
-	switch (KeyCode)
-	{
-	case DIK_DOWN:
-		simon->SetState(SIMON_STATE_SIT_RELEASE);
-		break;
-	case DIK_Z:
-		simon->SetState(SIMON_STATE_HIT_RELEASE);
-		//weapon->SetState(WEAPON_STATE_NO_WEAPON);
-		break;
-	case DIK_X:
-		simon->SetState(SIMON_STATE_HIT_RELEASE);
-		break;
-	default:
-		break;
-	}
-
-}
-
-
-void CSampleKeyHander::KeyState(BYTE* states)   //long event
-{
-	CGame* game = CGame::GetInstance();
-	CCandles* candles = CCandles::GetInstance();
-	CItems* items = CItems::GetInstance();
-	CWeapon* weapon = CWeapon::GetInstance();
-	CSimon* simon = CSimon::GetInstance();
-	//Khóa phím khi simon đóng băng
-	if (simon->getFreeze()) {
-		return;
-	}
-	// disable control key when SIMON die 
-	if (simon->GetState() == SIMON_STATE_DIE) return;
-	if (game->IsKeyDown(DIK_RIGHT))
-		simon->SetState(SIMON_STATE_WALKING_RIGHT);
-	else if (game->IsKeyDown(DIK_LEFT))
-		simon->SetState(SIMON_STATE_WALKING_LEFT);
-	else
-		simon->SetState(SIMON_STATE_IDLE);
-	if (game->IsKeyDown(DIK_DOWN))
-	{
-		if (simon->GetState() == SIMON_STATE_HIT) {
-			weapon->SetState(WEAPON_STATE_ROPE);
-			simon->SetState(SIMON_STATE_HIT);
-		}
-		simon->SetState(SIMON_STATE_SIT);
-	}
-
-	if (game->IsKeyDown(DIK_Z))
-	{
-		weapon->SetState(WEAPON_STATE_ROPE);
-		simon->SetState(SIMON_STATE_HIT);
-	}
-	if (game->IsKeyDown(DIK_X) && weapon->getHasDagger() && !weapon->isShow())
-	{
-		//weapon->show();
-		weapon->setTypeWeapon(WEAPON_TYPE_DAGGER);
-		weapon->SetState(WEAPON_STATE_DAGGER);
-		simon->SetState(SIMON_STATE_HIT);
-	}
-}
+CSampleKeyHander* keyHandler = new CSampleKeyHander();
 
 LRESULT CALLBACK WinProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
@@ -281,15 +176,11 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 {
 	
 	HWND hWnd = CreateGameWindow(hInstance, nCmdShow, SCREEN_WIDTH, SCREEN_HEIGHT);
-	CGame* game;
-
-	game = CGame::GetInstance();
-	game->Init(hWnd);
-
+	
 	scenes->Add(SCENE_GAME_ID, sceneGame);
-	keyHandler = new CSampleKeyHander();
-	scenes->Add(SCENE_GAME_ID, sceneGame);
-	game->InitKeyboard(keyHandler);
+	CGame::GetInstance()->Init(hWnd);
+	
+	CGame::GetInstance()->InitKeyboard(keyHandler);
 	//showConsole();
 	
 	LoadResources();

@@ -156,7 +156,9 @@ void CSimon::Render()
 
 	CAnimations::GetInstance()->Get(ani)->RenderFlip(-nx,x, y, DEFAULT_OFFSET_X,alpha);
 	setCurrentAni(ani);
-	//RenderBoundingBox();
+	if (CGame::GetInstance()->getDebug()) {
+		RenderBoundingBox();
+	}
 }
 void CSimon::goRight() {
 	isGoLeft = false;

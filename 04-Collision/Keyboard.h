@@ -22,28 +22,9 @@
 #include <sstream> 
 #include "Constants.h"
 
-using namespace std;
-
-class CScene
+class CSampleKeyHander : public CKeyEventHandler
 {
-	int id;				// Sprite ID in the sprite database
-	LPD3DXSPRITE spriteHandler;
-public:
-	virtual void LoadResources() = 0;
-	virtual void Update(DWORD dt) = 0;
-	virtual void Render() = 0;
+	virtual void KeyState(BYTE* states);
+	virtual void OnKeyDown(int KeyCode);
+	virtual void OnKeyUp(int KeyCode);
 };
-
-typedef CScene* LPSCENE;
-
-class CScenes
-{
-	static CScenes* __instance;
-	unordered_map<int, LPSCENE> scenes;
-
-public:
-	void Add(int id,LPSCENE scene);
-	LPSCENE Get(int id);
-	static CScenes* GetInstance();
-};
-

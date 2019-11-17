@@ -1,6 +1,6 @@
 ﻿#pragma once
 #include "Scenes.h"
-
+#define ID_MAP_1 1
 class CSceneGame : public CScene
 {
 	static CSceneGame* __instance;
@@ -14,6 +14,5 @@ public:
 	int getStage(int _stage) { return this->stage; };
 	void Update(DWORD dt);
 	void Render();
-	void Init(HWND hWnd);
 	static CSceneGame* GetInstance();
 };

@@ -3,7 +3,9 @@
 void CBrick::Render()
 {
 	animations[0]->Render(x, y);
-	//RenderBoundingBox();
+	if (CGame::GetInstance()->getDebug()) {
+		RenderBoundingBox();
+	}
 }
 
 void CBrick::GetBoundingBox(float &l, float &t, float &r, float &b)

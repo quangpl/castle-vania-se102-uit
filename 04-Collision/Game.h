@@ -39,6 +39,8 @@ class CGame
 
 	LPKEYEVENTHANDLER keyHandler;
 
+	bool isDebug = false;
+
 	float cam_x = 0.0f;
 	float cam_y = 0.0f;
 
@@ -72,7 +74,8 @@ public:
 	float GetCamPos_x() { return cam_x; }
 	float GetCamPos_y() { return cam_y; }
 	static CGame * GetInstance();
-
+	void setDebug(bool _debug) { this->isDebug = _debug; };
+	bool getDebug() { return this->isDebug; };
 	~CGame();
 };
 

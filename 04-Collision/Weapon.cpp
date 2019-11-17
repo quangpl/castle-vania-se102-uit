@@ -157,8 +157,10 @@ void CWeapon::Render()
 	}
 	if (typeWeapon) {
 		CAnimations::GetInstance()->Get(ani)->RenderFlip(-nx, x, y, 24, 128); // 128 : default alpha
-		//RenderBoundingBox();
 		setCurrentAni(ani);
+		if (CGame::GetInstance()->getDebug()) {
+			RenderBoundingBox();
+		}
 	}
 }
 

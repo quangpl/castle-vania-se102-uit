@@ -127,11 +127,12 @@
     <ClInclude Include="Candles.h" />
     <ClInclude Include="Constants.h" />
     <ClInclude Include="Items.h" />
+    <ClInclude Include="Keyboard.h" />
     <ClInclude Include="resource1.h" />
     <ClInclude Include="SceneGame.h" />
     <ClInclude Include="Scenes.h" />
     <ClInclude Include="Tile.h" />
-    <ClInclude Include="Map.h" />
+    <ClInclude Include="Maps.h" />
     <ClInclude Include="debug.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="GameObject.h" />
@@ -148,10 +149,11 @@
     <ClCompile Include="Brick.cpp" />
     <ClCompile Include="Candles.cpp" />
     <ClCompile Include="Items.cpp" />
+    <ClCompile Include="Keyboard.cpp" />
     <ClCompile Include="SceneGame.cpp" />
     <ClCompile Include="Scenes.cpp" />
     <ClCompile Include="Tile.cpp" />
-    <ClCompile Include="Map.cpp" />
+    <ClCompile Include="Maps.cpp" />
     <ClCompile Include="debug.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="GameObject.cpp" />

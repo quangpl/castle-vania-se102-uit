@@ -13,7 +13,7 @@
 
 using namespace std;
 
-class Map
+class CMap
 {
 	int frameWidth, frameHeight;
 
@@ -27,7 +27,7 @@ class Map
 	vector<LPTILE> tiles;
 public:
 
-	Map(int texId, LPCSTR filePath, D3DCOLOR color);
+	CMap(int texId, LPCSTR filePath, D3DCOLOR color);
 
 	void ReadMapTXT(LPCSTR filePath);
 
@@ -41,4 +41,16 @@ public:
 
 };
 
-typedef Map * LPTILES;
+typedef CMap * LPMAP;
+
+
+class CMaps
+{
+	static CMaps* __instance;
+	unordered_map<int, LPMAP> maps;
+
+public:
+	void Add(int id, LPMAP map);
+	LPMAP Get(int id);
+	static CMaps* GetInstance();
+};

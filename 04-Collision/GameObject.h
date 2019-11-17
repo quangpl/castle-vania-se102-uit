@@ -5,7 +5,7 @@
 #include <vector>
 #include "Constants.h"
 #include "Sprites.h"
-
+#include "Game.h"
 
 using namespace std;
 
