@@ -26,7 +26,7 @@
 #define ITEM_ANI_DAGGER 543
 #define ITEM_ANI_HIDE 5401
 
-#define PERIOD_TIME_APPEAR 5000
+#define PERIOD_TIME_APPEAR 2500
 
 
 class CItem : public CGameObject

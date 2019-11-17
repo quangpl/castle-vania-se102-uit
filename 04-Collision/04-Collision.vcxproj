@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
@@ -128,6 +128,8 @@
     <ClInclude Include="Constants.h" />
     <ClInclude Include="Items.h" />
     <ClInclude Include="resource1.h" />
+    <ClInclude Include="SceneGame.h" />
+    <ClInclude Include="Scenes.h" />
     <ClInclude Include="Tile.h" />
     <ClInclude Include="Map.h" />
     <ClInclude Include="debug.h" />
@@ -146,6 +148,8 @@
     <ClCompile Include="Brick.cpp" />
     <ClCompile Include="Candles.cpp" />
     <ClCompile Include="Items.cpp" />
+    <ClCompile Include="SceneGame.cpp" />
+    <ClCompile Include="Scenes.cpp" />
     <ClCompile Include="Tile.cpp" />
     <ClCompile Include="Map.cpp" />
     <ClCompile Include="debug.cpp" />

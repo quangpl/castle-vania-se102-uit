@@ -34,6 +34,9 @@
     <Filter Include="Lib">
       <UniqueIdentifier>{949d0046-3103-477b-841f-e327728895cd}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Framework\Scenes">
+      <UniqueIdentifier>{2ba24a7b-7160-478b-8044-915f80fa3bd6}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Brick.h">
@@ -88,6 +91,12 @@
     <ClInclude Include="Candles.h">
       <Filter>GameObject</Filter>
     </ClInclude>
+    <ClInclude Include="Scenes.h">
+      <Filter>Framework\Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="SceneGame.h">
+      <Filter>Framework\Scenes</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Brick.cpp">
@@ -141,6 +150,12 @@
     </ClCompile>
     <ClCompile Include="Candles.cpp">
       <Filter>GameObject</Filter>
+    </ClCompile>
+    <ClCompile Include="Scenes.cpp">
+      <Filter>Framework\Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="SceneGame.cpp">
+      <Filter>Framework\Scenes</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
