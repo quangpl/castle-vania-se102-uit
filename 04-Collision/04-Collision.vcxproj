@@ -126,6 +126,7 @@
     <ClInclude Include="Brick.h" />
     <ClInclude Include="Candles.h" />
     <ClInclude Include="Constants.h" />
+    <ClInclude Include="Hidden.h" />
     <ClInclude Include="Items.h" />
     <ClInclude Include="Keyboard.h" />
     <ClInclude Include="resource1.h" />
@@ -148,6 +149,7 @@
   <ItemGroup>
     <ClCompile Include="Brick.cpp" />
     <ClCompile Include="Candles.cpp" />
+    <ClCompile Include="Hidden.cpp" />
     <ClCompile Include="Items.cpp" />
     <ClCompile Include="Keyboard.cpp" />
     <ClCompile Include="SceneGame.cpp" />

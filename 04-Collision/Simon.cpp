@@ -16,9 +16,8 @@ CSimon* CSimon::GetInstance()
 
 void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
-	
+	cout << x << endl;
 	// Calculate dx, dy 
-
 	CGameObject::Update(dt);
 	checkBlink();
 	//Ngăn không cho Simon rớt ra khỏi màn hình
@@ -28,6 +27,9 @@ void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	// Simple fall down
 	vy += SIMON_GRAVITY * dt;
 
+	if (isAutoGoX) {
+		autoGoX(directionAutoGoX, SIMON_WALKING_SPEED_AUTO);
+	}
 	vector<LPCOLLISIONEVENT> coEvents;
 	vector<LPCOLLISIONEVENT> coEventsResult;
 	
@@ -77,10 +79,11 @@ void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 				int typeItem = dynamic_cast<CItem*>(e->obj)->collisionWithSimon();
 				collisionWithItem(typeItem);
 			}
-			//if (dynamic_cast<CWeapon*>(e->obj)) // if e->obj is Item 
-			//{
-			//	cout << "Va cham vu khi" << endl;
-			//}
+			if (dynamic_cast<CHidden*>(e->obj)) {
+				isAutoGoX = true;
+				directionAutoGoX = 1;
+			}
+			
 		}
 		//Xử lý sau khi nhảy 
 		jumpReset();
@@ -150,7 +153,6 @@ void CSimon::Render()
 		}
 	break;
 	}
-	cout << ani << endl;
 	int alpha = 255;
 	if (untouchable) alpha = 128;
 
@@ -306,27 +308,24 @@ void CSimon::SetState(int state)
 	}
 }
 
+void CSimon::autoGoX(int _nx, float speed) {
+	nx = _nx;
+	vx = 0.1f;
+	x += speed*nx;
+	isAutoGoX = true;
+	//setFreeze(true);
+}
+
 void CSimon::GetBoundingBox(float& left, float& top, float& right, float& bottom)
 {
 	left = x + SIMON_BBOX_MARGIN_LEFT;
 	top = y;
 	setPositionCustom(left, top);
-	/*if (level==SIMON_LEVEL_BIG)
-	{
-		right = x + SIMON_BIG_BBOX_WIDTH;
-		bottom = y + SIMON_BIG_BBOX_HEIGHT;
-	}
-	else
-	{
-		right = x + SIMON_SMALL_BBOX_WIDTH;
-		bottom = y + SIMON_SMALL_BBOX_HEIGHT;
-	}*/
-
+	
 	right = x + SIMON_BBOX_WIDTH ;
 	bottom = y + SIMON_BBOX_HEIGHT;
 	if (isSit) {
 		bottom = y + SIMON_SIT_BBOX_HEIGHT;
 	}
-
 }
 

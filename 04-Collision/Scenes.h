@@ -20,18 +20,23 @@
 #include "Maps.h"
 #include "Items.h"
 #include <sstream> 
+#include "Hidden.h"
 #include "Constants.h"
 
 using namespace std;
 
 class CScene
 {
+	int stage;
 	int id;				// Sprite ID in the sprite database
 	LPD3DXSPRITE spriteHandler;
 public:
 	virtual void LoadResources() = 0;
 	virtual void Update(DWORD dt) = 0;
 	virtual void Render() = 0;
+	virtual void checkUpdateScene() = 0;
+	void setStage(int _stage) { this->stage = _stage; };
+	int getStage() { return this->stage; };
 };
 
 typedef CScene* LPSCENE;

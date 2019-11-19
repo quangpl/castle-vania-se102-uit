@@ -178,11 +178,12 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	HWND hWnd = CreateGameWindow(hInstance, nCmdShow, SCREEN_WIDTH, SCREEN_HEIGHT);
 	
 	scenes->Add(SCENE_GAME_ID, sceneGame);
+	scenes->Get(SCENE_GAME_ID)->setStage(1);
 	CGame::GetInstance()->Init(hWnd);
 	
 	CGame::GetInstance()->InitKeyboard(keyHandler);
-	//showConsole();
 	
+	showConsole();
 	LoadResources();
 
 	SetWindowPos(hWnd, 0, 0, 0, SCREEN_WIDTH*2, SCREEN_HEIGHT*2, SWP_NOMOVE | SWP_NOOWNERZORDER | SWP_NOZORDER);

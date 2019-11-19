@@ -352,6 +352,13 @@
       <sprite id="10165" left="1" top="1" right="1" bottom="1"/>
     </Animation>
   </Texture>
+
+   <!-- Animation HIDDEN -->
+  <Texture  textureId ="5" gameObjectId ="29">
+    <Animation aniId="5650" frameTime="100" name="BRICKS">
+      <sprite id="10165" left="1" top="1" right="1" bottom="1"/>
+    </Animation>
+  </Texture>
             <!--Texture Simon Attack -->
   <Texture  textureId ="10" gameObjectId ="0">
     <Animation aniId="1000" frameTime="100" name="NORMAL_ATTACK_LEFT">

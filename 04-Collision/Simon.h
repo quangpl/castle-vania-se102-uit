@@ -2,10 +2,13 @@
 #include "GameObject.h"
 #include "Constants.h"
 #include "Weapon.h"
+#include "Hidden.h"
 #include "Candles.h"
 #include "Items.h"
 
-#define SIMON_WALKING_SPEED		0.1f 
+#define SIMON_WALKING_SPEED		0.4f //Spped simon walking , default : 0.1f
+#define SIMON_WALKING_SPEED_AUTO	0.15f //Spped simon walking , default : 0.1f
+
 //0.1f
 #define SIMON_JUMP_SPEED_Y		0.4f
 #define SIMON_JUMP_DEFLECT_SPEED 0.2f
@@ -84,6 +87,9 @@ class CSimon : public CGameObject
 	boolean canJump = true;
 	int stateBackup;
 	DWORD timeStartBlink;
+
+	bool isAutoGoX;
+	int directionAutoGoX;
 public: 
 	CSimon() : CGameObject()
 	{
@@ -112,6 +118,10 @@ public:
 	void collisionWithItem(int type);
 	void checkBlink();
 
+	void autoGoX(int nx, float speed);
+	void stopAutoGoX() {
+		isAutoGoX = false;
+	}
 
 	virtual void GetBoundingBox(float &left, float &top, float &right, float &bottom);
 };
