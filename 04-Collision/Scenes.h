@@ -35,6 +35,7 @@ public:
 	virtual void Update(DWORD dt) = 0;
 	virtual void Render() = 0;
 	virtual void checkUpdateScene() = 0;
+	virtual void clearObjects() = 0;
 	void setStage(int _stage) { this->stage = _stage; };
 	int getStage() { return this->stage; };
 };

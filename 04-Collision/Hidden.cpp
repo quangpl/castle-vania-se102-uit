@@ -1,8 +1,9 @@
 #include "Hidden.h"
 
-CHidden::CHidden(float _w, float _h)
+CHidden::CHidden(float _w, float _h, int type)
 {
 	setType(TYPE_OBJECT_HIDDEN);
+	typeHidden = type;
 	w = _w;
 	h = _h;
 }

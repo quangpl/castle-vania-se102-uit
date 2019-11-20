@@ -80,8 +80,10 @@ void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 				collisionWithItem(typeItem);
 			}
 			if (dynamic_cast<CHidden*>(e->obj)) {
+				cout << "Va cham" << endl;
 				isAutoGoX = true;
-				directionAutoGoX = 1;
+				x += dx;
+				timeStartAutoGoX = GetTickCount();
 			}
 			
 		}
@@ -158,6 +160,7 @@ void CSimon::Render()
 
 	CAnimations::GetInstance()->Get(ani)->RenderFlip(-nx,x, y, DEFAULT_OFFSET_X,alpha);
 	setCurrentAni(ani);
+
 	if (CGame::GetInstance()->getDebug()) {
 		RenderBoundingBox();
 	}
@@ -310,10 +313,17 @@ void CSimon::SetState(int state)
 
 void CSimon::autoGoX(int _nx, float speed) {
 	nx = _nx;
-	vx = 0.1f;
-	x += speed*nx;
-	isAutoGoX = true;
-	//setFreeze(true);
+	vx = 0.001f;
+	x += 0.2f;
+	setFreeze(true);
+	if (GetTickCount()- timeStartAutoGoX >= 1000) {
+	/*	CScenes::GetInstance()->Get(SCENE_GAME_ID)->setStage(2);
+		CScenes::GetInstance()->Get(SCENE_GAME_ID)->LoadResources();*/
+		//CScenes::GetInstance()->Get(SCENE_GAME_ID)->clearObjects();
+		isCollisionWithDoor = true;
+		isAutoGoX = false;
+		setFreeze(false);
+	}
 }
 
 void CSimon::GetBoundingBox(float& left, float& top, float& right, float& bottom)

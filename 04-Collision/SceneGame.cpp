@@ -7,7 +7,6 @@ CWeapon* weapon = CWeapon::GetInstance();
 CSimon* simon = CSimon::GetInstance();
 CMaps* maps = CMaps::GetInstance();
 
-vector<CGameObject*> objects;
 CSceneGame* CSceneGame::__instance = NULL;
 
 
@@ -27,10 +26,8 @@ CSceneGame* CSceneGame::GetInstance()
 
 void CSceneGame::LoadResources() {
 	cout << "load res" << endl;
-	if (isUpdateScene) {
-		return;
-	}
 	if (getStage() == 1) {
+		objects.clear();
 		CTextures* textures = CTextures::GetInstance();
 
 		textures->Add(ID_TEX_MAP_1, "Map\\tileset_map1.png", D3DCOLOR_XRGB(255, 0, 255));
@@ -127,7 +124,6 @@ void CSceneGame::LoadResources() {
 					}
 				}
 				else if (gameObjectId == 28) {
-
 					for (int i = 0; i < NUMBER_OF_BRICK; i++)
 					{
 						float l, t, r, b;
@@ -142,7 +138,7 @@ void CSceneGame::LoadResources() {
 
 		}
 
-		CHidden* hidden = new CHidden(30, 80);
+		CHidden* hidden = new CHidden(10, 80,HIDDEN_TYPE_DOOR);
 		hidden->SetPosition(685,130);
 		objects.push_back(hidden);
 
@@ -159,8 +155,7 @@ void CSceneGame::LoadResources() {
 	}
 	else if (getStage() == 2) {
 		{
-			vector<CGameObject*> objects;
-
+			objects.clear();
 			CTextures* textures = CTextures::GetInstance();
 
 			textures->Add(ID_TEX_MAP_2, "Map\\tileset_map2.png", D3DCOLOR_XRGB(255, 255, 255));
@@ -238,14 +233,14 @@ void CSceneGame::LoadResources() {
 						weapon->AddAnimation(aniId);
 					}
 					else if (gameObjectId == 28) {
-						/*for (int i = 0; i < NUMBER_OF_BRICK; i++)
+						for (int i = 0; i < NUMBER_OF_BRICK; i++)
 						{
 							float l, t, r, b;
 							CBrick* brick = new CBrick();
 							brick->AddAnimation(aniId);
-							brick->SetPosition(0 + i * 16.0f, 500);
+							brick->SetPosition(0 + i * 16.0f, SCREEN_HEIGHT - 30);
 							objects.push_back(brick);
-						}*/
+						}
 					}
 				};
 
@@ -267,15 +262,14 @@ void CSceneGame::LoadResources() {
 	else {
 			cout << "CANNOT SET STAGE or STAGE NULL" << endl;
 	}
-	isUpdateScene = true;
+	//isUpdateScene = true;
 }
 void CSceneGame::checkUpdateScene() {
 	switch (getStage())
 	{
 	case 1:
-		if (simon->GetPositionX() >= 670) {
+		if (simon->getIsCollisionWithDoor()) {
 			CScenes::GetInstance()->Get(SCENE_GAME_ID)->setStage(2);
-			isUpdateScene = false;
 			LoadResources();
 		}
 		break;
@@ -289,7 +283,7 @@ void CSceneGame::Update(DWORD dt) {
 	if (xWeapon <= 0 || xWeapon >= maps->Get(ID_MAP_1)->getMapWidth()) {
 		weapon->hide();
 	}
-	cout << simon->GetPositionX() << endl;
+	//cout << simon->GetPositionX() << endl;
 	checkUpdateScene();
 
 	vector<LPGAMEOBJECT> coPlayerAndBackground;
@@ -302,7 +296,7 @@ void CSceneGame::Update(DWORD dt) {
 	for (int i = 0; i < objects.size(); i++)
 	{
 		if (objects[i]->isShow()) {
-			if (dynamic_cast<CHidden*>(objects[i])||dynamic_cast<CBrick*>(objects[i]) || dynamic_cast<CSimon*>(objects[i]) || dynamic_cast<CItem*>(objects[i])) {
+			if (dynamic_cast<CHidden*>(objects[i]) || dynamic_cast<CBrick*>(objects[i]) || dynamic_cast<CSimon*>(objects[i]) || dynamic_cast<CItem*>(objects[i])) {
 				coPlayerAndBackground.push_back(objects[i]);
 			}
 
@@ -331,6 +325,8 @@ void CSceneGame::Update(DWORD dt) {
 	camX = CGame::GetInstance()->GetCamPos_x();
 	camY = CGame::GetInstance()->GetCamPos_y();
 	//Khoảng cách để Simon vô giữa màn hình
+
+	//CGame::GetInstance()->SetCamPos(cx, 23.0f);
 	if (cx >= SCREEN_WIDTH / 2) {
 		cx -= SCREEN_WIDTH / 2;
 	}
@@ -338,15 +334,18 @@ void CSceneGame::Update(DWORD dt) {
 		cx = 0;
 	}
 	if (getStage() == 1) {
-		CGame::GetInstance()->SetCamPos(cx, CAM_Y_DEFAULT_STAGE_1); //Khoảng cách để Simon đứng ngay giữa màn hình không bị lệch 
+		CGame::GetInstance()->SetCamPos(cx, CAM_Y_DEFAULT_STAGE_1); //Khoảng cách để Simon đứng ngay giữa màn hình không bị lệch
+		if (camX + SCREEN_WIDTH >= maps->Get(ID_MAP_1)->getMapWidth() && cx >= maps->Get(ID_MAP_1)->getMapWidth() - SCREEN_WIDTH) {
+			CGame::GetInstance()->SetCamPos(camX, CAM_Y_DEFAULT_STAGE_1);
+		}
 	}
 	else if (getStage() == 2) {
 		CGame::GetInstance()->SetCamPos(cx, CAM_Y_DEFAULT_STAGE_2); //Khoảng cách để Simon đứng ngay giữa màn hình không bị lệch 
+		if (camX + SCREEN_WIDTH >= maps->Get(ID_MAP_2)->getMapWidth() && cx >= maps->Get(ID_MAP_2)->getMapWidth() - SCREEN_WIDTH) {
+			CGame::GetInstance()->SetCamPos(camX, CAM_Y_DEFAULT_STAGE_2);
+		}
 	}
 
-	if (camX + SCREEN_WIDTH >= maps->Get(ID_MAP_1)->getMapWidth() && cx >= maps->Get(ID_MAP_1)->getMapWidth() - SCREEN_WIDTH) {
-		CGame::GetInstance()->SetCamPos(camX, CAM_Y_DEFAULT_STAGE_1);
-	}
 }
 void CSceneGame::Render() {
 	maps->Get(currentIdMap)->Render();

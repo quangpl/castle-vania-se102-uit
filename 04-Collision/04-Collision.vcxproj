@@ -132,6 +132,7 @@
     <ClInclude Include="resource1.h" />
     <ClInclude Include="SceneGame.h" />
     <ClInclude Include="Scenes.h" />
+    <ClInclude Include="SmallCandle.h" />
     <ClInclude Include="Tile.h" />
     <ClInclude Include="Maps.h" />
     <ClInclude Include="debug.h" />
@@ -154,6 +155,7 @@
     <ClCompile Include="Keyboard.cpp" />
     <ClCompile Include="SceneGame.cpp" />
     <ClCompile Include="Scenes.cpp" />
+    <ClCompile Include="SmallCandle.cpp" />
     <ClCompile Include="Tile.cpp" />
     <ClCompile Include="Maps.cpp" />
     <ClCompile Include="debug.cpp" />
