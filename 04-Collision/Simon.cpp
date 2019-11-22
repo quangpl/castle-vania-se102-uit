@@ -317,9 +317,6 @@ void CSimon::autoGoX(int _nx, float speed) {
 	x += 0.2f;
 	setFreeze(true);
 	if (GetTickCount()- timeStartAutoGoX >= 1000) {
-	/*	CScenes::GetInstance()->Get(SCENE_GAME_ID)->setStage(2);
-		CScenes::GetInstance()->Get(SCENE_GAME_ID)->LoadResources();*/
-		//CScenes::GetInstance()->Get(SCENE_GAME_ID)->clearObjects();
 		isCollisionWithDoor = true;
 		isAutoGoX = false;
 		setFreeze(false);

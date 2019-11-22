@@ -40,14 +40,23 @@
     <Filter Include="Framework\Keyboard">
       <UniqueIdentifier>{5b862792-cbe3-44b0-a019-0788868b9a77}</UniqueIdentifier>
     </Filter>
+    <Filter Include="GameObject\Weapon">
+      <UniqueIdentifier>{02249829-d08c-4c54-a0fb-fd7656d41357}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameObject\Item">
+      <UniqueIdentifier>{957df576-9787-4a26-a20a-7a16a032dc8a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameObject\Ground">
+      <UniqueIdentifier>{e78991b9-d8ce-463d-a520-1092b3a160ee}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameObject\Enemy">
+      <UniqueIdentifier>{30591c3f-1fea-408f-a1f6-35b1229ec7e8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameObject\Player">
+      <UniqueIdentifier>{cc45f234-3455-4465-9334-5d9d9ae430be}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Brick.h">
-      <Filter>GameObject</Filter>
-    </ClInclude>
-    <ClInclude Include="Goomba.h">
-      <Filter>GameObject</Filter>
-    </ClInclude>
     <ClInclude Include="debug.h">
       <Filter>Framework\Debug</Filter>
     </ClInclude>
@@ -73,23 +82,11 @@
       <Filter>Util</Filter>
     </ClInclude>
     <ClInclude Include="resource1.h" />
-    <ClInclude Include="Simon.h">
-      <Filter>GameObject</Filter>
-    </ClInclude>
     <ClInclude Include="tinystr.h">
       <Filter>Lib</Filter>
     </ClInclude>
     <ClInclude Include="tinyxml.h">
       <Filter>Lib</Filter>
-    </ClInclude>
-    <ClInclude Include="Weapon.h">
-      <Filter>GameObject</Filter>
-    </ClInclude>
-    <ClInclude Include="Items.h">
-      <Filter>GameObject</Filter>
-    </ClInclude>
-    <ClInclude Include="Candles.h">
-      <Filter>GameObject</Filter>
     </ClInclude>
     <ClInclude Include="Scenes.h">
       <Filter>Framework\Scenes</Filter>
@@ -103,20 +100,32 @@
     <ClInclude Include="Maps.h">
       <Filter>Framework\Map</Filter>
     </ClInclude>
+    <ClInclude Include="Weapon.h">
+      <Filter>GameObject\Weapon</Filter>
+    </ClInclude>
+    <ClInclude Include="Brick.h">
+      <Filter>GameObject\Ground</Filter>
+    </ClInclude>
+    <ClInclude Include="Candles.h">
+      <Filter>GameObject\Ground</Filter>
+    </ClInclude>
     <ClInclude Include="Hidden.h">
-      <Filter>GameObject</Filter>
+      <Filter>GameObject\Ground</Filter>
+    </ClInclude>
+    <ClInclude Include="Goomba.h">
+      <Filter>GameObject\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="Items.h">
+      <Filter>GameObject\Item</Filter>
     </ClInclude>
     <ClInclude Include="SmallCandle.h">
-      <Filter>GameObject</Filter>
+      <Filter>GameObject\Ground</Filter>
+    </ClInclude>
+    <ClInclude Include="Simon.h">
+      <Filter>GameObject\Player</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Brick.cpp">
-      <Filter>GameObject</Filter>
-    </ClCompile>
-    <ClCompile Include="Goomba.cpp">
-      <Filter>GameObject</Filter>
-    </ClCompile>
     <ClCompile Include="main.cpp" />
     <ClCompile Include="debug.cpp">
       <Filter>Framework\Debug</Filter>
@@ -136,9 +145,6 @@
     <ClCompile Include="Tile.cpp">
       <Filter>Framework\Tile</Filter>
     </ClCompile>
-    <ClCompile Include="Simon.cpp">
-      <Filter>GameObject</Filter>
-    </ClCompile>
     <ClCompile Include="tinystr.cpp">
       <Filter>Lib</Filter>
     </ClCompile>
@@ -150,15 +156,6 @@
     </ClCompile>
     <ClCompile Include="tinyxmlparser.cpp">
       <Filter>Lib</Filter>
-    </ClCompile>
-    <ClCompile Include="Weapon.cpp">
-      <Filter>GameObject</Filter>
-    </ClCompile>
-    <ClCompile Include="Items.cpp">
-      <Filter>GameObject</Filter>
-    </ClCompile>
-    <ClCompile Include="Candles.cpp">
-      <Filter>GameObject</Filter>
     </ClCompile>
     <ClCompile Include="Scenes.cpp">
       <Filter>Framework\Scenes</Filter>
@@ -172,11 +169,29 @@
     <ClCompile Include="Maps.cpp">
       <Filter>Framework\Map</Filter>
     </ClCompile>
+    <ClCompile Include="Weapon.cpp">
+      <Filter>GameObject\Weapon</Filter>
+    </ClCompile>
+    <ClCompile Include="Brick.cpp">
+      <Filter>GameObject\Ground</Filter>
+    </ClCompile>
+    <ClCompile Include="Candles.cpp">
+      <Filter>GameObject\Ground</Filter>
+    </ClCompile>
     <ClCompile Include="Hidden.cpp">
-      <Filter>GameObject</Filter>
+      <Filter>GameObject\Ground</Filter>
+    </ClCompile>
+    <ClCompile Include="Goomba.cpp">
+      <Filter>GameObject\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="Items.cpp">
+      <Filter>GameObject\Item</Filter>
     </ClCompile>
     <ClCompile Include="SmallCandle.cpp">
-      <Filter>GameObject</Filter>
+      <Filter>GameObject\Ground</Filter>
+    </ClCompile>
+    <ClCompile Include="Simon.cpp">
+      <Filter>GameObject\Player</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
