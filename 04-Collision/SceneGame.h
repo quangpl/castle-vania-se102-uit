@@ -1,5 +1,6 @@
 ﻿#pragma once
 #include "Scenes.h"
+
 #define ID_MAP_1 1
 #define ID_MAP_2 2
 

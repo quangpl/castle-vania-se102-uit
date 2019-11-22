@@ -5,7 +5,7 @@
 #include <d3dx9.h>
 #include <fstream>
 #include "debug.h"
-#include "Weapon.h"
+#include "Whip.h"
 #include "Game.h"
 #include "GameObject.h"
 #include "Textures.h"

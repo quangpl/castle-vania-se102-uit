@@ -124,6 +124,9 @@
     <ClInclude Include="Simon.h">
       <Filter>GameObject\Player</Filter>
     </ClInclude>
+    <ClInclude Include="Whip.h">
+      <Filter>GameObject\Weapon</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
@@ -192,6 +195,9 @@
     </ClCompile>
     <ClCompile Include="Simon.cpp">
       <Filter>GameObject\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="Whip.cpp">
+      <Filter>GameObject\Weapon</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

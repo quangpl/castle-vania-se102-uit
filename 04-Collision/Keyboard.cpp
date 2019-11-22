@@ -1,6 +1,5 @@
 ﻿#include "Keyboard.h"
 CGame* gameKey = CGame::GetInstance();
-CWeapon* weaponKey = CWeapon::GetInstance();
 CSimon* simonKey = CSimon::GetInstance();
 
 
@@ -73,7 +72,6 @@ void CSampleKeyHander::KeyState(BYTE* states)   //long event
 	if (gameKey->IsKeyDown(DIK_DOWN))
 	{
 		if (simonKey->GetState() == SIMON_STATE_HIT) {
-			weaponKey->SetState(WEAPON_STATE_ROPE);
 			simonKey->SetState(SIMON_STATE_HIT);
 		}
 		simonKey->SetState(SIMON_STATE_SIT);
@@ -81,14 +79,12 @@ void CSampleKeyHander::KeyState(BYTE* states)   //long event
 
 	if (gameKey->IsKeyDown(DIK_Z))
 	{
-		weaponKey->SetState(WEAPON_STATE_ROPE);
+	
 		simonKey->SetState(SIMON_STATE_HIT);
 	}
-	if (gameKey->IsKeyDown(DIK_X) && weaponKey->getHasDagger() && !weaponKey->isShow())
+	if (gameKey->IsKeyDown(DIK_X))
 	{
-		//weapon->show();
-		weaponKey->setTypeWeapon(WEAPON_TYPE_DAGGER);
-		weaponKey->SetState(WEAPON_STATE_DAGGER);
+	
 		simonKey->SetState(SIMON_STATE_HIT);
 	}
 }

@@ -109,7 +109,8 @@ public:
 	void SetState(int state);
 	void SetLevel(int l) { level = l; }
 	void StartUntouchable() { untouchable = 1; untouchable_start = GetTickCount(); }
-	int getDirection() { return this->nx; }
+	int getDirection() { return this->nx; };
+	void setDirection(int _nx) { this->nx = _nx; };
 	void goLeft();
 	void goRight();
 	void jump();

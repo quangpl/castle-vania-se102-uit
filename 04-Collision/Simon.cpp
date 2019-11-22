@@ -16,7 +16,6 @@ CSimon* CSimon::GetInstance()
 
 void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
-	cout << x << endl;
 	// Calculate dx, dy 
 	CGameObject::Update(dt);
 	checkBlink();
@@ -243,7 +242,7 @@ void CSimon::sitRelease() {
 }
 
 void CSimon::collisionWithItem(int type) {
-	CWeapon* weapon = CWeapon::GetInstance();
+	//CWeapon* weapon = CWeapon::GetInstance();
 	switch (type)
 	{
 	case ITEM_TYPE_LARGE_HEART:
@@ -251,15 +250,15 @@ void CSimon::collisionWithItem(int type) {
 		break;
 	case ITEM_TYPE_WHIP_UPGRADE:
 		timeStartBlink = GetTickCount();
-		weapon->setLevel(weapon->getLevel()+1);
+		//weapon->setLevel(weapon->getLevel()+1);
 		setFreeze(true);
 		setStateBackup(this->state);
 		SetState(SIMON_STATE_WALKING_BLINK_SINGLE);
 		break;
 	case ITEM_TYPE_DAGGER:
-		weapon->hide();
-		weapon->setHasDagger(true);
-		weapon->setTypeWeapon(WEAPON_TYPE_NO_WEAPON);
+		//weapon->hide();
+		//weapon->setHasDagger(true);
+		//weapon->setTypeWeapon(WEAPON_TYPE_NO_WEAPON);
 		break;
 	default:
 		break;

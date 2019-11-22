@@ -146,6 +146,7 @@
     <ClInclude Include="tinystr.h" />
     <ClInclude Include="tinyxml.h" />
     <ClInclude Include="Weapon.h" />
+    <ClInclude Include="Whip.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Brick.cpp" />
@@ -171,6 +172,7 @@
     <ClCompile Include="tinyxmlerror.cpp" />
     <ClCompile Include="tinyxmlparser.cpp" />
     <ClCompile Include="Weapon.cpp" />
+    <ClCompile Include="Whip.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="CastleVania1.rc" />

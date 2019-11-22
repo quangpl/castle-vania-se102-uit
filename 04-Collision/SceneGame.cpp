@@ -3,10 +3,9 @@
 CGame* game;
 CCandles* candles = CCandles::GetInstance();
 CItems* items = CItems::GetInstance();
-CWeapon* weapon = CWeapon::GetInstance();
 CSimon* simon = CSimon::GetInstance();
 CMaps* maps = CMaps::GetInstance();
-
+CWhip* whip;
 CSceneGame* CSceneGame::__instance = NULL;
 
 
@@ -102,7 +101,10 @@ void CSceneGame::LoadResources() {
 					simon->AddAnimation(aniId);
 				}
 				else if (gameObjectId == 100) {
-					weapon->AddAnimation(aniId);
+					whip = new CWhip();
+					whip->AddAnimation(aniId);
+					whip->setLevel(1);
+					whip->attack(1);
 				}
 				else if (gameObjectId == 2) {
 					CItem* item = new CItem();
@@ -146,10 +148,7 @@ void CSceneGame::LoadResources() {
 		objects.push_back(simon);
 
 
-		weapon->SetPosition(50.0f, 0);
-		weapon->setLevel(1);
-		weapon->setTypeWeapon(WEAPON_TYPE_NO_WEAPON);
-		objects.push_back(weapon);
+		objects.push_back(whip);
 		maps->Add(ID_MAP_1, map);
 		currentIdMap = ID_MAP_1;
 	}
@@ -230,7 +229,9 @@ void CSceneGame::LoadResources() {
 						simon->AddAnimation(aniId);
 					}
 					else if (gameObjectId == 100) {
-						weapon->AddAnimation(aniId);
+						whip = new CWhip();
+						whip->setLevel(1);
+						whip->AddAnimation(aniId);
 					}
 					else if (gameObjectId == 28) {
 						for (int i = 0; i < NUMBER_OF_BRICK; i++)
@@ -251,10 +252,7 @@ void CSceneGame::LoadResources() {
 			objects.push_back(simon);
 
 
-			weapon->SetPosition(50.0f, 0);
-			weapon->setLevel(1);
-			weapon->setTypeWeapon(WEAPON_TYPE_NO_WEAPON);
-			objects.push_back(weapon);
+			objects.push_back(whip);
 			maps->Add(ID_MAP_2, map);
 			currentIdMap = ID_MAP_2;
 		}
@@ -278,11 +276,11 @@ void CSceneGame::checkUpdateScene() {
 	}
 }
 void CSceneGame::Update(DWORD dt) {
-	float xWeapon, yWeapon;
+	/*float xWeapon, yWeapon;
 	weapon->GetPosition(xWeapon, yWeapon);
 	if (xWeapon <= 0 || xWeapon >= maps->Get(ID_MAP_1)->getMapWidth()) {
 		weapon->hide();
-	}
+	}*/
 	//cout << simon->GetPositionX() << endl;
 	checkUpdateScene();
 
