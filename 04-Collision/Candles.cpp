@@ -1,7 +1,7 @@
 ﻿#include "Candles.h"
 #include "Simon.h"
 
-CItems* listItem= CItems::GetInstance();
+//CItems* listItem= CItems::GetInstance();
 void CCandle::Render()
 {
 	int ani = CANDLE_ANI_SHOW;
@@ -70,18 +70,18 @@ void CCandle::SetState(int state)
 	}
 }
 
-CCandles* CCandles::__instance = NULL;
-
-
-CCandles* CCandles::GetInstance()
-{
-	if (__instance == NULL) __instance = new CCandles();
-	return __instance;
-}
-
-
-void CCandles::Add(CCandle* item)
-{
-	items.push_back(item);
-}
-
+//CCandles* CCandles::__instance = NULL;
+//
+//
+//CCandles* CCandles::GetInstance()
+//{
+//	if (__instance == NULL) __instance = new CCandles();
+//	return __instance;
+//}
+//
+//
+//void CCandles::Add(CCandle* item)
+//{
+//	items.push_back(item);
+//}
+//

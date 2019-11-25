@@ -1,13 +1,13 @@
 ﻿#include "SceneGame.h"
 
 CGame* game;
-CCandles* candles = CCandles::GetInstance();
-CItems* items = CItems::GetInstance();
+//CCandles* candles = CCandles::GetInstance();
 CSimon* simon = CSimon::GetInstance();
 CMaps* maps = CMaps::GetInstance();
 CWhip* whip;
-CSceneGame* CSceneGame::__instance = NULL;
 
+CSceneGame* CSceneGame::__instance = NULL;
+vector<CGameObject*> listItem;
 
 CSceneGame::CSceneGame()
 {
@@ -104,16 +104,15 @@ void CSceneGame::LoadResources() {
 					whip = new CWhip();
 					whip->AddAnimation(aniId);
 					whip->setLevel(1);
-					whip->attack(1);
 				}
-				else if (gameObjectId == 2) {
+				/*else if (gameObjectId == 2) {
 					CItem* item = new CItem();
 					item->AddAnimation(aniId);
 					item->SetState(ITEM_STATE_HIDE);
 					objects.push_back(item);
 					items->Add(nItem, item);
 					nItem++;
-				}
+				}*/
 				else if (gameObjectId == 21) {
 					for (int i = 1; i <= NUMBER_OF_CANDLE; i++) {
 						CCandle* candle = new CCandle();
@@ -121,7 +120,7 @@ void CSceneGame::LoadResources() {
 						candle->SetState(CANDLE_STATE_SHOW);
 						candle->SetPosition(i * DISTANCE_BETWEEN_CANDLE, Y_BASE);
 						candle->setId(i);
-						candles->Add(candle);
+						//candles->Add(candle);
 						objects.push_back(candle);
 					}
 				}
@@ -145,6 +144,7 @@ void CSceneGame::LoadResources() {
 		objects.push_back(hidden);
 
 		simon->SetPosition(50.0f, 0); //simon
+		simon->setWeapon(whip);
 		objects.push_back(simon);
 
 
@@ -283,10 +283,13 @@ void CSceneGame::Update(DWORD dt) {
 	}*/
 	//cout << simon->GetPositionX() << endl;
 	checkUpdateScene();
-
+	if (dynamic_cast<CWeapon*>(whip)) {
+		cout << "OK laf weapon" << endl;
+	}
 	vector<LPGAMEOBJECT> coPlayerAndBackground;
 	vector<LPGAMEOBJECT> coWeaponAndCandle;
 	vector<LPGAMEOBJECT> coEffects;
+
 
 
 
@@ -349,6 +352,12 @@ void CSceneGame::Render() {
 	maps->Get(currentIdMap)->Render();
 	for (int i = 0; i < objects.size(); i++)
 		objects[i]->Render();
+}
+void CSceneGame::checkCollisonOfSimon() {
+
+}
+void CSceneGame::checkCollisonOfWeapon() {
+	
 }
 
 

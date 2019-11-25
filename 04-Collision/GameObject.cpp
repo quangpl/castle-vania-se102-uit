@@ -84,6 +84,20 @@ void CGameObject::CalcPotentialCollisions(
 	std::sort(coEvents.begin(), coEvents.end(), CCollisionEvent::compare);
 }
 
+bool CGameObject::checkAABBWithObject(CGameObject *obj)
+{
+		float l, t, r, b;
+		float l1, t1, r1, b1;
+		this->GetBoundingBox(l, t, r, b);
+		obj->GetBoundingBox(l1, t1, r1, b1);
+
+		if (this->checkAABB(l, t, r, b, l1, t1, r1, b1))
+		{
+			return true;
+		}
+		return false;
+}
+
 void CGameObject::FilterCollision(
 	vector<LPCOLLISIONEVENT> &coEvents,
 	vector<LPCOLLISIONEVENT> &coEventsResult,

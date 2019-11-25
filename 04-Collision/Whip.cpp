@@ -24,7 +24,10 @@ void CWhip::Render()
 		break;
 	}
 	CAnimations::GetInstance()->Get(ani)->RenderFlip(-getDirection(), x, y, 24, 128);
-	
+	setCurrentAni(ani);
+	if (CGame::GetInstance()->getDebug()) {
+		RenderBoundingBox();
+	}
 }
 
 void CWhip::attack(int _direction)
@@ -81,7 +84,7 @@ void CWhip::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	if (getFinish()) {
 		return;
 	}
-	if (GetTickCount() - getLastTimeAttack() >= 6000) {
+	if (GetTickCount() - getLastTimeAttack() >= 340) {
 		setFinish(true);
 	}
 	float xSimon, ySimon;

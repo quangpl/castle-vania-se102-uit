@@ -1,8 +1,5 @@
 ﻿#include "Weapon.h"
 
-CAnimations* list_animations = CAnimations::GetInstance();
-
-
 //void CWeapon::GetBoundingBox(float& left, float& top, float& right, float& bottom)
 //{
 //	
@@ -130,11 +127,11 @@ void CWeapon::Render()
 	if (getFinish()) {
 		return;
 	}
+	cout << CAnimations::GetInstance()->Get(getCurrentAni())->getCurrentFrame() << endl;
 	if (CGame::GetInstance()->getDebug()) {
 		RenderBoundingBox();
 	}
 }
-
 void CWeapon::attack(int _direction)
 {
 	this->direction = _direction;

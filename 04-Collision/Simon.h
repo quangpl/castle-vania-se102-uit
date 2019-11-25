@@ -2,11 +2,10 @@
 #include "GameObject.h"
 #include "Constants.h"
 #include "Weapon.h"
-#include "Scenes.h"
+//#include "Scenes.h"
 
 #include "Hidden.h"
 #include "Candles.h"
-#include "Items.h"
 
 #define SIMON_WALKING_SPEED		0.4f //Spped simon walking , default : 0.1f
 #define SIMON_WALKING_SPEED_AUTO	0.11f //Spped simon walking , default : 0.1f
@@ -96,6 +95,8 @@ class CSimon : public CGameObject
 	DWORD timeStartAutoGoX;
 
 	bool isCollisionWithDoor = false;
+	CWeapon* weapon;
+	DWORD lastTimeAttack;
 public: 
 	CSimon() : CGameObject()
 	{
@@ -129,7 +130,9 @@ public:
 	void stopAutoGoX() {
 		isAutoGoX = false;
 	}
-
+	void attack();
+	void setWeapon(CWeapon* _weapon) { this->weapon = _weapon; };
 	bool getIsCollisionWithDoor() { return this->isCollisionWithDoor; };
 	virtual void GetBoundingBox(float &left, float &top, float &right, float &bottom);
+	
 };

@@ -20,4 +20,6 @@ public:
 	void checkUpdateScene();
 	static CSceneGame* GetInstance();
 	void clearObjects() { this->objects.clear(); };
+	void checkCollisonOfSimon();
+	void checkCollisonOfWeapon();
 };

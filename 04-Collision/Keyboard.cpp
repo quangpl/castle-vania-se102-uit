@@ -24,6 +24,10 @@ void CSampleKeyHander::OnKeyDown(int KeyCode)
 	case DIK_D: // debug mode
 		gameKey->setDebug(!gameKey->getDebug());
 		break;
+	/*case DIK_Z:
+		simonKey->attack();
+		simonKey->SetState(SIMON_STATE_HIT);
+		break;*/
 	}
 
 }
@@ -41,11 +45,11 @@ void CSampleKeyHander::OnKeyUp(int KeyCode)   //short event
 		simonKey->SetState(SIMON_STATE_SIT_RELEASE);
 		break;
 	case DIK_Z:
-		simonKey->SetState(SIMON_STATE_HIT_RELEASE);
-		//weapon->SetState(WEAPON_STATE_NO_WEAPON);
+		/*simonKey->SetState(SIMON_STATE_HIT_RELEASE);
+		weapon->SetState(WEAPON_STATE_NO_WEAPON);*/
 		break;
 	case DIK_X:
-		simonKey->SetState(SIMON_STATE_HIT_RELEASE);
+		/*simonKey->SetState(SIMON_STATE_HIT_RELEASE);*/
 		break;
 	default:
 		break;
@@ -79,12 +83,12 @@ void CSampleKeyHander::KeyState(BYTE* states)   //long event
 
 	if (gameKey->IsKeyDown(DIK_Z))
 	{
-	
+		simonKey->attack();
 		simonKey->SetState(SIMON_STATE_HIT);
 	}
 	if (gameKey->IsKeyDown(DIK_X))
 	{
-	
+		simonKey->attack();
 		simonKey->SetState(SIMON_STATE_HIT);
 	}
 }

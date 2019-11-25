@@ -2,7 +2,8 @@
 #define	__WEAPON_H__
 #pragma once
 #include "GameObject.h"
-
+#include <iostream>
+using namespace std;
 #define DAGGER_LEFT 40
 #define DAGGER_RIGHT 50
 

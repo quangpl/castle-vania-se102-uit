@@ -75,8 +75,8 @@ void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 			LPCOLLISIONEVENT e = coEventsResult[i];
 			if (dynamic_cast<CItem*>(e->obj) && (dynamic_cast<CItem*>(e->obj)->isShow())) // if e->obj is Item 
 			{
-				int typeItem = dynamic_cast<CItem*>(e->obj)->collisionWithSimon();
-				collisionWithItem(typeItem);
+				/*int typeItem = dynamic_cast<CItem*>(e->obj)->collisionWithSimon();*/
+				//collisionWithItem(typeItem);
 			}
 			if (dynamic_cast<CHidden*>(e->obj)) {
 				cout << "Va cham" << endl;
@@ -202,6 +202,11 @@ void CSimon::jumpReset() {
 	}
 	canJump = true;
 }
+void CSimon::attack() {
+	this->weapon->attack(nx);
+	this->lastTimeAttack = GetTickCount();
+}
+
 
 void CSimon::idle() {
 	if (!isJump) {
@@ -243,26 +248,26 @@ void CSimon::sitRelease() {
 
 void CSimon::collisionWithItem(int type) {
 	//CWeapon* weapon = CWeapon::GetInstance();
-	switch (type)
-	{
-	case ITEM_TYPE_LARGE_HEART:
-		cout << "Va cham heart tu simon";
-		break;
-	case ITEM_TYPE_WHIP_UPGRADE:
-		timeStartBlink = GetTickCount();
-		//weapon->setLevel(weapon->getLevel()+1);
-		setFreeze(true);
-		setStateBackup(this->state);
-		SetState(SIMON_STATE_WALKING_BLINK_SINGLE);
-		break;
-	case ITEM_TYPE_DAGGER:
-		//weapon->hide();
-		//weapon->setHasDagger(true);
-		//weapon->setTypeWeapon(WEAPON_TYPE_NO_WEAPON);
-		break;
-	default:
-		break;
-	}
+	//switch (type)
+	//{
+	//case ITEM_TYPE_LARGE_HEART:
+	//	cout << "Va cham heart tu simon";
+	//	break;
+	//case ITEM_TYPE_WHIP_UPGRADE:
+	//	timeStartBlink = GetTickCount();
+	//	//weapon->setLevel(weapon->getLevel()+1);
+	//	setFreeze(true);
+	//	setStateBackup(this->state);
+	//	SetState(SIMON_STATE_WALKING_BLINK_SINGLE);
+	//	break;
+	//case ITEM_TYPE_DAGGER:
+	//	//weapon->hide();
+	//	//weapon->setHasDagger(true);
+	//	//weapon->setTypeWeapon(WEAPON_TYPE_NO_WEAPON);
+	//	break;
+	//default:
+	//	break;
+	//}
 }
 
 void CSimon::checkBlink() {

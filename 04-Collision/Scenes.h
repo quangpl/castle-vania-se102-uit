@@ -18,10 +18,13 @@
 #include <istream>
 #include <string>
 #include "Maps.h"
-#include "Items.h"
+//#include "Items.h"
 #include <sstream> 
 #include "Hidden.h"
 #include "Constants.h"
+#include "WhipUpgrade.h"
+#include "LargeHeart.h"
+#include "DaggerItem.h"
 
 using namespace std;
 

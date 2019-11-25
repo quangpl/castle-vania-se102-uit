@@ -38,18 +38,18 @@ public:
 	void checkTimeoutHit();
 	void hit(DWORD time);
 };
-
-
-class CCandles
-{
-	static CCandles* __instance;
-	
-	vector<CCandle*> items;
-
-public:
-	void Add(CCandle* candle);
-	static CCandles* GetInstance();
-	CCandle* getByIndex(int pos) { return items.at(pos); }
-	int getSize() { return items.size(); }
-};
+//
+//
+//class CCandles
+//{
+//	static CCandles* __instance;
+//	
+//	vector<CCandle*> items;
+//
+//public:
+//	void Add(CCandle* candle);
+//	static CCandles* GetInstance();
+//	CCandle* getByIndex(int pos) { return items.at(pos); }
+//	int getSize() { return items.size(); }
+//};
 
