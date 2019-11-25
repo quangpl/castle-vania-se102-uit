@@ -69,15 +69,15 @@ void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		if (nx != 0) vx = 0;
 		if (ny != 0) vy = 0;
 
-		// Collision logic with Goombas
+		// Collision logic with Object
 		for (UINT i = 0; i < coEventsResult.size(); i++)
 		{
 			LPCOLLISIONEVENT e = coEventsResult[i];
-			if (dynamic_cast<CItem*>(e->obj) && (dynamic_cast<CItem*>(e->obj)->isShow())) // if e->obj is Item 
-			{
-				/*int typeItem = dynamic_cast<CItem*>(e->obj)->collisionWithSimon();*/
-				//collisionWithItem(typeItem);
-			}
+			//if (dynamic_cast<CItem*>(e->obj) && (dynamic_cast<CItem*>(e->obj)->isShow())) // if e->obj is Item 
+			//{
+			//	/*int typeItem = dynamic_cast<CItem*>(e->obj)->collisionWithSimon();*/
+			//	//collisionWithItem(typeItem);
+			//}
 			if (dynamic_cast<CHidden*>(e->obj)) {
 				cout << "Va cham" << endl;
 				isAutoGoX = true;

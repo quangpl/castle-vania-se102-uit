@@ -7,7 +7,7 @@
 #include "debug.h"
 #include "Whip.h"
 #include "Game.h"
-#include "GameObject.h"
+//#include "GameObject.h"
 #include "Textures.h"
 #include "tinyxml.h"
 #include "Simon.h"

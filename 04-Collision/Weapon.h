@@ -7,11 +7,6 @@ using namespace std;
 #define DAGGER_LEFT 40
 #define DAGGER_RIGHT 50
 
-
-
-
-
-
 #define WEAPON_TYPE_ROPE 1
 #define WEAPON_STATE_ROPE 1
 

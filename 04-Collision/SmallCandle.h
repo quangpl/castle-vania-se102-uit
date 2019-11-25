@@ -1,13 +1,15 @@
 #pragma once
-#include "GameObject.h"
+#include "Ground.h"
 
-class CSmallCandle : public CGameObject
+class CSmallCandle : public CGround
 {
+
+public:
+	CSmallCandle() {
+
+	};
 	virtual void GetBoundingBox(float& left, float& top, float& right, float& bottom);
 	virtual void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects);
 	virtual void Render();
-
-
-public:
 	virtual void SetState(int state);
 };

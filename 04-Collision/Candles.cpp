@@ -1,5 +1,4 @@
 ﻿#include "Candles.h"
-#include "Simon.h"
 
 //CItems* listItem= CItems::GetInstance();
 void CCandle::Render()

@@ -136,6 +136,9 @@
     <ClInclude Include="WhipUpgrade.h">
       <Filter>GameObject\Item</Filter>
     </ClInclude>
+    <ClInclude Include="Ground.h">
+      <Filter>GameObject\Ground</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
@@ -216,6 +219,9 @@
     </ClCompile>
     <ClCompile Include="WhipUpgrade.cpp">
       <Filter>GameObject\Item</Filter>
+    </ClCompile>
+    <ClCompile Include="Ground.cpp">
+      <Filter>GameObject\Ground</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
