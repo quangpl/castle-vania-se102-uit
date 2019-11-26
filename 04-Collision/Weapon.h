@@ -27,7 +27,6 @@ class CWeapon : public CGameObject
 	bool isFinish = true;
 	DWORD lastTimeAttack;
 	int direction;
-
 public:
 	CWeapon() : CGameObject()
 	{
@@ -40,6 +39,7 @@ public:
 	void setDirection(int _direct) { this->direction = _direct; };
 	int getDirection() { return this->direction; };
 	DWORD getLastTimeAttack() { return this->lastTimeAttack; };
+	//bool canAttack();
 };
 
 #endif

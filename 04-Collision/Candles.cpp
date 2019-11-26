@@ -3,50 +3,24 @@
 //CItems* listItem= CItems::GetInstance();
 void CCandle::Render()
 {
-	int ani = CANDLE_ANI_SHOW;
-	if (state == CANDLE_STATE_HIT) {
-		ani = CANDLE_ANI_HIT;
-	}
-	else if (state == CANDLE_STATE_HIDE) {
-		ani = CANDLE_ANI_HIDE;
-	}
+	int ani;
+	ani = CANDLE_ANI_SHOW;
+	/*cout << getHealth() << endl;
+	if (getHealth()>0) {
 		CAnimations::GetInstance()->Get(ani)->Render(x, y);
-		if (CGame::GetInstance()->getDebug()) {
+	}
+	else {	
+		ani = CANDLE_ANI_SHOW;
+	}*/
+	if (isShow()) {
+		CAnimations::GetInstance()->Get(ani)->Render(x, y);
+	}
+	if (CGame::GetInstance()->getDebug()) {
 			RenderBoundingBox();
-		}
-}
-void CCandle::checkTimeoutHit()
-{
-	if (GetTickCount() - startHit >= TIME_HIT && isHit) {
-		SetState(CANDLE_STATE_HIDE);
-	}
-
-}
-void CCandle::hit(DWORD time)
-{
-	isHit = true;
-	this->startHit = time;
-	SetState(CANDLE_STATE_HIT);
-}
-void CCandle::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
-{
-
-	 //Calculate dx, dy 
-
-CGameObject::Update(dt);
-
-vector<LPCOLLISIONEVENT> coEvents;
-vector<LPCOLLISIONEVENT> coEventsResult;
-
-coEvents.clear();
-checkTimeoutHit();
-float lWeapon, tWeapon, rWeapon, bWeapon, lCandle, tCandle, rCandle, bCandle;
-for (int i = 0; i < coObjects->size(); i++) {
-	if ((*coObjects)[i]->getType() == TYPE_OBJECT_WEAPON) {
-		(*coObjects)[i]->GetBoundingBox(lWeapon, tWeapon, rWeapon, bWeapon);
 	}
 }
-}
+
+
 void CCandle::GetBoundingBox(float& l, float& t, float& r, float& b)
 {
 	l = x;
@@ -55,19 +29,6 @@ void CCandle::GetBoundingBox(float& l, float& t, float& r, float& b)
 	b = y + CANDLE_BBOX_HEIGHT;
 }
 
-void CCandle::SetState(int state)
-{
-	CGameObject::SetState(state);
-	switch (state)
-	{
-	case CANDLE_STATE_HIDE:
-		hide();
-		break;
-	default:
-		show();
-		break;
-	}
-}
 
 //CCandles* CCandles::__instance = NULL;
 //

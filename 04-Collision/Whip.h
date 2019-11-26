@@ -2,7 +2,7 @@
 #define	__WHIP_H__
 #pragma once
 #include "Weapon.h"
-#include "Simon.h"
+//#include "Simon.h"
 // ROPE
 #define ROPE_SPEED_X 0
 #define ROPE_SPEED_Y 0
@@ -55,12 +55,15 @@ class CWhip : public CWeapon
 	virtual void Render();
 
 	int WhipLevel;
-
+	bool wasHit;
 public:
-	CWhip() {};
+	CWhip() {
+		wasHit = false;
+	};
 	void attack(int direction);
 	void setLevel(int _level) { this->WhipLevel = _level; };
 	int getLevel() { return this->WhipLevel;};
+	bool getWasHit() { return this->wasHit; };
 };
 
 #endif

@@ -2,7 +2,6 @@
 void CWhip::Render()
 {
 	int ani;
-	cout << WhipLevel << endl;
 	if (getFinish()) {
 		return;
 	}
@@ -10,15 +9,12 @@ void CWhip::Render()
 	{
 	case 1:
 		ani = ROPE_ANI_LEVEL_1;
-		cout << "vo 1" << endl;
 		break;
 	case 2:
 		ani = ROPE_ANI_LEVEL_2;
-		cout << "vo 2" << endl;
 		break;
 	case 3:
 		ani = ROPE_ANI_LEVEL_3;
-		cout << "vo 3" << endl;
 		break;
 	default:
 		break;
@@ -84,12 +80,14 @@ void CWhip::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	if (getFinish()) {
 		return;
 	}
+	wasHit = false;
 	if (GetTickCount() - getLastTimeAttack() >= 340) {
 		setFinish(true);
+		wasHit = true;
 	}
 	float xSimon, ySimon;
-	CSimon::GetInstance()->GetPosition(xSimon, ySimon);
+	/*CSimon::GetInstance()->GetPosition(xSimon, ySimon);
 	SetPosition(xSimon, ySimon);
-	setDirection(CSimon::GetInstance()->getDirection());
+	setDirection(CSimon::GetInstance()->getDirection());*/
 };
 

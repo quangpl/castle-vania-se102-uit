@@ -1,4 +1,4 @@
-#include <d3dx9.h>
+﻿#include <d3dx9.h>
 #include <algorithm>
 
 
@@ -13,6 +13,7 @@ CGameObject::CGameObject()
 	x = y = 0;
 	vx = vy = 0;
 	nx = 1;	
+	health = 1;
 }
 
 bool CGameObject::checkAABB(float left_a, float top_a, float right_a, float bottom_a, float left_b, float top_b, float right_b, float bottom_b)
@@ -97,7 +98,14 @@ bool CGameObject::checkAABBWithObject(CGameObject *obj)
 		}
 		return false;
 }
+bool CGameObject::checkAABBWithObjectAABBEx(CGameObject* obj) {
+		if (checkAABBWithObject(obj)) // kiểm tra va chạm bằng AABB trước
+			return true;
 
+		LPCOLLISIONEVENT e = SweptAABBEx(obj); // kt va chạm giữa 2 object bằng sweptAABB
+		bool res = e->t > 0 && e->t <= 1.0f; // ĐK va chạm
+		return res;
+}
 void CGameObject::FilterCollision(
 	vector<LPCOLLISIONEVENT> &coEvents,
 	vector<LPCOLLISIONEVENT> &coEventsResult,

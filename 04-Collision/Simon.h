@@ -1,11 +1,21 @@
+#ifndef __SIMON_H__
+#define	__SIMON_H__
 #pragma once
-#include "GameObject.h"
+//#include "GameObject.h"
 #include "Constants.h"
 #include "Weapon.h"
+#include "Whip.h"
 //#include "Scenes.h"
-
 #include "Hidden.h"
-#include "Candles.h"
+//#include "Candles.h"
+//#include "LargeHeart.h"
+//#include "DaggerItem.h"
+//#include "WhipUpgrade.h"
+#include "Items.h"
+//#include <algorithm>
+//#include "debug.h"
+//#include "Constants.h"
+//#include "Game.h"
 
 #define SIMON_WALKING_SPEED		0.4f //Spped simon walking , default : 0.1f
 #define SIMON_WALKING_SPEED_AUTO	0.11f //Spped simon walking , default : 0.1f
@@ -97,6 +107,8 @@ class CSimon : public CGameObject
 	bool isCollisionWithDoor = false;
 	CWeapon* weapon;
 	DWORD lastTimeAttack;
+	LPCOLLISIONEVENT colEventWithItem;
+	//CItem* itemCollision;
 public: 
 	CSimon() : CGameObject()
 	{
@@ -123,7 +135,6 @@ public:
 	void hit();
 	void hitRelease();
 
-	void collisionWithItem(int type);
 	void checkBlink();
 
 	void autoGoX(int nx, float speed);
@@ -132,7 +143,14 @@ public:
 	}
 	void attack();
 	void setWeapon(CWeapon* _weapon) { this->weapon = _weapon; };
+	CWeapon* getWeapon() { return this->weapon;};
 	bool getIsCollisionWithDoor() { return this->isCollisionWithDoor; };
 	virtual void GetBoundingBox(float &left, float &top, float &right, float &bottom);
-	
+	LPCOLLISIONEVENT getCollisionEventWithItem() { return this->colEventWithItem; };
+	void collectDagger();
+	void collectWhipUpgrade(CWhip* &_whip);
+	bool isCollisionWithItem(CItem* item);
+	bool getIsHit() { return this->isHit; };
 };
+
+#endif

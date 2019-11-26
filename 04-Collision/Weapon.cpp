@@ -127,7 +127,7 @@ void CWeapon::Render()
 	if (getFinish()) {
 		return;
 	}
-	cout << CAnimations::GetInstance()->Get(getCurrentAni())->getCurrentFrame() << endl;
+	//cout << CAnimations::GetInstance()->Get(getCurrentAni())->getCurrentFrame() << endl;
 	if (CGame::GetInstance()->getDebug()) {
 		RenderBoundingBox();
 	}
@@ -138,4 +138,8 @@ void CWeapon::attack(int _direction)
 	isFinish = false;
 	lastTimeAttack = GetTickCount(); // lưu lại
 }
- 
+//bool CWeapon::canAttack()
+//{
+//	return  GetTickCount() - lastTimeAttack >= 330 && !isFinish;
+//}
+

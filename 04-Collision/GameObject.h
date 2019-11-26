@@ -59,7 +59,7 @@ public:
 	DWORD dt; 
 	int typeObject;   
 
-	int health = 1; //Object nao cung co suc khoe ban dau la 1
+	int health; //Object nao cung co suc khoe ban dau la 1
 	vector<LPANIMATION> animations;
 
 public: 
@@ -93,6 +93,7 @@ public:
 	CGameObject();
 	bool checkAABB(float left_a, float top_a, float right_a, float bottom_a, float left_b, float top_b, float right_b, float bottom_b);
 	bool checkAABBWithObject(CGameObject* obj);
+	bool checkAABBWithObjectAABBEx(CGameObject* obj);
 	virtual void GetBoundingBox(float &left, float &top, float &right, float &bottom) = 0;
 	virtual void Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects = NULL);
 	virtual void Render() = 0;
@@ -112,9 +113,14 @@ public:
 	void setCurrentAni(int ani) { this->currentAni = ani; };
 	int getCurrentAni() { return this->currentAni; };
 
-	int getHealth() { return this->health; };
+	int getHealth() { return health; };
+	void setHealth(int h) { health = h; };
 	void updateHealth(int h) { this->health = this->health + h; };
-
+	void subHealth(int h) { health = health - h;
+	if (health < 0) {
+		health = 0;
+	}
+	};
 	~CGameObject();
 };
 

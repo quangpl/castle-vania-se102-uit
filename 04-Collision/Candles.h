@@ -18,20 +18,15 @@
 
 class CCandle : public CGround
 {
-	DWORD startHit;
 	int id;
-	bool isHit;
 	virtual void Render();
 	virtual void GetBoundingBox(float& l, float& t, float& r, float& b);
-	virtual void Update(DWORD dt, vector<LPGAMEOBJECT>* colliable_objects = NULL);
 public:
 	CCandle()
 	{
+		
 	}
 
-	void SetState(int state);
 	void setId(int id) { this->id = id; };
 	int getId() { return this->id; };
-	void checkTimeoutHit();
-	void hit(DWORD time);
 };

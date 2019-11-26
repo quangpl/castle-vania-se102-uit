@@ -28,9 +28,7 @@
 
 void CItem::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
-
-
-	CGameObject::Update(dt);
+	CGameObject::Update(dt, coObjects);
 	checkTimeoutAppear(); //check time appear
 }
 
