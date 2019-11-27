@@ -13,7 +13,10 @@ void CLargeHeart::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
 	// Calculate dx, dy 
 	CGameObject::Update(dt);
-
+	CItem::Update(dt, coObjects);
+	if (getFinish()) {
+		return;
+	}
 	// Simple fall down
 	vy += FALL_DOWN_SPEED * dt;
 
@@ -39,7 +42,7 @@ void CLargeHeart::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 void CLargeHeart::Render()
 {
 	CItem::Render();
-	if (!isShow()) {
+	if (getFinish()) {
 		return;
 	}
 	int ani = ITEM_ANI_LARGE_HEART;

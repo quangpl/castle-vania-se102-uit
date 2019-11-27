@@ -3,6 +3,14 @@
 //CItems* listItem= CItems::GetInstance();
 void CCandle::Render()
 {
+	if (isShow())
+	{
+		//cout << "Show" << endl;
+	}
+	else
+	{
+		return;
+	}
 	int ani;
 	ani = CANDLE_ANI_SHOW;
 	/*cout << getHealth() << endl;
@@ -12,9 +20,9 @@ void CCandle::Render()
 	else {	
 		ani = CANDLE_ANI_SHOW;
 	}*/
-	if (isShow()) {
-		CAnimations::GetInstance()->Get(ani)->Render(x, y);
-	}
+
+
+	CAnimations::GetInstance()->Get(ani)->Render(x, y);
 	if (CGame::GetInstance()->getDebug()) {
 			RenderBoundingBox();
 	}

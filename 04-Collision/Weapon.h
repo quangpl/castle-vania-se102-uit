@@ -33,6 +33,8 @@ public:
 		setType(TYPE_OBJECT_WEAPON);
 	}
 	virtual void Render();
+	virtual int getCurrentFrame() = 0;
+	virtual void setCurrentFrame(int fr) = 0;
 	void attack(int direction);
 	void setFinish(bool finish) { this->isFinish = finish; };
 	bool getFinish() { return this->isFinish; };

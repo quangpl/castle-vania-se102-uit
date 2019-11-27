@@ -56,6 +56,8 @@ class CWhip : public CWeapon
 
 	int WhipLevel;
 	bool wasHit;
+	bool isCanAttack;
+	int currentFrame;
 public:
 	CWhip() {
 		wasHit = false;
@@ -64,6 +66,11 @@ public:
 	void setLevel(int _level) { this->WhipLevel = _level; };
 	int getLevel() { return this->WhipLevel;};
 	bool getWasHit() { return this->wasHit; };
+	bool getIsCanAttack() {
+		return this->isCanAttack;
+	}
+	int getCurrentFrame() { return this->currentFrame; };
+	void setCurrentFrame(int fr) { this->currentFrame = fr; };
 };
 
 #endif

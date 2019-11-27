@@ -31,6 +31,7 @@ void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	if (isHit) {
 		if (CAnimations::GetInstance()->Get(getCurrentAni())->getCurrentFrame() == CAnimations::GetInstance()->Get(getCurrentAni())->getNumberOfFrame()-1) {
 			isHit = false;
+			isHitFinish = true;
 			//cout << "Set hit false" << endl;
 		}
 	}
@@ -81,7 +82,6 @@ void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		jumpReset();
 
 	}
-
 	// clean up collision events
 	for (UINT i = 0; i < coEvents.size(); i++) delete coEvents[i];
 }
@@ -235,6 +235,7 @@ void CSimon::sit() {
 void CSimon::hit() {
 	//cout << "hit hit" << endl;
 	isHit = true;
+	isHitFinish = false;
 	if ((isGoLeft || isGoRight) && !isJump) {
 		vx = 0;
 	}
@@ -283,13 +284,14 @@ void CSimon::collectDagger() {
 void CSimon::collectWhipUpgrade(CWhip* &whip) {
 	timeStartBlink = GetTickCount();
 	setFreeze(true);
+	SetSpeed(0, 0);
 	setStateBackup(this->state);
 	SetState(SIMON_STATE_WALKING_BLINK_SINGLE);
-	whip->setLevel(whip->getLevel() + 1);
+	/*whip->setLevel(whip->getLevel() + 1);*/
 }
 void CSimon::checkBlink() {
 	if (getFreeze()) {
-		if (GetTickCount() - timeStartBlink > TIME_BLINK) {
+		if (GetTickCount() - timeStartBlink >= TIME_BLINK) {
 			setFreeze(false);
 			SetState(getStateBackup());
 		}

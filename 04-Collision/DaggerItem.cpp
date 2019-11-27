@@ -15,6 +15,7 @@ void CDaggerItem::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 
 	// Calculate dx, dy 
 	CGameObject::Update(dt);
+	CItem::Update(dt, coObjects);
 
 	// Simple fall down
 	vy += FALL_DOWN_SPEED * dt;
@@ -41,6 +42,9 @@ void CDaggerItem::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 void CDaggerItem::Render()
 {
 	CItem::Render();
+	if (getFinish()) {
+		return;
+	}
 	int ani = ITEM_ANI_DAGGER;
 	CAnimations::GetInstance()->Get(ani)->Render(x, y);
 }

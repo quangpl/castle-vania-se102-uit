@@ -25,17 +25,20 @@
 class CItem : public CGameObject
 {
 	DWORD timeAppear;
+	bool isFinish;
 public:
 	CItem(float x, float y) : CGameObject()
 	{
 		setType(TYPE_OBJECT_ITEM); 
 		SetPosition(x, y);
+		timeAppear = GetTickCount();
 	}
 	virtual void GetBoundingBox(float& left, float& top, float& right, float& bottom) = 0;
 	virtual void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects) = 0;
 	virtual void Render() = 0;
-	void setTimeAppear(DWORD time) { this->timeAppear = time; };
 	void checkTimeoutAppear();
+	void setFinish(bool _finish) { this->isFinish = _finish; };
+	bool getFinish() { return this->isFinish; };
 };
 
 

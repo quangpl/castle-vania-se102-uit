@@ -301,7 +301,7 @@
     </Animation>
   </Texture>
   <!-- Animation LARGE_CANDLE -->
-  <Texture  textureId ="2" gameObjectId ="21">
+  <Texture  textureId ="2" gameObjectId ="211">
     <Animation aniId="560" frameTime="100" name="LARGE_CANDLE">
       <sprite id="10136" left="48" top="26" right="64" bottom="56"/>
       <sprite id="10137" left="75" top="26" right="91" bottom="56"/>
@@ -309,11 +309,11 @@
   </Texture>
 
    <!-- Animation LARGE_CANDLE -->
-  <Texture  textureId ="2" gameObjectId ="21">
+  <!-- <Texture  textureId ="2" gameObjectId ="21">
     <Animation aniId="5601" frameTime="100" name="LARGE_CANDLE">
       <sprite id="10136" left="0" top="0" right="0" bottom="0"/>
     </Animation>
-  </Texture>
+  </Texture> -->
   <!-- Animation DOORS -->
   <Texture  textureId ="2" gameObjectId ="22">
     <Animation aniId="561" frameTime="100" name="DOORS">

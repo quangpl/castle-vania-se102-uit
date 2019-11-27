@@ -38,9 +38,6 @@ void CItem::Render()
 	if (CGame::GetInstance()->getDebug()) {
 		RenderBoundingBox();
 	}
-	if (getHealth() <= 0) {
-		return;
-	}
 }
 
 
@@ -48,8 +45,9 @@ void CItem::checkTimeoutAppear()
 {
 	DWORD now = GetTickCount();
 	if (now - timeAppear >= PERIOD_TIME_APPEAR) {
-		hide();
+		/*hide();
 		SetState(ITEM_STATE_HIDE);
-		updateHealth(-2);
+		updateHealth(-2);*/\
+		isFinish = true;
 	}
 }

@@ -14,6 +14,7 @@ void CWhipUpgrade::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 
 	// Calculate dx, dy 
 	CGameObject::Update(dt);
+	CItem::Update(dt, coObjects);
 
 	// Simple fall down
 	vy += FALL_DOWN_SPEED * dt;
@@ -40,6 +41,9 @@ void CWhipUpgrade::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 void CWhipUpgrade::Render()
 {
 	CItem::Render();
+	if (getFinish()) {
+		return;
+	}
 	int ani = ITEM_ANI_WHIP_UPGRADE;
 	CAnimations::GetInstance()->Get(ani)->Render(x, y);
 }

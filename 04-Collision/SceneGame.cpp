@@ -112,7 +112,7 @@ void CSceneGame::LoadResources() {
 					items->Add(nItem, item);
 					nItem++;
 				}*/
-				else if (gameObjectId == 21) {
+				else if (gameObjectId == 211) {
 					for (int i = 1; i <= NUMBER_OF_CANDLE; i++) {
 						CCandle* candle = new CCandle();
 						candle->AddAnimation(aniId);
@@ -285,6 +285,8 @@ void CSceneGame::Update(DWORD dt) {
 	/*if (dynamic_cast<CWeapon*>(whip)) {
 		cout << "OK laf weapon" << endl;
 	}*/
+
+	
 	whip->SetPosition(simon->GetPositionX(), simon->GetPositionY());
 	vector<LPGAMEOBJECT> coPlayerAndBackground;
 	vector<LPGAMEOBJECT> coWeaponAndCandle;
@@ -316,6 +318,16 @@ void CSceneGame::Update(DWORD dt) {
 			}
 		}
 	}
+	/*int ncandle =0;
+	for (int i = 0; i < objects.size(); i++)
+	{
+		if (dynamic_cast<CCandle*>(objects[i])) {
+			ncandle++;
+		
+		}
+	}
+	cout << "So candle" << endl;
+	cout << ncandle << endl;*/
 	//Check collision area
 	checkCollisonOfWeapon(coWeaponAndCandle);
 	checkCollisionSimonWithItem();
@@ -385,12 +397,13 @@ void CSceneGame::checkCollisionSimonWithItem() {
 }
 void CSceneGame::checkCollisonOfWeapon(vector<LPGAMEOBJECT> &listObjects) {
 	CWeapon* weapon = simon->getWeapon();
-	if (weapon->getFinish()&&simon->getIsHit()) { //Vu khi dang hoat dong moi xet va cham
+	if (weapon->getCurrentFrame()==3) { //Vu khi dang hoat dong moi xet va cham
 		for (int i = 0; i < listObjects.size(); i++) {
 			if (dynamic_cast<CCandle*>(listObjects[i]) && weapon->checkAABBWithObject(listObjects[i])) {
 				objects.push_back(getItem(dynamic_cast<CCandle*>(listObjects[i])->getId(), listObjects[i]->GetPositionX(), listObjects[i]->GetPositionY()));
 				//cout << objects[i]->getHealth() << endl;
-				objects[i]->subHealth(1);
+				//objects[i]->subHealth(1);
+				weapon->setCurrentFrame(-1);
 				deleteObject(objects, i);
 				return;
 			}
@@ -403,9 +416,11 @@ void CSceneGame::getBonusFromItem(CItem* item) {
 	}
 	else if(dynamic_cast<CWhipUpgrade*>(item)) {
 		cout << "Dang dung vao upgrade" << endl;
-		//simon->collectWhipUpgrade(whip);
+		simon->collectWhipUpgrade(whip);
+		whip->setLevel(whip->getLevel() + 1);
 	}
 	else if (dynamic_cast<CDaggerItem*>(item)) {
+
 		cout << "Dang dung vao upgrade" << endl;
 	}
 }

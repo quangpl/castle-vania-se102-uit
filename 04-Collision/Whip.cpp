@@ -17,6 +17,7 @@ void CWhip::Render()
 		ani = ROPE_ANI_LEVEL_3;
 		break;
 	default:
+		ani = ROPE_ANI_LEVEL_1;
 		break;
 	}
 	CAnimations::GetInstance()->Get(ani)->RenderFlip(-getDirection(), x, y, 24, 128);
@@ -75,17 +76,32 @@ void CWhip::GetBoundingBox(float& left, float& top, float& right, float& bottom)
 
 
 void CWhip::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
-{	
-
+{
+	CGameObject::Update(dt);
+	CAnimations* listAnimation = CAnimations::GetInstance();
 	if (getFinish()) {
 		return;
 	}
 	wasHit = false;
-	if (GetTickCount() - getLastTimeAttack() >= 340) {
+	/*if (GetTickCount() - getLastTimeAttack() >= 340) {
 		setFinish(true);
 		wasHit = true;
+	}*/
+	//cout << listAnimation->Get(ROPE_ANI_LEVEL_1)->getCurrentFrame() << endl;
+	
+	if (currentFrame == 3) {
+		setFinish(true);
+		//currentFrame = -1;
+		listAnimation->Get(getCurrentAni())->setCurrentFrame(-1);
 	}
-	float xSimon, ySimon;
+	if (getCurrentAni()) {
+		currentFrame = listAnimation->Get(getCurrentAni())->getCurrentFrame();
+	}
+	/*if(listAnimation->Get(ROPE_ANI_LEVEL_1)->getCurrentFrame()==3|| listAnimation->Get(ROPE_ANI_LEVEL_2)->getCurrentFrame() == 3|| listAnimation->Get(ROPE_ANI_LEVEL_3)->getCurrentFrame() == 3){
+		setFinish(true);
+		wasHit = true;
+	}*/
+	//float xSimon, ySimon;
 	/*CSimon::GetInstance()->GetPosition(xSimon, ySimon);
 	SetPosition(xSimon, ySimon);
 	setDirection(CSimon::GetInstance()->getDirection());*/

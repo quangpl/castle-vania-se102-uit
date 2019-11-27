@@ -17,7 +17,7 @@
 //#include "Constants.h"
 //#include "Game.h"
 
-#define SIMON_WALKING_SPEED		0.4f //Spped simon walking , default : 0.1f
+#define SIMON_WALKING_SPEED		0.1f //Spped simon walking , default : 0.1f
 #define SIMON_WALKING_SPEED_AUTO	0.11f //Spped simon walking , default : 0.1f
 
 //0.1f
@@ -77,7 +77,7 @@
 
 #define PULL_UP 1
 #define Y_BASE 166.6
-#define TIME_BLINK 750
+#define TIME_BLINK 1000
 #define DEFAULT_OFFSET_X 24
 
 #define SIMON_BBOX_MARGIN_LEFT 15
@@ -108,12 +108,15 @@ class CSimon : public CGameObject
 	CWeapon* weapon;
 	DWORD lastTimeAttack;
 	LPCOLLISIONEVENT colEventWithItem;
+
+	bool isHitFinish = false;
 	//CItem* itemCollision;
 public: 
 	CSimon() : CGameObject()
 	{
 		level = SIMON_LEVEL;
 		untouchable = 0;
+		isHit = false;
 		setType(TYPE_OBJECT_PLAYER);
 	}
 	static CSimon* GetInstance();
@@ -151,6 +154,7 @@ public:
 	void collectWhipUpgrade(CWhip* &_whip);
 	bool isCollisionWithItem(CItem* item);
 	bool getIsHit() { return this->isHit; };
+	bool getIsHitFinish() { return this->isHitFinish; };
 };
 
 #endif

@@ -140,6 +140,6 @@ void CWeapon::attack(int _direction)
 }
 //bool CWeapon::canAttack()
 //{
-//	return  GetTickCount() - lastTimeAttack >= 330 && !isFinish;
+//	return  canTa
 //}
-
+//
