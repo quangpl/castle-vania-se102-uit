@@ -26,4 +26,5 @@ public:
 	void deleteObject(vector<LPGAMEOBJECT> &objects, int index);
 	void checkCollisionSimonWithItem();
 	void getBonusFromItem(CItem* item);
+	void createGhost();
 };

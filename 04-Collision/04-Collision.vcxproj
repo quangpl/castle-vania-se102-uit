@@ -129,7 +129,9 @@
     <ClInclude Include="Dagger.h" />
     <ClInclude Include="DaggerItem.h" />
     <ClInclude Include="Effect.h" />
+    <ClInclude Include="Enemy.h" />
     <ClInclude Include="Fire.h" />
+    <ClInclude Include="Ghost.h" />
     <ClInclude Include="Ground.h" />
     <ClInclude Include="Hidden.h" />
     <ClInclude Include="Items.h" />
@@ -161,7 +163,9 @@
     <ClCompile Include="Dagger.cpp" />
     <ClCompile Include="DaggerItem.cpp" />
     <ClCompile Include="Effect.cpp" />
+    <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="Fire.cpp" />
+    <ClCompile Include="Ghost.cpp" />
     <ClCompile Include="Ground.cpp" />
     <ClCompile Include="Hidden.cpp" />
     <ClCompile Include="Items.cpp" />

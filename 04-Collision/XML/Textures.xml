@@ -347,7 +347,7 @@
             <!--Texture Object and Effect -->
   <!-- Animation GHOST -->
   <Texture  textureId ="3" gameObjectId ="26">
-    <Animation aniId="565" frameTime="100" name="GHOST">
+    <Animation aniId="5655" frameTime="100" name="GHOST">
       <sprite id="10165" left="12" top="7" right="28" bottom="39"/>
       <sprite id="10166" left="37" top="7" right="53" bottom="39"/>
     </Animation>

@@ -24,9 +24,11 @@
 #include "Dagger.h"
 #include "Hidden.h"
 #include "Constants.h"
+#include "SmallCandle.h"
 #include "WhipUpgrade.h"
 #include "LargeHeart.h"
 #include "DaggerItem.h"
+#include "Ghost.h"
 
 using namespace std;
 

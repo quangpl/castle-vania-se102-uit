@@ -5,6 +5,8 @@ CGame* game;
 CSimon* simon = CSimon::GetInstance();
 CMaps* maps = CMaps::GetInstance();
 CWhip* whip;
+CWeapon* backupWeapon;
+CWeapon* backupSubWeapon;
 CSceneGame* CSceneGame::__instance = NULL;
 vector<CItem*> listItem;
 vector<CEffect*> listEffect;
@@ -35,6 +37,7 @@ void CSceneGame::LoadResources() {
 		textures->Add(ID_TEX_SIMON, "textures\\TexturesV3.png", D3DCOLOR_XRGB(34, 177, 76));
 		textures->Add(ID_TEX_CANDLE, "textures\\object.png", D3DCOLOR_XRGB(34, 177, 76));
 		textures->Add(ID_TEX_ITEM, "textures\\Items.png", D3DCOLOR_XRGB(128, 0, 0));
+		textures->Add(ID_TEX_ENEMY, "textures\\enemy.png", D3DCOLOR_XRGB(96, 68, 106));
 
 
 
@@ -130,7 +133,6 @@ void CSceneGame::LoadResources() {
 					{
 						float l, t, r, b;
 						CBrick* brick = new CBrick();
-						brick->AddAnimation(aniId);
 						brick->SetPosition(0 + i * 16.0f, SCREEN_HEIGHT - 45); //Anhr huong vi tri simon
 						objects.push_back(brick);
 					}
@@ -230,17 +232,11 @@ void CSceneGame::LoadResources() {
 					{
 						simon->AddAnimation(aniId);
 					}
-					else if (gameObjectId == 100) {
-						whip = new CWhip();
-						whip->setLevel(1);
-						whip->AddAnimation(aniId);
-					}
 					else if (gameObjectId == 28) {
 						for (int i = 0; i < NUMBER_OF_BRICK; i++)
 						{
 							float l, t, r, b;
 							CBrick* brick = new CBrick();
-							brick->AddAnimation(aniId);
 							brick->SetPosition(0 + i * 16.0f, SCREEN_HEIGHT - 30);
 							objects.push_back(brick);
 						}
@@ -249,12 +245,63 @@ void CSceneGame::LoadResources() {
 
 
 			}
+
+			//Load new object
+			TiXmlDocument Map2Object("XML/Map2_Objects.xml");
+			if (!Map2Object.LoadFile())
+			{
+				DebugOut(L"Can't read XML file: %s");
+				MessageBox(NULL, L"Can't Read XML File", L"Error", MB_OK);
+				return;
+			}
+			// get info root
+			 root = Map2Object.RootElement();
+			TiXmlElement* Objects = nullptr;
+			TiXmlElement* Object = nullptr;
+			for (Objects = root->FirstChildElement(); Objects != NULL; Objects = Objects->NextSiblingElement())
+			{
+				int id;
+				float x, y, Width, Height;
+				Objects->QueryIntAttribute("id", &id);
+				for (Object = Objects->FirstChildElement(); Object != NULL; Object = Object->NextSiblingElement())
+				{
+					Object->QueryFloatAttribute("x", &x);
+					Object->QueryFloatAttribute("y", &y);
+					Object->QueryFloatAttribute("width", &Width);
+					Object->QueryFloatAttribute("height", &Height);
+					if (id == 0)
+					{
+						CBrick* newBrick = new CBrick();
+						newBrick->setSize(Width, Height);
+						newBrick->SetPosition(x, y);
+						objects.push_back(newBrick);
+					}
+					
+					else if (id == 2) {
+						CSmallCandle* smallCandle = new CSmallCandle();
+						smallCandle->SetPosition(x, y);
+						objects.push_back(smallCandle);
+					}
+					/*else if (id == 3)
+					{
+						CWall* wall = new CWall();
+						wall->SetPosition(x, y);
+						wall->SetWidthHeight(Width, Height);
+						objects.push_back(wall);
+					}*/
+				}
+			}
+
+
+
+			//Simon
 			simon->stopAutoGoX();
 			simon->SetPosition(50.0f, 0); //simon
 			objects.push_back(simon);
 
-
+			//Whip
 			objects.push_back(whip);
+			//Map
 			maps->Add(ID_MAP_2, map);
 			currentIdMap = ID_MAP_2;
 		}
@@ -270,6 +317,10 @@ void CSceneGame::checkUpdateScene() {
 	case 1:
 		if (simon->getIsCollisionWithDoor()) {
 			CScenes::GetInstance()->Get(SCENE_GAME_ID)->setStage(2);
+			/*backupWeapon = simon->getWeapon();
+			if (simon->getSubWeapon()) {
+				backupSubWeapon = simon->getSubWeapon();
+			}*/
 			LoadResources();
 		}
 		break;
@@ -278,12 +329,9 @@ void CSceneGame::checkUpdateScene() {
 	}
 }
 void CSceneGame::Update(DWORD dt) {
-	/*float xWeapon, yWeapon;
-	weapon->GetPosition(xWeapon, yWeapon);
-	if (xWeapon <= 0 || xWeapon >= maps->Get(ID_MAP_1)->getMapWidth()) {
-		weapon->hide();
-	}*/
-	//cout << simon->GetPositionX() << endl;
+	if (getStage() == 2) {
+		createGhost();
+	}
 	checkUpdateScene();
 	/*if (dynamic_cast<CWeapon*>(whip)) {
 		cout << "OK laf weapon" << endl;
@@ -298,7 +346,7 @@ void CSceneGame::Update(DWORD dt) {
 	{
 		if (objects[i]->getHealth()>0 && objects[i]->isShow()) {
 			
-			if (dynamic_cast<CHidden*>(objects[i]) || dynamic_cast<CBrick*>(objects[i]) || dynamic_cast<CSimon*>(objects[i]) || dynamic_cast<CItem*>(objects[i])) {
+			if (dynamic_cast<CEnemy*>(objects[i]) ||dynamic_cast<CHidden*>(objects[i]) || dynamic_cast<CBrick*>(objects[i]) || dynamic_cast<CSimon*>(objects[i]) || dynamic_cast<CItem*>(objects[i])) {
 				coPlayerAndBackground.push_back(objects[i]);
 			}
 
@@ -315,7 +363,7 @@ void CSceneGame::Update(DWORD dt) {
 	{
 		if (objects[i]->getHealth() > 0 && objects[i]->isShow()) {
 
-			if (dynamic_cast<CBrick*>(objects[i]) || dynamic_cast<CSimon*>(objects[i]) || dynamic_cast<CItem*>(objects[i])) {
+			if (dynamic_cast<CEnemy*>(objects[i])||dynamic_cast<CBrick*>(objects[i]) || dynamic_cast<CSimon*>(objects[i]) || dynamic_cast<CItem*>(objects[i])) {
 				objects[i]->Update(dt, &coPlayerAndBackground);
 			}
 
@@ -399,9 +447,8 @@ void CSceneGame::checkCollisionSimonWithItem() {
 		if (dynamic_cast<CItem*>(objects[i])) {
 			if (!dynamic_cast<CItem*>(objects[i])->getFinish()) {
 				if (simon->isCollisionWithItem(dynamic_cast<CItem*>(objects[i]))) {
-					cout << "va cham item ne" << endl;
-					deleteObject(objects, i);
 					getBonusFromItem(dynamic_cast<CItem*>(objects[i]));
+					deleteObject(objects, i);
 				}
 			}
 			
@@ -481,6 +528,26 @@ CItem* CSceneGame::getItem(int id, float x, float y) {
 }
 void CSceneGame::deleteObject(vector<LPGAMEOBJECT> &listObj, int index) {
 	listObj.erase(listObj.begin() + index);
+	//listObj.erase(std::/*remove*/(listObj.begin(), listObj.end(), listObj[i]), listObj.end());
+}
+void CSceneGame::createGhost() {
+	int ghost = 0;
+	for (int i = 0; i < objects.size(); i++) {
+		if (dynamic_cast<CGhost*>(objects[i])&&objects[i]->isShow()) {
+			ghost++;
+		}
+	}
+	if (ghost >= 3) {
+		return;
+	}
+	for (int i = 1; i <= 3; i++) {
+		CGhost* newGhost = new CGhost(1); // Ghost chay nguoc chieu voi Simon
+		newGhost->SetPosition( i*8, 0); //8 la do chenh lech giua cac Ghost
+		objects.push_back(newGhost);
+	}
+	
+
+	
 }
 
 
