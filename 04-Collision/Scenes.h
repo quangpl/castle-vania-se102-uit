@@ -20,6 +20,8 @@
 #include "Maps.h"
 //#include "Items.h"
 #include <sstream> 
+#include "Fire.h"
+#include "Dagger.h"
 #include "Hidden.h"
 #include "Constants.h"
 #include "WhipUpgrade.h"
@@ -32,7 +34,7 @@ class CScene
 {
 	int stage;
 	int id;				// Sprite ID in the sprite database
-	LPD3DXSPRITE spriteHandler;
+	//LPD3DXSPRITE spriteHandler;
 public:
 	virtual void LoadResources() = 0;
 	virtual void Update(DWORD dt) = 0;

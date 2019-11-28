@@ -1,5 +1,4 @@
 #pragma once
-#include "Weapon.h"
 #include "Ground.h"
 #define CANDLE_BBOX_WIDTH  16
 #define CANDLE_BBOX_HEIGHT 29 //24

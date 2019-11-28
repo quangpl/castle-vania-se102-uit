@@ -17,7 +17,7 @@
 //#include "Constants.h"
 //#include "Game.h"
 
-#define SIMON_WALKING_SPEED		0.1f //Spped simon walking , default : 0.1f
+#define SIMON_WALKING_SPEED		0.25f //Spped simon walking , default : 0.1f
 #define SIMON_WALKING_SPEED_AUTO	0.11f //Spped simon walking , default : 0.1f
 
 //0.1f
@@ -106,6 +106,7 @@ class CSimon : public CGameObject
 
 	bool isCollisionWithDoor = false;
 	CWeapon* weapon;
+	CWeapon* subWeapon;
 	DWORD lastTimeAttack;
 	LPCOLLISIONEVENT colEventWithItem;
 
@@ -144,8 +145,12 @@ public:
 	void stopAutoGoX() {
 		isAutoGoX = false;
 	}
-	void attack();
+	void attack(); //Su dung vu khi chinh
+	void attackSub(); //Su dung vu khi phu
 	void setWeapon(CWeapon* _weapon) { this->weapon = _weapon; };
+	void setSubWeapon(CWeapon* _weapon) { this->subWeapon = _weapon; };
+	
+	CWeapon* getSubWeapon() {return this->subWeapon; };
 	CWeapon* getWeapon() { return this->weapon;};
 	bool getIsCollisionWithDoor() { return this->isCollisionWithDoor; };
 	virtual void GetBoundingBox(float &left, float &top, float &right, float &bottom);

@@ -210,9 +210,21 @@ void CSimon::jumpReset() {
 	canJump = true;
 }
 void CSimon::attack() {
-	this->weapon->attack(nx);
+	if (!this->weapon->getFinish()) {  //Ngan chan khong cho su dung vu khi lien tuc
+		return;
+	}
+	this->weapon->attack(x,y,nx);
 	this->lastTimeAttack = GetTickCount();
 }
+
+void CSimon::attackSub() {
+	if (!this->subWeapon->getFinish()) {  //Ngan chan khong cho su dung vu khi lien tuc
+		return;
+	}
+	this->subWeapon->attack(x, y, nx);
+	this->lastTimeAttack = GetTickCount();
+}
+
 
 
 void CSimon::idle() {

@@ -27,9 +27,9 @@ void CWhip::Render()
 	}
 }
 
-void CWhip::attack(int _direction)
+void CWhip::attack(float x, float y, int direction)
 {
-	CWeapon::attack(_direction);
+	CWeapon::attack(x,y, direction);
 };
 
 
@@ -77,11 +77,15 @@ void CWhip::GetBoundingBox(float& left, float& top, float& right, float& bottom)
 
 void CWhip::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
-	CGameObject::Update(dt);
+	//CGameObject::Update(dt);
+	CWeapon::Update(dt, coObjects);
 	CAnimations* listAnimation = CAnimations::GetInstance();
 	if (getFinish()) {
 		return;
 	}
+	/*if (GetTickCount() - getTimeStartWaitItem() >= 4000) {
+		setIsWaitItem(false);
+	}*/
 	wasHit = false;
 	/*if (GetTickCount() - getLastTimeAttack() >= 340) {
 		setFinish(true);
@@ -91,9 +95,13 @@ void CWhip::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	
 	if (currentFrame == 3) {
 		setFinish(true);
-		//currentFrame = -1;
+		setCanDestroy(true);
 		listAnimation->Get(getCurrentAni())->setCurrentFrame(-1);
 	}
+	else {
+		setCanDestroy(false);
+	}
+	
 	if (getCurrentAni()) {
 		currentFrame = listAnimation->Get(getCurrentAni())->getCurrentFrame();
 	}

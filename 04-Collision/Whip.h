@@ -62,7 +62,7 @@ public:
 	CWhip() {
 		wasHit = false;
 	};
-	void attack(int direction);
+	void attack(float x, float y,int direction);
 	void setLevel(int _level) { this->WhipLevel = _level; };
 	int getLevel() { return this->WhipLevel;};
 	bool getWasHit() { return this->wasHit; };

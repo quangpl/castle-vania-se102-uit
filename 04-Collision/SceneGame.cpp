@@ -7,6 +7,8 @@ CMaps* maps = CMaps::GetInstance();
 CWhip* whip;
 CSceneGame* CSceneGame::__instance = NULL;
 vector<CItem*> listItem;
+vector<CEffect*> listEffect;
+
 
 CSceneGame::CSceneGame()
 {
@@ -150,6 +152,7 @@ void CSceneGame::LoadResources() {
 		objects.push_back(whip);
 		maps->Add(ID_MAP_1, map);
 		currentIdMap = ID_MAP_1;
+
 	}
 	else if (getStage() == 2) {
 		{
@@ -293,7 +296,7 @@ void CSceneGame::Update(DWORD dt) {
 	vector<LPGAMEOBJECT> coEffects;
 	for (int i = 0; i < objects.size(); i++)
 	{
-		if (objects[i]->getHealth()>0) {
+		if (objects[i]->getHealth()>0 && objects[i]->isShow()) {
 			
 			if (dynamic_cast<CHidden*>(objects[i]) || dynamic_cast<CBrick*>(objects[i]) || dynamic_cast<CSimon*>(objects[i]) || dynamic_cast<CItem*>(objects[i])) {
 				coPlayerAndBackground.push_back(objects[i]);
@@ -302,12 +305,15 @@ void CSceneGame::Update(DWORD dt) {
 			if (dynamic_cast<CWeapon*>(objects[i]) || dynamic_cast<CCandle*>(objects[i])) {
 				coWeaponAndCandle.push_back(objects[i]);
 			}
+			if (dynamic_cast<CEffect*>(objects[i])) {
+				coEffects.push_back(objects[i]);
+			}
 		}
 	}
 
 	for (int i = 0; i < objects.size(); i++)
 	{
-		if (objects[i]->getHealth() > 0) {
+		if (objects[i]->getHealth() > 0 && objects[i]->isShow()) {
 
 			if (dynamic_cast<CBrick*>(objects[i]) || dynamic_cast<CSimon*>(objects[i]) || dynamic_cast<CItem*>(objects[i])) {
 				objects[i]->Update(dt, &coPlayerAndBackground);
@@ -315,6 +321,9 @@ void CSceneGame::Update(DWORD dt) {
 
 			if (dynamic_cast<CWeapon*>(objects[i]) || dynamic_cast<CCandle*>(objects[i])) {
 				objects[i]->Update(dt, &coWeaponAndCandle);
+			}
+			if (dynamic_cast<CEffect*>(objects[i])) {
+				objects[i]->Update(dt, &coEffects);
 			}
 		}
 	}
@@ -329,6 +338,7 @@ void CSceneGame::Update(DWORD dt) {
 	cout << "So candle" << endl;
 	cout << ncandle << endl;*/
 	//Check collision area
+	
 	checkCollisonOfWeapon(coWeaponAndCandle);
 	checkCollisionSimonWithItem();
 
@@ -387,25 +397,46 @@ void CSceneGame::Render() {
 void CSceneGame::checkCollisionSimonWithItem() {
 	for (int i = 0; i < objects.size(); i++) {
 		if (dynamic_cast<CItem*>(objects[i])) {
-			if (simon->isCollisionWithItem(dynamic_cast<CItem*>(objects[i]))) {
-				cout << "va cham item ne" << endl;
-				deleteObject(objects,i);
-				getBonusFromItem(dynamic_cast<CItem*>(objects[i]));
+			if (!dynamic_cast<CItem*>(objects[i])->getFinish()) {
+				if (simon->isCollisionWithItem(dynamic_cast<CItem*>(objects[i]))) {
+					cout << "va cham item ne" << endl;
+					deleteObject(objects, i);
+					getBonusFromItem(dynamic_cast<CItem*>(objects[i]));
+				}
 			}
+			
 		}
 	}
 }
 void CSceneGame::checkCollisonOfWeapon(vector<LPGAMEOBJECT> &listObjects) {
 	CWeapon* weapon = simon->getWeapon();
-	if (weapon->getCurrentFrame()==3) { //Vu khi dang hoat dong moi xet va cham
+	CWeapon* subWeapon = simon->getSubWeapon();
+	if (subWeapon) {
+		if (subWeapon->getCanDestroy()) { //Vu khi dang hoat dong moi xet va cham
+			for (int i = 0; i < listObjects.size(); i++) {
+				if (dynamic_cast<CCandle*>(listObjects[i]) && subWeapon->checkAABBWithObject(listObjects[i])) {
+					objects.push_back(new CFire(listObjects[i]->GetPositionX(), listObjects[i]->GetPositionY()));
+					objects.push_back(getItem(dynamic_cast<CCandle*>(listObjects[i])->getId(), listObjects[i]->GetPositionX(), listObjects[i]->GetPositionY()));
+					subWeapon->setCurrentFrame(-1);
+					subWeapon->setCanDestroy(false);
+					deleteObject(objects, i);
+					subWeapon->setFinish(true);
+				}
+			}
+		}
+	}
+	if (weapon->getCanDestroy()) { //Vu khi dang hoat dong moi xet va cham
 		for (int i = 0; i < listObjects.size(); i++) {
 			if (dynamic_cast<CCandle*>(listObjects[i]) && weapon->checkAABBWithObject(listObjects[i])) {
+				objects.push_back(new CFire(listObjects[i]->GetPositionX(), listObjects[i]->GetPositionY()));
 				objects.push_back(getItem(dynamic_cast<CCandle*>(listObjects[i])->getId(), listObjects[i]->GetPositionX(), listObjects[i]->GetPositionY()));
-				//cout << objects[i]->getHealth() << endl;
-				//objects[i]->subHealth(1);
-				weapon->setCurrentFrame(-1);
-				deleteObject(objects, i);
-				return;
+					weapon->setCurrentFrame(-1);
+					weapon->setCanDestroy(false);
+					deleteObject(objects, i);
+					weapon->setFinish(true);
+			}
+			else {
+				weapon->setCanDestroy(false);
 			}
 		}
 	}
@@ -420,8 +451,10 @@ void CSceneGame::getBonusFromItem(CItem* item) {
 		whip->setLevel(whip->getLevel() + 1);
 	}
 	else if (dynamic_cast<CDaggerItem*>(item)) {
-
-		cout << "Dang dung vao upgrade" << endl;
+		CDagger* dagger = new CDagger();
+		dagger->SetPosition(simon->GetPositionX(), simon->GetPositionY());
+		objects.push_back(dagger);
+		simon->setSubWeapon(dagger);
 	}
 }
 CItem* CSceneGame::getItem(int id, float x, float y) {

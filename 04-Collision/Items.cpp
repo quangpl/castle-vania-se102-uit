@@ -27,7 +27,10 @@
 //}
 
 void CItem::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
-{
+{	
+	if (isFinish) {
+		return;
+	}
 	CGameObject::Update(dt, coObjects);
 	checkTimeoutAppear(); //check time appear
 }
@@ -49,5 +52,6 @@ void CItem::checkTimeoutAppear()
 		SetState(ITEM_STATE_HIDE);
 		updateHealth(-2);*/\
 		isFinish = true;
+		hide();
 	}
 }

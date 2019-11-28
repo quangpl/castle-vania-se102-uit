@@ -88,7 +88,9 @@ void CSampleKeyHander::KeyState(BYTE* states)   //long event
 	}
 	if (gameKey->IsKeyDown(DIK_X))
 	{
-		simonKey->attack();
-		simonKey->SetState(SIMON_STATE_HIT);
+		if (simonKey->getSubWeapon()) {
+			simonKey->attackSub();
+			simonKey->SetState(SIMON_STATE_HIT);
+		}
 	}
 }

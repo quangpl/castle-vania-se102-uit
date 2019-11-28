@@ -55,6 +55,9 @@
     <Filter Include="GameObject\Player">
       <UniqueIdentifier>{cc45f234-3455-4465-9334-5d9d9ae430be}</UniqueIdentifier>
     </Filter>
+    <Filter Include="GameObject\Effect">
+      <UniqueIdentifier>{9c0e1092-e0cf-48e4-8d03-275b6c242a70}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="debug.h">
@@ -139,6 +142,15 @@
     <ClInclude Include="Ground.h">
       <Filter>GameObject\Ground</Filter>
     </ClInclude>
+    <ClInclude Include="Effect.h">
+      <Filter>GameObject\Effect</Filter>
+    </ClInclude>
+    <ClInclude Include="Fire.h">
+      <Filter>GameObject\Effect</Filter>
+    </ClInclude>
+    <ClInclude Include="Dagger.h">
+      <Filter>GameObject\Weapon</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
@@ -222,6 +234,15 @@
     </ClCompile>
     <ClCompile Include="Ground.cpp">
       <Filter>GameObject\Ground</Filter>
+    </ClCompile>
+    <ClCompile Include="Effect.cpp">
+      <Filter>GameObject\Effect</Filter>
+    </ClCompile>
+    <ClCompile Include="Fire.cpp">
+      <Filter>GameObject\Effect</Filter>
+    </ClCompile>
+    <ClCompile Include="Dagger.cpp">
+      <Filter>GameObject\Weapon</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
