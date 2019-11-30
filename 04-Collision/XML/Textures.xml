@@ -153,6 +153,40 @@
       <sprite id="100602" left="442" top="248" right="521" bottom="278" frameTime="100"/>
 
     </Animation>
+
+     <!-- Animation STAIR -->
+
+    <Animation aniId="5000" frameTime="100" name="STAIR_UP">
+      <sprite id="10005" left="86" top="24" right="164" bottom="54" frameTime="200"/>
+      <sprite id="50001" left="526" top="24" right="604" bottom="54" frameTime="25"/>
+    </Animation>
+
+     <Animation aniId="5004" frameTime="100" name="STAIR_DOWN">
+      <sprite id="10005" left="86" top="24" right="164" bottom="54" frameTime="200"/>
+      <sprite id="50007" left="611" top="24" right="687" bottom="54" frameTime="25"/>
+    </Animation>
+
+    <Animation aniId="5001" frameTime="100" name="STAIR_ATTACK_UP">
+      <sprite id="50001" left="526" top="24" right="604" bottom="54" frameTime="100"/>
+      <sprite id="50003" left="526" top="73" right="604" bottom="103" frameTime="100"/>
+      <sprite id="50004" left="609" top="73" right="687" bottom="103" frameTime="100"/>
+      <sprite id="50009" left="526" top="122" right="604" bottom="152" frameTime="100"/>
+    </Animation>
+    
+    <Animation aniId="5005" frameTime="100" name="STAIR_ATTACK_DOWN">
+      <sprite id="50007" left="611" top="24" right="687" bottom="54" frameTime="100"/>
+      <sprite id="50008" left="609" top="122" right="687" bottom="152" frameTime="100"/>
+      <sprite id="50009" left="526" top="166" right="604" bottom="193" frameTime="100"/>
+      <sprite id="50010" left="609" top="166" right="687" bottom="193" frameTime="100"/>
+    </Animation>
+
+    <Animation aniId="5002" frameTime="100" name="STAIR_IDLE_DOWN">
+      <sprite id="50007" left="611" top="24" right="687" bottom="54" frameTime="100"/>
+    </Animation>
+
+    <Animation aniId="5003" frameTime="100" name="STAIR_IDLE_UP">
+      <sprite id="50001" left="526" top="24" right="604" bottom="54" frameTime="100"/>
+    </Animation>
   </Texture>
   
              <!--Texture Item-->
@@ -220,20 +254,20 @@
   </Texture>
   <!-- Animation GRAY_MONEYBAG -->
   <Texture  textureId ="1" gameObjectId ="9">
-    <Animation aniId="547" frameTime="100" name="GRAY_MONEYBAG">
+    <Animation aniId="5472" frameTime="100" name="GRAY_MONEYBAG">
       <sprite id="10121" left="378" top="92" right="392" bottom="107"/>
     </Animation>
   </Texture>
   <!-- Animation STOP_WATCH -->
   <Texture  textureId ="1" gameObjectId ="10">
     <Animation aniId="548" frameTime="100" name="STOP_WATCH">
-      <sprite id="10122" left="40" top="105" right="55" bottom="111"/>
+      <sprite id="10122" left="40" top="105" right="55" bottom="121"/>
     </Animation>
   </Texture>
   <!-- Animation HOLY_WATER_BOTTLE -->
   <Texture  textureId ="1" gameObjectId ="11">
     <Animation aniId="549" frameTime="100" name="HOLY_WATER_BOTTLE">
-      <sprite id="10123" left="102" top="105" right="118" bottom="111"/>
+      <sprite id="10123" left="102" top="105" right="118" bottom="121"/>
     </Animation>
   </Texture>
   <!-- Animation HOLY_WATER_SMALL_BOTTLE -->
@@ -343,6 +377,32 @@
       <sprite id="10164" left="56" top="76" right="64" bottom="91"/>
     </Animation>
   </Texture>
+  <!-- Animation money-->
+  <Texture  textureId ="1" gameObjectId ="17">
+    <Animation aniId="601" frameTime="80" name="MONEY_100">
+      <sprite id="20033" left="407" top="44" right="460" bottom="58"/>
+    </Animation>
+  </Texture>
+
+    <Texture  textureId ="1" gameObjectId ="17">
+    <Animation aniId="602" frameTime="80" name="MONEY_400">
+      <sprite id="20034" left="407" top="69" right="460" bottom="83"/>
+    </Animation>
+  </Texture>
+
+    <Texture  textureId ="1" gameObjectId ="17">
+    <Animation aniId="603" frameTime="80" name="MONEY_700">
+      <sprite id="20035" left="407" top="93" right="460" bottom="107"/>
+    </Animation>
+  </Texture>
+
+    <Texture  textureId ="1" gameObjectId ="17">
+    <Animation aniId="604" frameTime="80" name="MONEY_1000">
+      <sprite id="20036" left="407" top="123" right="466" bottom="137"/>
+    </Animation>
+  </Texture>
+
+
   
             <!--Texture Object and Effect -->
   <!-- Animation GHOST -->
@@ -438,3 +498,6 @@
     </Animation>
   </Texture>
 </Textures>
+
+
+

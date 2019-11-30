@@ -29,6 +29,13 @@
 #include "LargeHeart.h"
 #include "DaggerItem.h"
 #include "Ghost.h"
+#include "SmallHeart.h"
+#include "Money.h"
+#include "StopWatch.h"
+#include "HolyWater.h"
+#include "Cross.h"
+#include "PotRoast.h"
+#include "MonneyEffect.h"
 
 using namespace std;
 

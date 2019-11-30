@@ -47,7 +47,8 @@ void CSprite::DrawFlip(int nx, float x, float y, float offsetX, int alpha)
 	D3DXMATRIX newTransform = oldTransform * middleTransform;
 
 	spriteHandler->SetTransform(&newTransform);
-	spriteHandler->Draw(texture, &r, NULL, &p, D3DCOLOR_XRGB(255, 255, 255));
+
+	spriteHandler->Draw(texture, &r, NULL, &p, D3DCOLOR_ARGB(alpha,255,255,255));
 	spriteHandler->SetTransform(&oldTransform);
 }
 

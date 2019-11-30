@@ -170,6 +170,11 @@ void CGameObject::AddAnimation(int aniId)
 	animations.push_back(ani);
 }
 
+int CGameObject::getAlphaRandom() {
+	int a = 0,b=255;
+	return a + rand() % (b - a + 1);
+}
+
 bool CGameObject::isInCamera(float width, float height ) {
 	float x = this->GetPositionX();
 	float y = this->GetPositionY();

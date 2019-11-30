@@ -34,7 +34,7 @@ void CSceneGame::LoadResources() {
 
 		textures->Add(ID_TEX_MAP_1, "Map\\tileset_map1.png", D3DCOLOR_XRGB(255, 0, 255));
 		textures->Add(ID_TEX_BBOX, "textures\\bbox.png", D3DCOLOR_XRGB(255, 255, 255));
-		textures->Add(ID_TEX_SIMON, "textures\\TexturesV3.png", D3DCOLOR_XRGB(34, 177, 76));
+		textures->Add(ID_TEX_SIMON, "textures\\TexturesV4.png", D3DCOLOR_XRGB(34, 177, 76));
 		textures->Add(ID_TEX_CANDLE, "textures\\object.png", D3DCOLOR_XRGB(34, 177, 76));
 		textures->Add(ID_TEX_ITEM, "textures\\Items.png", D3DCOLOR_XRGB(128, 0, 0));
 		textures->Add(ID_TEX_ENEMY, "textures\\enemy.png", D3DCOLOR_XRGB(96, 68, 106));
@@ -150,6 +150,7 @@ void CSceneGame::LoadResources() {
 		simon->setWeapon(whip);
 		objects.push_back(simon);
 
+		
 
 		objects.push_back(whip);
 		maps->Add(ID_MAP_1, map);
@@ -163,7 +164,7 @@ void CSceneGame::LoadResources() {
 
 			textures->Add(ID_TEX_MAP_2, "Map\\tileset_map2.png", D3DCOLOR_XRGB(255, 255, 255));
 			textures->Add(ID_TEX_BBOX, "textures\\bbox.png", D3DCOLOR_XRGB(255, 255, 255));
-			textures->Add(ID_TEX_SIMON, "textures\\TexturesV3.png", D3DCOLOR_XRGB(34, 177, 76));
+			textures->Add(ID_TEX_SIMON, "textures\\TexturesV4.png", D3DCOLOR_XRGB(34, 177, 76));
 			textures->Add(ID_TEX_CANDLE, "textures\\object.png", D3DCOLOR_XRGB(34, 177, 76));
 			textures->Add(ID_TEX_ITEM, "textures\\Items.png", D3DCOLOR_XRGB(128, 0, 0));
 
@@ -292,13 +293,18 @@ void CSceneGame::LoadResources() {
 				}
 			}
 
-
+			
 
 			//Simon
 			simon->stopAutoGoX();
 			simon->setDirection(1);
 			simon->SetPosition(50.0f, 0); //simon
 			objects.push_back(simon);
+
+		/*	CMonneyEffect* money = new CMonneyEffect(200, 60);
+			money->SetState(100);
+			objects.push_back(money);*/
+
 
 			//Whip
 			objects.push_back(whip);
@@ -310,7 +316,6 @@ void CSceneGame::LoadResources() {
 	else {
 			cout << "CANNOT SET STAGE or STAGE NULL" << endl;
 	}
-	//isUpdateScene = true;
 }
 void CSceneGame::checkUpdateScene() {
 	switch (getStage())
@@ -318,10 +323,7 @@ void CSceneGame::checkUpdateScene() {
 	case 1:
 		if (simon->getIsCollisionWithDoor()) {
 			CScenes::GetInstance()->Get(SCENE_GAME_ID)->setStage(2);
-			/*backupWeapon = simon->getWeapon();
-			if (simon->getSubWeapon()) {
-				backupSubWeapon = simon->getSubWeapon();
-			}*/
+			
 			LoadResources();
 		}
 		break;
@@ -334,10 +336,6 @@ void CSceneGame::Update(DWORD dt) {
 		createGhost();
 	}
 	checkUpdateScene();
-	/*if (dynamic_cast<CWeapon*>(whip)) {
-		cout << "OK laf weapon" << endl;
-	}*/
-
 	
 	whip->SetPosition(simon->GetPositionX(), simon->GetPositionY());
 	vector<LPGAMEOBJECT> coPlayerAndBackground;
@@ -376,16 +374,6 @@ void CSceneGame::Update(DWORD dt) {
 			}
 		}
 	}
-	/*int ncandle =0;
-	for (int i = 0; i < objects.size(); i++)
-	{
-		if (dynamic_cast<CCandle*>(objects[i])) {
-			ncandle++;
-		
-		}
-	}
-	cout << "So candle" << endl;
-	cout << ncandle << endl;*/
 	//Check collision area
 	
 	checkCollisonOfWeapon(coWeaponAndCandle);
@@ -529,25 +517,9 @@ CItem* CSceneGame::getItem(int id, float x, float y) {
 }
 void CSceneGame::deleteObject(vector<LPGAMEOBJECT> &listObj, int index) {
 	listObj.erase(listObj.begin() + index);
-	//listObj.erase(std::/*remove*/(listObj.begin(), listObj.end(), listObj[i]), listObj.end());
 }
 void CSceneGame::createGhost() {
 	int ghost = 0;
-/*	for (int i = 0; i < objects.size(); i++) {
-		if (dynamic_cast<CGhost*>(objects[i]) && objects[i]->isShow()&& game->GetCamPos_x()) {
-			if (objects[i]->getDirection() > 0) {
-				if (objects[i]->GetPositionX() >= game->GetCamPos_x() + SCREEN_WIDTH) {
-					objects[i]->hide();
-				}
-			}
-			else {
-				if (objects[i]->GetPositionX() <= game->GetCamPos_x()) {
-					objects[i]->hide();
-				}
-			}
-		}
-	}*/
-
 	for (int i = 0; i < objects.size(); i++) {
 		if (dynamic_cast<CGhost*>(objects[i])&&objects[i]->isShow()) {
 			ghost++;

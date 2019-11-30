@@ -163,8 +163,7 @@ void CSimon::Render()
 	}
 	int alpha = 255;
 	if (untouchable) alpha = 128;
-
-	CAnimations::GetInstance()->Get(ani)->RenderFlip(-nx,x, y, DEFAULT_OFFSET_X,alpha);
+	CAnimations::GetInstance()->Get(ani)->RenderFlip(-nx,x, y, DEFAULT_OFFSET_X, alpha);
 	setCurrentAni(ani);
 
 	if (CGame::GetInstance()->getDebug()) {

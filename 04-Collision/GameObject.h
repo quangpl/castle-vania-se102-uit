@@ -127,6 +127,7 @@ public:
 		health = 0;
 	}
 	};
+	int getAlphaRandom();
 	~CGameObject();
 };
 

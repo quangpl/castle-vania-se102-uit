@@ -19,7 +19,7 @@
 
 #define FALL_DOWN_SPEED 0.0002f
 
-#define PERIOD_TIME_APPEAR 2500
+#define PERIOD_TIME_APPEAR 4000
 
 
 class CItem : public CGameObject
