@@ -170,6 +170,18 @@ void CGameObject::AddAnimation(int aniId)
 	animations.push_back(ani);
 }
 
+bool CGameObject::isInCamera(float width, float height ) {
+	float x = this->GetPositionX();
+	float y = this->GetPositionY();
+	float xCam = CGame::GetInstance()->GetCamPos_x();
+	float yCam = CGame::GetInstance()->GetCamPos_y();
+	if (x + width < xCam || xCam + SCREEN_WIDTH < x)
+		return false;
+	if (y + height < yCam || yCam + SCREEN_HEIGHT < y)
+		return false;
+	return true;
+}
+
 CGameObject::~CGameObject()
 {
 

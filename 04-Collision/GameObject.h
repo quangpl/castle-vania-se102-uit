@@ -117,6 +117,8 @@ public:
 	void setCurrentAni(int ani) { this->currentAni = ani; };
 	int getCurrentAni() { return this->currentAni; };
 
+	bool isInCamera(float w,float h); // Kiem tra object co nam trong camera hay khong
+
 	int getHealth() { return health; };
 	void setHealth(int h) { health = h; };
 	void updateHealth(int h) { this->health = this->health + h; };

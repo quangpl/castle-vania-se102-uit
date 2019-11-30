@@ -296,6 +296,7 @@ void CSceneGame::LoadResources() {
 
 			//Simon
 			simon->stopAutoGoX();
+			simon->setDirection(1);
 			simon->SetPosition(50.0f, 0); //simon
 			objects.push_back(simon);
 
@@ -532,22 +533,44 @@ void CSceneGame::deleteObject(vector<LPGAMEOBJECT> &listObj, int index) {
 }
 void CSceneGame::createGhost() {
 	int ghost = 0;
+/*	for (int i = 0; i < objects.size(); i++) {
+		if (dynamic_cast<CGhost*>(objects[i]) && objects[i]->isShow()&& game->GetCamPos_x()) {
+			if (objects[i]->getDirection() > 0) {
+				if (objects[i]->GetPositionX() >= game->GetCamPos_x() + SCREEN_WIDTH) {
+					objects[i]->hide();
+				}
+			}
+			else {
+				if (objects[i]->GetPositionX() <= game->GetCamPos_x()) {
+					objects[i]->hide();
+				}
+			}
+		}
+	}*/
+
 	for (int i = 0; i < objects.size(); i++) {
 		if (dynamic_cast<CGhost*>(objects[i])&&objects[i]->isShow()) {
 			ghost++;
 		}
 	}
-	if (ghost >= 3) {
-		return;
+	cout << simon->getDirection() << endl;
+	if (ghost == 0) {
+		if (simon->getDirection()>0) {
+			for (int i = 0; i < 3; i++) {
+				CGhost* newGhost = new CGhost(-1); // Direction: 1 la di qua phai, -1 la di qua trai
+				newGhost->SetPosition(simon->GetPositionX() + SCREEN_WIDTH + i*30,167.7);
+				objects.push_back(newGhost);
+			}
+		}
+		else {
+			for (int i = 0; i < 3; i++) {
+				CGhost* newGhost = new CGhost(1); // Direction: 1 la di qua phai, -1 la di qua trai
+				newGhost->SetPosition(simon->GetPositionX() - SCREEN_WIDTH - i * 30, 0);
+				objects.push_back(newGhost);
+			}
+		}
 	}
-	for (int i = 1; i <= 3; i++) {
-		CGhost* newGhost = new CGhost(1); // Ghost chay nguoc chieu voi Simon
-		newGhost->SetPosition( i*8, 0); //8 la do chenh lech giua cac Ghost
-		objects.push_back(newGhost);
-	}
-	
-
-	
+	return;
 }
 
 
