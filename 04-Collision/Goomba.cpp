@@ -1,21 +1,9 @@
 #include "Goomba.h"
 #include <iostream>
-void CGoomba::GetBoundingBox(float &left, float &top, float &right, float &bottom)
-{
-	left = x;
-	top = y;
-	right = x + GOOMBA_BBOX_WIDTH;
-
-	if (state == GOOMBA_STATE_DIE)
-		bottom = y + GOOMBA_BBOX_HEIGHT_DIE;
-	else 	
-		bottom = y + GOOMBA_BBOX_HEIGHT;
-}
-
 void CGoomba::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 {
 	CGameObject::Update(dt, coObjects);
-
+	//Thieu ham calc va cham
 	//
 	// TO-DO: make sure Goomba can interact with the world and to each of them too!
 	// 

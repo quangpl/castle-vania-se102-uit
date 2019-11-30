@@ -1,12 +1,12 @@
 #include "Hidden.h"
 
-CHidden::CHidden(float _w, float _h, int type)
-{
-	setType(TYPE_OBJECT_HIDDEN);
-	typeHidden = type;
-	w = _w;
-	h = _h;
-}
+//CHidden::CHidden(float _w, float _h, int type)
+//{
+//	setType(TYPE_OBJECT_HIDDEN);
+//	typeHidden = type;
+//	w = _w;
+//	h = _h;
+//}
 void CHidden::GetBoundingBox(float& left, float& top, float& right, float& bottom)
 {
 	left = x;
@@ -18,8 +18,6 @@ void CHidden::GetBoundingBox(float& left, float& top, float& right, float& botto
 void CHidden::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
 	CGameObject::Update(dt, coObjects);
-
-
 }
 void CHidden::Render()
 {

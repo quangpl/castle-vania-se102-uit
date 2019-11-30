@@ -86,7 +86,6 @@
       <sprite id="10019" left="5" top="159" right="83" bottom="189" frameTime="100"/>
       <sprite id="10020" left="87" top="159" right="165" bottom="189" frameTime="100"/>
       <sprite id="10021" left="170" top="159" right="248" bottom="189" frameTime="100"/>
-      <sprite id="100212" left="170" top="159" right="248" bottom="189" frameTime="100"/>
     </Animation>
     <!-- Animation LEVEL_TWO_ATTACK_STAND -->
     <Animation aniId="510" frameTime="100" name="LEVEL_TWO_ATTACK_STAND">
@@ -302,7 +301,7 @@
     </Animation>
   </Texture>
   <!-- Animation LARGE_CANDLE -->
-  <Texture  textureId ="2" gameObjectId ="21">
+  <Texture  textureId ="2" gameObjectId ="211">
     <Animation aniId="560" frameTime="100" name="LARGE_CANDLE">
       <sprite id="10136" left="48" top="26" right="64" bottom="56"/>
       <sprite id="10137" left="75" top="26" right="91" bottom="56"/>
@@ -310,11 +309,11 @@
   </Texture>
 
    <!-- Animation LARGE_CANDLE -->
-  <Texture  textureId ="2" gameObjectId ="21">
+  <!-- <Texture  textureId ="2" gameObjectId ="21">
     <Animation aniId="5601" frameTime="100" name="LARGE_CANDLE">
       <sprite id="10136" left="0" top="0" right="0" bottom="0"/>
     </Animation>
-  </Texture>
+  </Texture> -->
   <!-- Animation DOORS -->
   <Texture  textureId ="2" gameObjectId ="22">
     <Animation aniId="561" frameTime="100" name="DOORS">
@@ -348,7 +347,7 @@
             <!--Texture Object and Effect -->
   <!-- Animation GHOST -->
   <Texture  textureId ="3" gameObjectId ="26">
-    <Animation aniId="565" frameTime="100" name="GHOST">
+    <Animation aniId="5655" frameTime="100" name="GHOST">
       <sprite id="10165" left="12" top="7" right="28" bottom="39"/>
       <sprite id="10166" left="37" top="7" right="53" bottom="39"/>
     </Animation>

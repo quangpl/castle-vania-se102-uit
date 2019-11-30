@@ -1,8 +1,8 @@
 #pragma once
-#include "GameObject.h"
+#include "Ground.h"
 
 #define HIDDEN_TYPE_DOOR 1
-class CHidden : public CGameObject
+class CHidden : public CGround
 {
 	int typeHidden;
 	virtual void GetBoundingBox(float& left, float& top, float& right, float& bottom);
@@ -11,7 +11,13 @@ class CHidden : public CGameObject
 	float w, h;
 
 public:
-	CHidden(float w, float h, int type);
+	CHidden(float _w, float _h, int type) : CGround() {
+		setType(TYPE_OBJECT_HIDDEN);
+		typeHidden = type;
+		w = _w;
+		h = _h;
+	};
+
 	void setTypeHidden(int type) { this->typeHidden = type; };
 	int getTypeHidden() { return this->typeHidden; };
 };

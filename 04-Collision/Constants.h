@@ -19,6 +19,8 @@
 #define ID_TEX_CANDLE 2
 #define ID_TEX_ITEM 1
 #define ID_TEX_HIDDEN 5
+#define ID_TEX_ENEMY 3
+
 
 
 

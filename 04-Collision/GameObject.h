@@ -59,6 +59,7 @@ public:
 	DWORD dt; 
 	int typeObject;   
 
+	int health; //Object nao cung co suc khoe ban dau la 1
 	vector<LPANIMATION> animations;
 
 public: 
@@ -68,6 +69,10 @@ public:
 	void getPositionCustom(float& x, float& y) { x = this->xRender;  y = this->yRender; }
 
 	void SetSpeed(float vx, float vy) { this->vx = vx, this->vy = vy; }
+	float getVx() { return this->vx; };
+	float getVy() { return this->vy; };
+	int getDirection() { return this->nx; };
+
 	void GetPosition(float &x, float &y) { x = this->x; y = this->y; }
 	float GetPositionX() { return this->x; };
 	float GetPositionY() { return this->y; };
@@ -91,6 +96,8 @@ public:
 
 	CGameObject();
 	bool checkAABB(float left_a, float top_a, float right_a, float bottom_a, float left_b, float top_b, float right_b, float bottom_b);
+	bool checkAABBWithObject(CGameObject* obj);
+	bool checkAABBWithObjectAABBEx(CGameObject* obj);
 	virtual void GetBoundingBox(float &left, float &top, float &right, float &bottom) = 0;
 	virtual void Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects = NULL);
 	virtual void Render() = 0;
@@ -110,6 +117,16 @@ public:
 	void setCurrentAni(int ani) { this->currentAni = ani; };
 	int getCurrentAni() { return this->currentAni; };
 
+	bool isInCamera(float w,float h); // Kiem tra object co nam trong camera hay khong
+
+	int getHealth() { return health; };
+	void setHealth(int h) { health = h; };
+	void updateHealth(int h) { this->health = this->health + h; };
+	void subHealth(int h) { health = health - h;
+	if (health < 0) {
+		health = 0;
+	}
+	};
 	~CGameObject();
 };
 

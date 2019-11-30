@@ -1,9 +1,4 @@
-﻿#include <algorithm>
-#include "debug.h"
-#include "Constants.h"
-#include "Simon.h"
-#include "Game.h"
-#include "Goomba.h"
+﻿#include "Simon.h"
 
 CSimon* CSimon::__instance = NULL;
 
@@ -16,7 +11,6 @@ CSimon* CSimon::GetInstance()
 
 void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
-	cout << x << endl;
 	// Calculate dx, dy 
 	CGameObject::Update(dt);
 	checkBlink();
@@ -37,12 +31,11 @@ void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	if (isHit) {
 		if (CAnimations::GetInstance()->Get(getCurrentAni())->getCurrentFrame() == CAnimations::GetInstance()->Get(getCurrentAni())->getNumberOfFrame()-1) {
 			isHit = false;
-			cout << "Set hit false" << endl;
+			isHitFinish = true;
+			//cout << "Set hit false" << endl;
 		}
 	}
-	// turn off collision when die 
-	if (state != SIMON_STATE_DIE)
-		CalcPotentialCollisions(coObjects, coEvents);
+	CalcPotentialCollisions(coObjects, coEvents);
 
 	// reset untouchable timer if untouchable time has passed
 	if (GetTickCount() - untouchable_start > SIMON_UNTOUCHABLE_TIME)
@@ -70,30 +63,43 @@ void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		if (nx != 0) vx = 0;
 		if (ny != 0) vy = 0;
 
-		// Collision logic with Goombas
+		// Collision logic with Object
 		for (UINT i = 0; i < coEventsResult.size(); i++)
 		{
 			LPCOLLISIONEVENT e = coEventsResult[i];
-			if (dynamic_cast<CItem*>(e->obj) && (dynamic_cast<CItem*>(e->obj)->isShow())) // if e->obj is Item 
-			{
-				int typeItem = dynamic_cast<CItem*>(e->obj)->collisionWithSimon();
-				collisionWithItem(typeItem);
-			}
 			if (dynamic_cast<CHidden*>(e->obj)) {
-				cout << "Va cham" << endl;
 				isAutoGoX = true;
 				x += dx;
 				timeStartAutoGoX = GetTickCount();
 			}
+			else if (dynamic_cast<CItem*>(e->obj)) {
+				this->colEventWithItem = e;
+			}
+
 			
 		}
 		//Xử lý sau khi nhảy 
 		jumpReset();
 
 	}
-
 	// clean up collision events
 	for (UINT i = 0; i < coEvents.size(); i++) delete coEvents[i];
+}
+bool CSimon::isCollisionWithItem(CItem* objItem)
+{
+	if (!objItem->isShow())
+		return false;
+
+	float l, t, r, b;
+	float l1, t1, r1, b1;
+	this->GetBoundingBox(l, t, r, b);  // lấy BBOX của simon
+
+	objItem->GetBoundingBox(l1, t1, r1, b1);
+	if (checkAABB(l, t, r, b, l1, t1, r1, b1))
+	{
+		return true; // check with AABB
+	}
+	return checkAABBWithObjectAABBEx(objItem);
 }
 
 void CSimon::Render()
@@ -107,7 +113,7 @@ void CSimon::Render()
 		break;
 	case SIMON_STATE_SIT:
 		if (isHit) {
-			cout << "state sit" << endl;
+			//cout << "state sit" << endl;
 			ani = SIMON_ANI_SIT_HIT;
 		}
 		else {
@@ -118,7 +124,7 @@ void CSimon::Render()
 		ani = SIMON_ANI_WALKING_BLINK_SINGLE;
 		break;
 	case SIMON_STATE_JUMP:
-		cout << "state jump" << endl;
+		//cout << "state jump" << endl;
 		ani = SIMON_ANI_JUMP;
 		break;
 	case SIMON_STATE_HIT:
@@ -203,6 +209,23 @@ void CSimon::jumpReset() {
 	}
 	canJump = true;
 }
+void CSimon::attack() {
+	if (!this->weapon->getFinish()) {  //Ngan chan khong cho su dung vu khi lien tuc
+		return;
+	}
+	this->weapon->attack(x,y,nx);
+	this->lastTimeAttack = GetTickCount();
+}
+
+void CSimon::attackSub() {
+	if (!this->subWeapon->getFinish()) {  //Ngan chan khong cho su dung vu khi lien tuc
+		return;
+	}
+	this->subWeapon->attack(x, y, nx);
+	this->lastTimeAttack = GetTickCount();
+}
+
+
 
 void CSimon::idle() {
 	if (!isJump) {
@@ -222,8 +245,9 @@ void CSimon::sit() {
 }
 
 void CSimon::hit() {
-	cout << "hit hit" << endl;
+	//cout << "hit hit" << endl;
 	isHit = true;
+	isHitFinish = false;
 	if ((isGoLeft || isGoRight) && !isJump) {
 		vx = 0;
 	}
@@ -242,33 +266,44 @@ void CSimon::sitRelease() {
 	}
 }
 
-void CSimon::collisionWithItem(int type) {
-	CWeapon* weapon = CWeapon::GetInstance();
-	switch (type)
-	{
-	case ITEM_TYPE_LARGE_HEART:
-		cout << "Va cham heart tu simon";
-		break;
-	case ITEM_TYPE_WHIP_UPGRADE:
-		timeStartBlink = GetTickCount();
-		weapon->setLevel(weapon->getLevel()+1);
-		setFreeze(true);
-		setStateBackup(this->state);
-		SetState(SIMON_STATE_WALKING_BLINK_SINGLE);
-		break;
-	case ITEM_TYPE_DAGGER:
-		weapon->hide();
-		weapon->setHasDagger(true);
-		weapon->setTypeWeapon(WEAPON_TYPE_NO_WEAPON);
-		break;
-	default:
-		break;
-	}
-}
+//void CSimon::collisionWithItem(int type) {
+	//CWeapon* weapon = CWeapon::GetInstance();
+	//switch (type)
+	//{
+	//case ITEM_TYPE_LARGE_HEART:
+	//	cout << "Va cham heart tu simon";
+	//	break;
+	//case ITEM_TYPE_WHIP_UPGRADE:
+	//	timeStartBlink = GetTickCount();
+	//	//weapon->setLevel(weapon->getLevel()+1);
+	//	setFreeze(true);
+	//	setStateBackup(this->state);
+	//	SetState(SIMON_STATE_WALKING_BLINK_SINGLE);
+	//	break;
+	//case ITEM_TYPE_DAGGER:
+	//	//weapon->hide();
+	//	//weapon->setHasDagger(true);
+	//	//weapon->setTypeWeapon(WEAPON_TYPE_NO_WEAPON);
+	//	break;
+	//default:
+	//	break;
+	//}
+//}
 
+void CSimon::collectDagger() {
+	
+}
+void CSimon::collectWhipUpgrade(CWhip* &whip) {
+	timeStartBlink = GetTickCount();
+	setFreeze(true);
+	SetSpeed(0, 0);
+	setStateBackup(this->state);
+	SetState(SIMON_STATE_WALKING_BLINK_SINGLE);
+	/*whip->setLevel(whip->getLevel() + 1);*/
+}
 void CSimon::checkBlink() {
 	if (getFreeze()) {
-		if (GetTickCount() - timeStartBlink > TIME_BLINK) {
+		if (GetTickCount() - timeStartBlink >= TIME_BLINK) {
 			setFreeze(false);
 			SetState(getStateBackup());
 		}
@@ -305,7 +340,7 @@ void CSimon::SetState(int state)
 		hit();
 		break;
 	case SIMON_STATE_HIT_RELEASE:
-		cout << "hit release";
+		//cout << "hit release";
 		hitRelease();
 		break;
 	}
@@ -322,6 +357,20 @@ void CSimon::autoGoX(int _nx, float speed) {
 		setFreeze(false);
 	}
 }
+
+//void CSimon::setItemCollision(LPCOLLISIONEVENT colEvent) {
+//	/*if (dynamic_cast<CLargeHeart*>(colEvent->obj)) {
+//		cout << "tim" << endl;
+//		itemCollision = dynamic_cast<CLargeHeart*>(colEvent->obj);
+//	}
+//	else if (dynamic_cast<CDaggerItem*>(colEvent->obj)) {
+//		itemCollision = dynamic_cast<CDaggerItem*>(colEvent->obj);
+//	}
+//	else if (dynamic_cast<CWhipUpgrade*>(colEvent->obj)) {
+//		cout << "whip upgarde" << endl;
+//		itemCollision = dynamic_cast<CWhipUpgrade*>(colEvent->obj);
+//	}*/
+//}
 
 void CSimon::GetBoundingBox(float& left, float& top, float& right, float& bottom)
 {

@@ -1,14 +1,23 @@
+#ifndef __SIMON_H__
+#define	__SIMON_H__
 #pragma once
-#include "GameObject.h"
+//#include "GameObject.h"
 #include "Constants.h"
 #include "Weapon.h"
-#include "Scenes.h"
-
+#include "Whip.h"
+//#include "Scenes.h"
 #include "Hidden.h"
-#include "Candles.h"
+//#include "Candles.h"
+//#include "LargeHeart.h"
+//#include "DaggerItem.h"
+//#include "WhipUpgrade.h"
 #include "Items.h"
+//#include <algorithm>
+//#include "debug.h"
+//#include "Constants.h"
+//#include "Game.h"
 
-#define SIMON_WALKING_SPEED		0.4f //Spped simon walking , default : 0.1f
+#define SIMON_WALKING_SPEED		0.25f //Spped simon walking , default : 0.1f
 #define SIMON_WALKING_SPEED_AUTO	0.11f //Spped simon walking , default : 0.1f
 
 //0.1f
@@ -68,7 +77,7 @@
 
 #define PULL_UP 1
 #define Y_BASE 166.6
-#define TIME_BLINK 750
+#define TIME_BLINK 1000
 #define DEFAULT_OFFSET_X 24
 
 #define SIMON_BBOX_MARGIN_LEFT 15
@@ -96,11 +105,19 @@ class CSimon : public CGameObject
 	DWORD timeStartAutoGoX;
 
 	bool isCollisionWithDoor = false;
+	CWeapon* weapon;
+	CWeapon* subWeapon;
+	DWORD lastTimeAttack;
+	LPCOLLISIONEVENT colEventWithItem;
+
+	bool isHitFinish = false;
+	//CItem* itemCollision;
 public: 
 	CSimon() : CGameObject()
 	{
 		level = SIMON_LEVEL;
 		untouchable = 0;
+		isHit = false;
 		setType(TYPE_OBJECT_PLAYER);
 	}
 	static CSimon* GetInstance();
@@ -109,7 +126,8 @@ public:
 	void SetState(int state);
 	void SetLevel(int l) { level = l; }
 	void StartUntouchable() { untouchable = 1; untouchable_start = GetTickCount(); }
-	int getDirection() { return this->nx; }
+	int getDirection() { return this->nx; };
+	void setDirection(int _nx) { this->nx = _nx; };
 	void goLeft();
 	void goRight();
 	void jump();
@@ -121,14 +139,27 @@ public:
 	void hit();
 	void hitRelease();
 
-	void collisionWithItem(int type);
 	void checkBlink();
 
 	void autoGoX(int nx, float speed);
 	void stopAutoGoX() {
 		isAutoGoX = false;
 	}
-
+	void attack(); //Su dung vu khi chinh
+	void attackSub(); //Su dung vu khi phu
+	void setWeapon(CWeapon* _weapon) { this->weapon = _weapon; };
+	void setSubWeapon(CWeapon* _weapon) { this->subWeapon = _weapon; };
+	
+	CWeapon* getSubWeapon() {return this->subWeapon; };
+	CWeapon* getWeapon() { return this->weapon;};
 	bool getIsCollisionWithDoor() { return this->isCollisionWithDoor; };
 	virtual void GetBoundingBox(float &left, float &top, float &right, float &bottom);
+	LPCOLLISIONEVENT getCollisionEventWithItem() { return this->colEventWithItem; };
+	void collectDagger();
+	void collectWhipUpgrade(CWhip* &_whip);
+	bool isCollisionWithItem(CItem* item);
+	bool getIsHit() { return this->isHit; };
+	bool getIsHitFinish() { return this->isHitFinish; };
 };
+
+#endif

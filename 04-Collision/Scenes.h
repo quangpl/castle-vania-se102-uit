@@ -5,9 +5,9 @@
 #include <d3dx9.h>
 #include <fstream>
 #include "debug.h"
-#include "Weapon.h"
+#include "Whip.h"
 #include "Game.h"
-#include "GameObject.h"
+//#include "GameObject.h"
 #include "Textures.h"
 #include "tinyxml.h"
 #include "Simon.h"
@@ -18,10 +18,17 @@
 #include <istream>
 #include <string>
 #include "Maps.h"
-#include "Items.h"
+//#include "Items.h"
 #include <sstream> 
+#include "Fire.h"
+#include "Dagger.h"
 #include "Hidden.h"
 #include "Constants.h"
+#include "SmallCandle.h"
+#include "WhipUpgrade.h"
+#include "LargeHeart.h"
+#include "DaggerItem.h"
+#include "Ghost.h"
 
 using namespace std;
 
@@ -29,7 +36,7 @@ class CScene
 {
 	int stage;
 	int id;				// Sprite ID in the sprite database
-	LPD3DXSPRITE spriteHandler;
+	//LPD3DXSPRITE spriteHandler;
 public:
 	virtual void LoadResources() = 0;
 	virtual void Update(DWORD dt) = 0;
