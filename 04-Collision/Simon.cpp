@@ -8,7 +8,61 @@ CSimon* CSimon::GetInstance()
 	if (__instance == NULL) __instance = new CSimon();
 	return __instance;
 }
+void CSimon::goOnStair(CStairPoint* stairPoint) {
+	switch (stairPoint->getStairDirection())
+	{
+	case 1:
+		nx = 1;
+		//autoGoX(1, SIMON_WALKING_SPEED_AUTO, 5900);
+		/*if (nx > 0) {
+			vx = SIMON_SPEED_ONSTAIR;
+			vy = -SIMON_SPEED_ONSTAIR;
+			
+		}
+		else {
+			vx = -SIMON_SPEED_ONSTAIR;
+			vy = SIMON_SPEED_ONSTAIR;
+		}*/
+		break;
+	case  2:
+		/*if (nx > 0) {
+			vx = SIMON_SPEED_ONSTAIR;
+			vy = -SIMON_SPEED_ONSTAIR;
 
+		}
+		else {
+			vx = -SIMON_SPEED_ONSTAIR;
+			vy = SIMON_SPEED_ONSTAIR;
+		}*/
+		break;
+	case 3:
+
+		/*if (nx > 0) {
+			vx = SIMON_SPEED_ONSTAIR;
+			vy = SIMON_SPEED_ONSTAIR;
+
+		}
+		else {
+			vx = -SIMON_SPEED_ONSTAIR;
+			vy = -SIMON_SPEED_ONSTAIR;
+		}*/
+		break; 
+	case 4:
+
+		//if (nx > 0) {
+		//	vx = SIMON_SPEED_ONSTAIR;
+		//	vy = SIMON_SPEED_ONSTAIR;
+
+		//}
+		//else {
+		//	vx = -SIMON_SPEED_ONSTAIR;
+		//	vy = -SIMON_SPEED_ONSTAIR;
+		//}
+		break;
+	default:
+		break;
+	}
+}
 void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
 	// Calculate dx, dy 
@@ -18,15 +72,29 @@ void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	if (x <= 0) {
 		x = 0;
 	}
-	// Simple fall down
-	vy += SIMON_GRAVITY * dt;
-
+	movingOutStair();
+	movingOnStair();
+	/*cout << nx << endl;
+	cout << vx << endl;*/
+	if (isGoToStair) {
+		goToStartOnStair();
+	}
+	// Simple fall down - Gravity of simon
+	if (hasGravity) {
+		vy += SIMON_GRAVITY * dt;
+	}
+	
 	if (isAutoGoX) {
-		autoGoX(directionAutoGoX, SIMON_WALKING_SPEED_AUTO);
+		autoGoX(directionAutoGoX, SIMON_WALKING_SPEED_AUTO, 500);
+		if (GetTickCount() - timeStartAutoGoX >= timeAutoGoX) {
+			isCollisionWithDoor = true;
+			isAutoGoX = false;
+			setFreeze(false);
+		}
 	}
 	vector<LPCOLLISIONEVENT> coEvents;
 	vector<LPCOLLISIONEVENT> coEventsResult;
-	
+ 
 	coEvents.clear();
 	if (isHit) {
 		if (CAnimations::GetInstance()->Get(getCurrentAni())->getCurrentFrame() == CAnimations::GetInstance()->Get(getCurrentAni())->getNumberOfFrame()-1) {
@@ -67,10 +135,10 @@ void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		for (UINT i = 0; i < coEventsResult.size(); i++)
 		{
 			LPCOLLISIONEVENT e = coEventsResult[i];
-			if (dynamic_cast<CHidden*>(e->obj)) {
-				isAutoGoX = true;
+			if (dynamic_cast<CHidden*>(e->obj) && dynamic_cast<CHidden*>(e->obj)->getTypeHidden()==HIDDEN_TYPE_DOOR) {
+			/*	isAutoGoX = true;
 				x += dx;
-				timeStartAutoGoX = GetTickCount();
+				timeStartAutoGoX = GetTickCount();*/
 			}
 			else if (dynamic_cast<CItem*>(e->obj)) {
 				this->colEventWithItem = e;
@@ -105,11 +173,35 @@ bool CSimon::isCollisionWithItem(CItem* objItem)
 void CSimon::Render()
 {
 	int ani;
-	
 	switch (state)
 	{
 	case SIMON_STATE_DIE:
 		ani = SIMON_ANI_DIE;
+		break;
+	case SIMON_STATE_ON_STAIR:
+		switch (typeMovingStair)
+		{
+		case 1:
+			ani = SIMON_ANI_STAIR_UP;
+			break;
+		case 2:
+			ani = SIMON_ANI_STAIR_DOWN;
+			break;
+		case 3:
+			ani = SIMON_ANI_STAIR_ATTACK_UP;
+			break;
+		case 4:
+			ani = SIMON_ANI_STAIR_ATTACK_DOWN;
+			break;
+		case 5:
+			ani = SIMON_ANI_STAIR_IDLE_UP;
+			break;
+		case 6:
+			ani = SIMON_ANI_STAIR_IDLE_DOWN;
+			break;
+		default:
+			break;
+		}
 		break;
 	case SIMON_STATE_SIT:
 		if (isHit) {
@@ -171,6 +263,17 @@ void CSimon::Render()
 	}
 }
 void CSimon::goRight() {
+	nx = 1;
+	if (isMovingOnStair) {
+		isGoRight = true;
+		typeMovingStair = 1;
+		vx = SIMON_SPEED_ONSTAIR;
+		vy = -SIMON_SPEED_ONSTAIR;
+		hasGravity = false;
+	}
+	if (isGoToStartOnStair) {
+		return;
+	}
 	isGoLeft = false;
 	isGoRight = true;
 	if (!isJump) {
@@ -182,6 +285,16 @@ void CSimon::goRight() {
 }
 
 void CSimon::goLeft() {
+	nx = -1;
+	if (isMovingOnStair) {
+		typeMovingStair = 2;
+		vx = -SIMON_SPEED_ONSTAIR;
+		vy = SIMON_SPEED_ONSTAIR;
+		hasGravity = false;
+	}
+	if (isGoToStartOnStair) {
+		return;
+	}
 	isGoLeft = true;
 	isGoRight = false;
 	if (!isJump) {
@@ -192,6 +305,48 @@ void CSimon::goLeft() {
 	}
 }
 
+void CSimon::goToStartOnStair() {
+	//int point = 598;
+	int point;
+	switch (currentStairTypeCollision)
+	{
+	case 1:
+	 point = 598;
+
+		setFreeze(true);
+		if (round(x) < point) {
+			nx = 1;
+			vx = SIMON_SPEED_ONSTAIR;
+		}
+		else if (round(x) > point) {
+			nx = -1;
+			vx = -SIMON_SPEED_ONSTAIR;
+		}
+		else {
+			//vx = 0;
+			nx = 1;
+			isGoToStair = false;
+			isGoToStartOnStair = true;
+			timeToGoToStartOnStair = GetTickCount();
+			return;
+		}
+		break;
+	case 2:
+		//point = 670;
+		setFreeze(true);
+		//vx = 0;
+		nx = -1;
+		vx = -SIMON_SPEED_ONSTAIR;
+		vy = SIMON_SPEED_ONSTAIR;
+		isGoToStair = false;
+		isGoToStartOnStair = true;
+		timeToGoToStartOnStair = GetTickCount();
+		break;
+	default:
+		break;
+	}
+
+}
 void CSimon::jump() {
 	if (canJump&&!isSit) {
 		state = SIMON_STATE_JUMP;
@@ -227,6 +382,13 @@ void CSimon::attackSub() {
 
 
 void CSimon::idle() {
+	if (isMovingOnStair) {
+		nx>0?typeMovingStair = 5: typeMovingStair = 6;
+		return;
+	}
+	if (isGoToStair) {
+		return;
+	}
 	if (!isJump) {
 		vx = 0;
 	}
@@ -237,6 +399,9 @@ void CSimon::die() {
 }
 
 void CSimon::sit() {
+	if (isGoToStartOnStair) {
+		return;
+	}
 	if (!isJump) {
 		isSit = true;
 		vx = 0;
@@ -345,31 +510,39 @@ void CSimon::SetState(int state)
 	}
 }
 
-void CSimon::autoGoX(int _nx, float speed) {
+void CSimon::autoGoX(int _nx, float speed,DWORD timeAutoGo )
+{
 	nx = _nx;
-	vx = 0.001f;
-	x += 0.2f;
+	vx = speed;
+	isAutoGoX = true;
 	setFreeze(true);
-	if (GetTickCount()- timeStartAutoGoX >= 1000) {
-		isCollisionWithDoor = true;
-		isAutoGoX = false;
-		setFreeze(false);
-	}
+	timeAutoGoX = timeAutoGo;
 }
 
-//void CSimon::setItemCollision(LPCOLLISIONEVENT colEvent) {
-//	/*if (dynamic_cast<CLargeHeart*>(colEvent->obj)) {
-//		cout << "tim" << endl;
-//		itemCollision = dynamic_cast<CLargeHeart*>(colEvent->obj);
-//	}
-//	else if (dynamic_cast<CDaggerItem*>(colEvent->obj)) {
-//		itemCollision = dynamic_cast<CDaggerItem*>(colEvent->obj);
-//	}
-//	else if (dynamic_cast<CWhipUpgrade*>(colEvent->obj)) {
-//		cout << "whip upgarde" << endl;
-//		itemCollision = dynamic_cast<CWhipUpgrade*>(colEvent->obj);
-//	}*/
-//}
+void CSimon::collisionWithHidden(vector<CHidden*> listHidden) {
+	for (int i = 0; i < listHidden.size(); i++) {
+		if (listHidden[i]->getTypeHidden() == HIDDEN_TYPE_DOOR) {
+		
+			if (this->checkAABBWithObjectAABBEx(listHidden[i])) {
+				 isAutoGoX = true;
+				 timeStartAutoGoX = GetTickCount();
+			}
+		}
+	}
+}
+CStairPoint* CSimon::checkCollisionStartStair(vector<CStairPoint*> listObj) {
+	for (int i = 0; i < listObj.size(); i++) {
+		if (this->checkAABBWithObjectAABBEx(listObj[i])) {
+			canGoStair = true;
+			currentStair = listObj[i];
+			cout << "va cham cau thang" << endl;
+			currentStairTypeCollision = currentStair->getStairDirection();
+			return listObj[i];
+		}
+	}
+	canGoStair = false;
+}
+
 
 void CSimon::GetBoundingBox(float& left, float& top, float& right, float& bottom)
 {
@@ -381,6 +554,85 @@ void CSimon::GetBoundingBox(float& left, float& top, float& right, float& bottom
 	bottom = y + SIMON_BBOX_HEIGHT;
 	if (isSit) {
 		bottom = y + SIMON_SIT_BBOX_HEIGHT;
+	}
+}
+
+void CSimon::movingOnStair() {
+	if (isGoToStartOnStair) {
+		switch (currentStairTypeCollision)
+		{
+		case 1:
+			if (GetTickCount() - timeToGoToStartOnStair >= TIME_AUTO_GO_STAIR) {
+				state = SIMON_STATE_ON_STAIR;
+				//typeMovingStair = 5;
+				vx = 0;  //Set van toc simon dung yen tai thoi diem do
+				vy = 0;
+				setFreeze(false);
+				isMovingOnStair = true;
+				hasGravity = false;
+			}
+			else {
+				/*x += nx*0.1;*/
+				isMovingOnStair = true;
+				state = SIMON_STATE_ON_STAIR;
+				typeMovingStair = 1;
+				vx = SIMON_SPEED_ONSTAIR;
+				vy = -SIMON_SPEED_ONSTAIR;
+			}
+			break;
+		case 2:
+			if (GetTickCount() - timeToGoToStartOnStair >= TIME_AUTO_GO_STAIR) {
+				state = SIMON_STATE_ON_STAIR;
+				//typeMovingStair = 5;
+				vx = 0;
+				vy = 0;
+				setFreeze(false);
+				isMovingOnStair = true;
+				hasGravity = false;
+			}
+			else {
+				/*x += nx*0.1;*/
+				isMovingOnStair = true;
+				state = SIMON_STATE_ON_STAIR;
+				typeMovingStair = 1;
+				vx =-SIMON_SPEED_ONSTAIR;
+				vy = SIMON_SPEED_ONSTAIR;
+			}
+			break;
+		default:
+			break;
+		}
+	}
+	else {
+		//cout << "ONSTAIRFALSE" << endl;
+	}
+	currentStair = NULL;
+}
+void CSimon::movingOutStair() {
+	if (isMovingOnStair) {
+		int directionStair = 0;
+		if (currentStair) {
+			directionStair = currentStair->getStairDirection();
+		}
+		switch (directionStair)
+		{
+		case 2:
+			cout << "Out stair" << endl;
+			if (nx > 0) {
+				y = y - 200; // kéo simon lên cao, để tạo va chạm giả xuống mặt đất, tránh overlaping. tính thời gian tiếp đất
+				vy = 9999999999.0f; // vận tốc kéo xuống lớn để chạm đất ngay trong 1 frame
+				dy = vy * dt; // cập nhật lại dy
+				isMovingOnStair = false;
+				hasGravity = true;
+				//SetState(SIMON_STATE_IDLE);
+				state = SIMON_STATE_IDLE;
+
+				isGoToStartOnStair = false;
+			}
+			break;
+		default:
+			break;
+		}
 	}
 }
 

@@ -10,6 +10,8 @@ CWeapon* backupSubWeapon;
 CSceneGame* CSceneGame::__instance = NULL;
 vector<CItem*> listItem;
 vector<CEffect*> listEffect;
+vector<CHidden*> listHidden;
+vector<CStairPoint*> listStairPoint;
 
 
 CSceneGame::CSceneGame()
@@ -142,8 +144,8 @@ void CSceneGame::LoadResources() {
 
 		}
 
-		CHidden* hidden = new CHidden(10, 80,HIDDEN_TYPE_DOOR);
-		hidden->SetPosition(685,130);
+		CHidden* hidden = new CHidden(685,130,10, 80, HIDDEN_TYPE_DOOR);
+		listHidden.push_back(hidden);
 		objects.push_back(hidden);
 
 		simon->SetPosition(50.0f, 0); //simon
@@ -160,6 +162,7 @@ void CSceneGame::LoadResources() {
 	else if (getStage() == 2) {
 		{
 			objects.clear();
+			listHidden.clear();
 			CTextures* textures = CTextures::GetInstance();
 
 			textures->Add(ID_TEX_MAP_2, "Map\\tileset_map2.png", D3DCOLOR_XRGB(255, 255, 255));
@@ -262,7 +265,7 @@ void CSceneGame::LoadResources() {
 			for (Objects = root->FirstChildElement(); Objects != NULL; Objects = Objects->NextSiblingElement())
 			{
 				int id;
-				float x, y, Width, Height;
+				float x, y, Width, Height,direction;
 				Objects->QueryIntAttribute("id", &id);
 				for (Object = Objects->FirstChildElement(); Object != NULL; Object = Object->NextSiblingElement())
 				{
@@ -270,6 +273,7 @@ void CSceneGame::LoadResources() {
 					Object->QueryFloatAttribute("y", &y);
 					Object->QueryFloatAttribute("width", &Width);
 					Object->QueryFloatAttribute("height", &Height);
+					Object->QueryFloatAttribute("direction", &direction);
 					if (id == 0)
 					{
 						CBrick* newBrick = new CBrick();
@@ -283,17 +287,15 @@ void CSceneGame::LoadResources() {
 						smallCandle->SetPosition(x, y);
 						objects.push_back(smallCandle);
 					}
-					/*else if (id == 3)
+					else if (id == -3)
 					{
-						CWall* wall = new CWall();
-						wall->SetPosition(x, y);
-						wall->SetWidthHeight(Width, Height);
-						objects.push_back(wall);
-					}*/
+						CStairPoint* stairPoint = new CStairPoint(x,y, Width, Height, direction);
+						objects.push_back(stairPoint);
+						listStairPoint.push_back(stairPoint);
+					}
 				}
 			}
 
-			
 
 			//Simon
 			simon->stopAutoGoX();
@@ -323,7 +325,6 @@ void CSceneGame::checkUpdateScene() {
 	case 1:
 		if (simon->getIsCollisionWithDoor()) {
 			CScenes::GetInstance()->Get(SCENE_GAME_ID)->setStage(2);
-			
 			LoadResources();
 		}
 		break;
@@ -332,11 +333,21 @@ void CSceneGame::checkUpdateScene() {
 	}
 }
 void CSceneGame::Update(DWORD dt) {
+
 	if (getStage() == 2) {
 		createGhost();
+		/*Check and process Simon on stair*/
+		CStairPoint* stairPoint = simon->checkCollisionStartStair(listStairPoint);
+		/*if (stairPoint) {
+			simon->goOnStair(stairPoint);
+		}*/
+		/*Check and process Simon on stair*/
 	}
+	simon->collisionWithHidden(listHidden);
 	checkUpdateScene();
-	
+
+
+
 	whip->SetPosition(simon->GetPositionX(), simon->GetPositionY());
 	vector<LPGAMEOBJECT> coPlayerAndBackground;
 	vector<LPGAMEOBJECT> coWeaponAndCandle;
@@ -345,7 +356,7 @@ void CSceneGame::Update(DWORD dt) {
 	{
 		if (objects[i]->getHealth()>0 && objects[i]->isShow()) {
 			
-			if (dynamic_cast<CEnemy*>(objects[i]) ||dynamic_cast<CHidden*>(objects[i]) || dynamic_cast<CBrick*>(objects[i]) || dynamic_cast<CSimon*>(objects[i]) || dynamic_cast<CItem*>(objects[i])) {
+			if (dynamic_cast<CEnemy*>(objects[i])|| dynamic_cast<CBrick*>(objects[i]) || dynamic_cast<CSimon*>(objects[i]) || dynamic_cast<CItem*>(objects[i])) {
 				coPlayerAndBackground.push_back(objects[i]);
 			}
 
@@ -525,7 +536,6 @@ void CSceneGame::createGhost() {
 			ghost++;
 		}
 	}
-	cout << simon->getDirection() << endl;
 	if (ghost == 0) {
 		if (simon->getDirection()>0) {
 			for (int i = 0; i < 3; i++) {

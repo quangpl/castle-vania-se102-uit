@@ -147,6 +147,7 @@
     <ClInclude Include="Scenes.h" />
     <ClInclude Include="SmallCandle.h" />
     <ClInclude Include="SmallHeart.h" />
+    <ClInclude Include="StairPoint.h" />
     <ClInclude Include="StopWatch.h" />
     <ClInclude Include="Tile.h" />
     <ClInclude Include="Maps.h" />
@@ -187,6 +188,7 @@
     <ClCompile Include="Scenes.cpp" />
     <ClCompile Include="SmallCandle.cpp" />
     <ClCompile Include="SmallHeart.cpp" />
+    <ClCompile Include="StairPoint.cpp" />
     <ClCompile Include="StopWatch.cpp" />
     <ClCompile Include="Tile.cpp" />
     <ClCompile Include="Maps.cpp" />

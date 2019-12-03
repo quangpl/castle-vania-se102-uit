@@ -178,6 +178,9 @@
     <ClInclude Include="MonneyEffect.h">
       <Filter>GameObject\Effect</Filter>
     </ClInclude>
+    <ClInclude Include="StairPoint.h">
+      <Filter>GameObject\Ground</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
@@ -297,6 +300,9 @@
     </ClCompile>
     <ClCompile Include="MonneyEffect.cpp">
       <Filter>GameObject\Effect</Filter>
+    </ClCompile>
+    <ClCompile Include="StairPoint.cpp">
+      <Filter>GameObject\Ground</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

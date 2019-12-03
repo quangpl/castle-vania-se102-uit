@@ -58,14 +58,14 @@
     <Spawn x="1300" y="0" spawnerId="0" enemyId="0" xEnemy="0" yEnemy="0" quantityEachSpawn ="3" timeEachSpawn="1000" delaySpawnTime="2000" width="8" height="300"/>
 
   </Spawns>
-  <CheckStairs id="-3">
-    <CheckStair x="614" y="208" width="16" height="4" ny="1" nx="1"/>
-    <CheckStair x="675" y="144" width="16" height="4" ny="-1" nx="-1"/>
-    <!--<CheckStair x="715" y="144" width="14" height="4" ny="1" nx="1"/>
-    <CheckStair x="746" y="113" width="14" height="4" ny="-1" nx="-1"/>-->
-    <CheckStair x="937" y="143" width="16" height="4" ny="1" nx="-1"/>
-    <CheckStair x="908" y="112" width="16" height="4" ny="-1" nx="1"/>
-  </CheckStairs>
+  <StairPoints id="-3">
+    <StairPoint x="614" y="208" width="16" height="4" ny="1" nx="1" direction="1" center="598" />
+    <StairPoint x="695" y="115" width="5" height="4" ny="-1" nx="-1" direction="2" center=""/>
+    <StairPoint x="715" y="144" width="6" height="4" ny="1" nx="1" direction="1" center=""/>
+    <StairPoint x="755" y="83" width="14" height="4" ny="-1" nx="-1" direction="2" center=""/>
+    <StairPoint x="937" y="143" width="16" height="4" ny="1" nx="-1" direction="3" center=""/>
+    <StairPoint x="908" y="112" width="16" height="4" ny="-1" nx="1" direction="4" center=""/>
+  </StairPoints>
   <Detroys id="-99" >
     <Detroy x="0" y="0" type="-1" width="0" height="0"/>
     <Detroy x="0" y="0" type="1" width="0" height="0"/>

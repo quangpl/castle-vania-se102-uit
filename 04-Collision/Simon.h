@@ -12,13 +12,14 @@
 //#include "DaggerItem.h"
 //#include "WhipUpgrade.h"
 #include "Items.h"
+#include "StairPoint.h"
 //#include <algorithm>
 //#include "debug.h"
 //#include "Constants.h"
 //#include "Game.h"
 
-#define SIMON_WALKING_SPEED		0.25f //Spped simon walking , default : 0.1f
-#define SIMON_WALKING_SPEED_AUTO	0.11f //Spped simon walking , default : 0.1f
+#define SIMON_WALKING_SPEED		0.25f//Spped simon walking , default : 0.1f
+#define SIMON_WALKING_SPEED_AUTO	0.01f //Spped simon walking , default : 0.1f
 
 //0.1f
 #define SIMON_JUMP_SPEED_Y		0.4f
@@ -38,6 +39,9 @@
 
 #define SIMON_STATE_HIT		600
 #define SIMON_STATE_HIT_RELEASE 601
+
+#define SIMON_STATE_ON_STAIR 801
+
 
 
 #define SIMON_ANI_IDLE_RIGHT		400
@@ -66,12 +70,23 @@
 
 #define SIMON_ANI_DIE				8
 
+#define SIMON_ANI_STAIR_UP 5000
+#define SIMON_ANI_STAIR_DOWN 5004
+#define SIMON_ANI_STAIR_ATTACK_UP 5001
+#define SIMON_ANI_STAIR_ATTACK_DOWN 5005
+#define SIMON_ANI_STAIR_IDLE_UP 5003
+#define SIMON_ANI_STAIR_IDLE_DOWN 5002
+
+
+
+
 #define	SIMON_LEVEL	2
 
 #define SIMON_BBOX_WIDTH  35
 #define SIMON_BBOX_HEIGHT 28
 #define SIMON_SIT_BBOX_HEIGHT 20
 
+#define SIMON_SPEED_ONSTAIR 0.04f;
 
 #define SIMON_UNTOUCHABLE_TIME 5000
 
@@ -81,6 +96,8 @@
 #define DEFAULT_OFFSET_X 24
 
 #define SIMON_BBOX_MARGIN_LEFT 15
+#define TIME_AUTO_GO_STAIR 350
+
 
 class CSimon : public CGameObject
 {
@@ -103,6 +120,7 @@ class CSimon : public CGameObject
 	int directionAutoGoX;
 
 	DWORD timeStartAutoGoX;
+	DWORD timeAutoGoX;
 
 	bool isCollisionWithDoor = false;
 	CWeapon* weapon;
@@ -111,6 +129,19 @@ class CSimon : public CGameObject
 	LPCOLLISIONEVENT colEventWithItem;
 
 	bool isHitFinish = false;
+
+
+	bool isGoToStair;
+	int typeMovingStair;
+	bool canGoStair;
+	CStairPoint* currentStair = NULL;
+	int currentStairTypeCollision;
+	bool isMovingOnStair;
+	bool isGoToStartOnStair = false;
+	DWORD timeToGoToStartOnStair;
+	DWORD timeStartDownStair;
+
+	bool hasGravity = true;
 	//CItem* itemCollision;
 public: 
 	CSimon() : CGameObject()
@@ -141,7 +172,7 @@ public:
 
 	void checkBlink();
 
-	void autoGoX(int nx, float speed);
+	void autoGoX(int nx, float speed, DWORD time);
 	void stopAutoGoX() {
 		isAutoGoX = false;
 	}
@@ -160,6 +191,23 @@ public:
 	bool isCollisionWithItem(CItem* item);
 	bool getIsHit() { return this->isHit; };
 	bool getIsHitFinish() { return this->isHitFinish; };
+	void collisionWithHidden(vector<CHidden*> listHidden);
+
+	void setIsGoToStair(bool stair) { this->isGoToStair = stair; };
+	bool getIsGoToStair() { return this->isGoToStair; };
+
+	CStairPoint* checkCollisionStartStair(vector<CStairPoint*> listObj);
+
+	void goOnStair(CStairPoint* listObj);
+	void setTypeMovingStair(int type) { this->typeMovingStair = type; }
+	int getTypeMovingStair() { return this->typeMovingStair; }
+
+	bool getCanGoStair() { return this->canGoStair; };
+	void setCanGoStair(bool stair) { this->canGoStair = stair; };
+	void goToStartOnStair();
+	void movingOnStair();
+	void movingOutStair();
+	CStairPoint* getCurrentStair() { return this->currentStair; }
 };
 
 #endif

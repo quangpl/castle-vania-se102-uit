@@ -20,7 +20,7 @@ void CWhip::Render()
 		ani = ROPE_ANI_LEVEL_1;
 		break;
 	}
-	CAnimations::GetInstance()->Get(ani)->RenderFlip(-getDirection(), x, y, 24, 128);
+	CAnimations::GetInstance()->Get(ani)->RenderFlip(-getDirection(), x, y, 24, 255);
 	setCurrentAni(ani);
 	if (CGame::GetInstance()->getDebug()) {
 		RenderBoundingBox();

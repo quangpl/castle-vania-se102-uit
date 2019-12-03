@@ -36,6 +36,7 @@
 #include "Cross.h"
 #include "PotRoast.h"
 #include "MonneyEffect.h"
+#include "StairPoint.h"
 
 using namespace std;
 
