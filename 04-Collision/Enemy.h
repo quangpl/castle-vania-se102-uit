@@ -1,4 +1,5 @@
 #include "GameObject.h"
+#include "Weapon.h"
 class CEnemy : public CGameObject
 {
 public:

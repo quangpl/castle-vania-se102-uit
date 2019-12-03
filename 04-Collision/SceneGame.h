@@ -27,4 +27,6 @@ public:
 	void checkCollisionSimonWithItem();
 	void getBonusFromItem(CItem* item);
 	void createGhost();
+	void checkCollisionOfEnemy();
+
 };

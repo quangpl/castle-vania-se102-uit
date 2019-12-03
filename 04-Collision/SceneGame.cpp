@@ -11,6 +11,7 @@ CSceneGame* CSceneGame::__instance = NULL;
 vector<CItem*> listItem;
 vector<CEffect*> listEffect;
 vector<CHidden*> listHidden;
+vector<CEnemy*> listEnemy;
 vector<CStairPoint*> listStairPoint;
 
 
@@ -354,6 +355,13 @@ void CSceneGame::Update(DWORD dt) {
 	vector<LPGAMEOBJECT> coPlayerAndBackground;
 	vector<LPGAMEOBJECT> coWeaponAndCandle;
 	vector<LPGAMEOBJECT> coEffects;
+
+	for (int i = 0; i < objects.size(); i++)
+	{
+		if (!objects[i]->isShow()) {
+			deleteObject(objects, i);
+		}
+	}
 	for (int i = 0; i < objects.size(); i++)
 	{
 		if (objects[i]->getHealth()>0 && objects[i]->isShow()) {
@@ -362,7 +370,7 @@ void CSceneGame::Update(DWORD dt) {
 				coPlayerAndBackground.push_back(objects[i]);
 			}
 
-			if (dynamic_cast<CWeapon*>(objects[i]) || dynamic_cast<CCandle*>(objects[i])) {
+			if (dynamic_cast<CWeapon*>(objects[i]) || dynamic_cast<CCandle*>(objects[i])|| dynamic_cast<CSmallCandle*>(objects[i])) {
 				coWeaponAndCandle.push_back(objects[i]);
 			}
 			if (dynamic_cast<CEffect*>(objects[i])) {
@@ -379,7 +387,7 @@ void CSceneGame::Update(DWORD dt) {
 				objects[i]->Update(dt, &coPlayerAndBackground);
 			}
 
-			if (dynamic_cast<CWeapon*>(objects[i]) || dynamic_cast<CCandle*>(objects[i])) {
+			if (dynamic_cast<CWeapon*>(objects[i]) || dynamic_cast<CCandle*>(objects[i])|| dynamic_cast<CSmallCandle*>(objects[i])) {
 				objects[i]->Update(dt, &coWeaponAndCandle);
 			}
 			if (dynamic_cast<CEffect*>(objects[i])) {
@@ -391,6 +399,7 @@ void CSceneGame::Update(DWORD dt) {
 	
 	checkCollisonOfWeapon(coWeaponAndCandle);
 	checkCollisionSimonWithItem();
+	checkCollisionOfEnemy();
 
 	// Update camera to follow SIMON
 	float cx, cy, camX, camY;
@@ -463,13 +472,22 @@ void CSceneGame::checkCollisonOfWeapon(vector<LPGAMEOBJECT> &listObjects) {
 	if (subWeapon) {
 		if (subWeapon->getCanDestroy()) { //Vu khi dang hoat dong moi xet va cham
 			for (int i = 0; i < listObjects.size(); i++) {
-				if (dynamic_cast<CCandle*>(listObjects[i]) && subWeapon->checkAABBWithObject(listObjects[i])) {
+				if (dynamic_cast<CCandle*>(listObjects[i]) && weapon->checkAABBWithObject(listObjects[i])) {
 					objects.push_back(new CFire(listObjects[i]->GetPositionX(), listObjects[i]->GetPositionY()));
 					objects.push_back(getItem(dynamic_cast<CCandle*>(listObjects[i])->getId(), listObjects[i]->GetPositionX(), listObjects[i]->GetPositionY()));
-					subWeapon->setCurrentFrame(-1);
-					subWeapon->setCanDestroy(false);
+					weapon->setCurrentFrame(-1);
+					weapon->setCanDestroy(false);
 					deleteObject(objects, i);
-					subWeapon->setFinish(true);
+					weapon->setFinish(true);
+				}
+				else if (dynamic_cast<CSmallCandle*>(listObjects[i]) && weapon->checkAABBWithObject(listObjects[i])) {
+					objects.push_back(new CFire(listObjects[i]->GetPositionX(), listObjects[i]->GetPositionY()));
+					objects.push_back(getItem(1 + rand() % (11), listObjects[i]->GetPositionX(), listObjects[i]->GetPositionY()));
+					weapon->setCurrentFrame(-1);
+					weapon->setCanDestroy(false);
+					deleteObject(objects, i);
+					listObjects[i]->hide();
+					weapon->setFinish(true);
 				}
 			}
 		}
@@ -483,6 +501,15 @@ void CSceneGame::checkCollisonOfWeapon(vector<LPGAMEOBJECT> &listObjects) {
 					weapon->setCanDestroy(false);
 					deleteObject(objects, i);
 					weapon->setFinish(true);
+			}
+			else if (dynamic_cast<CSmallCandle*>(listObjects[i]) && weapon->checkAABBWithObject(listObjects[i])) {
+				objects.push_back(new CFire(listObjects[i]->GetPositionX(), listObjects[i]->GetPositionY()));
+				objects.push_back(getItem(1 + rand() % (11), listObjects[i]->GetPositionX(), listObjects[i]->GetPositionY()));
+				weapon->setCurrentFrame(-1);
+				weapon->setCanDestroy(false);
+				deleteObject(objects, i);
+				listObjects[i]->hide();
+				weapon->setFinish(true);
 			}
 			else {
 				weapon->setCanDestroy(false);
@@ -507,6 +534,7 @@ void CSceneGame::getBonusFromItem(CItem* item) {
 	}
 }
 CItem* CSceneGame::getItem(int id, float x, float y) {
+	int valueMoney[] = { 100, 400, 700, 1000 };
 	switch (id)
 	{
 	case 1:
@@ -524,12 +552,70 @@ CItem* CSceneGame::getItem(int id, float x, float y) {
 	case 5:
 		return new CDaggerItem(x, y);
 		break;
+	case 6:
+		return new CCross(x, y);
+		break;
+	case 7:
+		return new CHolyWater(x, y);
+		break;
+	case 8:
+		return new CMoney(x, y, valueMoney[rand() % (4)]);
+		break;
+	case 9:
+		return new CPotRoast(x, y);
+		break;
+	case 10:
+		return new CSmallHeart(x, y);
+		break;
+	case 11:
+		return new CStopWatch(x, y);
+		break;
 	default:
+		return new CLargeHeart(x, y);
 		break;
 	}
 }
 void CSceneGame::deleteObject(vector<LPGAMEOBJECT> &listObj, int index) {
 	listObj.erase(listObj.begin() + index);
+}
+
+void CSceneGame::checkCollisionOfEnemy() {
+	cout << listEnemy.size();
+	CWeapon* weapon = simon->getWeapon();
+	CWeapon* subWeapon = simon->getSubWeapon();
+	if (subWeapon) {
+		if (subWeapon->getCanDestroy()) { //Vu khi dang hoat dong moi xet va cham
+			for (int i = 0; i < listEnemy.size(); i++) {
+				if (dynamic_cast<CGhost*>(listEnemy[i]) && subWeapon->checkAABBWithObject(listEnemy[i])) {
+					objects.push_back(new CFire(listEnemy[i]->GetPositionX(), listEnemy[i]->GetPositionY()));
+					objects.push_back(getItem(1 + rand() % (11), listEnemy[i]->GetPositionX(), listEnemy[i]->GetPositionY()));
+					weapon->setCurrentFrame(-1);
+					weapon->setCanDestroy(false);
+					deleteObject(objects, i);
+					listEnemy[i]->hide();
+					weapon->setFinish(true);
+				}
+			}
+		}
+	}
+	if (!weapon->getCanDestroy()) { //Vu khi dang hoat dong moi xet va cham
+		for (int i = 0; i < objects.size(); i++) {
+			if (dynamic_cast<CGhost*>(objects[i]) && weapon->checkAABBWithObjectAABBEx(objects[i])) {
+				objects.push_back(new CFire(objects[i]->GetPositionX(), objects[i]->GetPositionY()));
+				objects.push_back(getItem(1 + rand() % (11), objects[i]->GetPositionX(), objects[i]->GetPositionY()));
+				weapon->setCurrentFrame(-1);
+				weapon->setCanDestroy(false);
+				cout<<"Va cham enemy"<<endl;
+				deleteObject(objects, i);
+				objects[i]->hide();
+				weapon->setFinish(true);
+			}
+			else {
+				weapon->setCanDestroy(false);
+			}
+		}
+
+	}
 }
 void CSceneGame::createGhost() {
 	int ghost = 0;
@@ -543,6 +629,7 @@ void CSceneGame::createGhost() {
 			for (int i = 0; i < 3; i++) {
 				CGhost* newGhost = new CGhost(-1); // Direction: 1 la di qua phai, -1 la di qua trai
 				newGhost->SetPosition(simon->GetPositionX() + SCREEN_WIDTH + i*30,167.7);
+				listEnemy.push_back(newGhost);
 				objects.push_back(newGhost);
 			}
 		}
@@ -550,11 +637,11 @@ void CSceneGame::createGhost() {
 			for (int i = 0; i < 3; i++) {
 				CGhost* newGhost = new CGhost(1); // Direction: 1 la di qua phai, -1 la di qua trai
 				newGhost->SetPosition(simon->GetPositionX() - SCREEN_WIDTH - i * 30, 0);
+				listEnemy.push_back(newGhost);
 				objects.push_back(newGhost);
 			}
 		}
 	}
-	return;
 }
 
 

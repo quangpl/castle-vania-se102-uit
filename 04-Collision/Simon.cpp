@@ -68,7 +68,6 @@ void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	// Calculate dx, dy 
 	CGameObject::Update(dt);
 	checkBlink();
-	cout << currentStairTypeCollision << endl;
 	//Ngăn không cho Simon rớt ra khỏi màn hình
 	if (x <= 0) {
 		x = 0;

@@ -18,7 +18,8 @@ class CMoney : public CItem
 {
 	int value = 0; // Gia tri tien cua vat pham : 100,400,700,1000
 public:
-	CMoney(float x, float y) : CItem(x, y) {
+	CMoney(float x, float y, int _state) : CItem(x, y) {
+		SetState(_state);
 	};
 	virtual void GetBoundingBox(float& left, float& top, float& right, float& bottom);
 	virtual void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects);
