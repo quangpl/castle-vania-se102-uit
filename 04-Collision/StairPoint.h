@@ -8,6 +8,7 @@ class CStairPoint : public CGround
 	virtual void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects);
 	virtual void Render();
 	float w, h;
+	int center;
 
 public:
 	CStairPoint(float _x, float _y, float _w, float _h, int _direction) : CGround() {
@@ -21,4 +22,7 @@ public:
 
 	void setStairDirection(int direction) { this->stairDirection = direction; };
 	int getStairDirection() { return this->stairDirection; };
+
+	void setCenter(int cen) { this->center = cen; }
+	int getCenter() { return this->center; }
 };

@@ -265,7 +265,7 @@ void CSceneGame::LoadResources() {
 			for (Objects = root->FirstChildElement(); Objects != NULL; Objects = Objects->NextSiblingElement())
 			{
 				int id;
-				float x, y, Width, Height,direction;
+				float x, y, Width, Height,direction,center;
 				Objects->QueryIntAttribute("id", &id);
 				for (Object = Objects->FirstChildElement(); Object != NULL; Object = Object->NextSiblingElement())
 				{
@@ -274,6 +274,7 @@ void CSceneGame::LoadResources() {
 					Object->QueryFloatAttribute("width", &Width);
 					Object->QueryFloatAttribute("height", &Height);
 					Object->QueryFloatAttribute("direction", &direction);
+					Object->QueryFloatAttribute("center", &center);
 					if (id == 0)
 					{
 						CBrick* newBrick = new CBrick();
@@ -290,6 +291,7 @@ void CSceneGame::LoadResources() {
 					else if (id == -3)
 					{
 						CStairPoint* stairPoint = new CStairPoint(x,y, Width, Height, direction);
+						stairPoint->setCenter(center);
 						objects.push_back(stairPoint);
 						listStairPoint.push_back(stairPoint);
 					}

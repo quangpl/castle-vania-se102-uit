@@ -96,7 +96,7 @@
 #define DEFAULT_OFFSET_X 24
 
 #define SIMON_BBOX_MARGIN_LEFT 15
-#define TIME_AUTO_GO_STAIR 350
+#define TIME_AUTO_GO_STAIR 100
 
 
 class CSimon : public CGameObject
@@ -140,6 +140,7 @@ class CSimon : public CGameObject
 	bool isGoToStartOnStair = false;
 	DWORD timeToGoToStartOnStair;
 	DWORD timeStartDownStair;
+	int centerPointStair;
 
 	bool hasGravity = true;
 	//CItem* itemCollision;
