@@ -92,7 +92,9 @@ void CWhip::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		wasHit = true;
 	}*/
 	//cout << listAnimation->Get(ROPE_ANI_LEVEL_1)->getCurrentFrame() << endl;
-	
+	if (getCurrentAni()) {
+		currentFrame = listAnimation->Get(getCurrentAni())->getCurrentFrame();
+	}
 	if (currentFrame == 3) {
 		setFinish(true);
 		setCanDestroy(true);
@@ -102,9 +104,7 @@ void CWhip::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		setCanDestroy(false);
 	}
 	
-	if (getCurrentAni()) {
-		currentFrame = listAnimation->Get(getCurrentAni())->getCurrentFrame();
-	}
+	
 	/*if(listAnimation->Get(ROPE_ANI_LEVEL_1)->getCurrentFrame()==3|| listAnimation->Get(ROPE_ANI_LEVEL_2)->getCurrentFrame() == 3|| listAnimation->Get(ROPE_ANI_LEVEL_3)->getCurrentFrame() == 3){
 		setFinish(true);
 		wasHit = true;

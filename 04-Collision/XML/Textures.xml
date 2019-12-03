@@ -86,6 +86,7 @@
       <sprite id="10019" left="5" top="159" right="83" bottom="189" frameTime="100"/>
       <sprite id="10020" left="87" top="159" right="165" bottom="189" frameTime="100"/>
       <sprite id="10021" left="170" top="159" right="248" bottom="189" frameTime="100"/>
+      <sprite id="100212" left="170" top="159" right="248" bottom="189" frameTime="100"/>
     </Animation>
     <!-- Animation LEVEL_TWO_ATTACK_STAND -->
     <Animation aniId="510" frameTime="100" name="LEVEL_TWO_ATTACK_STAND">

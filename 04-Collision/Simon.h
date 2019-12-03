@@ -96,7 +96,7 @@
 #define DEFAULT_OFFSET_X 24
 
 #define SIMON_BBOX_MARGIN_LEFT 15
-#define TIME_AUTO_GO_STAIR 100
+#define TIME_AUTO_GO_STAIR 200
 
 
 class CSimon : public CGameObject

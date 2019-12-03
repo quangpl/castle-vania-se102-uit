@@ -425,7 +425,7 @@ void CSceneGame::Update(DWORD dt) {
 	else if (getStage() == 2) {
 		CGame::GetInstance()->SetCamPos(cx, CAM_Y_DEFAULT_STAGE_2); //Khoảng cách để Simon đứng ngay giữa màn hình không bị lệch 
 		if (camX + SCREEN_WIDTH >= maps->Get(ID_MAP_2)->getMapWidth() && cx >= maps->Get(ID_MAP_2)->getMapWidth() - SCREEN_WIDTH) {
-			CGame::GetInstance()->SetCamPos(camX, CAM_Y_DEFAULT_STAGE_2);
+			CGame::GetInstance()->SetCamPos(camX+100, CAM_Y_DEFAULT_STAGE_2);
 		}
 	}
 
@@ -580,7 +580,6 @@ void CSceneGame::deleteObject(vector<LPGAMEOBJECT> &listObj, int index) {
 }
 
 void CSceneGame::checkCollisionOfEnemy() {
-	cout << listEnemy.size();
 	CWeapon* weapon = simon->getWeapon();
 	CWeapon* subWeapon = simon->getSubWeapon();
 	if (subWeapon) {
@@ -598,23 +597,24 @@ void CSceneGame::checkCollisionOfEnemy() {
 			}
 		}
 	}
-	if (!weapon->getCanDestroy()) { //Vu khi dang hoat dong moi xet va cham
+	if (weapon->getCurrentFrame()==3) { //Vu khi dang hoat dong moi xet va cham
 		for (int i = 0; i < objects.size(); i++) {
 			if (dynamic_cast<CGhost*>(objects[i]) && weapon->checkAABBWithObjectAABBEx(objects[i])) {
 				objects.push_back(new CFire(objects[i]->GetPositionX(), objects[i]->GetPositionY()));
 				objects.push_back(getItem(1 + rand() % (11), objects[i]->GetPositionX(), objects[i]->GetPositionY()));
 				weapon->setCurrentFrame(-1);
 				weapon->setCanDestroy(false);
+				weapon->setCurrentFrame(-1); 
 				cout<<"Va cham enemy"<<endl;
 				deleteObject(objects, i);
 				objects[i]->hide();
 				weapon->setFinish(true);
 			}
-			else {
-				weapon->setCanDestroy(false);
-			}
 		}
 
+	}
+	else {
+		cout << "Undame" << endl;
 	}
 }
 void CSceneGame::createGhost() {
