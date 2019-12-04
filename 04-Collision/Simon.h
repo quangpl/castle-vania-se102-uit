@@ -19,7 +19,7 @@
 //#include "Game.h"
 
 #define SIMON_WALKING_SPEED		0.25f//Spped simon walking , default : 0.1f
-#define SIMON_WALKING_SPEED_AUTO	0.01f //Spped simon walking , default : 0.1f
+#define SIMON_WALKING_SPEED_AUTO	0.05f //Spped simon walking , default : 0.1f
 
 //0.1f
 #define SIMON_JUMP_SPEED_Y		0.4f
@@ -98,6 +98,8 @@
 #define SIMON_BBOX_MARGIN_LEFT 15
 #define TIME_AUTO_GO_STAIR 200
 
+#define STAGE_1_TARGET_DOOR 680
+
 
 class CSimon : public CGameObject
 {
@@ -118,9 +120,8 @@ class CSimon : public CGameObject
 
 	bool isAutoGoX;
 	int directionAutoGoX;
-
-	DWORD timeStartAutoGoX;
-	DWORD timeAutoGoX;
+	float targetAutoGoX;
+	bool isAutoGoXComplete;
 
 	bool isCollisionWithDoor = false;
 	CWeapon* weapon;
@@ -172,8 +173,8 @@ public:
 	void hitRelease();
 
 	void checkBlink();
-
-	void autoGoX(int nx, float speed, DWORD time);
+	bool getIsAutoGoXComplete() { return this->isAutoGoXComplete; }
+	void autoGoX(int nx, float speed, float target);
 	void stopAutoGoX() {
 		isAutoGoX = false;
 	}

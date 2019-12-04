@@ -68,6 +68,7 @@ void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	// Calculate dx, dy 
 	CGameObject::Update(dt);
 	checkBlink();
+	cout << x << endl;
 	//Ngăn không cho Simon rớt ra khỏi màn hình
 	if (x <= 0) {
 		x = 0;
@@ -85,11 +86,22 @@ void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	}
 	
 	if (isAutoGoX) {
-		autoGoX(directionAutoGoX, SIMON_WALKING_SPEED_AUTO, 500);
-		if (GetTickCount() - timeStartAutoGoX >= timeAutoGoX) {
-			isCollisionWithDoor = true;
-			isAutoGoX = false;
-			setFreeze(false);
+		vx = nx*SIMON_WALKING_SPEED_AUTO;
+		if (nx > 0) {
+			if (round(x) >= targetAutoGoX) {
+				isAutoGoX = false;
+				setFreeze(false);
+				isAutoGoXComplete = true;
+				cout << "finish" << endl;
+			}
+		}
+		else {
+			if (round(x) <= targetAutoGoX) {
+				isAutoGoX = false;
+				setFreeze(false);
+				isAutoGoXComplete = true;
+				cout << "finish" << endl;
+			}
 		}
 	}
 	vector<LPCOLLISIONEVENT> coEvents;
@@ -561,22 +573,21 @@ void CSimon::SetState(int state)
 	}
 }
 
-void CSimon::autoGoX(int _nx, float speed,DWORD timeAutoGo )
+void CSimon::autoGoX(int _nx, float speed,float target)
 {
 	nx = _nx;
 	vx = speed;
 	isAutoGoX = true;
 	setFreeze(true);
-	timeAutoGoX = timeAutoGo;
+	targetAutoGoX = target;
 }
 
 void CSimon::collisionWithHidden(vector<CHidden*> listHidden) {
 	for (int i = 0; i < listHidden.size(); i++) {
 		if (listHidden[i]->getTypeHidden() == HIDDEN_TYPE_DOOR) {
-		
 			if (this->checkAABBWithObjectAABBEx(listHidden[i])) {
-				 isAutoGoX = true;
-				 timeStartAutoGoX = GetTickCount();
+				autoGoX(1, SIMON_WALKING_SPEED_AUTO, STAGE_1_TARGET_DOOR);
+				isCollisionWithDoor = true;
 			}
 		}
 	}

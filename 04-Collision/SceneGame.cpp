@@ -472,7 +472,7 @@ void CSceneGame::checkUpdateScene() {
 	switch (getStage())
 	{
 	case 1:
-		if (simon->getIsCollisionWithDoor()) {
+		if (simon->getIsCollisionWithDoor()&&simon->getIsAutoGoXComplete()) {
 			CScenes::GetInstance()->Get(SCENE_GAME_ID)->setStage(2);
 			LoadResources();
 		}
