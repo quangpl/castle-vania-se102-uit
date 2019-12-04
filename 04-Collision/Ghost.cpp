@@ -46,7 +46,7 @@ void CGhost::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		for (UINT i = 0; i < coEventsResult.size(); i++)
 		{
 			LPCOLLISIONEVENT e = coEventsResult[i];
-			if (dynamic_cast<CSmallCandle*>(e->obj)) {
+			if (dynamic_cast<CSimon*>(e->obj)) {
 				x += dx;
 			}
 		}

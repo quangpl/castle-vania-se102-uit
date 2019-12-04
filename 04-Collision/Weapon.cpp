@@ -118,6 +118,9 @@ void CWeapon::attack(float x, float y,int _direction)
 	lastTimeAttack = GetTickCount(); // lưu lại
 	cout << "attack weapon" << endl;
 }
+CWeapon::~CWeapon() {
+	cout << "Weapon xoa" << endl;
+}
 //bool CWeapon::canAttack()
 //{
 //	return  canTa

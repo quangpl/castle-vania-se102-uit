@@ -349,18 +349,33 @@
       <sprite id="10136" left="0" top="0" right="0" bottom="0"/>
     </Animation>
   </Texture> -->
-  <!-- Animation DOORS -->
+ <!-- Animation DOORS -->
   <Texture  textureId ="2" gameObjectId ="22">
-    <Animation aniId="561" frameTime="100" name="DOORS">
-      <sprite id="10138" left="24" top="121" right="32" bottom="171"/>
-      <sprite id="10139" left="36" top="121" right="52" bottom="171"/>
-      <sprite id="10149" left="55" top="121" right="78" bottom="171"/>
+    <Animation aniId="561" frameTime="200" name="DOORS">
+      <sprite id="10140" left="24" top="121" right="32" bottom="171"  frameTime="200"/>
+      <sprite id="10141" left="36" top="121" right="52" bottom="171"  frameTime="200"/>
+      <sprite id="10142" left="55" top="121" right="78" bottom="171"  frameTime="200"/>
+      <sprite id="10143" left="55" top="121" right="78" bottom="171"  frameTime="200"/>
+    </Animation>
+  </Texture>
+  <Texture  textureId ="2" gameObjectId ="22">
+    <Animation aniId="5612" frameTime="200" name="DOORS_STATIC">
+      <sprite id="101402" left="24" top="121" right="32" bottom="171"  frameTime="200"/>
+    </Animation>
+  </Texture>
+  <Texture  textureId ="2" gameObjectId ="22">
+    <Animation aniId="5611" frameTime="200" name="DOORS">
+      <sprite id="10144" left="55" top="121" right="78" bottom="171"  frameTime="200"/>
+      <sprite id="10145" left="36" top="121" right="52" bottom="171"  frameTime="200"/>
+      <sprite id="10146" left="24" top="121" right="32" bottom="171"  frameTime="200"/> 
+      <sprite id="10147" left="24" top="121" right="32" bottom="171"  frameTime="200"/>
     </Animation>
   </Texture>
   <!-- Animation BREAKING_WALL -->
   <Texture  textureId ="2" gameObjectId ="23">
     <Animation aniId="562" frameTime="100" name="BREAKING_WALL">
-      <sprite id="10159" left="138" top="80" right="145" bottom="88"/>
+      <sprite id="10159" left="138" top="80" right="145" bottom="88" frameTime="500"/>
+      <sprite id="10159" left="138" top="80" right="145" bottom="88" frameTime="500"/>
     </Animation>
   </Texture>
   <!-- Animation SPLASH_EFFECT -->

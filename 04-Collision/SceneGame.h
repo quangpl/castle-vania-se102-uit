@@ -3,6 +3,7 @@
 
 #define ID_MAP_1 1
 #define ID_MAP_2 2
+#define VX_CAMERA 0.02;
 
 class CSceneGame : public CScene
 {	
@@ -10,6 +11,8 @@ class CSceneGame : public CScene
 	vector<CGameObject*> objects;
 	bool isUpdateScene;
 	static CSceneGame* __instance;
+	bool isStageMoving = false;
+
 public:
 	CSceneGame();
 	~CSceneGame();
@@ -24,9 +27,9 @@ public:
 	void checkCollisonOfWeapon(vector<LPGAMEOBJECT> &objects);
 	CItem* getItem(int id, float x, float y);
 	void deleteObject(vector<LPGAMEOBJECT> &objects, int index);
-	void checkCollisionSimonWithItem();
+	void checkCollisionOfSimon();
 	void getBonusFromItem(CItem* item);
 	void createGhost();
 	void checkCollisionOfEnemy();
-
+	void updateCamAutoGo(DWORD dt);
 };

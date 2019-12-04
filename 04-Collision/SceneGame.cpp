@@ -1,6 +1,6 @@
 ﻿#include "SceneGame.h"
 
-CGame* game;
+CGame* game = CGame::GetInstance();
 //CCandles* candles = CCandles::GetInstance();
 CSimon* simon = CSimon::GetInstance();
 CMaps* maps = CMaps::GetInstance();
@@ -12,6 +12,7 @@ vector<CItem*> listItem;
 vector<CEffect*> listEffect;
 vector<CHidden*> listHidden;
 vector<CEnemy*> listEnemy;
+vector<CBrick*> listBrick;
 vector<CStairPoint*> listStairPoint;
 
 
@@ -145,6 +146,8 @@ void CSceneGame::LoadResources() {
 
 		}
 
+
+		
 		CHidden* hidden = new CHidden(685,130,10, 80, HIDDEN_TYPE_DOOR);
 		listHidden.push_back(hidden);
 		objects.push_back(hidden);
@@ -159,10 +162,17 @@ void CSceneGame::LoadResources() {
 		maps->Add(ID_MAP_1, map);
 		currentIdMap = ID_MAP_1;
 
+
 	}
-	else if (getStage() == 2) {
+	else if (getStage() == 2) 
 		{
+		cout << "load stage 2" << endl;
+			//objects.clear();
 			objects.clear();
+		/*	for (int i = 0; i < objects.size(); i++) {
+					objects.erase(objects.begin() + i);
+			}*/
+
 			listHidden.clear();
 			CTextures* textures = CTextures::GetInstance();
 
@@ -289,6 +299,12 @@ void CSceneGame::LoadResources() {
 						smallCandle->SetPosition(x, y);
 						objects.push_back(smallCandle);
 					}
+					else if (id == -1) {
+						CDoor* door = new CDoor(x, y);
+						door->SetState(DOOR_STATE_STATIC);
+						objects.push_back(door);
+
+					}
 					else if (id == -3)
 					{
 						CStairPoint* stairPoint = new CStairPoint(x,y, Width, Height, direction);
@@ -302,6 +318,7 @@ void CSceneGame::LoadResources() {
 
 			//Simon
 			simon->stopAutoGoX();
+			simon->setWeapon(simon->getWeapon());
 			simon->setDirection(1);
 			simon->SetPosition(50.0f, 0); //simon
 			objects.push_back(simon);
@@ -317,6 +334,135 @@ void CSceneGame::LoadResources() {
 			maps->Add(ID_MAP_2, map);
 			currentIdMap = ID_MAP_2;
 		}
+else if (getStage() == 3) {
+	objects.clear();
+	CTextures* textures = CTextures::GetInstance();
+
+	textures->Add(ID_TEX_MAP_1, "Map\\tileset_map2.png", D3DCOLOR_XRGB(255, 0, 255));
+	textures->Add(ID_TEX_BBOX, "textures\\bbox.png", D3DCOLOR_XRGB(255, 255, 255));
+	textures->Add(ID_TEX_SIMON, "textures\\TexturesV4.png", D3DCOLOR_XRGB(34, 177, 76));
+	textures->Add(ID_TEX_CANDLE, "textures\\object.png", D3DCOLOR_XRGB(34, 177, 76));
+	textures->Add(ID_TEX_ITEM, "textures\\Items.png", D3DCOLOR_XRGB(128, 0, 0));
+	textures->Add(ID_TEX_ENEMY, "textures\\enemy.png", D3DCOLOR_XRGB(96, 68, 106));
+
+
+
+
+	CMap* map = new CMap(ID_TEX_MAP_1, "Map\\tileset_map2.png", D3DCOLOR_XRGB(255, 0, 255));
+	map->ReadMapTXT("Map\\Map3.txt");
+	map->LoadTile();
+
+	CSprites* sprites = CSprites::GetInstance();
+	CAnimations* animations = CAnimations::GetInstance();
+
+	LPDIRECT3DTEXTURE9 texSimon = textures->Get(ID_TEX_SIMON);
+	LPDIRECT3DTEXTURE9 texCandle = textures->Get(ID_TEX_CANDLE);
+
+	//Load tất cả animations
+	LPDIRECT3DTEXTURE9 directTexture;
+	TiXmlDocument doc("XML/Textures.xml");
+	if (!doc.LoadFile())
+	{
+		DebugOut(L"Can't read XML file");
+		MessageBox(NULL, L"Can't Read XML File", L"Error", MB_OK);
+		return;
+	}
+	else
+	{
+		DebugOut(L"[INFO]Read XML success\n");
+	}
+	// get info root
+	TiXmlElement* root = doc.RootElement();
+	TiXmlElement* sprite = nullptr;
+	TiXmlElement* animation = nullptr;
+	TiXmlElement* texture = nullptr;
+	LPANIMATION ani;
+	int nItem = 1;
+	// gameObjectId = 0 -- Simon
+	for (texture = root->FirstChildElement(); texture != NULL; texture = texture->NextSiblingElement())
+	{
+		int textureId;
+		int gameObjectId;
+		texture->QueryIntAttribute("textureId", &textureId);
+		texture->QueryIntAttribute("gameObjectId", &gameObjectId);
+
+		directTexture = textures->Get(textureId);
+		for (animation = texture->FirstChildElement(); animation != NULL; animation = animation->NextSiblingElement())
+		{
+			int aniId, frameTime;
+			animation->QueryIntAttribute("frameTime", &frameTime);
+
+			ani = new CAnimation(frameTime);
+			for (sprite = animation->FirstChildElement(); sprite != NULL; sprite = sprite->NextSiblingElement())
+			{
+				int left, top, right, bottom, id;
+				sprite->QueryIntAttribute("id", &id);
+				sprite->QueryIntAttribute("top", &top);
+				sprite->QueryIntAttribute("left", &left);
+				sprite->QueryIntAttribute("right", &right);
+				sprite->QueryIntAttribute("bottom", &bottom);
+				sprites->Add(id, left, top, right, bottom, directTexture);
+				ani->Add(id);
+			}
+			animation->QueryIntAttribute("aniId", &aniId);
+			animations->Add(aniId, ani);
+			if (gameObjectId == 0)
+			{
+				simon->AddAnimation(aniId);
+			}
+			else if (gameObjectId == 100) {
+				whip = new CWhip();
+				whip->AddAnimation(aniId);
+				whip->setLevel(1);
+			}
+			/*else if (gameObjectId == 2) {
+				CItem* item = new CItem();
+				item->AddAnimation(aniId);
+				item->SetState(ITEM_STATE_HIDE);
+				objects.push_back(item);
+				items->Add(nItem, item);
+				nItem++;
+			}*/
+			else if (gameObjectId == 211) {
+				for (int i = 1; i <= NUMBER_OF_CANDLE; i++) {
+					CCandle* candle = new CCandle();
+					candle->AddAnimation(aniId);
+					candle->SetState(CANDLE_STATE_SHOW);
+					candle->SetPosition(i * DISTANCE_BETWEEN_CANDLE, Y_BASE);
+					candle->setId(i);
+					//candles->Add(candle);
+					objects.push_back(candle);
+				}
+			}
+			else if (gameObjectId == 28) {
+				for (int i = 0; i < NUMBER_OF_BRICK; i++)
+				{
+					float l, t, r, b;
+					CBrick* brick = new CBrick();
+					brick->SetPosition(0 + i * 16.0f, SCREEN_HEIGHT - 45); //Anhr huong vi tri simon
+					objects.push_back(brick);
+				}
+			}
+		};
+
+
+	}
+
+
+	CHidden* hidden = new CHidden(685, 130, 10, 80, HIDDEN_TYPE_DOOR);
+	listHidden.push_back(hidden);
+	objects.push_back(hidden);
+
+	simon->SetPosition(50.0f, 0); //simon
+	simon->setWeapon(whip);
+	objects.push_back(simon);
+
+
+
+	objects.push_back(whip);
+	maps->Add(ID_MAP_1, map);
+	currentIdMap = ID_MAP_1;
+
 }
 	else {
 			cout << "CANNOT SET STAGE or STAGE NULL" << endl;
@@ -349,12 +495,13 @@ void CSceneGame::Update(DWORD dt) {
 	simon->collisionWithHidden(listHidden);
 	checkUpdateScene();
 
-
-
+	//bug khong co whip cho simon
 	whip->SetPosition(simon->GetPositionX(), simon->GetPositionY());
 	vector<LPGAMEOBJECT> coPlayerAndBackground;
 	vector<LPGAMEOBJECT> coWeaponAndCandle;
 	vector<LPGAMEOBJECT> coEffects;
+	vector<LPGAMEOBJECT> coEnemyAndBackground;
+
 
 	for (int i = 0; i < objects.size(); i++)
 	{
@@ -362,11 +509,12 @@ void CSceneGame::Update(DWORD dt) {
 			deleteObject(objects, i);
 		}
 	}
+	
 	for (int i = 0; i < objects.size(); i++)
 	{
 		if (objects[i]->getHealth()>0 && objects[i]->isShow()) {
 			
-			if (dynamic_cast<CEnemy*>(objects[i])|| dynamic_cast<CBrick*>(objects[i]) || dynamic_cast<CSimon*>(objects[i]) || dynamic_cast<CItem*>(objects[i])) {
+			if (dynamic_cast<CBrick*>(objects[i]) || dynamic_cast<CSimon*>(objects[i]) || dynamic_cast<CItem*>(objects[i])) {
 				coPlayerAndBackground.push_back(objects[i]);
 			}
 
@@ -375,6 +523,9 @@ void CSceneGame::Update(DWORD dt) {
 			}
 			if (dynamic_cast<CEffect*>(objects[i])) {
 				coEffects.push_back(objects[i]);
+			}
+			if (dynamic_cast<CEnemy*>(objects[i]) || dynamic_cast<CBrick*>(objects[i])) {
+				coEnemyAndBackground.push_back(objects[i]);
 			}
 		}
 	}
@@ -393,12 +544,15 @@ void CSceneGame::Update(DWORD dt) {
 			if (dynamic_cast<CEffect*>(objects[i])) {
 				objects[i]->Update(dt, &coEffects);
 			}
+			if (dynamic_cast<CEnemy*>(objects[i]) || dynamic_cast<CBrick*>(objects[i])) {
+				objects[i]->Update(dt, &coEnemyAndBackground);
+			}
 		}
 	}
 	//Check collision area
 	
 	checkCollisonOfWeapon(coWeaponAndCandle);
-	checkCollisionSimonWithItem();
+	checkCollisionOfSimon();
 	checkCollisionOfEnemy();
 
 	// Update camera to follow SIMON
@@ -409,6 +563,7 @@ void CSceneGame::Update(DWORD dt) {
 	camY = CGame::GetInstance()->GetCamPos_y();
 	//Khoảng cách để Simon vô giữa màn hình
 
+	updateCamAutoGo(dt);
 	//CGame::GetInstance()->SetCamPos(cx, 23.0f);
 	if (cx >= SCREEN_WIDTH / 2) {
 		cx -= SCREEN_WIDTH / 2;
@@ -423,10 +578,22 @@ void CSceneGame::Update(DWORD dt) {
 		}
 	}
 	else if (getStage() == 2) {
+		
 		CGame::GetInstance()->SetCamPos(cx, CAM_Y_DEFAULT_STAGE_2); //Khoảng cách để Simon đứng ngay giữa màn hình không bị lệch 
-		if (camX + SCREEN_WIDTH >= maps->Get(ID_MAP_2)->getMapWidth() && cx >= maps->Get(ID_MAP_2)->getMapWidth() - SCREEN_WIDTH) {
-			CGame::GetInstance()->SetCamPos(camX+100, CAM_Y_DEFAULT_STAGE_2);
+		if (camX  >= 1235 && cx >= 1235) {
+			CGame::GetInstance()->SetCamPos(camX, CAM_Y_DEFAULT_STAGE_2);
 		}
+	 
+		if (isStageMoving) {
+			CGame::GetInstance()->SetCamPos(CGame::GetInstance()->GetCamPos_x() +1 , CAM_Y_DEFAULT_STAGE_2);
+			if (round(CGame::GetInstance()->GetCamPos_x()) >= 1513) {
+				CGame::GetInstance()->SetCamPos(1513, CAM_Y_DEFAULT_STAGE_2);
+				isStageMoving = false;
+			/*	setStage(3);
+				LoadResources();*/
+			}
+		}
+
 	}
 
 }
@@ -453,16 +620,23 @@ void CSceneGame::Render() {
 //	}
 //}
 
-void CSceneGame::checkCollisionSimonWithItem() {
+void CSceneGame::checkCollisionOfSimon() {
 	for (int i = 0; i < objects.size(); i++) {
 		if (dynamic_cast<CItem*>(objects[i])) {
 			if (!dynamic_cast<CItem*>(objects[i])->getFinish()) {
 				if (simon->isCollisionWithItem(dynamic_cast<CItem*>(objects[i]))) {
 					getBonusFromItem(dynamic_cast<CItem*>(objects[i]));
-					deleteObject(objects, i);
+					objects[i]->hide();
+					//deleteObject(objects, i);
 				}
 			}
 			
+		}
+		if (dynamic_cast<CDoor*>(objects[i])) {
+			if (simon->checkAABBWithObject(objects[i])) {
+				objects[i]->SetState(DOOR_STATE_OPEN);
+				game->setAutoGo(true, 1900);
+			}
 		}
 	}
 }
@@ -614,36 +788,44 @@ void CSceneGame::checkCollisionOfEnemy() {
 
 	}
 	else {
-		cout << "Undame" << endl;
+		//cout << "Undame" << endl;
 	}
 }
 void CSceneGame::createGhost() {
-	int ghost = 0;
-	for (int i = 0; i < objects.size(); i++) {
-		if (dynamic_cast<CGhost*>(objects[i])&&objects[i]->isShow()) {
-			ghost++;
-		}
-	}
-	if (ghost == 0) {
-		if (simon->getDirection()>0) {
-			for (int i = 0; i < 3; i++) {
-				CGhost* newGhost = new CGhost(-1); // Direction: 1 la di qua phai, -1 la di qua trai
-				newGhost->SetPosition(simon->GetPositionX() + SCREEN_WIDTH + i*30,167.7);
-				listEnemy.push_back(newGhost);
-				objects.push_back(newGhost);
-			}
-		}
-		else {
-			for (int i = 0; i < 3; i++) {
-				CGhost* newGhost = new CGhost(1); // Direction: 1 la di qua phai, -1 la di qua trai
-				newGhost->SetPosition(simon->GetPositionX() - SCREEN_WIDTH - i * 30, 0);
-				listEnemy.push_back(newGhost);
-				objects.push_back(newGhost);
-			}
-		}
-	}
+	//int ghost = 0;
+	//for (int i = 0; i < objects.size(); i++) {
+	//	if (dynamic_cast<CGhost*>(objects[i])&&objects[i]->isShow()) {
+	//		ghost++;
+	//	}
+	//}
+	//if (ghost == 0) {
+	//	if (simon->getDirection()>0) {
+	//		for (int i = 0; i < 3; i++) {
+	//			CGhost* newGhost = new CGhost(-1); // Direction: 1 la di qua phai, -1 la di qua trai
+	//			newGhost->SetPosition(simon->GetPositionX() + SCREEN_WIDTH + i*30,50);
+	//			listEnemy.push_back(newGhost);
+	//			objects.push_back(newGhost);
+	//		}
+	//	}
+	//	else {
+	//		for (int i = 0; i < 3; i++) {
+	//			CGhost* newGhost = new CGhost(1); // Direction: 1 la di qua phai, -1 la di qua trai
+	//			newGhost->SetPosition(simon->GetPositionX() - SCREEN_WIDTH - i * 30, 0);
+	//			listEnemy.push_back(newGhost);
+	//			objects.push_back(newGhost);
+	//		}
+	//	}
+	//}
 }
 
+void CSceneGame::updateCamAutoGo(DWORD dt) {
+	float camX = CGame::GetInstance()->GetCamPos_x();
+	if (game->getAutoGo() && camX!=game->getTargetAutoGo()) {
+		cout << "Auto" << endl;
+		CGame::GetInstance()->SetCamPos(camX+100, CAM_Y_DEFAULT_STAGE_1);
+		isStageMoving = true;
+	}
+}
 
 
 

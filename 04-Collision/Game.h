@@ -44,7 +44,11 @@ class CGame
 	float cam_x = 0.0f;
 	float cam_y = 0.0f;
 
+	bool isAutoGo;
+	int targetAutoGo;
+
 public:
+	CGame();
 	void InitKeyboard(LPKEYEVENTHANDLER handler);
 	void Init(HWND hWnd);
 	void Draw(float x, float y, LPDIRECT3DTEXTURE9 texture, int left, int top, int right, int bottom, int alpha = 255);
@@ -76,6 +80,14 @@ public:
 	static CGame * GetInstance();
 	void setDebug(bool _debug) { this->isDebug = _debug; };
 	bool getDebug() { return this->isDebug; };
+
+	void setAutoGo(bool b, int target) {
+		this->isAutoGo = b; this->targetAutoGo = target;
+	}
+
+	bool getAutoGo(){ return this->isAutoGo; }
+	int getTargetAutoGo() { return this->targetAutoGo; }
+
 	~CGame();
 };
 

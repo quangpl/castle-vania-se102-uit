@@ -1,4 +1,4 @@
-#ifndef __WEAPON_H__
+﻿#ifndef __WEAPON_H__
 #define	__WEAPON_H__
 #pragma once
 #include "GameObject.h"
@@ -46,6 +46,7 @@ public:
 	DWORD getLastTimeAttack() { return this->lastTimeAttack; };
 	bool getCanDestroy() { return this->canDestroy; };
 	void setCanDestroy(bool _destroy) {this->canDestroy = _destroy; };
+	~CWeapon();
 };
 
 #endif

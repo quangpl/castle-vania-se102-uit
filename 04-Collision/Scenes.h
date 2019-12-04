@@ -37,6 +37,7 @@
 #include "PotRoast.h"
 #include "MonneyEffect.h"
 #include "StairPoint.h"
+#include "Door.h"
 
 using namespace std;
 

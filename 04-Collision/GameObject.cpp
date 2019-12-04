@@ -189,5 +189,5 @@ bool CGameObject::isInCamera(float width, float height ) {
 
 CGameObject::~CGameObject()
 {
-
+	cout << "Da xoa" << endl;
 }

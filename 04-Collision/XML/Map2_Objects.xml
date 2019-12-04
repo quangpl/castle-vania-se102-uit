@@ -41,7 +41,7 @@
     <Wall x="1392" y="116"  width="142" height="13"/>
   </Walls>
   <ChangeSceneObjects id="-1">
-    <ChangeScene x="1532" y="168" sceneId="2"
+    <ChangeScene x="1529" y="65" sceneId="2"
     simonAutoGo="0" simonAutoGoDistance="35"
     camAutoGo="1" isDoor="1" width="8" height="14"/>
   </ChangeSceneObjects>
@@ -65,6 +65,8 @@
     <StairPoint x="755" y="84" width="14" height="4" ny="-1" nx="-1" direction="2" center="000"/>
     <StairPoint x="929" y="143" width="16" height="4" ny="1" nx="-1" direction="3" center="923"/>
     <StairPoint x="893" y="84" width="14" height="4" ny="-1" nx="1" direction="4" center="000"/>
+     <StairPoint x="1286" y="208" width="14" height="4" ny="1" nx="1"  direction="1" center="1267"/>
+    <StairPoint x="1400" y="84" width="14" height="4" ny="-1" nx="-1"  direction="2" center="000"/>
   </StairPoints>
   <Detroys id="-99" >
     <Detroy x="0" y="0" type="-1" width="0" height="0"/>

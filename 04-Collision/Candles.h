@@ -23,7 +23,7 @@ class CCandle : public CGround
 public:
 	CCandle()
 	{
-		
+		//cout << "Candle create" << endl;
 	}
 
 	void setId(int id) { this->id = id; };

@@ -9,6 +9,10 @@ CGame * CGame::__instance = NULL;
 	- hInst: Application instance handle
 	- hWnd: Application window handle
 */
+
+CGame::CGame() {
+	isAutoGo = false;
+}
 void CGame::Init(HWND hWnd)
 {// khởi tạo các thông tin cơ bản
 	LPDIRECT3D9 d3d = Direct3DCreate9(D3D_SDK_VERSION);

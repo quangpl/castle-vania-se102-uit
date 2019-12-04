@@ -1,4 +1,5 @@
 #include "Enemy.h"
+#include "Simon.h"
 #include "SmallCandle.h"
 class CGhost : public CEnemy
 {
