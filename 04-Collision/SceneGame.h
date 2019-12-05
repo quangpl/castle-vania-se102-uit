@@ -4,14 +4,26 @@
 #define ID_MAP_1 1
 #define ID_MAP_2 2
 #define VX_CAMERA 0.02;
-
+#define TIME_CORSS_EFFECT 3000
+#define TIME_STOP_WATCH 2500
 class CSceneGame : public CScene
 {	
 	int currentIdMap;
 	vector<CGameObject*> objects;
 	bool isUpdateScene;
 	static CSceneGame* __instance;
-	bool isStageMoving = false;
+
+	bool isStageMoving ;
+	bool isWaitSimonThroughScene;
+	bool isProcessStageChange ;
+	bool isChangeSceneComplete;
+
+	bool hasCrossEffect = false;
+	DWORD timeStartCrossEffect;
+
+	bool isStopWatch = false;
+	DWORD timeStartStopWatch;
+	
 
 public:
 	CSceneGame();

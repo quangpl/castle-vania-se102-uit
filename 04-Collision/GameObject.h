@@ -71,6 +71,9 @@ public:
 	void SetSpeed(float vx, float vy) { this->vx = vx, this->vy = vy; }
 	float getVx() { return this->vx; };
 	float getVy() { return this->vy; };
+	void setVx(float _vx) { this->vx = _vx; }
+	void setVy(float _vy) { this->vy = _vy; }
+
 	int getDirection() { return this->nx; };
 
 	void GetPosition(float &x, float &y) { x = this->x; y = this->y; }

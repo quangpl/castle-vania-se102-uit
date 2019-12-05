@@ -6,7 +6,7 @@ void CEffect::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
 	// Calculate dx, dy 
 	CGameObject::Update(dt);
-	if (GetTickCount() - timeStartAppear >= 300) {
+	if (GetTickCount() - timeStartAppear >= 1000) {
 		hide();
 	}
 }

@@ -5,7 +5,7 @@ void CDagger::Render()
 	if (getFinish()) {
 		return;
 	}
-	CAnimations::GetInstance()->Get(ani)->RenderFlip(-getDirection(), x, y, 24, 128);
+	CAnimations::GetInstance()->Get(ani)->RenderFlip(-getDirection(), x, y, 24, 255);
 	setCurrentAni(ani);
 	if (CGame::GetInstance()->getDebug()) {
 		RenderBoundingBox();

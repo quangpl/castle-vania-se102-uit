@@ -4,6 +4,7 @@
 #include "GameObject.h"
 #include <iostream>
 #include "Candles.h"
+#include "Brick.h"
 using namespace std;
 
 

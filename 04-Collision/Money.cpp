@@ -47,16 +47,16 @@ void CMoney::Render()
 	int ani = 0;
 	switch (state)
 	{
-	case MONEY_STATE_100:
+	case MONEY_VALUE_100:
 		ani = MONEY_ANI_100;
 		break;
-	case MONEY_STATE_400:
+	case MONEY_VALUE_400:
 		ani = MONEY_ANI_400;
 		break;
-	case MONEY_STATE_700:
+	case MONEY_VALUE_700:
 		ani = MONEY_ANI_700;
 		break;
-	case MONEY_STATE_1000:
+	case MONEY_VALUE_1000:
 		ani = MONEY_ANI_1000;
 		break;
 	default:
@@ -70,16 +70,16 @@ void CMoney::SetState(int state)
 	CGameObject::SetState(state);
 	switch (state)
 	{
-	case MONEY_STATE_100:
+	case MONEY_VALUE_100:
 		value = 100;
 		break;
-	case MONEY_STATE_400:
+	case MONEY_VALUE_400:
 		value = 400;
 		break;
-	case MONEY_STATE_700:
+	case MONEY_VALUE_700:
 		value = 700;
 		break;
-	case MONEY_STATE_1000:
+	case MONEY_VALUE_1000:
 		value = 1000;
 		break;
 	default:

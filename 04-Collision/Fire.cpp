@@ -17,5 +17,18 @@ void CFire::Render()
 	if (!isShow()) {
 		return;
 	}
-	CAnimations::GetInstance()->Get(EFFECT_ANI_FIRE)->Render(x, y);
+	int ani;
+	switch (state)
+	{
+	case FIRE_STATE_NORMAL:
+		ani = EFFECT_ANI_FIRE;
+		break;
+	case FIRE_STATE_POND:
+		ani = EFFECT_ANI_POND;
+		break;
+	default:
+		ani = EFFECT_ANI_FIRE;
+		break;
+	}
+	CAnimations::GetInstance()->Get(ani)->Render(x, y);
 }

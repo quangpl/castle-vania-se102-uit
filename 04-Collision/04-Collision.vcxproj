@@ -137,6 +137,7 @@
     <ClInclude Include="Ground.h" />
     <ClInclude Include="Hidden.h" />
     <ClInclude Include="HolyWater.h" />
+    <ClInclude Include="HolyWaterItem.h" />
     <ClInclude Include="Items.h" />
     <ClInclude Include="Keyboard.h" />
     <ClInclude Include="LargeHeart.h" />
@@ -180,6 +181,7 @@
     <ClCompile Include="Ground.cpp" />
     <ClCompile Include="Hidden.cpp" />
     <ClCompile Include="HolyWater.cpp" />
+    <ClCompile Include="HolyWaterItem.cpp" />
     <ClCompile Include="Items.cpp" />
     <ClCompile Include="Keyboard.cpp" />
     <ClCompile Include="LargeHeart.cpp" />

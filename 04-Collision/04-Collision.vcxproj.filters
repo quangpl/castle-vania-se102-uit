@@ -166,9 +166,6 @@
     <ClInclude Include="StopWatch.h">
       <Filter>GameObject\Item</Filter>
     </ClInclude>
-    <ClInclude Include="HolyWater.h">
-      <Filter>GameObject\Item</Filter>
-    </ClInclude>
     <ClInclude Include="Cross.h">
       <Filter>GameObject\Item</Filter>
     </ClInclude>
@@ -183,6 +180,12 @@
     </ClInclude>
     <ClInclude Include="Door.h">
       <Filter>GameObject\Ground</Filter>
+    </ClInclude>
+    <ClInclude Include="HolyWaterItem.h">
+      <Filter>GameObject\Item</Filter>
+    </ClInclude>
+    <ClInclude Include="HolyWater.h">
+      <Filter>GameObject\Weapon</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -292,9 +295,6 @@
     <ClCompile Include="StopWatch.cpp">
       <Filter>GameObject\Item</Filter>
     </ClCompile>
-    <ClCompile Include="HolyWater.cpp">
-      <Filter>GameObject\Item</Filter>
-    </ClCompile>
     <ClCompile Include="Cross.cpp">
       <Filter>GameObject\Item</Filter>
     </ClCompile>
@@ -309,6 +309,12 @@
     </ClCompile>
     <ClCompile Include="Door.cpp">
       <Filter>GameObject\Ground</Filter>
+    </ClCompile>
+    <ClCompile Include="HolyWaterItem.cpp">
+      <Filter>GameObject\Item</Filter>
+    </ClCompile>
+    <ClCompile Include="HolyWater.cpp">
+      <Filter>GameObject\Weapon</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

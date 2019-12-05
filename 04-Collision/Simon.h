@@ -178,6 +178,9 @@ public:
 	void stopAutoGoX() {
 		isAutoGoX = false;
 	}
+	bool getAutoGoX() {
+		return this->isAutoGoX;
+	}
 	void attack(); //Su dung vu khi chinh
 	void attackSub(); //Su dung vu khi phu
 	void setWeapon(CWeapon* _weapon) { this->weapon = _weapon; };

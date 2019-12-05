@@ -67,8 +67,8 @@ void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
 	// Calculate dx, dy 
 	CGameObject::Update(dt);
+	//cout << x << endl;
 	checkBlink();
-	cout << x << endl;
 	//Ngăn không cho Simon rớt ra khỏi màn hình
 	if (x <= 0) {
 		x = 0;
@@ -91,8 +91,9 @@ void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 			if (round(x) >= targetAutoGoX) {
 				isAutoGoX = false;
 				setFreeze(false);
-				isAutoGoXComplete = true;
-				cout << "finish" << endl;
+				isAutoGoXComplete = true; 
+				vx = 0;
+				cout << "finish right" << endl;
 			}
 		}
 		else {
@@ -100,7 +101,8 @@ void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 				isAutoGoX = false;
 				setFreeze(false);
 				isAutoGoXComplete = true;
-				cout << "finish" << endl;
+				vx = 0;
+				cout << "finish left" << endl;
 			}
 		}
 	}
@@ -439,6 +441,9 @@ void CSimon::attackSub() {
 
 
 void CSimon::idle() {
+	if (isAutoGoX) {
+		return;
+	}
 	if (isMovingOnStair) {
 		if (currentStairTypeCollision == 1 || currentStairTypeCollision == 2)
 		{
@@ -579,6 +584,7 @@ void CSimon::autoGoX(int _nx, float speed,float target)
 	vx = speed;
 	isAutoGoX = true;
 	setFreeze(true);
+	isAutoGoXComplete = false;
 	targetAutoGoX = target;
 }
 

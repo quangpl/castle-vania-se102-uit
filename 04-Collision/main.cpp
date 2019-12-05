@@ -28,7 +28,15 @@ CScenes* scenes = CScenes::GetInstance();
 
 CSceneGame* sceneGame = CSceneGame::GetInstance();
 CSampleKeyHander* keyHandler = new CSampleKeyHander();
-
+D3DCOLOR createBlinkColor() {
+	int randomInt = 1 + rand() % (2);
+	if (randomInt % 2 == 0) {
+		return  D3DCOLOR_XRGB(0, 0, 0);
+	}
+	else {
+		return  D3DCOLOR_XRGB(255, 255, 255);
+	}
+}
 LRESULT CALLBACK WinProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
 	switch (message) {
@@ -75,7 +83,13 @@ void Render()
 	if (d3ddv->BeginScene())
 	{
 		// Clear back buffer with a color
-		d3ddv->ColorFill(bb, NULL, BACKGROUND_COLOR);
+		if (game->getIsBlinkScene()) {
+			d3ddv->ColorFill(bb, NULL, createBlinkColor());
+		}
+		else {
+			d3ddv->ColorFill(bb, NULL, BACKGROUND_COLOR);
+		}
+		
 		//tao ao giac - cross
 		spriteHandler->Begin(D3DXSPRITE_ALPHABLEND);
 		scenes->Get(SCENE_GAME_ID)->Render();

@@ -1,9 +1,6 @@
 #include "MonneyEffect.h"
 
-void CMonneyEffect::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
-{
-	CEffect::Update(dt, coObjects);
-}
+
 
 void CMonneyEffect::GetBoundingBox(float& l, float& t, float& r, float& b) {
 	l = x;
@@ -17,7 +14,7 @@ void CMonneyEffect::Render()
 		return;
 	}
 	int ani = 0;
-	switch (state)
+	switch (value)
 	{
 	case MONNEY_EFFECT_STATE_100:
 		ani = MONNEY_EFFECT_ANI_100;
@@ -34,10 +31,9 @@ void CMonneyEffect::Render()
 	default:
 		break;
 	}
-	CAnimations::GetInstance()->Get(601)->Render(x, y);
-}
-void CMonneyEffect::SetState(int state)
-{
-	CGameObject::SetState(state);
+	CAnimations::GetInstance()->Get(ani)->Render(x, y);
+	if (CGame::GetInstance()->getDebug()) {
+		RenderBoundingBox();
+	}
 }
 

@@ -5,7 +5,7 @@
     <Ground x="693" y="147" width="43" height="10"/>
     <Ground x="752" y="116" width="156" height="10" />
     <Ground x="929" y="147" width="96" height="10" />
-    <Ground x="1396" y="115" width="138" height="10" />
+    <Ground x="1396" y="115" width="265" height="10" />
   </Grounds>
   <SmallCandles id="2" >
     <SmallCandle x="30" y="182" width="8" height="14" />

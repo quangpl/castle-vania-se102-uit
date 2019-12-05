@@ -47,6 +47,8 @@ class CGame
 	bool isAutoGo;
 	int targetAutoGo;
 
+	bool isBlinkScene;
+
 public:
 	CGame();
 	void InitKeyboard(LPKEYEVENTHANDLER handler);
@@ -87,7 +89,9 @@ public:
 
 	bool getAutoGo(){ return this->isAutoGo; }
 	int getTargetAutoGo() { return this->targetAutoGo; }
-
+	
+	void setIsBlinkScene(bool blink) { this->isBlinkScene = blink; }
+	bool getIsBlinkScene() { return this->isBlinkScene; }
 	~CGame();
 };
 

@@ -32,6 +32,7 @@
 #include "SmallHeart.h"
 #include "Money.h"
 #include "StopWatch.h"
+#include "HolyWaterItem.h"
 #include "HolyWater.h"
 #include "Cross.h"
 #include "PotRoast.h"

@@ -12,6 +12,7 @@ CGame * CGame::__instance = NULL;
 
 CGame::CGame() {
 	isAutoGo = false;
+	isBlinkScene = false;
 }
 void CGame::Init(HWND hWnd)
 {// khởi tạo các thông tin cơ bản

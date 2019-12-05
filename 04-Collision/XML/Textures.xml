@@ -274,7 +274,7 @@
   <!-- Animation HOLY_WATER_SMALL_BOTTLE -->
   <Texture  textureId ="1" gameObjectId ="12">
     <Animation aniId="550" frameTime="100" name="HOLY_WATER_SMALL_BOTTLE">
-      <sprite id="10124" left="143" top="113" right="144" bottom="121"/>
+      <sprite id="10124" left="134" top="113" right="142" bottom="121"/>
     </Animation>
   </Texture>
   <!-- Animation HOLY_WATER -->
@@ -287,6 +287,7 @@
   <Texture  textureId ="1" gameObjectId ="14">
     <Animation aniId="552" frameTime="100" name="HOLY_WATER_POND">
       <sprite id="10126" left="131" top="155" right="147" bottom="168"/>
+      <sprite id="10126" left="105" top="153" right="113" bottom="168"/>
     </Animation>
   </Texture>
   <!-- Animation CROSS -->
@@ -358,6 +359,14 @@
       <sprite id="10143" left="55" top="121" right="78" bottom="171"  frameTime="200"/>
     </Animation>
   </Texture>
+    <Texture  textureId ="2" gameObjectId ="22">
+    <Animation aniId="56123" frameTime="200" name="DOORS_OPEN_COMPLETE">
+      <!-- <sprite id="10140" left="24" top="121" right="32" bottom="171"  frameTime="200"/> -->
+      <!-- <sprite id="10141" left="36" top="121" right="52" bottom="171"  frameTime="200"/> -->
+      <sprite id="10142" left="55" top="121" right="78" bottom="171"  frameTime="200"/>
+      <!-- <sprite id="10143" left="55" top="121" right="78" bottom="171"  frameTime="200"/> -->
+    </Animation>
+  </Texture>
   <Texture  textureId ="2" gameObjectId ="22">
     <Animation aniId="5612" frameTime="200" name="DOORS_STATIC">
       <sprite id="101402" left="24" top="121" right="32" bottom="171"  frameTime="200"/>
@@ -369,6 +378,11 @@
       <sprite id="10145" left="36" top="121" right="52" bottom="171"  frameTime="200"/>
       <sprite id="10146" left="24" top="121" right="32" bottom="171"  frameTime="200"/> 
       <sprite id="10147" left="24" top="121" right="32" bottom="171"  frameTime="200"/>
+    </Animation>
+  </Texture>
+    <Texture  textureId ="2" gameObjectId ="22">
+    <Animation aniId="56112" frameTime="200" name="DOORS_CLOSE_COMPLETE">
+      <sprite id="101472" left="24" top="121" right="32" bottom="171"  frameTime="200"/>
     </Animation>
   </Texture>
   <!-- Animation BREAKING_WALL -->
@@ -415,6 +429,29 @@
     <Texture  textureId ="1" gameObjectId ="17">
     <Animation aniId="604" frameTime="80" name="MONEY_1000">
       <sprite id="20036" left="407" top="123" right="466" bottom="137"/>
+    </Animation>
+  </Texture>
+
+    
+  <!-- Animation RED_MONEYBAG_EFFECT 100 -->
+  <Texture  textureId ="1" gameObjectId ="19">
+    <Animation aniId="1546" frameTime="100" name="RED_MONEYBAG_EFFECT">
+      <sprite id="10133" left="407" top="44" right="422" bottom="52" frameTime="500"/>
+      <sprite id="10133" left="407" top="44" right="422" bottom="52" frameTime="500"/>
+    </Animation>
+  </Texture>
+  <!-- Animation PURPLE_MONEYBAG_EFFECT 400 -->
+  <Texture  textureId ="1" gameObjectId ="19">
+    <Animation aniId="1547" frameTime="100" name="PURPLE_MONEYBAG_EFFECT">
+      <sprite id="10133" left="407" top="69" right="422" bottom="77" frameTime="500"/>
+      <sprite id="10133" left="407" top="69" right="422" bottom="77" frameTime="500"/>
+    </Animation>
+  </Texture>
+  <!-- Animation WHITE_MONEYBAG_EFFECT 700-->
+  <Texture  textureId ="1" gameObjectId ="19">
+    <Animation aniId="1647" frameTime="100" name="WHITE_MONEYBAG_EFFECT">
+      <sprite id="10133" left="407" top="93" right="422" bottom="100" frameTime="500"/>
+      <sprite id="10133" left="407" top="93" right="422" bottom="100" frameTime="500"/>
     </Animation>
   </Texture>
 
