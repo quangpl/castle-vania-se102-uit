@@ -67,12 +67,13 @@ void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
 	// Calculate dx, dy 
 	CGameObject::Update(dt);
-	//cout << x << endl;
+	cout << x << endl;
 	checkBlink();
 	//Ngăn không cho Simon rớt ra khỏi màn hình
 	if (x <= 0) {
 		x = 0;
 	}
+	cout << x << endl;
 	movingOutStair();
 	movingOnStair();
 	/*cout << nx << endl;
@@ -81,6 +82,7 @@ void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		goToStartOnStair();
 	}
 	// Simple fall down - Gravity of simon
+
 	if (hasGravity) {
 		vy += SIMON_GRAVITY * dt;
 	}
@@ -187,6 +189,9 @@ bool CSimon::isCollisionWithItem(CItem* objItem)
 void CSimon::Render()
 {
 	int ani;
+	if (isHit) {
+		cout << "hit" << endl;
+	}
 	switch (state)
 	{
 	case SIMON_STATE_DIE:
@@ -267,6 +272,7 @@ void CSimon::Render()
 		}
 	break;
 	}
+
 	int alpha = 255;
 	if (untouchable) alpha = 128;
 	CAnimations::GetInstance()->Get(ani)->RenderFlip(-nx,x, y, DEFAULT_OFFSET_X, alpha);
@@ -423,9 +429,11 @@ void CSimon::jumpReset() {
 	canJump = true;
 }
 void CSimon::attack() {
+
 	if (!this->weapon->getFinish()) {  //Ngan chan khong cho su dung vu khi lien tuc
 		return;
 	}
+	isHit = true;
 	this->weapon->attack(x,y,nx);
 	this->lastTimeAttack = GetTickCount();
 }
