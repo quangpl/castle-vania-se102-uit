@@ -14,8 +14,8 @@ vector<CHidden*> listHidden;
 vector<CGameObject*> listBrick;
 vector<CStairPoint*> listStairPoint;
 vector<CDoor*> listDoor;
-
 vector<CGameObject*> listEnemy;
+CDoor* currentDoor;
 
 CSceneGame::CSceneGame()
 {
@@ -524,7 +524,9 @@ void CSceneGame::Update(DWORD dt) {
 	
 	//Update in the new way
 	for (int i = 0; i < listEnemy.size(); i++) {
-		listEnemy[i]->Update(dt, &listBrick);
+		if (listEnemy[i]->isShow()) {
+			listEnemy[i]->Update(dt, &listBrick);
+		}
 	}
 	//simon->Update(dt, &listEnemy);
 
@@ -652,6 +654,8 @@ void CSceneGame::Update(DWORD dt) {
 					if (dynamic_cast<CDoor*>(objects[i])->getId() == 2&!isWaitSimonThroughScene) //dang xu ly cua o stage 2
 					{
 						isWaitSimonThroughScene = true;
+						objects[i]->SetState(DOOR_STATE_OPEN);
+						currentDoor = dynamic_cast<CDoor*>(objects[i]);
 						simon->autoGoX(1, SIMON_WALKING_SPEED_AUTO, 1600);
 					}
 				}
@@ -662,6 +666,7 @@ void CSceneGame::Update(DWORD dt) {
 			simon->setFreeze(true);
 			game->setAutoGo(true, 1537);
 			isChangeSceneComplete = true;
+			currentDoor->SetState(DOOR_STATE_CLOSE);
 		}
 		if (isChangeSceneComplete && !game->getAutoGo()) {
 			simon->setFreeze(false);
@@ -942,11 +947,10 @@ void CSceneGame::createGhost() {
 			ghost++;
 		}
 	}
-	cout << ghost << endl;
 	if (ghost == 0) {
 		if (simon->getDirection()>0) {
 			for (int i = 0; i < 3; i++) {
-				CGhost* newGhost = new CGhost(simon->GetPositionX()+SCREEN_WIDTH+ i * 30, 50,-1); // Direction: 1 la di qua phai, -1 la di qua trai
+				CGhost* newGhost = new CGhost(simon->GetPositionX()+SCREEN_WIDTH+ i * 30, 150,-1); // Direction: 1 la di qua phai, -1 la di qua trai
 				listEnemy.push_back(newGhost);
 				objects.push_back(newGhost);
 				cout << "Tao ghost" << endl;
@@ -954,7 +958,7 @@ void CSceneGame::createGhost() {
 		}
 		else {
 			for (int i = 0; i < 3; i++) {
-				CGhost* newGhost = new CGhost(simon->GetPositionX() - SCREEN_WIDTH - i * 30, 50, 1); // Direction: 1 la di qua phai, -1 la di qua trai
+				CGhost* newGhost = new CGhost(simon->GetPositionX() - SCREEN_WIDTH - i * 30, 150, 1); // Direction: 1 la di qua phai, -1 la di qua trai
 				listEnemy.push_back(newGhost);
 				objects.push_back(newGhost);
 				cout << "Tao ghost" << endl;

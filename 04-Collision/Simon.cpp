@@ -145,7 +145,7 @@ void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
  
 	coEvents.clear();
 	if (isHit) {
-		if (CAnimations::GetInstance()->Get(getCurrentAni())->getCurrentFrame() == CAnimations::GetInstance()->Get(getCurrentAni())->getNumberOfFrame()-1) {
+		if (GetTickCount()-timeStartHit>=400) {
 			isHit = false;
 			isHitFinish = true;
 			//cout << "Set hit false" << endl;
@@ -313,7 +313,7 @@ void CSimon::Render()
 		}
 	break;
 	}
-
+	cout << typeMovingStair << endl;
 	CAnimations::GetInstance()->Get(ani)->RenderFlip(-nx,x, y, DEFAULT_OFFSET_X, alpha);
 	setCurrentAni(ani);
 
@@ -325,7 +325,7 @@ void CSimon::Render()
 
 void CSimon::collisionWithEnemy(vector<LPGAMEOBJECT> listEnemy) {
 	for (int i = 0; i < listEnemy.size(); i++) {
-		if (checkAABBWithObjectAABBEx(listEnemy[i])&&isTouchable) {
+		if (checkAABBWithObjectAABBEx(listEnemy[i])&&isTouchable&& listEnemy[i]->isShow()) {
 			cout << "va cham" << endl;
 				isHurt = true;
 				isTouchable = false;
@@ -481,9 +481,14 @@ void CSimon::jumpReset() {
 	canJump = true;
 }
 void CSimon::attack() {
-
+	
 	if (!this->weapon->getFinish()) {  //Ngan chan khong cho su dung vu khi lien tuc
 		return;
+	}
+	timeStartHit = GetTickCount();
+	if (isMovingOnStair) {
+		cout << "Set type" << endl;
+		typeMovingStair = 3;
 	}
 	isHit = true;
 	this->weapon->attack(x,y,nx);
@@ -491,9 +496,11 @@ void CSimon::attack() {
 }
 
 void CSimon::attackSub() {
+
 	if (!this->subWeapon->getFinish()) {  //Ngan chan khong cho su dung vu khi lien tuc
 		return;
 	}
+	timeStartHit = GetTickCount();
 	this->subWeapon->attack(x, y, nx);
 	this->lastTimeAttack = GetTickCount();
 }
@@ -501,16 +508,31 @@ void CSimon::attackSub() {
 
 
 void CSimon::idle() {
+	if (isHit) {
+		cout << "hit true" << endl;
+	}
 	if (isAutoGoX) {
 		return;
 	}
 	if (isMovingOnStair) {
 		if (currentStairTypeCollision == 1 || currentStairTypeCollision == 2)
 		{
-			nx > 0 ? typeMovingStair = 5 : typeMovingStair = 6;
+			
+			if (isHit) {
+				nx > 0 ? typeMovingStair = 3 : typeMovingStair =4;
+			}
+			else {
+				nx > 0 ? typeMovingStair = 5 : typeMovingStair = 6;
+			}
 		}
 		else {
-			nx < 0 ? typeMovingStair = 5 : typeMovingStair = 6;
+		
+			if (isHit) {
+				nx > 0 ? typeMovingStair = 3 : typeMovingStair = 4;
+			}
+			else {
+				nx < 0 ? typeMovingStair = 5 : typeMovingStair = 6;
+			}
 		}
 		return;
 	}

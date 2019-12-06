@@ -118,6 +118,7 @@ class CSimon : public CGameObject
 	boolean isGoRight;
 
 	bool isHit;
+	DWORD timeStartHit;
 	boolean canJump = true;
 	int stateBackup;
 	DWORD timeStartBlink;

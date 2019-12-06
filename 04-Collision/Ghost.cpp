@@ -25,7 +25,6 @@ void CGhost::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	float camX = CGame::GetInstance()->GetCamPos_x();
 	if ((x > camX + SCREEN_WIDTH && nx > 0) || (x < camX && nx < 0)) {
 		hide();
-		cout << "hide" << endl;
 	}
 	vy += 0.002f * dt;
 	vx = nx * GHOST_SPEED;
