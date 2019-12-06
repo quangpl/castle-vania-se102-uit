@@ -57,16 +57,17 @@
 
   </Spawns>
   <StairPoints id="-3">
-    <StairPoint x="614" y="208" width="16" height="4" ny="1" nx="1" direction="1" center="598" />
-    <StairPoint x="695" y="115" width="5" height="4" ny="-1" nx="-1" direction="2" center="000"/>
-    <StairPoint x="715" y="144" width="6" height="4" ny="1" nx="1" direction="1" center="688"/>
-    <StairPoint x="755" y="84" width="14" height="4" ny="-1" nx="-1" direction="2" center="000"/>
-    <StairPoint x="929" y="143" width="16" height="4" ny="1" nx="-1" direction="3" center="923"/>
-    <StairPoint x="893" y="84" width="14" height="4" ny="-1" nx="1" direction="4" center="000"/>
-    <StairPoint x="1286" y="208" width="14" height="4" ny="1" nx="1"  direction="1" center="1267"/>
-    <StairPoint x="1400" y="84" width="14" height="4" ny="-1" nx="-1"  direction="2" center="000"/>
-    <StairPoint x="1700" y="120" width="14" height="4" ny="-1" nx="-1"  direction="4" center="000"/>
-    <StairPoint x="1775" y="208" width="14" height="4" ny="-1" nx="-1"  direction="3" center="1757"/>
+    <StairPoint x="614" y="208" width="16" height="4" ny="1" nx="1" direction="1" center="598" isThroughBrick="0"/>
+    <StairPoint x="695" y="115" width="5" height="4" ny="-1" nx="-1" direction="2" center="000" isThroughBrick="0"/>
+    <StairPoint x="715" y="144" width="6" height="4" ny="1" nx="1" direction="1" center="688" isThroughBrick="0"/>
+    <StairPoint x="755" y="84" width="14" height="4" ny="-1" nx="-1" direction="2" center="000" isThroughBrick="0"/>
+    <StairPoint x="935" y="143" width="14" height="4" ny="1" nx="-1" direction="3" center="923" isThroughBrick="0"/>
+    <StairPoint x="893" y="84" width="14" height="4" ny="-1" nx="1" direction="4" center="000" isThroughBrick="0"/>
+    <StairPoint x="1286" y="208" width="14" height="4" ny="1" nx="1"  direction="1" center="1267" isThroughBrick="0"/>
+    <StairPoint x="1400" y="84" width="14" height="4" ny="-1" nx="-1"  direction="2" center="000" isThroughBrick="0"/>
+    <StairPoint x="1700" y="120" width="14" height="4" ny="-1" nx="-1"  direction="4" center="000" isThroughBrick="0"/>
+    <StairPoint x="1775" y="208" width="14" height="4" ny="-1" nx="-1"  direction="3" center="1757" isThroughBrick="0"/>
+    <StairPoint x="1568" y="183" width="14" height="4" ny="-1" nx="-1"  direction="4" center="000" isThroughBrick="1"/>
   </StairPoints>
   <Detroys id="-99" >
     <Detroy x="0" y="0" type="-1" width="0" height="0"/>

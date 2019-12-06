@@ -9,6 +9,7 @@ class CStairPoint : public CGround
 	virtual void Render();
 	float w, h;
 	int center;
+	float hasThrough; //Simon can through the brick enum: 0,1
 
 public:
 	CStairPoint(float _x, float _y, float _w, float _h, int _direction) : CGround() {
@@ -25,4 +26,7 @@ public:
 
 	void setCenter(int cen) { this->center = cen; }
 	int getCenter() { return this->center; }
+
+	void setHasThrough(float through) { this->hasThrough = through; }
+	bool getHasThrough() { return this->hasThrough;}
 };

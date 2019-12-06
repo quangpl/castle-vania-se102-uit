@@ -161,6 +161,9 @@ void CSceneGame::LoadResources() {
 		simon->setWeapon(whip);
 		objects.push_back(simon);
 
+		/*CFishMen* fish = new CFishMen(100, 100, 1, simon);
+		objects.push_back(fish);
+		listEnemy.push_back(fish);*/
 		/*CGhost* newGhost = new CGhost(100,20,1);
 		newGhost->SetPosition(100, 100);
 		objects.push_back(newGhost);
@@ -287,6 +290,7 @@ void CSceneGame::LoadResources() {
 			{
 				int id;
 				float x, y, Width, Height,direction,center;
+				float isThroughBrick;
 				Objects->QueryIntAttribute("id", &id);
 				for (Object = Objects->FirstChildElement(); Object != NULL; Object = Object->NextSiblingElement())
 				{
@@ -296,6 +300,8 @@ void CSceneGame::LoadResources() {
 					Object->QueryFloatAttribute("height", &Height);
 					Object->QueryFloatAttribute("direction", &direction);
 					Object->QueryFloatAttribute("center", &center);
+					Object->QueryFloatAttribute("isThroughBrick", &isThroughBrick);
+
 					if (id == 0)
 					{
 						CBrick* newBrick = new CBrick();
@@ -320,6 +326,8 @@ void CSceneGame::LoadResources() {
 					{
 						CStairPoint* stairPoint = new CStairPoint(x,y, Width, Height, direction);
 						stairPoint->setCenter(center);
+						stairPoint->setCenter(center);
+						stairPoint->setHasThrough(isThroughBrick);
 						objects.push_back(stairPoint);
 						listStairPoint.push_back(stairPoint);
 					}
@@ -338,7 +346,8 @@ void CSceneGame::LoadResources() {
 		/*	CMonneyEffect* money = new CMonneyEffect(200, 60);
 			money->SetState(100);
 			objects.push_back(money);*/
-
+			CHidden* hiddenTunnel = new CHidden(1592, 222, 14, 5, HIDDEN_TYPE_GO_TUNNEL);
+			objects.push_back(hiddenTunnel);
 
 			//Whip
 			objects.push_back(simon->getWeapon());
@@ -353,136 +362,208 @@ void CSceneGame::LoadResources() {
 			maps->Add(ID_MAP_2, map);
 			currentIdMap = ID_MAP_2;
 		}
-else if (getStage() == 3) {
-	//objects.clear();
-	//CTextures* textures = CTextures::GetInstance();
+	else if (getStage() == 3) {
+		cout << "load stage 3" << endl;
+		objects.clear();
+		listBrick.clear();
+		listHidden.clear();
+		listStairPoint.clear();
+		listDoor.clear();
+		/*	for (int i = 0; i < objects.size(); i++) {
+					objects.erase(objects.begin() + i);
+			}*/
 
-	//textures->Add(ID_TEX_MAP_1, "Map\\tileset_map2.png", D3DCOLOR_XRGB(255, 0, 255));
-	//textures->Add(ID_TEX_BBOX, "textures\\bbox.png", D3DCOLOR_XRGB(255, 255, 255));
-	//textures->Add(ID_TEX_SIMON, "textures\\TexturesV4.png", D3DCOLOR_XRGB(34, 177, 76));
-	//textures->Add(ID_TEX_CANDLE, "textures\\object.png", D3DCOLOR_XRGB(34, 177, 76));
-	//textures->Add(ID_TEX_ITEM, "textures\\Items.png", D3DCOLOR_XRGB(128, 0, 0));
-	//textures->Add(ID_TEX_ENEMY, "textures\\enemy.png", D3DCOLOR_XRGB(96, 68, 106));
+		//listHidden.clear();
+		CTextures* textures = CTextures::GetInstance();
 
-
-
-
-	//CMap* map = new CMap(ID_TEX_MAP_1, "Map\\tileset_map2.png", D3DCOLOR_XRGB(255, 0, 255));
-	//map->ReadMapTXT("Map\\Map3.txt");
-	//map->LoadTile();
-
-	//CSprites* sprites = CSprites::GetInstance();
-	//CAnimations* animations = CAnimations::GetInstance();
-
-	//LPDIRECT3DTEXTURE9 texSimon = textures->Get(ID_TEX_SIMON);
-	//LPDIRECT3DTEXTURE9 texCandle = textures->Get(ID_TEX_CANDLE);
-
-	////Load tất cả animations
-	//LPDIRECT3DTEXTURE9 directTexture;
-	//TiXmlDocument doc("XML/Textures.xml");
-	//if (!doc.LoadFile())
-	//{
-	//	DebugOut(L"Can't read XML file");
-	//	MessageBox(NULL, L"Can't Read XML File", L"Error", MB_OK);
-	//	return;
-	//}
-	//else
-	//{
-	//	DebugOut(L"[INFO]Read XML success\n");
-	//}
-	//// get info root
-	//TiXmlElement* root = doc.RootElement();
-	//TiXmlElement* sprite = nullptr;
-	//TiXmlElement* animation = nullptr;
-	//TiXmlElement* texture = nullptr;
-	//LPANIMATION ani;
-	//int nItem = 1;
-	//// gameObjectId = 0 -- Simon
-	//for (texture = root->FirstChildElement(); texture != NULL; texture = texture->NextSiblingElement())
-	//{
-	//	int textureId;
-	//	int gameObjectId;
-	//	texture->QueryIntAttribute("textureId", &textureId);
-	//	texture->QueryIntAttribute("gameObjectId", &gameObjectId);
-
-	//	directTexture = textures->Get(textureId);
-	//	for (animation = texture->FirstChildElement(); animation != NULL; animation = animation->NextSiblingElement())
-	//	{
-	//		int aniId, frameTime;
-	//		animation->QueryIntAttribute("frameTime", &frameTime);
-
-	//		ani = new CAnimation(frameTime);
-	//		for (sprite = animation->FirstChildElement(); sprite != NULL; sprite = sprite->NextSiblingElement())
-	//		{
-	//			int left, top, right, bottom, id;
-	//			sprite->QueryIntAttribute("id", &id);
-	//			sprite->QueryIntAttribute("top", &top);
-	//			sprite->QueryIntAttribute("left", &left);
-	//			sprite->QueryIntAttribute("right", &right);
-	//			sprite->QueryIntAttribute("bottom", &bottom);
-	//			sprites->Add(id, left, top, right, bottom, directTexture);
-	//			ani->Add(id);
-	//		}
-	//		animation->QueryIntAttribute("aniId", &aniId);
-	//		animations->Add(aniId, ani);
-	//		if (gameObjectId == 0)
-	//		{
-	//			simon->AddAnimation(aniId);
-	//		}
-	//		else if (gameObjectId == 100) {
-	//			whip = new CWhip();
-	//			whip->AddAnimation(aniId);
-	//			whip->setLevel(1);
-	//		}
-	//		/*else if (gameObjectId == 2) {
-	//			CItem* item = new CItem();
-	//			item->AddAnimation(aniId);
-	//			item->SetState(ITEM_STATE_HIDE);
-	//			objects.push_back(item);
-	//			items->Add(nItem, item);
-	//			nItem++;
-	//		}*/
-	//		else if (gameObjectId == 211) {
-	//			for (int i = 1; i <= NUMBER_OF_CANDLE; i++) {
-	//				CCandle* candle = new CCandle();
-	//				candle->AddAnimation(aniId);
-	//				candle->SetState(CANDLE_STATE_SHOW);
-	//				candle->SetPosition(i * DISTANCE_BETWEEN_CANDLE, Y_BASE);
-	//				candle->setId(i);
-	//				//candles->Add(candle);
-	//				objects.push_back(candle);
-	//			}
-	//		}
-	//		else if (gameObjectId == 28) {
-	//			for (int i = 0; i < NUMBER_OF_BRICK; i++)
-	//			{
-	//				float l, t, r, b;
-	//				CBrick* brick = new CBrick();
-	//				brick->SetPosition(0 + i * 16.0f, SCREEN_HEIGHT - 45); //Anhr huong vi tri simon
-	//				objects.push_back(brick);
-	//			}
-	//		}
-	//	};
-
-
-	//}
-
-
-	//CHidden* hidden = new CHidden(685, 130, 10, 80, HIDDEN_TYPE_DOOR);
-	//listHidden.push_back(hidden);
-	//objects.push_back(hidden);
-
-	//simon->SetPosition(50.0f, 0); //simon
-	//simon->setWeapon(whip);
-	//objects.push_back(simon);
+		textures->Add(ID_TEX_MAP_3, "Map\\tileset_map2.png", D3DCOLOR_XRGB(255, 255, 255));
+		textures->Add(ID_TEX_BBOX, "textures\\bbox.png", D3DCOLOR_XRGB(255, 255, 255));
+		textures->Add(ID_TEX_SIMON, "textures\\TexturesV4.png", D3DCOLOR_XRGB(34, 177, 76));
+		textures->Add(ID_TEX_CANDLE, "textures\\object.png", D3DCOLOR_XRGB(34, 177, 76));
+		textures->Add(ID_TEX_ITEM, "textures\\Items.png", D3DCOLOR_XRGB(128, 0, 0));
 
 
 
-	//objects.push_back(whip);
-	//maps->Add(ID_MAP_1, map);
-	//currentIdMap = ID_MAP_1;
 
-}
+		CMap* map = new CMap(ID_TEX_MAP_3, "Map\\tileset_map2.png", D3DCOLOR_XRGB(255, 255, 255));
+		map->ReadMapTXT("Map\\Map3.txt");
+		map->LoadTile();
+
+		CSprites* sprites = CSprites::GetInstance();
+		CAnimations* animations = CAnimations::GetInstance();
+
+		LPDIRECT3DTEXTURE9 texSimon = textures->Get(ID_TEX_SIMON);
+		LPDIRECT3DTEXTURE9 texCandle = textures->Get(ID_TEX_CANDLE);
+
+		//Load tất cả animations
+		LPDIRECT3DTEXTURE9 directTexture;
+		TiXmlDocument doc("XML/Textures.xml");
+		if (!doc.LoadFile())
+		{
+			DebugOut(L"Can't read XML file");
+			MessageBox(NULL, L"Can't Read XML File", L"Error", MB_OK);
+			return;
+		}
+		else
+		{
+			DebugOut(L"[INFO]Read XML success\n");
+		}
+		// get info root
+		TiXmlElement* root = doc.RootElement();
+		TiXmlElement* sprite = nullptr;
+		TiXmlElement* animation = nullptr;
+		TiXmlElement* texture = nullptr;
+		LPANIMATION ani;
+		int nItem = 1;
+		// gameObjectId = 0 -- Simon
+		for (texture = root->FirstChildElement(); texture != NULL; texture = texture->NextSiblingElement())
+		{
+			int textureId;
+			int gameObjectId;
+			texture->QueryIntAttribute("textureId", &textureId);
+			texture->QueryIntAttribute("gameObjectId", &gameObjectId);
+
+			directTexture = textures->Get(textureId);
+			for (animation = texture->FirstChildElement(); animation != NULL; animation = animation->NextSiblingElement())
+			{
+				int aniId, frameTime;
+				animation->QueryIntAttribute("frameTime", &frameTime);
+
+				ani = new CAnimation(frameTime);
+				for (sprite = animation->FirstChildElement(); sprite != NULL; sprite = sprite->NextSiblingElement())
+				{
+					int left, top, right, bottom, id;
+					sprite->QueryIntAttribute("id", &id);
+					sprite->QueryIntAttribute("top", &top);
+					sprite->QueryIntAttribute("left", &left);
+					sprite->QueryIntAttribute("right", &right);
+					sprite->QueryIntAttribute("bottom", &bottom);
+					sprites->Add(id, left, top, right, bottom, directTexture);
+					ani->Add(id);
+				}
+				animation->QueryIntAttribute("aniId", &aniId);
+				animations->Add(aniId, ani);
+				if (gameObjectId == 0)
+				{
+					simon->AddAnimation(aniId);
+				}
+				else if (gameObjectId == 28) {
+					for (int i = 0; i < NUMBER_OF_BRICK; i++)
+					{
+						float l, t, r, b;
+						CBrick* brick = new CBrick();
+						brick->SetPosition(0 + i * 16.0f, SCREEN_HEIGHT - 30);
+						objects.push_back(brick);
+						listBrick.push_back(brick);
+					}
+				}
+			};
+
+
+		}
+
+		//Load new object
+		TiXmlDocument Map2Object("XML/Map21_Objects.xml");
+		if (!Map2Object.LoadFile())
+		{
+			DebugOut(L"Can't read XML file: %s");
+			MessageBox(NULL, L"Can't Read XML File", L"Error", MB_OK);
+			return;
+		}
+		// get info root
+		root = Map2Object.RootElement();
+		TiXmlElement* Objects = nullptr;
+		TiXmlElement* Object = nullptr;
+		for (Objects = root->FirstChildElement(); Objects != NULL; Objects = Objects->NextSiblingElement())
+		{
+			int id;
+			float x, y, Width, Height, direction, center;
+			float isThroughBrick;
+			Objects->QueryIntAttribute("id", &id);
+			for (Object = Objects->FirstChildElement(); Object != NULL; Object = Object->NextSiblingElement())
+			{
+				Object->QueryFloatAttribute("x", &x);
+				Object->QueryFloatAttribute("y", &y);
+				Object->QueryFloatAttribute("width", &Width);
+				Object->QueryFloatAttribute("height", &Height);
+				Object->QueryFloatAttribute("direction", &direction);
+				Object->QueryFloatAttribute("center", &center);
+				Object->QueryFloatAttribute("isThroughBrick", &isThroughBrick);
+
+				if (id == 0)
+				{
+					CBrick* newBrick = new CBrick();
+					newBrick->setSize(Width, Height);
+					newBrick->SetPosition(x, y);
+					listBrick.push_back(newBrick);
+					objects.push_back(newBrick);
+				}
+
+				if (id == 2) {
+					CSmallCandle* smallCandle = new CSmallCandle();
+					smallCandle->SetPosition(x, y);
+					objects.push_back(smallCandle);
+				}
+				//else if (id == -1) {
+				//	CDoor* door = new CDoor(x, y, 2); //2: id stage 2 , stage cua cua dang dung
+				//	door->SetState(DOOR_STATE_STATIC);
+				//	objects.push_back(door);
+				//	listDoor.push_back(door);
+				//}
+				else if (id == -3)
+				{
+					CStairPoint* stairPoint = new CStairPoint(x, y, Width, Height, direction);
+					stairPoint->setCenter(center);
+					stairPoint->setHasThrough(isThroughBrick);
+					objects.push_back(stairPoint);
+					listStairPoint.push_back(stairPoint);
+				}
+			}
+		}
+
+		/*CFishMen* fish = new CFishMen(100, 400, 1, simon);
+		objects.push_back(fish);
+		listEnemy.push_back(fish);
+
+		  fish = new CFishMen(23000, 400, -1, simon);
+		objects.push_back(fish);
+		listEnemy.push_back(fish);*/
+		//Simon
+		//simon->setWeapon(simon->getWeapon());
+		//simon->setSubWeapon(simon->getSubWeapon());
+		simon->setDirection(1);
+		//simon->SetPosition(100, 0); //simon
+		objects.push_back(simon);
+
+
+
+
+
+		/*	CMonneyEffect* money = new CMonneyEffect(200, 60);
+			money->SetState(100);
+			objects.push_back(money);*/
+		//CHidden* hiddenTunnel = new CHidden(1592, 222, 14, 5, HIDDEN_TYPE_GO_TUNNEL);
+		//objects.push_back(hiddenTunnel);
+
+		//Whip
+	/*	objects.push_back(simon->getWeapon());
+		if (simon->getSubWeapon()) {
+			simon->setSubWeapon(simon->getSubWeapon());
+			objects.push_back(simon->getSubWeapon());
+		}*/
+		/*	CGhost* newGhost = new CGhost(100, 20, 1);
+			objects.push_back(newGhost);
+			listEnemy.push_back(newGhost);*/
+			//Map
+
+		/*CFishMen* fish = new  CFishMen(100, 400, 1, simon);
+		listEnemy.push_back(fish);
+		objects.push_back(fish);*/
+
+		maps->Add(ID_MAP_3, map);
+		currentIdMap = ID_MAP_3;
+		}
+	
 	else {
 			cout << "CANNOT SET STAGE or STAGE NULL" << endl;
 	}
@@ -497,21 +578,28 @@ void CSceneGame::checkUpdateScene() {
 			LoadResources();
 		}
 		break;
+	case 2:
+		break;
+	case 3:
 	default:
 		break;
 	}
 }
 void CSceneGame::Update(DWORD dt) {
-
-	if (getStage() == 2) {
+	
+	if (getStage() ==2) {
 		createGhost();
-		createBat();
+		//createBat();
 		/*Check and process Simon on stair*/
 		CStairPoint* stairPoint = simon->checkCollisionStartStair(listStairPoint);
 		/*if (stairPoint) {
 			simon->goOnStair(stairPoint);
 		}*/
 		/*Check and process Simon on stair*/
+	}
+	else if (getStage() == 3) {
+		isAllowCreateFishmen = true;
+		//createFishMan();
 	}
 	simon->collisionWithHidden(listHidden);
 	checkUpdateScene();
@@ -567,7 +655,7 @@ void CSceneGame::Update(DWORD dt) {
 	{
 		if (objects[i]->getHealth() > 0 && objects[i]->isShow()) {
 
-			if ( dynamic_cast<CBrick*>(objects[i]) || dynamic_cast<CSimon*>(objects[i]) || dynamic_cast<CItem*>(objects[i])) {
+			if (dynamic_cast<CBrick*>(objects[i]) || dynamic_cast<CSimon*>(objects[i]) || dynamic_cast<CItem*>(objects[i])) {
 				objects[i]->Update(dt, &coPlayerAndBackground);
 			}
 
@@ -679,6 +767,12 @@ void CSceneGame::Update(DWORD dt) {
 		}
 		//check chuyen qua cua stage 2
 	}
+	else if (getStage() == 3) {
+		CGame::GetInstance()->SetCamPos(cx, CAM_Y_DEFAULT_STAGE_2); //Khoảng cách để Simon đứng ngay giữa màn hình không bị lệch 
+		if (camX >= 497 && cx >= 497) {
+			CGame::GetInstance()->SetCamPos(497, CAM_Y_DEFAULT_STAGE_2);
+		}
+	}
 
 }
 void CSceneGame::Render() {
@@ -724,6 +818,16 @@ void CSceneGame::checkCollisionOfSimon() {
 				game->setAutoGo(true, 1380);
 			}
 		}
+		if (dynamic_cast<CHidden*>(objects[i])) {
+			if (simon->checkAABBWithObject(objects[i])&& (dynamic_cast<CHidden*>(objects[i])->getTypeHidden()== HIDDEN_TYPE_GO_TUNNEL)){
+				cout << "chuyen qua stage 3" << endl;
+				CScenes::GetInstance()->Get(SCENE_GAME_ID)->setStage(3);
+				LoadResources();
+				simon->SetPosition(47, 51);
+				simon->setIsThroughBrick(0);
+				cout << "update" << endl;
+			}
+		}
 	}
 }
 void CSceneGame::checkCollisonOfWeapon(vector<LPGAMEOBJECT> &listObjects) {
@@ -743,6 +847,7 @@ void CSceneGame::checkCollisonOfWeapon(vector<LPGAMEOBJECT> &listObjects) {
 					subWeapon->setCanDestroy(false);
 					//deleteObject(objects, i);
 					subWeapon->setFinish(true);
+					listObjects[i]->hide();
 					//objects.push_back(new CFire(subWeapon->GetPositionX(), subWeapon->GetPositionY(), FIRE_STATE_POND));
 				}
 				else if (dynamic_cast<CSmallCandle*>(listObjects[i]) && subWeapon->checkAABBWithObject(listObjects[i])) {
@@ -766,6 +871,7 @@ void CSceneGame::checkCollisonOfWeapon(vector<LPGAMEOBJECT> &listObjects) {
 					weapon->setCurrentFrame(-1);
 					weapon->setCanDestroy(false);
 					//deleteObject(objects, i);
+					listObjects[i]->hide();
 					weapon->setFinish(true);
 			}
 			else if (dynamic_cast<CSmallCandle*>(listObjects[i]) && weapon->checkAABBWithObject(listObjects[i])) {
@@ -1011,6 +1117,71 @@ void CSceneGame::updateCamAutoGo(DWORD dt) {
 	if (game->getAutoGo() && camX!=game->getTargetAutoGo()) {
 		//CGame::GetInstance()->SetCamPos(camX+100, CAM_Y_DEFAULT_STAGE_1);
 		isStageMoving = true;
+	}
+}
+void CSceneGame::createFishMan() {
+	
+	if (isAllowCreateFishmen && CountEnemyFishmen < 2)
+	{
+		cout << "Tao fish man" << endl;
+		DWORD now = GetTickCount();
+		if (true) // đủ thời gian chờ
+		{
+			cout << "Dang thuc hien tao fish" << endl;
+			TimeCreateFishmen = now; // đặt lại thời gian đã tạo
+
+			float xFishmen = 0;
+
+			if (FISHMEN_ZONE_1_LEFT < simon->GetPositionX() && simon->GetPositionX() <= FISHMEN_ZONE_1_RIGHT)
+			{
+				xFishmen = (rand() % 2) ? (FISHMEN_POS_3) : (FISHMEN_POS_4);
+			}
+
+			if (FISHMEN_ZONE_2_LEFT < simon->GetPositionX() && simon->GetPositionX() <= FISHMEN_ZONE_2_RIGHT)
+			{
+				xFishmen = (rand() % 2) ? (FISHMEN_POS_1) : ((rand() % 2) ? (FISHMEN_POS_3) : (FISHMEN_POS_4));
+			}
+
+			if (FISHMEN_ZONE_3_LEFT < simon->GetPositionX() && simon->GetPositionX() <= FISHMEN_ZONE_3_RIGHT)
+			{
+				xFishmen = (rand() % 2) ? (FISHMEN_POS_4) : (FISHMEN_POS_5);
+			}
+
+			if (FISHMEN_ZONE_4_LEFT < simon->GetPositionX() && simon->GetPositionX() <= FISHMEN_ZONE_4_RIGHT)
+			{
+				xFishmen = (rand() % 2) ? (FISHMEN_POS_3) : (FISHMEN_POS_5);
+			}
+
+			if (FISHMEN_ZONE_5_LEFT < simon->GetPositionX() && simon->GetPositionX() <= FISHMEN_ZONE_5_RIGHT)
+			{
+				xFishmen = (rand() % 2) ? (FISHMEN_POS_4) : (FISHMEN_POS_6);
+			}
+
+			if (FISHMEN_ZONE_6_LEFT < simon->GetPositionX() && simon->GetPositionX() <= FISHMEN_ZONE_6_RIGHT)
+			{
+				xFishmen = (rand() % 2) ? (FISHMEN_POS_5) : ((rand() % 2) ? (FISHMEN_POS_7) : (FISHMEN_POS_8));
+			}
+
+			if (FISHMEN_ZONE_7_LEFT < simon->GetPositionX() && simon->GetPositionX() <= FISHMEN_ZONE_7_RIGHT)
+			{
+				xFishmen = (rand() % 2) ? (FISHMEN_POS_6) : (FISHMEN_POS_8);
+			}
+			if (FISHMEN_ZONE_8_LEFT < simon->GetPositionX() && simon->GetPositionX() <= FISHMEN_ZONE_8_RIGHT)
+			{
+				xFishmen = (rand() % 2) ? (FISHMEN_POS_6) : (FISHMEN_POS_7);
+			}
+			int directionFishmen = xFishmen < simon->GetPositionX() ? 1 : -1;
+
+
+			float yFishmen = FISHMEN_POS_Y;
+
+			CFishMen* newFishMan = new CFishMen(xFishmen, yFishmen, directionFishmen, simon);
+			listEnemy.push_back(newFishMan);
+			objects.push_back(newFishMan);
+			CountEnemyFishmen++;
+
+			TimeWaitCreateFishmen = 2000 + (rand() % 2000);
+		}
 	}
 }
 

@@ -133,6 +133,8 @@
     <ClInclude Include="Door.h" />
     <ClInclude Include="Effect.h" />
     <ClInclude Include="Fire.h" />
+    <ClInclude Include="FireBall.h" />
+    <ClInclude Include="FishMen.h" />
     <ClInclude Include="Ghost.h" />
     <ClInclude Include="Ground.h" />
     <ClInclude Include="Hidden.h" />
@@ -177,6 +179,8 @@
     <ClCompile Include="Door.cpp" />
     <ClCompile Include="Effect.cpp" />
     <ClCompile Include="Fire.cpp" />
+    <ClCompile Include="FireBall.cpp" />
+    <ClCompile Include="FishMen.cpp" />
     <ClCompile Include="Ghost.cpp" />
     <ClCompile Include="Ground.cpp" />
     <ClCompile Include="Hidden.cpp" />

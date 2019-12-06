@@ -40,6 +40,7 @@
 #include "StairPoint.h"
 #include "Door.h"
 #include "Bat.h"
+#include "FishMen.h"
 
 using namespace std;
 

@@ -49,7 +49,7 @@ void CMap::Render() {
 	int endColumn = cx + SCREEN_WIDTH / frameWidth + 1; //SCREEN_WIDTH
 	for (int i = 0; i < rowMap; i++) {
 		for (int j = 0; j < columnMap; j++) {
-			//DebugOut(L"\ntiles: %d", tileMap[i][j]);
+			DebugOut(L"\ntiles: %d", tileMap[i][j]);
 			tiles[tileMap[i][j]]->Draw(j*frameWidth + drawPositionX, i*frameHeight + drawPositionY);
 		}
 	}

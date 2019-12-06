@@ -2,6 +2,8 @@
 #include "Ground.h"
 #define HIDDEN_TYPE_DOOR 1
 #define HIDDEN_TYPE_STAIR 2
+#define HIDDEN_TYPE_GO_TUNNEL 3
+
 
 class CHidden : public CGround
 {

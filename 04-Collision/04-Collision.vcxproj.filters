@@ -187,6 +187,12 @@
     <ClInclude Include="Bat.h">
       <Filter>GameObject\Enemy</Filter>
     </ClInclude>
+    <ClInclude Include="FireBall.h">
+      <Filter>GameObject\Weapon</Filter>
+    </ClInclude>
+    <ClInclude Include="FishMen.h">
+      <Filter>GameObject\Enemy</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
@@ -314,6 +320,12 @@
       <Filter>GameObject\Weapon</Filter>
     </ClCompile>
     <ClCompile Include="Bat.cpp">
+      <Filter>GameObject\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="FireBall.cpp">
+      <Filter>GameObject\Weapon</Filter>
+    </ClCompile>
+    <ClCompile Include="FishMen.cpp">
       <Filter>GameObject\Enemy</Filter>
     </ClCompile>
   </ItemGroup>

@@ -67,8 +67,10 @@ void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
 	// Calculate dx, dy 
 	CGameObject::Update(dt);
-	//cout << x << endl;
 	checkBlink();
+	if(currentStair) {
+		cout << currentStair->getStairDirection() << endl;
+	}
 	if (isBlink) {
 		if (GetTickCount() - timeStartBlink >= TIME_BLINK) {
 			isBlink = false;
@@ -114,7 +116,9 @@ void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		}
 	}
 	// Simple fall down - Gravity of simon
-
+	if (isThroughBrick) {
+		cout << "through all" << endl;
+	}
 	if (hasGravity) {
 		vy += SIMON_GRAVITY * dt;
 	}
@@ -196,6 +200,13 @@ void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 			}
 			else if (dynamic_cast<CItem*>(e->obj)) {
 				this->colEventWithItem = e;
+			}
+			else if (dynamic_cast<CBrick*>(e->obj)) {
+				if (isMovingOnStair&&isThroughBrick) {
+					x += dx;
+					y += dy;
+					cout << "Through all" << endl;
+				}
 			}
 
 			
@@ -686,9 +697,11 @@ CStairPoint* CSimon::checkCollisionStartStair(vector<CStairPoint*> listObj) {
 	for (int i = 0; i < listObj.size(); i++) {
 		if (this->checkAABBWithObjectAABBEx(listObj[i])) {
 			canGoStair = true;
+			cout << "Co va cham" << endl;
 			currentStair = listObj[i];
 			centerPointStair = currentStair->getCenter();
 			currentStairTypeCollision = currentStair->getStairDirection();
+			isThroughBrick = currentStair->getHasThrough();
 			return listObj[i];
 		}
 	}
@@ -830,7 +843,7 @@ void CSimon::movingOutStair() {
 			}
 			break;
 		case 3:
-			cout << "Out stair" << endl;
+			cout << "Out stair 3" << endl;
 			if (nx > 0) {
 				isMovingOnStair = false;
 				hasGravity = true;
@@ -839,9 +852,9 @@ void CSimon::movingOutStair() {
 			}
 			break;
 		case 4:
-			cout << "Out stair" << endl;
+			cout << "Out stair 4" << endl;
 			if (nx < 0) {
-				y = y - 200; // kéo simon lên cao, để tạo va chạm giả xuống mặt đất, tránh overlaping. tính thời gian tiếp đất
+				y = y - 50; // kéo simon lên cao, để tạo va chạm giả xuống mặt đất, tránh overlaping. tính thời gian tiếp đất
 				vy = 9999999999.0f; // vận tốc kéo xuống lớn để chạm đất ngay trong 1 frame
 				dy = vy * dt; // cập nhật lại dy
 				isMovingOnStair = false;

@@ -155,6 +155,8 @@ class CSimon : public CGameObject
 	bool isHurtFinish =true;
 	bool isTouchable;
 	DWORD timeTouchable;
+	
+	bool isThroughBrick = false; //If it's true, simon can go through the brick anyway.
 
 	bool isBlink;
 	DWORD timeStartBlinking;
@@ -230,6 +232,9 @@ public:
 	void movingOnStair();
 	void movingOutStair();
 	CStairPoint* getCurrentStair() { return this->currentStair; }
+
+	void setIsThroughBrick(bool isThrough) { this->isThroughBrick = isThrough; }
+	bool getIsThroughBrick() { return this->isThroughBrick; }
 };
 
 #endif

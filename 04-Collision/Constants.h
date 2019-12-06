@@ -15,6 +15,7 @@
 #define ID_TEX_MISC 20
 #define ID_TEX_MAP_1 1000
 #define ID_TEX_MAP_2 2000
+#define ID_TEX_MAP_3 3000
 #define ID_TEX_SIMON 30
 #define ID_TEX_CANDLE 2
 #define ID_TEX_ITEM 1
