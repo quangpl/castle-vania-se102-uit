@@ -67,19 +67,51 @@ void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
 	// Calculate dx, dy 
 	CGameObject::Update(dt);
-	cout << x << endl;
+	//cout << x << endl;
 	checkBlink();
+	if (isBlink) {
+		if (GetTickCount() - timeStartBlink >= TIME_BLINK) {
+			isBlink = false;
+			alpha = 255;
+		}
+		else {
+			alpha = rand() % (255) + 1;
+		}
+	}
 	//Ngăn không cho Simon rớt ra khỏi màn hình
 	if (x <= 0) {
 		x = 0;
 	}
-	cout << x << endl;
 	movingOutStair();
 	movingOnStair();
 	/*cout << nx << endl;
 	cout << vx << endl;*/
 	if (isGoToStair) {
 		goToStartOnStair();
+	}
+
+	//Simon hurt effect 
+	if (isHurt) {
+		cout << "hurt" << endl;
+		if (GetTickCount() - timeStartHurt >= TIME_HURT) {
+			vx = 0;
+			//SetState(SIMON_STATE_SIT);
+			SetState(SIMON_STATE_IDLE);
+			isHurt = false;
+			//y = y - 70;
+			hasGravity = true;
+			setFreeze(false);
+			cout << "Vo if" << endl;
+
+		}
+		else {
+				cout << "Vo else" << endl;
+				hasGravity = false;
+				setFreeze(true);
+				vx = -nx * V_HURT;
+				vy = -V_HURT;
+				SetState(SIMON_STATE_HURT);
+		}
 	}
 	// Simple fall down - Gravity of simon
 
@@ -122,11 +154,17 @@ void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	CalcPotentialCollisions(coObjects, coEvents);
 
 	// reset untouchable timer if untouchable time has passed
-	if (GetTickCount() - untouchable_start > SIMON_UNTOUCHABLE_TIME)
-	{
-		untouchable_start = 0;
-		untouchable = 0;
+	if (!isTouchable) {
+		if (GetTickCount() - timeTouchable > 4000)
+		{
+			isTouchable = true;
+			alpha = 255;
+		}
+		else {
+			alpha = getAlphaRandom();
+		}
 	}
+	
 
 	// No collision occured, proceed normally
 	if (coEvents.size() == 0)
@@ -238,6 +276,9 @@ void CSimon::Render()
 		//cout << "state jump" << endl;
 		ani = SIMON_ANI_JUMP;
 		break;
+	case SIMON_STATE_HURT:
+		ani = SIMON_ANI_HURT;
+		break;
 	case SIMON_STATE_HIT:
 		ani = SIMON_ANI_HIT;
 		if (isSit) {
@@ -273,13 +314,24 @@ void CSimon::Render()
 	break;
 	}
 
-	int alpha = 255;
-	if (untouchable) alpha = 128;
 	CAnimations::GetInstance()->Get(ani)->RenderFlip(-nx,x, y, DEFAULT_OFFSET_X, alpha);
 	setCurrentAni(ani);
 
 	if (CGame::GetInstance()->getDebug()) {
 		RenderBoundingBox();
+	}
+}
+
+
+void CSimon::collisionWithEnemy(vector<LPGAMEOBJECT> listEnemy) {
+	for (int i = 0; i < listEnemy.size(); i++) {
+		if (checkAABBWithObjectAABBEx(listEnemy[i])&&isTouchable) {
+			cout << "va cham" << endl;
+				isHurt = true;
+				isTouchable = false;
+				timeTouchable = GetTickCount();
+				timeStartHurt = GetTickCount();
+		}
 	}
 }
 void CSimon::goRight() {
@@ -582,6 +634,9 @@ void CSimon::SetState(int state)
 	case SIMON_STATE_HIT_RELEASE:
 		//cout << "hit release";
 		hitRelease();
+		break;
+	case SIMON_STATE_HURT:
+		isHurt = true;
 		break;
 	}
 }

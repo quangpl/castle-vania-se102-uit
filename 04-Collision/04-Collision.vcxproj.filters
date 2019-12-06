@@ -154,9 +154,6 @@
     <ClInclude Include="Ghost.h">
       <Filter>GameObject\Enemy</Filter>
     </ClInclude>
-    <ClInclude Include="Enemy.h">
-      <Filter>GameObject\Enemy</Filter>
-    </ClInclude>
     <ClInclude Include="SmallHeart.h">
       <Filter>GameObject\Item</Filter>
     </ClInclude>
@@ -281,9 +278,6 @@
       <Filter>GameObject\Weapon</Filter>
     </ClCompile>
     <ClCompile Include="Ghost.cpp">
-      <Filter>GameObject\Enemy</Filter>
-    </ClCompile>
-    <ClCompile Include="Enemy.cpp">
       <Filter>GameObject\Enemy</Filter>
     </ClCompile>
     <ClCompile Include="SmallHeart.cpp">

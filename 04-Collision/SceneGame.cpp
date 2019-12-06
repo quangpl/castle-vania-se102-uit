@@ -11,11 +11,11 @@ CSceneGame* CSceneGame::__instance = NULL;
 vector<CItem*> listItem;
 vector<CEffect*> listEffect;
 vector<CHidden*> listHidden;
-vector<CEnemy*> listEnemy;
-vector<CBrick*> listBrick;
+vector<CGameObject*> listBrick;
 vector<CStairPoint*> listStairPoint;
 vector<CDoor*> listDoor;
 
+vector<CGameObject*> listEnemy;
 
 CSceneGame::CSceneGame()
 {
@@ -143,6 +143,7 @@ void CSceneGame::LoadResources() {
 						CBrick* brick = new CBrick();
 						brick->SetPosition(0 + i * 16.0f, SCREEN_HEIGHT - 45); //Anhr huong vi tri simon
 						objects.push_back(brick);
+						listBrick.push_back(brick);
 					}
 				}
 			};
@@ -159,9 +160,10 @@ void CSceneGame::LoadResources() {
 		simon->setWeapon(whip);
 		objects.push_back(simon);
 
-		/*CHolyWater* holy = new CHolyWater();
-		holy->SetPosition(100, 100);
-		objects.push_back(holy);*/
+		/*CGhost* newGhost = new CGhost(100,20,1);
+		newGhost->SetPosition(100, 100);
+		objects.push_back(newGhost);
+		listEnemy.push_back(newGhost);*/
 
 		objects.push_back(whip);
 		maps->Add(ID_MAP_1, map);
@@ -174,6 +176,7 @@ void CSceneGame::LoadResources() {
 		cout << "load stage 2" << endl;
 			//objects.clear();
 			objects.clear();
+			listBrick.clear();
 		/*	for (int i = 0; i < objects.size(); i++) {
 					objects.erase(objects.begin() + i);
 			}*/
@@ -252,15 +255,16 @@ void CSceneGame::LoadResources() {
 					{
 						simon->AddAnimation(aniId);
 					}
-					else if (gameObjectId == 28) {
+					/*else if (gameObjectId == 28) {
 						for (int i = 0; i < NUMBER_OF_BRICK; i++)
 						{
 							float l, t, r, b;
 							CBrick* brick = new CBrick();
 							brick->SetPosition(0 + i * 16.0f, SCREEN_HEIGHT - 30);
 							objects.push_back(brick);
+							listBrick.push_back(brick);
 						}
-					}
+					}*/
 				};
 
 
@@ -296,10 +300,11 @@ void CSceneGame::LoadResources() {
 						CBrick* newBrick = new CBrick();
 						newBrick->setSize(Width, Height);
 						newBrick->SetPosition(x, y);
+						listBrick.push_back(newBrick);
 						objects.push_back(newBrick);
 					}
 					
-					else if (id == 2) {
+					 if (id == 2) {
 						CSmallCandle* smallCandle = new CSmallCandle();
 						smallCandle->SetPosition(x, y);
 						objects.push_back(smallCandle);
@@ -340,7 +345,9 @@ void CSceneGame::LoadResources() {
 				simon->setSubWeapon(simon->getSubWeapon());
 				objects.push_back(simon->getSubWeapon());
 			}
-		
+		/*	CGhost* newGhost = new CGhost(100, 20, 1);
+			objects.push_back(newGhost);
+			listEnemy.push_back(newGhost);*/
 			//Map
 			maps->Add(ID_MAP_2, map);
 			currentIdMap = ID_MAP_2;
@@ -514,6 +521,12 @@ void CSceneGame::Update(DWORD dt) {
 	vector<LPGAMEOBJECT> coEffects;
 	vector<LPGAMEOBJECT> coEnemyAndBackground;
 	vector<LPGAMEOBJECT> coCommons;
+	
+	//Update in the new way
+	for (int i = 0; i < listEnemy.size(); i++) {
+		listEnemy[i]->Update(dt, &listBrick);
+	}
+	//simon->Update(dt, &listEnemy);
 
 
 	for (int i = 0; i < objects.size(); i++)
@@ -537,9 +550,9 @@ void CSceneGame::Update(DWORD dt) {
 			else if (dynamic_cast<CEffect*>(objects[i])) {
 				coEffects.push_back(objects[i]);
 			}
-			else if (dynamic_cast<CEnemy*>(objects[i]) || dynamic_cast<CBrick*>(objects[i])) {
+			/*else if (dynamic_cast<CBrick*>(objects[i])) {
 				coEnemyAndBackground.push_back(objects[i]);
-			}
+			}*/
 			else {
 				coCommons.push_back(objects[i]);
 			}
@@ -550,7 +563,7 @@ void CSceneGame::Update(DWORD dt) {
 	{
 		if (objects[i]->getHealth() > 0 && objects[i]->isShow()) {
 
-			if (dynamic_cast<CEnemy*>(objects[i])||dynamic_cast<CBrick*>(objects[i]) || dynamic_cast<CSimon*>(objects[i]) || dynamic_cast<CItem*>(objects[i])) {
+			if ( dynamic_cast<CBrick*>(objects[i]) || dynamic_cast<CSimon*>(objects[i]) || dynamic_cast<CItem*>(objects[i])) {
 				objects[i]->Update(dt, &coPlayerAndBackground);
 			}
 
@@ -560,9 +573,9 @@ void CSceneGame::Update(DWORD dt) {
 			else if (dynamic_cast<CEffect*>(objects[i])) {
 				objects[i]->Update(dt, &coEffects);
 			}
-			else if (dynamic_cast<CEnemy*>(objects[i]) || dynamic_cast<CBrick*>(objects[i])) {
+			/*else if (dynamic_cast<CBrick*>(objects[i])) {
 				objects[i]->Update(dt, &coEnemyAndBackground);
-			}
+			}*/
 			else {
 				objects[i]->Update(dt, &coCommons);
 			}
@@ -592,7 +605,7 @@ void CSceneGame::Update(DWORD dt) {
 	checkCollisonOfWeapon(coWeaponAndCandle);
 	checkCollisionOfSimon();
 	checkCollisionOfEnemy();
-
+	simon->collisionWithEnemy(listEnemy);
 	// Update camera to follow SIMON
 	float cx, cy, camX, camY;
 	simon->GetPosition(cx, cy);
@@ -922,30 +935,32 @@ void CSceneGame::checkCollisionOfEnemy() {
 	}
 }
 void CSceneGame::createGhost() {
-	//int ghost = 0;
-	//for (int i = 0; i < objects.size(); i++) {
-	//	if (dynamic_cast<CGhost*>(objects[i])&&objects[i]->isShow()) {
-	//		ghost++;
-	//	}
-	//}
-	//if (ghost == 0) {
-	//	if (simon->getDirection()>0) {
-	//		for (int i = 0; i < 3; i++) {
-	//			CGhost* newGhost = new CGhost(-1); // Direction: 1 la di qua phai, -1 la di qua trai
-	//			newGhost->SetPosition(simon->GetPositionX() + SCREEN_WIDTH + i*30,50);
-	//			listEnemy.push_back(newGhost);
-	//			objects.push_back(newGhost);
-	//		}
-	//	}
-	//	else {
-	//		for (int i = 0; i < 3; i++) {
-	//			CGhost* newGhost = new CGhost(1); // Direction: 1 la di qua phai, -1 la di qua trai
-	//			newGhost->SetPosition(simon->GetPositionX() - SCREEN_WIDTH - i * 30, 0);
-	//			listEnemy.push_back(newGhost);
-	//			objects.push_back(newGhost);
-	//		}
-	//	}
-	//}
+	 
+	int ghost = 0;
+	for (int i = 0; i < objects.size(); i++) {
+		if (dynamic_cast<CGhost*>(objects[i])&&objects[i]->isShow()) {
+			ghost++;
+		}
+	}
+	cout << ghost << endl;
+	if (ghost == 0) {
+		if (simon->getDirection()>0) {
+			for (int i = 0; i < 3; i++) {
+				CGhost* newGhost = new CGhost(simon->GetPositionX()+SCREEN_WIDTH+ i * 30, 50,-1); // Direction: 1 la di qua phai, -1 la di qua trai
+				listEnemy.push_back(newGhost);
+				objects.push_back(newGhost);
+				cout << "Tao ghost" << endl;
+			}
+		}
+		else {
+			for (int i = 0; i < 3; i++) {
+				CGhost* newGhost = new CGhost(simon->GetPositionX() - SCREEN_WIDTH - i * 30, 50, 1); // Direction: 1 la di qua phai, -1 la di qua trai
+				listEnemy.push_back(newGhost);
+				objects.push_back(newGhost);
+				cout << "Tao ghost" << endl;
+			}
+		}
+	}
 }
 
 void CSceneGame::updateCamAutoGo(DWORD dt) {

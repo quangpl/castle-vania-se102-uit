@@ -42,6 +42,9 @@
 
 #define SIMON_STATE_ON_STAIR 801
 
+#define SIMON_STATE_HURT 1000
+
+
 
 
 #define SIMON_ANI_IDLE_RIGHT		400
@@ -50,7 +53,7 @@
 
 
 #define SIMON_ANI_WALKING_RIGHT			500
-#define SIMON_ANI_WALKING_LEFT			501
+#define SIMON_ANI_HURT			501
 #define SIMON_ANI_WALKING			503
 #define SIMON_ANI_WALKING_BLINK_SINGLE		517
 
@@ -97,10 +100,11 @@
 
 #define SIMON_BBOX_MARGIN_LEFT 15
 #define TIME_AUTO_GO_STAIR 200
-
+#define TIME_HURT 250
+#define TIME_BLINK 2500
 #define STAGE_1_TARGET_DOOR 680
 
-
+#define V_HURT 0.1f;
 class CSimon : public CGameObject
 {
 	static CSimon* __instance;
@@ -144,6 +148,16 @@ class CSimon : public CGameObject
 	int centerPointStair;
 
 	bool hasGravity = true;
+
+	bool isHurt;
+	DWORD timeStartHurt;
+	bool isHurtFinish =true;
+	bool isTouchable;
+	DWORD timeTouchable;
+
+	bool isBlink;
+	DWORD timeStartBlinking;
+	int alpha;
 	//CItem* itemCollision;
 public: 
 	CSimon() : CGameObject()
@@ -152,6 +166,8 @@ public:
 		untouchable = 0;
 		isHit = false;
 		setType(TYPE_OBJECT_PLAYER);
+		alpha = 255;
+		isTouchable = true;
 	}
 	static CSimon* GetInstance();
 	virtual void Update(DWORD dt, vector<LPGAMEOBJECT> *colliable_objects = NULL);
@@ -197,7 +213,7 @@ public:
 	bool getIsHit() { return this->isHit; };
 	bool getIsHitFinish() { return this->isHitFinish; };
 	void collisionWithHidden(vector<CHidden*> listHidden);
-
+	void collisionWithEnemy(vector<LPGAMEOBJECT> listEnemy);
 	void setIsGoToStair(bool stair) { this->isGoToStair = stair; };
 	bool getIsGoToStair() { return this->isGoToStair; };
 
