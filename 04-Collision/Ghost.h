@@ -17,5 +17,6 @@ public:
 		x = _x;
 		y = _y;
 		nx = direction;
+		setType(TYPE_OBJECT_ENEMY);
 	};
 };

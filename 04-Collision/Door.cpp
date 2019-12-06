@@ -14,7 +14,6 @@ void CDoor::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	CGameObject::Update(dt, coObjects);
 	if (CAnimations::GetInstance()->Get(DOOR_ANI_OPEN)->getCurrentFrame() == 3|| CAnimations::GetInstance()->Get(DOOR_ANI_CLOSE)->getCurrentFrame() == 3)
 	{
-		cout << "vo complete" << endl;
 		isComplete = true;
 	}
 }

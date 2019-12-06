@@ -313,7 +313,7 @@ void CSimon::Render()
 		}
 	break;
 	}
-	cout << typeMovingStair << endl;
+	//cout << typeMovingStair << endl;
 	CAnimations::GetInstance()->Get(ani)->RenderFlip(-nx,x, y, DEFAULT_OFFSET_X, alpha);
 	setCurrentAni(ani);
 
@@ -509,7 +509,6 @@ void CSimon::attackSub() {
 
 void CSimon::idle() {
 	if (isHit) {
-		cout << "hit true" << endl;
 	}
 	if (isAutoGoX) {
 		return;

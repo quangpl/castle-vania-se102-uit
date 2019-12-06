@@ -23,6 +23,9 @@ class CSceneGame : public CScene
 
 	bool isStopWatch = false;
 	DWORD timeStartStopWatch;
+
+	bool isCreatingBat;
+	bool isCreatingGhost;
 	
 
 public:
@@ -44,4 +47,5 @@ public:
 	void createGhost();
 	void checkCollisionOfEnemy();
 	void updateCamAutoGo(DWORD dt);
+	void createBat();
 };

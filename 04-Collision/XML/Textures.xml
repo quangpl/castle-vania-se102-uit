@@ -476,6 +476,33 @@
       <sprite id="20166" left="168" top="19" right="200" bottom="32"/>
     </Animation>
   </Texture>
+
+<!-- Animation BAT -->
+  <Texture textureId ="3" gameObjectId ="28">
+    <Animation aniId="569" frameTime="100" name="BAT_IDLE">
+      <sprite id="10172" left="94" top="46" right="106" bottom="60" frameTime="100"/>
+    </Animation>
+    <Animation aniId="570" frameTime="100" name="BAT_FLY">
+      <sprite id="10173" left="116" top="46" right="132" bottom="60" frameTime="100"/>
+      <sprite id="10174" left="143" top="48" right="159" bottom="60" frameTime="100"/>
+      <sprite id="10175" left="169" top="44" right="185" bottom="60" frameTime="100"/>
+    </Animation>
+  </Texture>
+  <!-- Animation UGLY_FISH -->
+  <Texture  textureId ="3" gameObjectId ="29">
+    <Animation aniId="571" frameTime="100" name="UGLY_FISH_IDLE">
+      <sprite id="10177" left="36" top="51" right="50" bottom="83" frameTime="100"/>
+    </Animation>
+    
+    <Animation aniId="572" frameTime="100" name="UGLY_FISH_MOVING">
+      <sprite id="10178" left="64" top="51" right="80" bottom="83" frameTime="350"/>
+      <sprite id="10177" left="36" top="51" right="50" bottom="83" frameTime="350"/>
+    </Animation>
+    
+    <Animation aniId="573" frameTime="100" name="UGLY_FISH_ATTACK">
+      <sprite id="10179" left="9" top="51" right="25" bottom="83" frameTime="100"/>
+    </Animation>
+  </Texture>
    <!-- Animation BRICKS -->
   <Texture  textureId ="2" gameObjectId ="28">
     <Animation aniId="565" frameTime="100" name="BRICKS">

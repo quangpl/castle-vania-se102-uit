@@ -92,6 +92,10 @@ public:
 	
 	void setIsBlinkScene(bool blink) { this->isBlinkScene = blink; }
 	bool getIsBlinkScene() { return this->isBlinkScene; }
+	
+	int getRandomInt(int a, int b) {
+		return rand() % (b + 1 - a) + a;
+	}
 	~CGame();
 };
 

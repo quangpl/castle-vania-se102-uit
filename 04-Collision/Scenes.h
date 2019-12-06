@@ -39,6 +39,7 @@
 #include "MonneyEffect.h"
 #include "StairPoint.h"
 #include "Door.h"
+#include "Bat.h"
 
 using namespace std;
 
