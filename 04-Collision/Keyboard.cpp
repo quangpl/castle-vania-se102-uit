@@ -29,6 +29,10 @@ void CSampleKeyHander::OnKeyDown(int KeyCode)
 			simonKey->setIsGoToStair(true);
 		}
 		break;
+	case DIK_Z:
+		simonKey->attack();
+		simonKey->SetState(SIMON_STATE_HIT);
+		break;
 	case DIK_DOWN: // debug mode
 		cout << "Dang nhan down" << endl;
 		if (simonKey->getCanGoStair()) {
@@ -99,8 +103,8 @@ void CSampleKeyHander::KeyState(BYTE* states)   //long event
 
 	if (gameKey->IsKeyDown(DIK_Z))
 	{
-		simonKey->attack();
-		simonKey->SetState(SIMON_STATE_HIT);
+	/*	simonKey->attack();
+		simonKey->SetState(SIMON_STATE_HIT);*/
 	}
 	if (gameKey->IsKeyDown(DIK_X))
 	{

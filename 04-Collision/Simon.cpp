@@ -68,9 +68,9 @@ void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	// Calculate dx, dy 
 	CGameObject::Update(dt);
 	checkBlink();
-	if(currentStair) {
-		cout << currentStair->getStairDirection() << endl;
-	}
+	//if(currentStair) {
+	//	cout << currentStair->getStairDirection() << endl;
+	//}
 	if (isBlink) {
 		if (GetTickCount() - timeStartBlink >= TIME_BLINK) {
 			isBlink = false;
@@ -110,8 +110,10 @@ void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 				cout << "Vo else" << endl;
 				hasGravity = false;
 				setFreeze(true);
-				vx = -nx * V_HURT;
-				vy = -V_HURT;
+				if (!isMovingOnStair) {
+					vx = -nx * V_HURT;
+					vy = -V_HURT;
+				}
 				SetState(SIMON_STATE_HURT);
 		}
 	}
@@ -186,6 +188,7 @@ void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		x += min_tx * dx + nx * 0.4f;		// nx*0.4f : need to push out a bit to avoid overlapping next frame
 		y += min_ty * dy + ny * 0.4f;
 
+		
 		if (nx != 0) vx = 0;
 		if (ny != 0) vy = 0;
 
@@ -336,7 +339,7 @@ void CSimon::Render()
 
 void CSimon::collisionWithEnemy(vector<LPGAMEOBJECT> listEnemy) {
 	for (int i = 0; i < listEnemy.size(); i++) {
-		if (checkAABBWithObjectAABBEx(listEnemy[i])&&isTouchable&& listEnemy[i]->isShow()) {
+		if (checkAABBWithObject(listEnemy[i])&&isTouchable&& listEnemy[i]->isShow()) {
 			cout << "va cham" << endl;
 				isHurt = true;
 				isTouchable = false;
@@ -683,13 +686,17 @@ void CSimon::autoGoX(int _nx, float speed,float target)
 	targetAutoGoX = target;
 }
 
-void CSimon::collisionWithHidden(vector<CHidden*> listHidden) {
+int CSimon::getTypeHiddenCollision(vector<CHidden*> listHidden) {
 	for (int i = 0; i < listHidden.size(); i++) {
-		if (listHidden[i]->getTypeHidden() == HIDDEN_TYPE_DOOR) {
 			if (this->checkAABBWithObjectAABBEx(listHidden[i])) {
+				if (listHidden[i]->getTypeHidden() == HIDDEN_TYPE_DOOR) {
 				autoGoX(1, SIMON_WALKING_SPEED_AUTO, STAGE_1_TARGET_DOOR);
 				isCollisionWithDoor = true;
-			}
+				return HIDDEN_TYPE_DOOR;
+				}
+				else if(listHidden[i]->getTypeHidden() == HIDDEN_TYPE_STOP_CREATE_GHOST) {
+					return HIDDEN_TYPE_STOP_CREATE_GHOST;
+				}
 		}
 	}
 }
@@ -697,7 +704,6 @@ CStairPoint* CSimon::checkCollisionStartStair(vector<CStairPoint*> listObj) {
 	for (int i = 0; i < listObj.size(); i++) {
 		if (this->checkAABBWithObjectAABBEx(listObj[i])) {
 			canGoStair = true;
-			cout << "Co va cham" << endl;
 			currentStair = listObj[i];
 			centerPointStair = currentStair->getCenter();
 			currentStairTypeCollision = currentStair->getStairDirection();

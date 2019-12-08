@@ -22,8 +22,12 @@ CSceneGame::CSceneGame()
 	isWaitSimonThroughScene = false;
 	isStageMoving = false;
 	isProcessStageChange = false;
-	isCreatingGhost = true;
+
+	isAllowToCreateGhost = false;
+	isWaitingToCreateGhost = false;
+	
 	isCreatingBat = false;
+	isAllowCreateBat = false;
 }
 
 CSceneGame::~CSceneGame()
@@ -138,7 +142,7 @@ void CSceneGame::LoadResources() {
 						objects.push_back(candle);
 					}
 				}
-				else if (gameObjectId == 28) {
+				else if (gameObjectId == 282) {
 					for (int i = 0; i < NUMBER_OF_BRICK; i++)
 					{
 						float l, t, r, b;
@@ -155,7 +159,6 @@ void CSceneGame::LoadResources() {
 		
 		CHidden* hidden = new CHidden(685,130,10, 80, HIDDEN_TYPE_DOOR);
 		listHidden.push_back(hidden);
-		objects.push_back(hidden);
 
 		simon->SetPosition(50.0f, 0); //simon
 		simon->setWeapon(whip);
@@ -164,10 +167,20 @@ void CSceneGame::LoadResources() {
 		/*CFishMen* fish = new CFishMen(100, 100, 1, simon);
 		objects.push_back(fish);
 		listEnemy.push_back(fish);*/
-		/*CGhost* newGhost = new CGhost(100,20,1);
-		newGhost->SetPosition(100, 100);
+
+	/*	CGhost* newGhost3 = new CGhost(30, 50, -1);
+		objects.push_back(newGhost3);
+		listEnemy.push_back(newGhost3);
+
+
+		CGhost* newGhost = new CGhost(100,50,1);
 		objects.push_back(newGhost);
-		listEnemy.push_back(newGhost);*/
+		listEnemy.push_back(newGhost);
+
+		CGhost* newGhost2 = new CGhost(150, 50, 1);
+
+		objects.push_back(newGhost2);
+		listEnemy.push_back(newGhost2);*/
 
 		objects.push_back(whip);
 		maps->Add(ID_MAP_1, map);
@@ -180,11 +193,14 @@ void CSceneGame::LoadResources() {
 		cout << "load stage 2" << endl;
 			//objects.clear();
 			objects.clear();
+			listHidden.clear();
+			listStairPoint.clear();
+			listDoor.clear();
 			listBrick.clear();
-		/*	for (int i = 0; i < objects.size(); i++) {
-					objects.erase(objects.begin() + i);
-			}*/
 
+			//config init constant
+			isAllowToCreateGhost = true;
+			
 			listHidden.clear();
 			CTextures* textures = CTextures::GetInstance();
 
@@ -259,16 +275,6 @@ void CSceneGame::LoadResources() {
 					{
 						simon->AddAnimation(aniId);
 					}
-					/*else if (gameObjectId == 28) {
-						for (int i = 0; i < NUMBER_OF_BRICK; i++)
-						{
-							float l, t, r, b;
-							CBrick* brick = new CBrick();
-							brick->SetPosition(0 + i * 16.0f, SCREEN_HEIGHT - 30);
-							objects.push_back(brick);
-							listBrick.push_back(brick);
-						}
-					}*/
 				};
 
 
@@ -334,6 +340,8 @@ void CSceneGame::LoadResources() {
 				}
 			}
 
+			CHidden* hidden = new CHidden(1142, 180, 20, 35, HIDDEN_TYPE_STOP_CREATE_GHOST);
+			listHidden.push_back(hidden);
 
 			//Simon
 			simon->stopAutoGoX();
@@ -355,9 +363,28 @@ void CSceneGame::LoadResources() {
 				simon->setSubWeapon(simon->getSubWeapon());
 				objects.push_back(simon->getSubWeapon());
 			}
-		/*	CGhost* newGhost = new CGhost(100, 20, 1);
+
+
+			/*CPanther* panther = new CPanther(691, 40, -1, 50, simon);
+			objects.push_back(panther);
+			listEnemy.push_back(panther);
+
+			panther = new CPanther(855, 40, -1, 50, simon);
+			objects.push_back(panther);
+			listEnemy.push_back(panther);
+
+
+			 panther = new CPanther(921, 40, -1, 50, simon);
+			objects.push_back(panther);
+			listEnemy.push_back(panther);*/
+
+			/*CGhost* newGhost = new CGhost(100, 20, -1);
+			objects.push_back(newGhost);
+			listEnemy.push_back(newGhost);
+			newGhost = new CGhost(350, 20, 1);
 			objects.push_back(newGhost);
 			listEnemy.push_back(newGhost);*/
+
 			//Map
 			maps->Add(ID_MAP_2, map);
 			currentIdMap = ID_MAP_2;
@@ -551,9 +578,8 @@ void CSceneGame::LoadResources() {
 			simon->setSubWeapon(simon->getSubWeapon());
 			objects.push_back(simon->getSubWeapon());
 		}*/
-		/*	CGhost* newGhost = new CGhost(100, 20, 1);
-			objects.push_back(newGhost);
-			listEnemy.push_back(newGhost);*/
+		
+		
 			//Map
 
 		/*CFishMen* fish = new  CFishMen(100, 400, 1, simon);
@@ -588,7 +614,7 @@ void CSceneGame::checkUpdateScene() {
 void CSceneGame::Update(DWORD dt) {
 	
 	if (getStage() ==2) {
-		createGhost();
+		
 		//createBat();
 		/*Check and process Simon on stair*/
 		CStairPoint* stairPoint = simon->checkCollisionStartStair(listStairPoint);
@@ -599,9 +625,13 @@ void CSceneGame::Update(DWORD dt) {
 	}
 	else if (getStage() == 3) {
 		isAllowCreateFishmen = true;
-		//createFishMan();
+		createFishMan();
 	}
-	simon->collisionWithHidden(listHidden);
+
+
+	//Create enemy area
+	createGhost();
+	
 	checkUpdateScene();
 
 	//bug khong co whip cho simon
@@ -617,7 +647,10 @@ void CSceneGame::Update(DWORD dt) {
 		if (listEnemy[i]->isShow()) {
 			listEnemy[i]->Update(dt, &listBrick);
 		}
-	}
+	}	
+
+
+
 	//simon->Update(dt, &listEnemy);
 
 
@@ -645,9 +678,9 @@ void CSceneGame::Update(DWORD dt) {
 			/*else if (dynamic_cast<CBrick*>(objects[i])) {
 				coEnemyAndBackground.push_back(objects[i]);
 			}*/
-			else {
+			/*else {
 				coCommons.push_back(objects[i]);
-			}
+			}*/
 		}
 	}
 
@@ -668,9 +701,9 @@ void CSceneGame::Update(DWORD dt) {
 			/*else if (dynamic_cast<CBrick*>(objects[i])) {
 				objects[i]->Update(dt, &coEnemyAndBackground);
 			}*/
-			else {
+			/*else {
 				objects[i]->Update(dt, &coCommons);
-			}
+			}*/
 
 		}
 	}
@@ -697,6 +730,7 @@ void CSceneGame::Update(DWORD dt) {
 	checkCollisonOfWeapon(coWeaponAndCandle);
 	checkCollisionOfSimon();
 	checkCollisionOfEnemy();
+	checkCollisionSimonWithHidden();
 	simon->collisionWithEnemy(listEnemy);
 	// Update camera to follow SIMON
 	float cx, cy, camX, camY;
@@ -744,7 +778,6 @@ void CSceneGame::Update(DWORD dt) {
 					if (dynamic_cast<CDoor*>(objects[i])->getId() == 2&!isWaitSimonThroughScene) //dang xu ly cua o stage 2
 					{
 						isWaitSimonThroughScene = true;
-						isCreatingGhost == false;
 						objects[i]->SetState(DOOR_STATE_OPEN);
 						currentDoor = dynamic_cast<CDoor*>(objects[i]);
 						simon->autoGoX(1, SIMON_WALKING_SPEED_AUTO, 1600);
@@ -758,8 +791,7 @@ void CSceneGame::Update(DWORD dt) {
 			game->setAutoGo(true, 1537);
 			isChangeSceneComplete = true;
 			currentDoor->SetState(DOOR_STATE_CLOSE);
-			isCreatingBat = true;
-			isCreatingGhost = false;
+			isAllowCreateBat = true;
 		}
 		if (isChangeSceneComplete && !game->getAutoGo()) {
 			simon->setFreeze(false);
@@ -769,7 +801,7 @@ void CSceneGame::Update(DWORD dt) {
 	}
 	else if (getStage() == 3) {
 		CGame::GetInstance()->SetCamPos(cx, CAM_Y_DEFAULT_STAGE_2); //Khoảng cách để Simon đứng ngay giữa màn hình không bị lệch 
-		if (camX >= 497 && cx >= 497) {
+		if (camX >= BOUNDARY_CAMERA_STAGE_3 && cx >= BOUNDARY_CAMERA_STAGE_3) {
 			CGame::GetInstance()->SetCamPos(497, CAM_Y_DEFAULT_STAGE_2);
 		}
 	}
@@ -780,6 +812,10 @@ void CSceneGame::Render() {
 	for (int i = 0; i < objects.size(); i++)
 	{
 			objects[i]->Render();
+	}
+	for (int i = 0; i < listHidden.size(); i++)
+	{
+		listHidden[i]->Render();
 	}
 }
 //void CSceneGame::checkCollisonOfSimon() {
@@ -1060,6 +1096,9 @@ void CSceneGame::checkCollisionOfEnemy() {
 	}
 }
 void CSceneGame::createBat() {
+	if (!isAllowCreateBat) {
+		return;
+	}
 	int nBat=0;
 	for (int i = 0; i < objects.size(); i++) {
 		if (dynamic_cast<CBat*>(objects[i])) {
@@ -1083,32 +1122,39 @@ void CSceneGame::createBat() {
 	}
 }
 void CSceneGame::createGhost() {
-	if (!isCreatingGhost) {
+	
+	if (!isAllowToCreateGhost) {
 		return;
 	 }
+	
 	int ghost = 0;
 	for (int i = 0; i < objects.size(); i++) {
 		if (dynamic_cast<CGhost*>(objects[i])&&objects[i]->isShow()) {
 			ghost++;
 		}
 	}
-	if (ghost == 0) {
-		if (simon->getDirection()>0) {
+	if (ghost == 0&&!isWaitingToCreateGhost) {
+		timeStartCreateGhost = GetTickCount();
+		isWaitingToCreateGhost = true;
+	}
+	if (GetTickCount() - timeStartCreateGhost >= TIME_DELAY_CREATE_GHOST&& isWaitingToCreateGhost) {
 			for (int i = 0; i < 3; i++) {
-				CGhost* newGhost = new CGhost(simon->GetPositionX()+SCREEN_WIDTH+ i * 30, 150,-1); // Direction: 1 la di qua phai, -1 la di qua trai
-				listEnemy.push_back(newGhost);
-				objects.push_back(newGhost);
-				cout << "Tao ghost" << endl;
+				if (rand() % 2) {
+					CGhost* newGhost = new CGhost(game->GetCamPos_x() + i * 30, 170, 1); // Direction: 1 la di qua phai, -1 la di qua trai
+					listEnemy.push_back(newGhost);
+					objects.push_back(newGhost);
+					cout << "Tao ghost phai" << endl;
+				}
+				else {
+					CGhost* newGhost = new CGhost(game->GetCamPos_x() + SCREEN_WIDTH + i * 30, 170, -1); // Direction: 1 la di qua phai, -1 la di qua trai
+					listEnemy.push_back(newGhost);
+					objects.push_back(newGhost);
+					cout << "Tao ghost phai" << endl;
+				}
+
 			}
-		}
-		else {
-			for (int i = 0; i < 3; i++) {
-				CGhost* newGhost = new CGhost(simon->GetPositionX() - SCREEN_WIDTH - i * 30, 150, 1); // Direction: 1 la di qua phai, -1 la di qua trai
-				listEnemy.push_back(newGhost);
-				objects.push_back(newGhost);
-				cout << "Tao ghost" << endl;
-			}
-		}
+			
+			isWaitingToCreateGhost = false;
 	}
 }
 
@@ -1185,5 +1231,16 @@ void CSceneGame::createFishMan() {
 	}
 }
 
+void CSceneGame::checkCollisionSimonWithHidden() {
+	int typeHidden = simon->getTypeHiddenCollision(listHidden);
+	switch (typeHidden)
+	{
+	case HIDDEN_TYPE_STOP_CREATE_GHOST:
+		isAllowToCreateGhost = false;
+		break;
+	default:
+		break;
+	}
+}
 
 

@@ -2,7 +2,10 @@
 
 void CGhost::Render()
 {
-	CAnimations::GetInstance()->Get(GHOST_ANI)->RenderFlip(getDirection(), x, y, 24, 255);
+	if (!isShow()) {
+		return;
+	}
+	CAnimations::GetInstance()->Get(GHOST_ANI)->RenderFlip(getDirection(), x, y, 9, 255);
 	if (CGame::GetInstance()->getDebug()) {
 		RenderBoundingBox();
 	}
@@ -22,19 +25,24 @@ void CGhost::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
 	// Calculate dx, dy 
 	CGameObject::Update(dt);
-	float camX = CGame::GetInstance()->GetCamPos_x();
-	if ((x > camX + SCREEN_WIDTH && nx > 0) || (x < camX && nx < 0)) {
-		hide();
+	if (!isShow()) {
+		return;
 	}
-	vy += 0.002f * dt;
+	float camX = CGame::GetInstance()->GetCamPos_x();
+	//if ((x <= camX && nx<0 )||( x + GHOST_BBOX_WIDTH >= camX&&nx>0)) {
+	//	hide();
+	//	cout << "hide" << endl;
+	//	return;
+	//} Xoa khi ghost đi khoi camera 
+	// Simple fall down
+	vy += GHOST_FALLDOWN_SPEED * dt;
 	vx = nx * GHOST_SPEED;
 	vector<LPCOLLISIONEVENT> coEvents;
 	vector<LPCOLLISIONEVENT> coEventsResult;
 
 	coEvents.clear();
 
-	CalcPotentialCollisions(coObjects, coEvents);
-
+		CalcPotentialCollisions(coObjects, coEvents);
 
 	// No collision occured, proceed normally
 	if (coEvents.size() == 0)
@@ -55,15 +63,14 @@ void CGhost::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		if (nx != 0) vx = 0;
 		if (ny != 0) vy = 0;
 
-		// Collision logic with Object
+		// Collision logic with Goombas
 		for (UINT i = 0; i < coEventsResult.size(); i++)
 		{
 			LPCOLLISIONEVENT e = coEventsResult[i];
-			if (dynamic_cast<CBrick*>(e->obj)) {
-			//	vy = 0;
-			}
+
 		}
 	}
+
 	// clean up collision events
 	for (UINT i = 0; i < coEvents.size(); i++) delete coEvents[i];
 }

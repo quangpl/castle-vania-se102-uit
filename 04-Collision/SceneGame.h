@@ -45,6 +45,13 @@
 #define FISHMEN_POS_Y 400
 
 
+#define BOUNDARY_CAMERA_STAGE_3 427
+#define BOUNDARY_CAMERA_STAGE_2 1506
+
+#define TIME_DELAY_CREATE_GHOST 3000
+
+
+
 class CSceneGame : public CScene
 {	
 	int currentIdMap;
@@ -64,13 +71,16 @@ class CSceneGame : public CScene
 	DWORD timeStartStopWatch;
 
 	bool isCreatingBat;
-	bool isCreatingGhost;
+	bool isAllowToCreateGhost;
+	DWORD timeStartCreateGhost;
+	bool isWaitingToCreateGhost;
 	
 	bool isAllowCreateFishmen;
 	int CountEnemyFishmen;
 	DWORD TimeCreateFishmen;
 	DWORD TimeWaitCreateFishmen;
 	DWORD timeTest;
+	bool isAllowCreateBat;
 
 public:
 	CSceneGame();
@@ -90,6 +100,7 @@ public:
 	void getBonusFromItem(CItem* item);
 	void createGhost();
 	void checkCollisionOfEnemy();
+	void checkCollisionSimonWithHidden();
 	void updateCamAutoGo(DWORD dt);
 	void createBat();
 	void createFishMan();

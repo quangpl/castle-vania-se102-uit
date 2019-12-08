@@ -168,6 +168,7 @@
     <ClInclude Include="Weapon.h" />
     <ClInclude Include="WhipUpgrade.h" />
     <ClInclude Include="Whip.h" />
+    <ClInclude Include="Panther.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Bat.cpp" />
@@ -215,6 +216,7 @@
     <ClCompile Include="Weapon.cpp" />
     <ClCompile Include="Whip.cpp" />
     <ClCompile Include="WhipUpgrade.cpp" />
+    <ClCompile Include="Panther.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="CastleVania1.rc" />

@@ -101,8 +101,8 @@
 #define SIMON_BBOX_MARGIN_LEFT 15
 #define TIME_AUTO_GO_STAIR 200
 #define TIME_HURT 250
-#define TIME_BLINK 2500
-#define STAGE_1_TARGET_DOOR 680
+#define TIME_BLINK 1300
+#define STAGE_1_TARGET_DOOR 665
 
 #define V_HURT 0.1f;
 class CSimon : public CGameObject
@@ -215,7 +215,7 @@ public:
 	bool isCollisionWithItem(CItem* item);
 	bool getIsHit() { return this->isHit; };
 	bool getIsHitFinish() { return this->isHitFinish; };
-	void collisionWithHidden(vector<CHidden*> listHidden);
+	int getTypeHiddenCollision(vector<CHidden*> listHidden);
 	void collisionWithEnemy(vector<LPGAMEOBJECT> listEnemy);
 	void setIsGoToStair(bool stair) { this->isGoToStair = stair; };
 	bool getIsGoToStair() { return this->isGoToStair; };

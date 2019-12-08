@@ -37,12 +37,11 @@
       <sprite id="10009" left="443" top="166" right="521" bottom="196" frameTime="100"/>
     </Animation>
     <!-- Animation THROW -->
-    <Animation aniId="507" frameTime="100" name="THROW">
-      <sprite id="10010" left="4" top="24" right="82" bottom="54" frameTime="100"/>
-      <sprite id="10011" left="4" top="73" right="82" bottom="103" frameTime="100"/>
-      <sprite id="10012" left="86" top="73" right="164" bottom="103" frameTime="100"/>
-      <sprite id="10013" left="169" top="73" right="247" bottom="103" frameTime="100"/>
-      <sprite id="100132" left="169" top="73" right="247" bottom="103" frameTime="100"/>
+   <Animation aniId="507" frameTime="100" name="THROW">
+      <sprite id="10010" left="5" top="24" right="83" bottom="54" frameTime="100"/>
+      <sprite id="10011" left="5" top="73" right="83" bottom="103" frameTime="100"/>
+      <sprite id="10012" left="87" top="73" right="165" bottom="103" frameTime="100"/>
+      <sprite id="10013" left="171" top="73" right="249" bottom="103" frameTime="100"/>
     </Animation>
     <!-- Animation THROW_INVISIBLE -->
     <Animation aniId="508" frameTime="100" name="THROW_INVISIBLE">
@@ -120,6 +119,7 @@
       <sprite id="10041" left="88" top="529" right="164" bottom="560"/>
       <sprite id="10042" left="174" top="529" right="250" bottom="560"/>
       <sprite id="100422" left="174" top="529" right="250" bottom="560"/>
+        <sprite id="100422" left="174" top="529" right="250" bottom="560"/>
 
     </Animation>
     <!-- Animation LEVEL_THREE_ATTACK_SIT -->
@@ -465,15 +465,18 @@
       <sprite id="10166" left="37" top="7" right="53" bottom="39"/>
     </Animation>
   </Texture>
-  <!-- Animation WOLF -->
+ <!-- Animation WOLF -->
   <Texture  textureId ="3" gameObjectId ="27">
-    <Animation aniId="566" frameTime="100" name="WOLF_RUN">
-      <sprite id="20163" left="68" top="19" right="92" bottom="34"/>
-      <sprite id="20164" left="98" top="19" right="126" bottom="34"/>
-      <sprite id="20165" left="133" top="19" right="163" bottom="34"/>
+    <Animation aniId="566" frameTime="100" name="WOLF_IDLE">
+      <sprite id="10167" left="61" top="18" right="93" bottom="34" frameTime="100"/>
     </Animation>
-    <Animation aniId="567" frameTime="100" name="WOLF_JUMP">
-      <sprite id="20166" left="168" top="19" right="200" bottom="32"/>
+    <Animation aniId="567" frameTime="50" name="WOLF_RUN">
+      <sprite id="10168" left="177" top="18" right="209" bottom="34" frameTime="100"/>
+      <sprite id="10169" left="100" top="18" right="132" bottom="34" frameTime="100"/>
+      <sprite id="10170" left="136" top="18" right="168" bottom="34" frameTime="80"/>
+    </Animation>
+    <Animation aniId="568" frameTime="100" name="WOLF_JUMP">
+      <sprite id="10171" left="177" top="18" right="209" bottom="34"/>
     </Animation>
   </Texture>
 
@@ -504,7 +507,7 @@
     </Animation>
   </Texture>
    <!-- Animation BRICKS -->
-  <Texture  textureId ="2" gameObjectId ="28">
+  <Texture  textureId ="2" gameObjectId ="282">
     <Animation aniId="565" frameTime="100" name="BRICKS">
       <sprite id="10165" left="1" top="1" right="1" bottom="1"/>
     </Animation>

@@ -13,7 +13,7 @@
 #define DOOR_STATE_CLOSE_COMPLETE 4
 
 #define DOOR_BBOX_HEIGHT 40
-#define DOOR_BBOX_WIDTH 8
+#define DOOR_BBOX_WIDTH 20
 
 class CDoor : public CGround
 {

@@ -41,6 +41,7 @@
 #include "Door.h"
 #include "Bat.h"
 #include "FishMen.h"
+#include "Panther.h"
 
 using namespace std;
 

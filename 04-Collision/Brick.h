@@ -23,6 +23,15 @@ public:
 		this->AddAnimation(BRICK_ANI);
 		this->typeBrick = type;
 	}
+	CBrick(float _x,float _y, float _width, float _height) : CGround()
+	{
+		this->AddAnimation(BRICK_ANI);
+		typeBrick = BRICK_TYPE_1;
+		x = _x;
+		y = _y;
+		width = _width;
+		height = _height;
+	}
 	void setSize(int w, int h) { this->width = w; this->height = h; };
 	void setTypeBrick(int type) { this->typeBrick = type; }
 	int getTypeBrick() { return this->typeBrick; }

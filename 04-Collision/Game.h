@@ -46,7 +46,7 @@ class CGame
 
 	bool isAutoGo;
 	int targetAutoGo;
-
+	float boundCamLeft, boundCamRight;
 	bool isBlinkScene;
 
 public:

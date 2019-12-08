@@ -6,6 +6,7 @@
 #define GHOST_BBOX_HEIGHT 30
 
 #define GHOST_SPEED 0.02f
+#define GHOST_FALLDOWN_SPEED 0.002f
 #define GHOST_ANI 5655
 class CGhost : public CGameObject
 {

@@ -193,6 +193,9 @@
     <ClInclude Include="FishMen.h">
       <Filter>GameObject\Enemy</Filter>
     </ClInclude>
+    <ClInclude Include="Panther.h">
+      <Filter>GameObject\Enemy</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
@@ -326,6 +329,9 @@
       <Filter>GameObject\Weapon</Filter>
     </ClCompile>
     <ClCompile Include="FishMen.cpp">
+      <Filter>GameObject\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="Panther.cpp">
       <Filter>GameObject\Enemy</Filter>
     </ClCompile>
   </ItemGroup>
