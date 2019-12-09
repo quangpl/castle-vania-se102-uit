@@ -2,23 +2,19 @@
 
 
 
-CPanther::CPanther(float X, float Y, int Direction, float _jumpDistance, CSimon* simon)
+CPanther::CPanther(float X, float Y, int Direction, CSimon* simon)
 {
 	vx = vy = 0;
 	nx = Direction;
 	x = X;
-	xBackup = X;
 	y = Y;
 	//AutoGoX_Backup_X = x;
-	jumpDistance = _jumpDistance;
 
-	isSitting = 1;
-	isRunning = 0;
-	isJumping = 0;
-	isStart = 0;
-	isAutoGoX = 0;
-
+	isSitting = true;
+	isRunning = false;
+	isJumping = false;
 	this->simon = simon;
+
 }
 
 void CPanther::GetBoundingBox(float& left, float& top, float& right, float& bottom) {
@@ -30,44 +26,45 @@ void CPanther::GetBoundingBox(float& left, float& top, float& right, float& bott
 
 void CPanther::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
-	// Calculate dx, dy 
+	if (!isShow()) {
+		return;
+	}
+	float camX = CGame::GetInstance()->GetCamPos_x();
+
+	//Xoa khi ghost đi khoi camera 
+	if ((x + PANTHER_BBOX_WIDTH > camX + SCREEN_WIDTH && nx == 1) || (x + PANTHER_BBOX_WIDTH < camX && nx == -1)) {
+		hide();
+	}
+
+	if (x- simon->GetPositionX() <25 && isSitting) { //distance kich hoat
+		isRunning = true;
+		isSitting = false;
+	}
+	if (isSitting) {
+		vx = 0;
+		SetState(PANTHER_STATE_SITTING);
+	}
+	if (isJumping) {
+		vy = -PANTHER_VY_JUMP;
+		vx = -PANTHER_VX_JUMP;
+		SetState(PANTHER_STATE_JUMPING);
+		isRunning = false;
+	}
+	if (isRunning) {
+		vx = -PANTHER_SPEED_RUNNING;
+		if (isLanding)
+			vx = -vx;
+		SetState(PANTHER_STATE_RUNNING);
+
+	}
+	vy += PANTHER_GRAVITY * dt;
+
 	CGameObject::Update(dt);
-	if (abs(simon->GetPositionX() - x) <= 20) { //distance kich hoat
-		isRunning = 1;
-		//cout << "go"<<endl;
-		vy = -PANTHER_VYJUMP;
-		vx = PANTHER_VXJUMP * nx;
-		vx = nx*PANTHER_SPEED_RUNNING;
-	}
-	//if (isRunning||isSitting) {
-	//	//cout << "run"<<endl;
-	//	vx = nx*PANTHER_SPEED_RUNNING;
-	//}
-	//if (isRunning) {
-	//	vx = nx * PANTHER_SPEED_RUNNING;
-	//	if (abs(x - xBackup) >= 200) {
-	//		/*Jump();*/
-	//		cout << "Jump" << endl;
-	//	}
-	//}
-
-	//if (isJumping) {
-	//	cout << "jump"<< endl;
-
-	//	if (abs(x - startJumpPoint) >= jumpDistance) {
-	//		nx = -nx;
-	//		isJumping = 0;
-	//		isRunning = 1;
-	//	}
-	//	else {
-	//		vy = -PANTHER_VYJUMP;
-	//		vx = PANTHER_VXJUMP * nx;
-	//	}
-	//}
-	// Simple fall down - Gravity of simon
-	if (isRunning||isSitting) {
-		vy += 0.002f * dt;
-	}
+	// Calculate dx, dy 
+	//x += dx;
+	//gravity falldown
+	
+	
 	
 	vector<LPCOLLISIONEVENT> coEvents;
 	vector<LPCOLLISIONEVENT> coEventsResult;
@@ -83,12 +80,18 @@ void CPanther::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	// No collision occured, proceed normally
 	if (coEvents.size() == 0)
 	{
+
 		x += dx;
 		y += dy;
+		if (!isJumping && !isSitting) {
+			isJumping = true;
+			SetState(PANTHER_STATE_JUMPING);
+			isRunning = false;
+		}
 	}
 	else
 	{
-		float min_tx, min_ty, nx = 0, ny;
+		float min_tx, min_ty, nx = 0, ny=0;
 
 		FilterCollision(coEvents, coEventsResult, min_tx, min_ty, nx, ny);
 
@@ -98,29 +101,21 @@ void CPanther::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 
 		if (nx != 0) vx = 0;
 		if (ny != 0) vy = 0;
-
-		// Collision logic with Object
-		for (UINT i = 0; i < coEventsResult.size(); i++)
-		{
-			LPCOLLISIONEVENT e = coEventsResult[i];
-			if (dynamic_cast<CBrick*>(e->obj)) {
-				cout << "va cham briock" << endl;
-				cout << e->obj->GetPositionX() << endl;
-				//if (nx < 0) {
-				//	if (abs(x - e->obj->GetPositionX())<=2) {
-				//		/*Jump();*/
-				//		vx = 0;
-				//		vy = 0;
-				//		cout << "stop" << endl;
-				//	}
-				//}
-				//else {
-				//	
-				//}
-			}
-
-
+		if (ny == -1 && isJumping) 
+		{ //va cham ben duoi
+			vy = 0;
+			vx = -vx;
+			vx = 0;
+			isJumping = false;
+			isRunning = true;
+			SetState(PANTHER_STATE_RUNNING);
+			isLanding = true;
+			(this->nx) *= -1;
+			cout << "Set nx =1" << endl;
 		}
+
+		 //Collision logic with Object
+		
 		//Xử lý sau khi nhảy 
 
 	}
@@ -131,15 +126,16 @@ void CPanther::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 
 void CPanther::Render()
 {
-	if (!isShow())
-		return;
+if(!isShow()) { //distance kich hoat
+	return;
+}
 	int ani;
 	switch (state)
 	{
 	case PANTHER_STATE_SITTING:
 		ani = PANTHER_ANI_SITTING;
 		break;
-	case PANTHER_STATE_RUNNINGG:
+	case PANTHER_STATE_RUNNING:
 		ani = PANTHER_ANI_RUNNING;
 		break;
 	case PANTHER_STATE_JUMPING:
@@ -149,36 +145,12 @@ void CPanther::Render()
 		ani = PANTHER_ANI_SITTING;
 		break;
 	}
-	CAnimations::GetInstance()->Get(ani)->RenderFlip(nx, x, y, 20, 255);
+	CAnimations::GetInstance()->Get(ani)->RenderFlip(nx, x, y, 9, 255);
 	
 	if (CGame::GetInstance()->getDebug())
 		RenderBoundingBox();
 
 }
-
-bool CPanther::GetIsStart()
-{
-	return isStart;
-}
-
-void CPanther::Jump()
-{
-	if (isJumping == true)
-		return;
-	vy = -PANTHER_VYJUMP;
-	vx = PANTHER_VXJUMP * nx;
-	isJumping = true;
-	cout << "Jump" << endl;
-	startJumpPoint = x;
-
-}
-
-void CPanther::Run()
-{
-	vx = PANTHER_SPEED_RUNNING * nx;
-	isRunning = 1;
-}
-
 
 
 CPanther::~CPanther()

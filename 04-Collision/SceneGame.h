@@ -74,6 +74,11 @@ class CSceneGame : public CScene
 	bool isAllowToCreateGhost;
 	DWORD timeStartCreateGhost;
 	bool isWaitingToCreateGhost;
+
+	bool isCreatingPanther;
+	bool isAllowToCreatePanther;
+	DWORD timeStartCreatPanther;
+	bool isWaitingToCreatePanther;
 	
 	bool isAllowCreateFishmen;
 	int CountEnemyFishmen;
@@ -98,10 +103,12 @@ public:
 	void deleteObject(vector<LPGAMEOBJECT> &objects, int index);
 	void checkCollisionOfSimon();
 	void getBonusFromItem(CItem* item);
-	void createGhost();
+	
 	void checkCollisionOfEnemy();
 	void checkCollisionSimonWithHidden();
 	void updateCamAutoGo(DWORD dt);
 	void createBat();
 	void createFishMan();
+	void createPanther();
+	void createGhost();
 };

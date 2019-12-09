@@ -365,18 +365,20 @@ void CSceneGame::LoadResources() {
 			}
 
 
-			/*CPanther* panther = new CPanther(691, 40, -1, 50, simon);
-			objects.push_back(panther);
-			listEnemy.push_back(panther);
+			CPanther* panther1 = new CPanther(691, 40, -1, simon);
+			panther1 = new CPanther(691, 40, -1, simon);
+			objects.push_back(panther1);
+			listEnemy.push_back(panther1);
 
-			panther = new CPanther(855, 40, -1, 50, simon);
-			objects.push_back(panther);
-			listEnemy.push_back(panther);
+			CPanther* panther2 = new CPanther(691, 40, -1, simon);
+			panther2 = new CPanther(855, 40, -1, simon);
+			objects.push_back(panther2);
+			listEnemy.push_back(panther2);
 
-
-			 panther = new CPanther(921, 40, -1, 50, simon);
-			objects.push_back(panther);
-			listEnemy.push_back(panther);*/
+			CPanther* panther3 = new CPanther(691, 40, -1, simon);
+			panther3 = new CPanther(921, 40, -1, simon);
+			objects.push_back(panther3);
+			listEnemy.push_back(panther3);
 
 			/*CGhost* newGhost = new CGhost(100, 20, -1);
 			objects.push_back(newGhost);
@@ -1134,7 +1136,6 @@ void CSceneGame::createGhost() {
 		}
 	}
 
-	cout << ghost << endl;
 	if (ghost == 0&&!isWaitingToCreateGhost) {
 		timeStartCreateGhost = GetTickCount();
 		isWaitingToCreateGhost = true;
@@ -1245,4 +1246,8 @@ void CSceneGame::checkCollisionSimonWithHidden() {
 	}
 }
 
+void CSceneGame::createPanther()
+{
+
+}
 
