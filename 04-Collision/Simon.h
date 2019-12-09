@@ -152,6 +152,7 @@ class CSimon : public CGameObject
 
 	bool isHurt;
 	DWORD timeStartHurt;
+	int directionHurt;
 	bool isHurtFinish =true;
 	bool isTouchable;
 	DWORD timeTouchable;

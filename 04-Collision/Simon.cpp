@@ -111,8 +111,9 @@ void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 				hasGravity = false;
 				setFreeze(true);
 				if (!isMovingOnStair) {
-					vx = -nx * V_HURT;
+					vx = directionHurt * V_HURT;
 					vy = -V_HURT;
+					nx = -directionHurt;
 				}
 				SetState(SIMON_STATE_HURT);
 		}
@@ -345,6 +346,7 @@ void CSimon::collisionWithEnemy(vector<LPGAMEOBJECT> listEnemy) {
 				isTouchable = false;
 				timeTouchable = GetTickCount();
 				timeStartHurt = GetTickCount();
+				directionHurt = listEnemy[i]->getDirection();
 		}
 	}
 }
