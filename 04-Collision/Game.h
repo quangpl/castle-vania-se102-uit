@@ -2,7 +2,7 @@
 #include <Windows.h>
 #include <d3d9.h>
 #include <d3dx9.h>
-
+#include "Constants.h"
 #define DIRECTINPUT_VERSION 0x0800
 #include <dinput.h>
 
@@ -96,6 +96,7 @@ public:
 	int getRandomInt(int a, int b) {
 		return rand() % (b + 1 - a) + a;
 	}
+
 	~CGame();
 };
 

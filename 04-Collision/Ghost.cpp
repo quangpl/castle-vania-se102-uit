@@ -29,11 +29,12 @@ void CGhost::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		return;
 	}
 	float camX = CGame::GetInstance()->GetCamPos_x();
-	//if ((x <= camX && nx<0 )||( x + GHOST_BBOX_WIDTH >= camX&&nx>0)) {
-	//	hide();
-	//	cout << "hide" << endl;
-	//	return;
-	//} Xoa khi ghost đi khoi camera 
+
+	//Xoa khi ghost đi khoi camera 
+	if ((x + GHOST_BBOX_WIDTH > camX+SCREEN_WIDTH && nx==1)|| (x + GHOST_BBOX_WIDTH < camX && nx == -1)) {
+		hide();
+	}
+	
 	// Simple fall down
 	vy += GHOST_FALLDOWN_SPEED * dt;
 	vx = nx * GHOST_SPEED;

@@ -1133,6 +1133,8 @@ void CSceneGame::createGhost() {
 			ghost++;
 		}
 	}
+
+	cout << ghost << endl;
 	if (ghost == 0&&!isWaitingToCreateGhost) {
 		timeStartCreateGhost = GetTickCount();
 		isWaitingToCreateGhost = true;
@@ -1140,7 +1142,7 @@ void CSceneGame::createGhost() {
 	if (GetTickCount() - timeStartCreateGhost >= TIME_DELAY_CREATE_GHOST&& isWaitingToCreateGhost) {
 			for (int i = 0; i < 3; i++) {
 				if (rand() % 2) {
-					CGhost* newGhost = new CGhost(game->GetCamPos_x() + i * 30, 170, 1); // Direction: 1 la di qua phai, -1 la di qua trai
+					CGhost* newGhost = new CGhost(game->GetCamPos_x() - i * 30, 170, 1); // Direction: 1 la di qua phai, -1 la di qua trai
 					listEnemy.push_back(newGhost);
 					objects.push_back(newGhost);
 					cout << "Tao ghost phai" << endl;

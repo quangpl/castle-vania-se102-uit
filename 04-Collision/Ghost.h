@@ -13,10 +13,13 @@ class CGhost : public CGameObject
 	virtual void GetBoundingBox(float& left, float& top, float& right, float& bottom);
 	virtual void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects);
 	virtual void Render();
+
+	float xInit;
 public:
 	CGhost(float _x,float _y, int direction):CGameObject(){
 		x = _x;
 		y = _y;
+		xInit = x;
 		nx = direction;
 		setType(TYPE_OBJECT_ENEMY);
 	};
