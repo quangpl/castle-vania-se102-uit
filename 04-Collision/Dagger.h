@@ -1,8 +1,7 @@
 #pragma once
 #include "Weapon.h"
-#define DAGGER_LEFT 40
-#define DAGGER_RIGHT 50
-#define DAGGER_BBOX_HEIGHT 24
+#define DAGGER_RIGHT 20
+#define DAGGER_BBOX_HEIGHT 20
 
 #define DAGGER_THROW_SPEED 0.2f
 #define DAGGER_ANI 543

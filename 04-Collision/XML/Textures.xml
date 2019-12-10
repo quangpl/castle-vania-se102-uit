@@ -506,9 +506,14 @@
       <sprite id="10178" left="64" top="51" right="80" bottom="83" frameTime="350"/>
       <sprite id="10177" left="36" top="51" right="50" bottom="83" frameTime="350"/>
     </Animation>
+     <Animation aniId="574" frameTime="100" name="UGLY_FISH_ATTACK">
+      <sprite id="101728" left="9" top="53" right="25" bottom="83" frameTime="100"/>
+    </Animation>
+
+  <!-- Animation FireBall-->
     
-    <Animation aniId="573" frameTime="100" name="UGLY_FISH_ATTACK">
-      <sprite id="10179" left="9" top="51" right="25" bottom="83" frameTime="100"/>
+    <Animation aniId="573" frameTime="100" name="UGLY_FISH_WEAPON">
+      <sprite id="101729" left="100" top="224" right="107" bottom="230" frameTime="100"/>
     </Animation>
   </Texture>
    <!-- Animation BRICKS -->

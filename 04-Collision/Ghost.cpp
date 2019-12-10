@@ -25,6 +25,9 @@ void CGhost::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
 	// Calculate dx, dy 
 	CGameObject::Update(dt);
+	if (x > 1500) {
+		this->hide();
+	}
 	if (!isShow()) {
 		return;
 	}

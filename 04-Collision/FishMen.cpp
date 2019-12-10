@@ -1,22 +1,22 @@
 ﻿#include "FishMen.h"
 
 
-CFishMen::CFishMen(float X, float Y, int Direction, CSimon* simon)
+CFishMen::CFishMen(float X, float Y, int Direction, CSimon* simon, vector<CGameObject*>* _listEnemy)
 {
 	setType(TYPE_OBJECT_ENEMY);
 	this->x = X;
 	this->y = Y;
 	this->nx = Direction;
 	vx = 0;
+	this->listEnemy = _listEnemy;
 	vy = -FISHMEN_SPEED_Y_UP;
 	yInit = y;
 	xInit = x;
 	xAccumulationAttack = 0;
-
 	cout << "tao fish CONSTRCUTOR" << endl;
 	isRunning = 0;
 	isAttacking = false;
-
+	SetState(FISHMEN_STATE_IDLE);
 	this->simon = simon;
 	//this->listWeaponOfEnemy = listWeaponOfEnemy;
 }
@@ -69,6 +69,7 @@ void CFishMen::Update(DWORD dt, vector<LPGAMEOBJECT>* listObject)
 
 	if (isRunning)
 	{
+		SetState(FISHMEN_STATE_MOVING);
 		vx = nx * FISHMEN_SPEED_X;
 		vy += FISHMEN_GRAVITY;
 	}
@@ -131,6 +132,8 @@ void CFishMen::Update(DWORD dt, vector<LPGAMEOBJECT>* listObject)
 
 	if (isAttacking)
 	{
+		SetState(FISHMEN_STATE_ATTACK);
+
 		DWORD now = GetTickCount();
 		if (now - TimeAttack >= FISHMEN_TIME_LIMIT_WAIT_AFTER_ATTACK)
 		{
@@ -148,7 +151,25 @@ void CFishMen::Render()
 	if (!isShow()) {
 		return;
 	}
-	int ani = FISHMEN_ANI_MOVING;
+	int ani;
+	if (vx != 0) {
+		ani = FISHMEN_ANI_MOVING;
+	}
+	switch (state)
+	{
+	case FISHMEN_STATE_IDLE:
+		ani = FISHMEN_ANI_IDLE;
+		break;
+	case FISHMEN_STATE_MOVING:
+		ani = FISHMEN_ANI_MOVING;
+		break;
+	case FISHMEN_STATE_ATTACK:
+		ani = FISHMEN_ANI_ATTACK;
+		break;
+	default:
+		break;
+	}
+
 	CAnimations::GetInstance()->Get(ani)->RenderFlip(nx, x, y, 9, 255);
 	if (CGame::GetInstance()->getDebug())
 		RenderBoundingBox();
@@ -158,20 +179,22 @@ void CFishMen::attack()
 {
 	if (isAttacking)
 		return;
-	cout << "Attack fish" << endl;
-	/*if (weapon == NULL)
-	{
-		weapon = new FireBall(camera);
-		listWeaponOfEnemy->push_back(weapon);
-	}*/
 
-	/*if (weapon->GetFinish() == false)
-		return;*/
+	if (weapon == NULL)
+	{
+		weapon = new CFireBall();
+		listEnemy->push_back(weapon);
+	}
+
+	if (weapon->isShow() == false)
+	{
+		return;
+	}
 
 	isAttacking = true;
 	TimeAttack = GetTickCount();
 
-	/*weapon->SetSpeed(FIREBALL_SPEED * direction, 0);
-	weapon->Attack(x + 10, y + 3, direction);*/
+	weapon->SetSpeed(FIREBALL_SPEED * this->nx, 0);
+	weapon->attack(x + 10, y + 3, this->nx);
 
 }

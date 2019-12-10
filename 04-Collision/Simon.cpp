@@ -68,6 +68,7 @@ void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	// Calculate dx, dy 
 	CGameObject::Update(dt);
 	checkBlink();
+	cout << y << endl;
 	//if(currentStair) {
 	//	cout << currentStair->getStairDirection() << endl;
 	//}
@@ -244,7 +245,7 @@ void CSimon::Render()
 {
 	int ani = SIMON_ANI_IDLE;
 	if (isHit) {
-		cout << "hit" << endl;
+		//cout << "hit" << endl;
 	}
 	switch (state)
 	{

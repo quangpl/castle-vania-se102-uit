@@ -359,6 +359,9 @@ void CSceneGame::LoadResources() {
 			CHidden* hiddenTunnel = new CHidden(1592, 222, 14, 5, HIDDEN_TYPE_GO_TUNNEL);
 			objects.push_back(hiddenTunnel);
 
+		 
+			
+
 			//Whip
 			objects.push_back(simon->getWeapon());
 			if (simon->getSubWeapon()) {
@@ -371,6 +374,7 @@ void CSceneGame::LoadResources() {
 
 			CHidden* hiddenPanther2 = new CHidden(1240, 180, 20, 25, HIDDEN_TYPE_SWITCH_START_STOP_CREATE_PANTHER);
 			listHidden.push_back(hiddenPanther2);
+
 
 		/*	CPanther* panther1 = new CPanther(691, 40, -1, simon);
 			panther1 = new CPanther(691, 40, -1, simon);
@@ -572,7 +576,8 @@ void CSceneGame::LoadResources() {
 		objects.push_back(simon);
 
 
-
+		CHidden* waterHidden = new CHidden(0, 200, 447, 4, HIDDEN_TYPE_SIMON_DIE);
+		listHidden.push_back(waterHidden);
 
 
 		/*	CMonneyEffect* money = new CMonneyEffect(200, 60);
@@ -582,11 +587,11 @@ void CSceneGame::LoadResources() {
 		//objects.push_back(hiddenTunnel);
 
 		//Whip
-	/*	objects.push_back(simon->getWeapon());
+		objects.push_back(simon->getWeapon());
 		if (simon->getSubWeapon()) {
 			simon->setSubWeapon(simon->getSubWeapon());
 			objects.push_back(simon->getSubWeapon());
-		}*/
+		}
 		
 		
 			//Map
@@ -634,10 +639,10 @@ void CSceneGame::Update(DWORD dt) {
 	}
 	else if (getStage() == 3) {
 		isAllowCreateFishmen = true;
-		createFishMan();
+	
 	}
 	CStairPoint* stairPoint = simon->checkCollisionStartStair(listStairPoint);
-
+	createFishMan();
 	//Create enemy area
 	createGhost();
 	createPanther();
@@ -805,10 +810,11 @@ void CSceneGame::Update(DWORD dt) {
 			currentDoor->SetState(DOOR_STATE_CLOSE);
 			isAllowCreateBat = true;
 		}
-		if (isChangeSceneComplete && !game->getAutoGo()) {
+		//block simon when simon through the door 
+	/*	if (isChangeSceneComplete && !game->getAutoGo()) {
 			simon->setFreeze(false);
 			cout << "set true bat" << endl;
-		}
+		}*/
 		//check chuyen qua cua stage 2
 	}
 	else if (getStage() == 3) {
@@ -821,6 +827,10 @@ void CSceneGame::Update(DWORD dt) {
 }
 void CSceneGame::Render() {
 	maps->Get(currentIdMap)->Render();
+	for (int i = 0; i < listEnemy.size(); i++)
+	{
+		listEnemy[i]->Render();
+	}
 	for (int i = 0; i < objects.size(); i++)
 	{
 			objects[i]->Render();
@@ -829,6 +839,7 @@ void CSceneGame::Render() {
 	{
 		listHidden[i]->Render();
 	}
+
 }
 //void CSceneGame::checkCollisonOfSimon() {
 //	LPCOLLISIONEVENT colEventWithItem = simon->getCollisionEventWithItem();
@@ -871,7 +882,8 @@ void CSceneGame::checkCollisionOfSimon() {
 				cout << "chuyen qua stage 3" << endl;
 				CScenes::GetInstance()->Get(SCENE_GAME_ID)->setStage(3);
 				LoadResources();
-				simon->SetPosition(47, 51);
+				//set position of simon after go to the tunnel
+				simon->SetPosition(33, 25);
 				simon->setIsThroughBrick(0);
 				cout << "update" << endl;
 			}
@@ -1075,29 +1087,31 @@ void CSceneGame::checkCollisionOfEnemy() {
 	if (subWeapon) {
 		if (subWeapon->getCanDestroy()) { //Vu khi dang hoat dong moi xet va cham
 			for (int i = 0; i < listEnemy.size(); i++) {
-				if (objects[i]->getType() == TYPE_OBJECT_ENEMY && subWeapon->checkAABBWithObject(listEnemy[i])) {
+				if (listEnemy[i]->isShow() && listEnemy[i]->getType() == TYPE_OBJECT_ENEMY && subWeapon->checkAABBWithObjectAABBEx(listEnemy[i])) {
 					objects.push_back(new CFire(listEnemy[i]->GetPositionX(), listEnemy[i]->GetPositionY()));
 					objects.push_back(getItem(1 + rand() % (11), listEnemy[i]->GetPositionX(), listEnemy[i]->GetPositionY()));
-					weapon->setCurrentFrame(-1);
-					weapon->setCanDestroy(false);
+					subWeapon->setCurrentFrame(-1);
+					subWeapon->setCanDestroy(false);
+					subWeapon->setCurrentFrame(-1);
+					cout << "Va cham enemy" << endl;
 					//deleteObject(objects, i);
 					listEnemy[i]->hide();
-					weapon->setFinish(true);
+					//subWeapon->setFinish(true);
 				}
 			}
 		}
 	}
 	if (weapon->getCurrentFrame()==3) { //Vu khi dang hoat dong moi xet va cham
-		for (int i = 0; i < objects.size(); i++) {
-			if (objects[i]->getType()== TYPE_OBJECT_ENEMY && weapon->checkAABBWithObjectAABBEx(objects[i])) {
-				objects.push_back(new CFire(objects[i]->GetPositionX(), objects[i]->GetPositionY()));
-				objects.push_back(getItem(1 + rand() % (11), objects[i]->GetPositionX(), objects[i]->GetPositionY()));
+		for (int i = 0; i < listEnemy.size(); i++) {
+			if (listEnemy[i]->isShow()&&listEnemy[i]->getType()== TYPE_OBJECT_ENEMY && weapon->checkAABBWithObjectAABBEx(listEnemy[i])) {
+				objects.push_back(new CFire(listEnemy[i]->GetPositionX(), listEnemy[i]->GetPositionY()));
+				objects.push_back(getItem(1 + rand() % (11), listEnemy[i]->GetPositionX(), listEnemy[i]->GetPositionY()));
 				weapon->setCurrentFrame(-1);
 				weapon->setCanDestroy(false);
 				weapon->setCurrentFrame(-1); 
 				cout<<"Va cham enemy"<<endl;
 				//deleteObject(objects, i);
-				objects[i]->hide();
+				listEnemy[i]->hide();
 				weapon->setFinish(true);
 			}
 		}
@@ -1179,12 +1193,21 @@ void CSceneGame::updateCamAutoGo(DWORD dt) {
 	}
 }
 void CSceneGame::createFishMan() {
-	
-	if (isAllowCreateFishmen && CountEnemyFishmen < 2)
+	if (!isAllowCreateFishmen) {
+		return;
+	}
+
+	int nFishMen = 0;
+	for (int i = 0; i < listEnemy.size(); i++) {
+		if (dynamic_cast<CFishMen*>(listEnemy[i])&& listEnemy[i]->isShow()) {
+			nFishMen++;
+		}
+	}
+	cout << "fishmen: " << nFishMen << endl;
+	if (nFishMen < 2)
 	{
-		cout << "Tao fish man" << endl;
 		DWORD now = GetTickCount();
-		if (true) // đủ thời gian chờ
+		if (GetTickCount()- TimeCreateFishmen >=TimeWaitCreateFishmen) // đủ thời gian chờ
 		{
 			cout << "Dang thuc hien tao fish" << endl;
 			TimeCreateFishmen = now; // đặt lại thời gian đã tạo
@@ -1234,11 +1257,14 @@ void CSceneGame::createFishMan() {
 
 			float yFishmen = FISHMEN_POS_Y;
 
-			CFishMen* newFishMan = new CFishMen(xFishmen, yFishmen, directionFishmen, simon);
+		
+
+			CFishMen* newFishMan = new CFishMen(xFishmen, yFishmen, directionFishmen, simon, &listEnemy);
 			listEnemy.push_back(newFishMan);
 			objects.push_back(newFishMan);
-			CountEnemyFishmen++;
-
+			cout << "Tao fishmen" << endl;
+			createSplash(xFishmen, yFishmen);
+			
 			TimeWaitCreateFishmen = 2000 + (rand() % 2000);
 		}
 	}
@@ -1258,6 +1284,12 @@ void CSceneGame::checkCollisionSimonWithHidden() {
 			cout << "va cham panther hidden" << endl;
 			isUpdateCreatePantherStatus = true;
 	}*/
+		break;
+	case HIDDEN_TYPE_SIMON_DIE:
+		if (simon->isShow()) {
+			simon->hide();
+			createSplash(simon->GetPositionX(), simon->GetPositionY());
+		}
 		break;
 	default:
 		isUpdateCreatePantherStatus = false;
@@ -1298,3 +1330,24 @@ void CSceneGame::createPanther()
 	}
 }
 
+void CSceneGame::createSplash(float x,float y) {
+	for (int i = 0; i < QUANTITY_EFFECT_SPLASH; i++)
+	{
+		if (i == 0)
+		{
+			y = SPLASH_Y_SIDE;
+		}
+		else if (i == 1)
+		{
+			y = SPLASH_Y_CENTER;
+			x = x + SPLASH_OFFSET_LEFT;
+		}
+		else
+		{
+			y = SPLASH_Y_SIDE;
+			x = x + SPLASH_OFFSET_RIGHT;
+		}
+		CEffect* splash = new CSplash(x, y);
+		objects.push_back(splash);
+	}
+}

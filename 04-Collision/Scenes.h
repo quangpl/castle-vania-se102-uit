@@ -42,7 +42,8 @@
 #include "Bat.h"
 #include "FishMen.h"
 #include "Panther.h"
-
+#include "FireBall.h"
+#include "Splash.h"
 using namespace std;
 
 class CScene

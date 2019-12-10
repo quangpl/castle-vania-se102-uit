@@ -82,7 +82,6 @@ class CSceneGame : public CScene
 
 	
 	bool isAllowCreateFishmen;
-	int CountEnemyFishmen;
 	DWORD TimeCreateFishmen;
 	DWORD TimeWaitCreateFishmen;
 	DWORD timeTest;
@@ -112,4 +111,5 @@ public:
 	void createFishMan();
 	void createPanther();
 	void createGhost();
+	void createSplash(float , float y);
 };

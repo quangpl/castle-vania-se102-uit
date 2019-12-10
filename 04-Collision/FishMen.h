@@ -5,18 +5,18 @@
 #include "Brick.h"
 #include "Simon.h"
 #include "FireBall.h"
-#define FISHMEN_SPEED_Y_UP 0.4f
+#define FISHMEN_SPEED_Y_UP 0.34f
 #define FISHMEN_SPEED_Y_DOWN 0.3f
 
-#define FISHMEN_DY_JUMP 350 // nhảy lên khoảng 450px thì rớt xuống
+#define FISHMEN_DY_JUMP 350 // nhảy lên khoảng 350px thì rớt xuống
 
 #define FISHMEN_ANI_IDLE 571
 #define FISHMEN_ANI_MOVING 572
-#define FISHMEN_ANI_ATTACK 573 // ani lúc fishmen attack
-#define FISHMEN_ANI_JUMP 2 // ani lúc nhảy
-#define FISHMEN_ANI_WALK_BEGIN 1 // ani bắt đầu đi
-#define FISHMEN_ANI_WALK_END 2 
-
+#define FISHMEN_ANI_ATTACK 574 // ani lúc fishmen attack#define FISHMEN_ANI_IDLE 571
+ 
+#define FISHMEN_STATE_IDLE 0
+#define FISHMEN_STATE_MOVING 1
+#define FISHMEN_STATE_ATTACK 2
 
 #define FISHMEN_GRAVITY 0.01f
 #define FISHMEN_SPEED_X 0.02f
@@ -39,15 +39,15 @@ private:
 	float xAccumulationAttack; // quãng đường đã đi tích lũy, để khi đi đủ giới hạn sẽ attack
 	DWORD TimeAttack; // thời điểm attack
 	bool isRunning;
-	//FireBall* weapon;
+	CFireBall* weapon;
 	bool isAttacking;
-
+	vector<CGameObject*>* listEnemy;
 	/* Lưu thành phần ngoài phục vụ xử lí */
 	CSimon* simon;
 	vector<CWeapon*>* listWeaponOfEnemy;
 
 public:
-	CFishMen(float X, float Y, int Direction, CSimon* simon);
+	CFishMen(float X, float Y, int Direction, CSimon* simon, vector<CGameObject*> * listEnemy);
 	virtual ~CFishMen();
 
 	void GetBoundingBox(float& left, float& top, float& right, float& bottom);
