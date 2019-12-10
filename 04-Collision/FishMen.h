@@ -21,8 +21,8 @@
 #define FISHMEN_GRAVITY 0.01f
 #define FISHMEN_SPEED_X 0.02f
 
-#define FISHMEN_BBOX_WIDTH 20
-#define	FISHMEN_BBOX_HEIGHT 32
+#define FISHMEN_BBOX_WIDTH 25
+#define	FISHMEN_BBOX_HEIGHT 30
 #define FISHMEN_DX_LIMIT 100 // đi được khoảng 140px thì đổi hướng
 #define FISHMEN_DX_ATTACK_LIMIT 100 // đi được khoảng 140px thì đổi hướng
 

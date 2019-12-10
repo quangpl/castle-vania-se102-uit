@@ -242,7 +242,7 @@ bool CSimon::isCollisionWithItem(CItem* objItem)
 
 void CSimon::Render()
 {
-	int ani;
+	int ani = SIMON_ANI_IDLE;
 	if (isHit) {
 		cout << "hit" << endl;
 	}
@@ -714,6 +714,7 @@ CStairPoint* CSimon::checkCollisionStartStair(vector<CStairPoint*> listObj) {
 			centerPointStair = currentStair->getCenter();
 			currentStairTypeCollision = currentStair->getStairDirection();
 			isThroughBrick = currentStair->getHasThrough();
+			cout << currentStairTypeCollision << endl;
 			return listObj[i];
 		}
 	}

@@ -5,7 +5,7 @@ class CStairPoint : public CGround
 {
 	int stairDirection;
 	virtual void GetBoundingBox(float& left, float& top, float& right, float& bottom);
-	virtual void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects);
+
 	virtual void Render();
 	float w, h;
 	int center;
@@ -20,7 +20,7 @@ public:
 		h = _h;
 		stairDirection = _direction;
 	};
-
+	virtual void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects);
 	void setStairDirection(int direction) { this->stairDirection = direction; };
 	int getStairDirection() { return this->stairDirection; };
 

@@ -626,7 +626,7 @@ void CSceneGame::Update(DWORD dt) {
 		
 		//createBat();
 		/*Check and process Simon on stair*/
-		CStairPoint* stairPoint = simon->checkCollisionStartStair(listStairPoint);
+	
 		/*if (stairPoint) {
 			simon->goOnStair(stairPoint);
 		}*/
@@ -636,7 +636,7 @@ void CSceneGame::Update(DWORD dt) {
 		isAllowCreateFishmen = true;
 		createFishMan();
 	}
-
+	CStairPoint* stairPoint = simon->checkCollisionStartStair(listStairPoint);
 
 	//Create enemy area
 	createGhost();
@@ -656,7 +656,10 @@ void CSceneGame::Update(DWORD dt) {
 		if (listEnemy[i]->isShow()) {
 			listEnemy[i]->Update(dt, &listBrick);
 		}
-	}	
+	}
+	/*for (int i = 0; i < listStairPoint.size(); i++) {
+		listStairPoint[i]->Update(dt, &coPlayerAndBackground);
+	}*/
 
 
 

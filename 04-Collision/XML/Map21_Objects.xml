@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Objects>
   <Grounds id="0">
-    <Ground x="100" y="101" width="26" height="5" />
+    <Ground x="100" y="98" width="26" height="1" />
     <Ground x="4" y="132" width="220" height="10" />
     <Ground x="254" y="132" width="28" height="10" />
     <Ground x="324" y="132" width="134" height="10" />
@@ -23,7 +23,7 @@
     <HiddenWall x="464" y="131" width="16" height="16" type ="2" itemId="0"/>
   </HiddenWalls>
   <StairPoints id="-3">
-    <StairPoint  x="89" y="96" width="16" height="4" ny="1" nx="-1"  direction="3" center="83" isThroughBrick="0"/>/>
+    <StairPoint  x="89" y="96" width="18" height="4" ny="1" nx="-1"  direction="3" center="80" isThroughBrick="0"/>/>
     <StairPoint x="442" y="129" width="14" height="4" ny="1" nx="-1"  direction="3" center="432" isThroughBrick="0"/>
   </StairPoints>
   <ChangeScenes id="-1">

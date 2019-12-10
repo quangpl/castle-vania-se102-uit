@@ -27,8 +27,8 @@ CFishMen::~CFishMen()
 
 void CFishMen::GetBoundingBox(float& left, float& top, float& right, float& bottom)
 {
-	left = x + 5;
-	top = y + 15;
+	left = x;
+	top = y ;
 	right = x + FISHMEN_BBOX_WIDTH;
 	bottom = y + FISHMEN_BBOX_HEIGHT;
 }
@@ -149,7 +149,7 @@ void CFishMen::Render()
 		return;
 	}
 	int ani = FISHMEN_ANI_MOVING;
-	CAnimations::GetInstance()->Get(ani)->RenderFlip(nx, x, y, 24, 255);
+	CAnimations::GetInstance()->Get(ani)->RenderFlip(nx, x, y, 9, 255);
 	if (CGame::GetInstance()->getDebug())
 		RenderBoundingBox();
 }

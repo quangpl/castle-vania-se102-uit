@@ -14,6 +14,7 @@ void CStairPoint::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 }
 void CStairPoint::Render()
 {
+
 	if (CGame::GetInstance()->getDebug()) {
 		RenderBoundingBox();
 	}
