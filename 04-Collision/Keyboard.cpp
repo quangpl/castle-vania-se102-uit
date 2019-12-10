@@ -33,6 +33,14 @@ void CSampleKeyHander::OnKeyDown(int KeyCode)
 		simonKey->attack();
 		simonKey->SetState(SIMON_STATE_HIT);
 		break;
+	case DIK_2:
+		CScenes::GetInstance()->Get(SCENE_GAME_ID)->setStage(2);
+		CScenes::GetInstance()->Get(SCENE_GAME_ID)->LoadResources();
+		break;
+	case DIK_3:
+		CScenes::GetInstance()->Get(SCENE_GAME_ID)->setStage(3);
+		CScenes::GetInstance()->Get(SCENE_GAME_ID)->LoadResources();
+		break;
 	case DIK_DOWN: // debug mode
 		cout << "Dang nhan down" << endl;
 		if (simonKey->getCanGoStair()) {

@@ -49,6 +49,7 @@
 #define BOUNDARY_CAMERA_STAGE_2 1506
 
 #define TIME_DELAY_CREATE_GHOST 3000
+#define TIME_DELAY_CREATE_PANTHER 3000
 
 
 
@@ -75,10 +76,10 @@ class CSceneGame : public CScene
 	DWORD timeStartCreateGhost;
 	bool isWaitingToCreateGhost;
 
-	bool isCreatingPanther;
+	
 	bool isAllowToCreatePanther;
-	DWORD timeStartCreatPanther;
-	bool isWaitingToCreatePanther;
+	bool isUpdateCreatePantherStatus =false;
+
 	
 	bool isAllowCreateFishmen;
 	int CountEnemyFishmen;

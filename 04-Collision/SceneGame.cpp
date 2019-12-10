@@ -26,6 +26,8 @@ CSceneGame::CSceneGame()
 	isAllowToCreateGhost = false;
 	isWaitingToCreateGhost = false;
 	
+	isAllowToCreatePanther = false;
+
 	isCreatingBat = false;
 	isAllowCreateBat = false;
 }
@@ -364,8 +366,13 @@ void CSceneGame::LoadResources() {
 				objects.push_back(simon->getSubWeapon());
 			}
 
+			CHidden* hiddenPanther1 = new CHidden(468, 180, 20, 25, HIDDEN_TYPE_SWITCH_START_STOP_CREATE_PANTHER);
+			listHidden.push_back(hiddenPanther1);
 
-			CPanther* panther1 = new CPanther(691, 40, -1, simon);
+			CHidden* hiddenPanther2 = new CHidden(1240, 180, 20, 25, HIDDEN_TYPE_SWITCH_START_STOP_CREATE_PANTHER);
+			listHidden.push_back(hiddenPanther2);
+
+		/*	CPanther* panther1 = new CPanther(691, 40, -1, simon);
 			panther1 = new CPanther(691, 40, -1, simon);
 			objects.push_back(panther1);
 			listEnemy.push_back(panther1);
@@ -378,7 +385,7 @@ void CSceneGame::LoadResources() {
 			CPanther* panther3 = new CPanther(691, 40, -1, simon);
 			panther3 = new CPanther(921, 40, -1, simon);
 			objects.push_back(panther3);
-			listEnemy.push_back(panther3);
+			listEnemy.push_back(panther3);*/
 
 			/*CGhost* newGhost = new CGhost(100, 20, -1);
 			objects.push_back(newGhost);
@@ -633,7 +640,7 @@ void CSceneGame::Update(DWORD dt) {
 
 	//Create enemy area
 	createGhost();
-	
+	createPanther();
 	checkUpdateScene();
 
 	//bug khong co whip cho simon
@@ -1241,13 +1248,50 @@ void CSceneGame::checkCollisionSimonWithHidden() {
 	case HIDDEN_TYPE_STOP_CREATE_GHOST:
 		isAllowToCreateGhost = false;
 		break;
+	case HIDDEN_TYPE_SWITCH_START_STOP_CREATE_PANTHER:
+		isAllowToCreatePanther = true;
+		/*if (!isUpdateCreatePantherStatus) {
+			isAllowToCreatePanther = !isAllowToCreatePanther;
+			cout << "va cham panther hidden" << endl;
+			isUpdateCreatePantherStatus = true;
+	}*/
+		break;
 	default:
+		isUpdateCreatePantherStatus = false;
 		break;
 	}
 }
 
 void CSceneGame::createPanther()
 {
+	if (!isAllowToCreatePanther) {
+		return;
+	}
+	int panther = 0;
+	for (int i = 0; i < objects.size(); i++) {
+		if (dynamic_cast<CPanther*>(objects[i]) && objects[i]->isShow()) {
+			panther++;
+		}
+	}
+	cout << panther << endl;
+	if (panther == 0) {
+		cout << "Create panther" << endl;
+		CPanther* panther1 = new CPanther(691, 40, -1, simon);
+		panther1 = new CPanther(691, 40, -1, simon);
+		objects.push_back(panther1);
+		listEnemy.push_back(panther1);
 
+		CPanther* panther2 = new CPanther(691, 40, -1, simon);
+		panther2 = new CPanther(855, 40, -1, simon);
+		objects.push_back(panther2);
+		listEnemy.push_back(panther2);
+
+		CPanther* panther3 = new CPanther(691, 40, -1, simon);
+		panther3 = new CPanther(921, 40, -1, simon);
+		objects.push_back(panther3);
+		listEnemy.push_back(panther3);
+
+		isAllowToCreatePanther = false;
+	}
 }
 

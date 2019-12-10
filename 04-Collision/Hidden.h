@@ -5,6 +5,9 @@
 #define HIDDEN_TYPE_GO_TUNNEL 3
 #define HIDDEN_TYPE_STOP_CREATE_GHOST 4
 
+#define HIDDEN_TYPE_SWITCH_START_STOP_CREATE_PANTHER 5
+
+
 
 class CHidden : public CGround
 {

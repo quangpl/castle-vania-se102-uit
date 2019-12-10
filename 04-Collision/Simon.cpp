@@ -71,6 +71,7 @@ void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	//if(currentStair) {
 	//	cout << currentStair->getStairDirection() << endl;
 	//}
+
 	if (isBlink) {
 		if (GetTickCount() - timeStartBlink >= TIME_BLINK) {
 			isBlink = false;
@@ -690,7 +691,7 @@ void CSimon::autoGoX(int _nx, float speed,float target)
 
 int CSimon::getTypeHiddenCollision(vector<CHidden*> listHidden) {
 	for (int i = 0; i < listHidden.size(); i++) {
-			if (this->checkAABBWithObjectAABBEx(listHidden[i])) {
+			if (this->checkAABBWithObject(listHidden[i])) {
 				if (listHidden[i]->getTypeHidden() == HIDDEN_TYPE_DOOR) {
 				autoGoX(1, SIMON_WALKING_SPEED_AUTO, STAGE_1_TARGET_DOOR);
 				isCollisionWithDoor = true;
@@ -698,6 +699,9 @@ int CSimon::getTypeHiddenCollision(vector<CHidden*> listHidden) {
 				}
 				else if(listHidden[i]->getTypeHidden() == HIDDEN_TYPE_STOP_CREATE_GHOST) {
 					return HIDDEN_TYPE_STOP_CREATE_GHOST;
+				}
+				else {
+					return listHidden[i]->getTypeHidden();
 				}
 		}
 	}

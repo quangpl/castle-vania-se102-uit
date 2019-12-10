@@ -21,6 +21,7 @@
 #include "Items.h"
 #include <sstream> 
 #include "Constants.h"
+#include "Scenes.h"
 
 class CSampleKeyHander : public CKeyEventHandler
 {

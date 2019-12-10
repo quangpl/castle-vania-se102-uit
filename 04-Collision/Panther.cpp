@@ -110,7 +110,9 @@ void CPanther::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 			isRunning = true;
 			SetState(PANTHER_STATE_RUNNING);
 			isLanding = true;
-			(this->nx) *= -1;
+			if (this->nx != 1) {
+				(this->nx) *= -1;
+			}
 			cout << "Set nx =1" << endl;
 		}
 
