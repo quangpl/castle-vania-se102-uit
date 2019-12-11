@@ -35,6 +35,11 @@ void CFishMen::GetBoundingBox(float& left, float& top, float& right, float& bott
 
 void CFishMen::Update(DWORD dt, vector<LPGAMEOBJECT>* listObject)
 {
+	/*float camX = CGame::GetInstance()->GetCamPos_x();
+
+	if ((x + FISHMEN_BBOX_WIDTH > camX + SCREEN_WIDTH && nx == 1) || (x + FISHMEN_BBOX_WIDTH < camX && nx == -1)) {
+		hide();
+	}*/
 	if (y >= BREAK_POINT_DIE_Y&&vy>0) {
 		hide();
 	}

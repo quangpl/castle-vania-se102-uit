@@ -8,6 +8,9 @@
 #define HIDDEN_TYPE_SWITCH_START_STOP_CREATE_PANTHER 5
 #define HIDDEN_TYPE_SIMON_DIE 6
 
+#define HIDDEN_TYPE_START_CREATE_BAT 7
+
+
 
 
 class CHidden : public CGround

@@ -28,7 +28,6 @@ CSceneGame::CSceneGame()
 	
 	isAllowToCreatePanther = false;
 
-	isCreatingBat = false;
 	isAllowCreateBat = false;
 }
 
@@ -376,6 +375,21 @@ void CSceneGame::LoadResources() {
 			listHidden.push_back(hiddenPanther2);
 
 
+			CHidden* hiddenCreateBat = new CHidden(1600, 86, 5, 25, HIDDEN_TYPE_START_CREATE_BAT);
+			listHidden.push_back(hiddenCreateBat);
+
+			CHidden* hiddenCreateBat1 = new CHidden(1673, 121, 5, 25, HIDDEN_TYPE_START_CREATE_BAT);
+			listHidden.push_back(hiddenCreateBat1);
+			CHidden* hiddenCreateBat2 = new CHidden(1728, 183, 5, 25, HIDDEN_TYPE_START_CREATE_BAT);
+			listHidden.push_back(hiddenCreateBat2);
+			CHidden* hiddenCreateBat3 = new CHidden(1661, 183, 5, 25, HIDDEN_TYPE_START_CREATE_BAT);
+			listHidden.push_back(hiddenCreateBat3);
+			CHidden* hiddenCreateBat4 = new CHidden(1536, 183, 5, 25, HIDDEN_TYPE_START_CREATE_BAT);
+			listHidden.push_back(hiddenCreateBat4);
+			CHidden* hiddenCreateBat5 = new CHidden(1606, 183, 5, 25, HIDDEN_TYPE_START_CREATE_BAT);
+			listHidden.push_back(hiddenCreateBat5);
+
+
 		/*	CPanther* panther1 = new CPanther(691, 40, -1, simon);
 			panther1 = new CPanther(691, 40, -1, simon);
 			objects.push_back(panther1);
@@ -645,6 +659,7 @@ void CSceneGame::Update(DWORD dt) {
 	createFishMan();
 	//Create enemy area
 	createGhost();
+	createBat();
 	createPanther();
 	checkUpdateScene();
 
@@ -808,7 +823,6 @@ void CSceneGame::Update(DWORD dt) {
 			game->setAutoGo(true, 1537);
 			isChangeSceneComplete = true;
 			currentDoor->SetState(DOOR_STATE_CLOSE);
-			isAllowCreateBat = true;
 		}
 		//block simon when simon through the door 
 	/*	if (isChangeSceneComplete && !game->getAutoGo()) {
@@ -1122,28 +1136,29 @@ void CSceneGame::checkCollisionOfEnemy() {
 	}
 }
 void CSceneGame::createBat() {
-	if (!isAllowCreateBat) {
-		return;
-	}
-	int nBat=0;
-	for (int i = 0; i < objects.size(); i++) {
-		if (dynamic_cast<CBat*>(objects[i])) {
-			nBat++;
+
+	if (isAllowCreateBat) {
+	
+		int nBat = 0;
+		for (int i = 0; i < objects.size(); i++) {
+			if (dynamic_cast<CBat*>(objects[i]) && objects[i]->isShow()) {
+				nBat++;
+			}
 		}
-	}
-	 
-	if (nBat==0&&isCreatingBat) {
-		cout << "Tao bat" << endl;
-		int randomInt = game->getRandomInt(1, 3);
-		if (randomInt % 2 == 0) {
-			CBat* bat = new CBat(game->GetCamPos_x(), simon->GetPositionY() /*+ game->getRandomInt(-4, 20)*/, 1);
-			listEnemy.push_back(bat);
-			objects.push_back(bat);
-		}
-		else {
-			CBat* bat = new CBat(game->GetCamPos_x()+SCREEN_WIDTH, simon->GetPositionY()/* + game->getRandomInt(-4, 20)*/, -1);
-			listEnemy.push_back(bat);
-			objects.push_back(bat);
+
+		if (nBat == 0) {
+			int randomInt = game->getRandomInt(1, 3);
+			if (randomInt % 2 == 0) {
+				CBat* bat = new CBat(game->GetCamPos_x(), simon->GetPositionY() /*+ game->getRandomInt(-4, 20)*/, 1);
+				listEnemy.push_back(bat);
+				objects.push_back(bat);
+			}
+			else {
+				CBat* bat = new CBat(game->GetCamPos_x() + SCREEN_WIDTH, simon->GetPositionY()/* + game->getRandomInt(-4, 20)*/, -1);
+				listEnemy.push_back(bat);
+				objects.push_back(bat);
+			}
+			isAllowCreateBat = false;
 		}
 	}
 }
@@ -1291,6 +1306,10 @@ void CSceneGame::checkCollisionSimonWithHidden() {
 			createSplash(simon->GetPositionX(), simon->GetPositionY());
 		}
 		break;
+	case HIDDEN_TYPE_START_CREATE_BAT:
+		isAllowCreateBat = true;
+		cout << "Aloow creawte bat" << endl;
+		break;
 	default:
 		isUpdateCreatePantherStatus = false;
 		break;
@@ -1308,7 +1327,6 @@ void CSceneGame::createPanther()
 			panther++;
 		}
 	}
-	cout << panther << endl;
 	if (panther == 0) {
 		cout << "Create panther" << endl;
 		CPanther* panther1 = new CPanther(691, 40, -1, simon);

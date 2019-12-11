@@ -28,6 +28,9 @@ void CBat::Update(DWORD dt, vector<LPGAMEOBJECT>* listObject)
 	if ((x > camX + SCREEN_WIDTH && nx > 0) || (x < camX && nx < 0)) {
 		hide();
 	}
+	/*if (isShow()) {
+		return;
+	}*/
 	if (y - yBackup >= DeltaY)
 	{
 		vy = -BAT_SPEED_Y;
@@ -48,7 +51,10 @@ void CBat::Update(DWORD dt, vector<LPGAMEOBJECT>* listObject)
 
 void CBat::Render()
 {
-	CAnimations::GetInstance()->Get(BAT_ANI)->RenderFlip(getDirection(), x, y, 24, 255);
+	/*if (isShow()) {
+		return;
+	}*/
+	CAnimations::GetInstance()->Get(BAT_ANI)->RenderFlip(getDirection(), x, y, 8, 255);
 	if (CGame::GetInstance()->getDebug()) {
 		RenderBoundingBox();
 	}

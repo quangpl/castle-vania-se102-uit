@@ -3,8 +3,8 @@
 
 #include "GameObject.h" 
 
-#define BAT_SPEED_X 0.03f 
-#define BAT_SPEED_Y 0.03f
+#define BAT_SPEED_X 0.15f 
+#define BAT_SPEED_Y 0.15f
 
 #define DeltaY 20 // Biên giao động trục y
 #define BAT_ANI 569

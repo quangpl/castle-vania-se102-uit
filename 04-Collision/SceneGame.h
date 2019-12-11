@@ -50,6 +50,8 @@
 
 #define TIME_DELAY_CREATE_GHOST 3000
 #define TIME_DELAY_CREATE_PANTHER 3000
+#define TIME_DELAY_CREATE_BAT 10000
+
 
 
 
@@ -71,7 +73,11 @@ class CSceneGame : public CScene
 	bool isStopWatch = false;
 	DWORD timeStartStopWatch;
 
-	bool isCreatingBat;
+	bool isAllowCreateBat;
+	DWORD lastTimeCreateBat;
+	bool isWaitingCreateBat = false;
+
+
 	bool isAllowToCreateGhost;
 	DWORD timeStartCreateGhost;
 	bool isWaitingToCreateGhost;
@@ -85,7 +91,7 @@ class CSceneGame : public CScene
 	DWORD TimeCreateFishmen;
 	DWORD TimeWaitCreateFishmen;
 	DWORD timeTest;
-	bool isAllowCreateBat;
+
 
 public:
 	CSceneGame();
@@ -107,6 +113,8 @@ public:
 	void checkCollisionOfEnemy();
 	void checkCollisionSimonWithHidden();
 	void updateCamAutoGo(DWORD dt);
+
+
 	void createBat();
 	void createFishMan();
 	void createPanther();

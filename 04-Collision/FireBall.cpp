@@ -20,9 +20,9 @@ void CFireBall::Update(DWORD dt, vector<LPGAMEOBJECT>* listObject)
 {
 	// vượt quá biên độ trục y cho phép thì đổi chiều vy
 	float camX = CGame::GetInstance()->GetCamPos_x();
-	/*if ((x > camX + SCREEN_WIDTH && nx > 0) || (x < camX && nx < 0)) {
+	if ((x > camX + SCREEN_WIDTH && nx > 0) || (x < camX && nx < 0)) {
 		hide();
-	}*/
+	}
 
 	CGameObject::Update(dt); // Update dt, dx, dy
 	x += dx;
