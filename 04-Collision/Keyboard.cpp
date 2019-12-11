@@ -99,14 +99,14 @@ void CSampleKeyHander::KeyState(BYTE* states)   //long event
 		simonKey->SetState(SIMON_STATE_IDLE);
 	if (gameKey->IsKeyDown(DIK_DOWN))
 	{
-		/*if (simonKey->getCanGoStair()) {
+		if (simonKey->getCanGoStair()) {
 			return;
 		}
 		cout<<"vuot ngoai" << endl;
 		if (simonKey->GetState() == SIMON_STATE_HIT) {
 			simonKey->SetState(SIMON_STATE_HIT);
 		}
-		simonKey->SetState(SIMON_STATE_SIT);*/
+		simonKey->SetState(SIMON_STATE_SIT);
 	}
 
 	if (gameKey->IsKeyDown(DIK_Z))

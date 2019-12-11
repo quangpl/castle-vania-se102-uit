@@ -1107,6 +1107,7 @@ void CSceneGame::checkCollisionOfEnemy() {
 					subWeapon->setCurrentFrame(-1);
 					subWeapon->setCanDestroy(false);
 					subWeapon->setCurrentFrame(-1);
+					subWeapon->setFinish(true);
 					cout << "Va cham enemy" << endl;
 					//deleteObject(objects, i);
 					listEnemy[i]->hide();
@@ -1116,17 +1117,23 @@ void CSceneGame::checkCollisionOfEnemy() {
 		}
 	}
 	if (weapon->getCurrentFrame()==3) { //Vu khi dang hoat dong moi xet va cham
-		for (int i = 0; i < listEnemy.size(); i++) {
-			if (listEnemy[i]->isShow()&&listEnemy[i]->getType()== TYPE_OBJECT_ENEMY && weapon->checkAABBWithObjectAABBEx(listEnemy[i])) {
-				objects.push_back(new CFire(listEnemy[i]->GetPositionX(), listEnemy[i]->GetPositionY()));
-				objects.push_back(getItem(1 + rand() % (11), listEnemy[i]->GetPositionX(), listEnemy[i]->GetPositionY()));
-				weapon->setCurrentFrame(-1);
-				weapon->setCanDestroy(false);
-				weapon->setCurrentFrame(-1); 
-				cout<<"Va cham enemy"<<endl;
-				//deleteObject(objects, i);
-				listEnemy[i]->hide();
-				weapon->setFinish(true);
+		if (weapon->getCanDestroy()) {
+			for (int i = 0; i < listEnemy.size(); i++) {
+				if (listEnemy[i]->isShow() && listEnemy[i]->getType() == TYPE_OBJECT_ENEMY && weapon->checkAABBWithObjectAABBEx(listEnemy[i])) {
+					objects.push_back(new CFire(listEnemy[i]->GetPositionX(), listEnemy[i]->GetPositionY()));
+					objects.push_back(getItem(1 + rand() % (11), listEnemy[i]->GetPositionX(), listEnemy[i]->GetPositionY()));
+					weapon->setCurrentFrame(-1);
+					weapon->setCanDestroy(false);
+					weapon->setCurrentFrame(-1);
+					cout << "Va cham enemy" << endl;
+					//deleteObject(objects, i);
+					listEnemy[i]->hide();
+					weapon->setFinish(true);
+				}
+				else {
+					cout << "Danh trat" << endl;
+					weapon->setCanDestroy(false);
+				}
 			}
 		}
 
