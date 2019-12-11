@@ -4,8 +4,8 @@
 #define FIREBALL_SPEED 0.21f
 
 #define FIREBALL_ANI 573
-#define FIREBALL_BBOX_WIDTH 7
-#define FIREBALL_BBOX_HEIGHT 7
+#define FIREBALL_BBOX_WIDTH 8
+#define FIREBALL_BBOX_HEIGHT 8
 
 class CFireBall : public CGameObject
 {

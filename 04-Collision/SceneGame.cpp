@@ -677,6 +677,12 @@ void CSceneGame::Update(DWORD dt) {
 			listEnemy[i]->Update(dt, &listBrick);
 		}
 	}
+
+	for (int i = 0; i < listDoor.size(); i++) {
+		if (listDoor[i]->isShow()) {
+			listDoor[i]->Update(dt);
+		}
+	}
 	/*for (int i = 0; i < listStairPoint.size(); i++) {
 		listStairPoint[i]->Update(dt, &coPlayerAndBackground);
 	}*/
