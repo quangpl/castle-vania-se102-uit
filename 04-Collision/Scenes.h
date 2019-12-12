@@ -44,6 +44,7 @@
 #include "Panther.h"
 #include "FireBall.h"
 #include "Splash.h"
+#include "Grid.h"
 using namespace std;
 
 class CScene

@@ -68,8 +68,8 @@ void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	// Calculate dx, dy 
 	CGameObject::Update(dt);
 	checkBlink();
-	/*cout <<"y: " <<y << endl;
-	cout << "x: "<<x << endl;*/
+	//cout <<"y: " <<y << endl;
+	//cout << "x: "<<x << endl;
 	//if(currentStair) {
 	//	cout << currentStair->getStairDirection() << endl;
 	//}
@@ -691,33 +691,33 @@ void CSimon::autoGoX(int _nx, float speed,float target)
 	targetAutoGoX = target;
 }
 
-int CSimon::getTypeHiddenCollision(vector<CHidden*> listHidden) {
+int CSimon::getTypeHiddenCollision(vector<CGameObject*> listHidden) {
 	for (int i = 0; i < listHidden.size(); i++) {
 			if (this->checkAABBWithObject(listHidden[i])) {
-				if (listHidden[i]->getTypeHidden() == HIDDEN_TYPE_DOOR) {
+				if (dynamic_cast<CHidden*>(listHidden[i])->getTypeHidden() == HIDDEN_TYPE_DOOR) {
 				autoGoX(1, SIMON_WALKING_SPEED_AUTO, STAGE_1_TARGET_DOOR);
 				isCollisionWithDoor = true;
 				return HIDDEN_TYPE_DOOR;
 				}
-				else if(listHidden[i]->getTypeHidden() == HIDDEN_TYPE_STOP_CREATE_GHOST) {
+				else if(dynamic_cast<CHidden*>(listHidden[i])->getTypeHidden() == HIDDEN_TYPE_STOP_CREATE_GHOST) {
 					return HIDDEN_TYPE_STOP_CREATE_GHOST;
 				}
 				else {
-					return listHidden[i]->getTypeHidden();
+					return dynamic_cast<CHidden*>(listHidden[i])->getTypeHidden();
 				}
 		}
 	}
 }
-CStairPoint* CSimon::checkCollisionStartStair(vector<CStairPoint*> listObj) {
+CStairPoint* CSimon::checkCollisionStartStair(vector<CGameObject*> listObj) {
 	for (int i = 0; i < listObj.size(); i++) {
 		if (this->checkAABBWithObjectAABBEx(listObj[i])) {
 			canGoStair = true;
-			currentStair = listObj[i];
+			currentStair = dynamic_cast<CStairPoint*>(listObj[i]);
 			centerPointStair = currentStair->getCenter();
 			currentStairTypeCollision = currentStair->getStairDirection();
 			isThroughBrick = currentStair->getHasThrough();
 			cout << currentStairTypeCollision << endl;
-			return listObj[i];
+			return  dynamic_cast<CStairPoint*>(listObj[i]);
 		}
 	}
 	canGoStair = false;

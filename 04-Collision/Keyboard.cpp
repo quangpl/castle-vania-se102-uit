@@ -40,6 +40,12 @@ void CSampleKeyHander::OnKeyDown(int KeyCode)
 	case DIK_3:
 		CScenes::GetInstance()->Get(SCENE_GAME_ID)->setStage(3);
 		CScenes::GetInstance()->Get(SCENE_GAME_ID)->LoadResources();
+		simonKey->SetPosition(50, 100);
+		break;
+	case DIK_4:
+		CScenes::GetInstance()->Get(SCENE_GAME_ID)->setStage(4);
+		CScenes::GetInstance()->Get(SCENE_GAME_ID)->LoadResources();
+		simonKey->SetPosition(77, 86.5);
 		break;
 	case DIK_DOWN: // debug mode
 		cout << "Dang nhan down" << endl;

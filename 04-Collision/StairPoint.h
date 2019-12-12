@@ -6,7 +6,7 @@ class CStairPoint : public CGround
 	int stairDirection;
 	virtual void GetBoundingBox(float& left, float& top, float& right, float& bottom);
 
-	virtual void Render();
+	
 	float w, h;
 	int center;
 	float hasThrough; //Simon can through the brick enum: 0,1
@@ -23,7 +23,7 @@ public:
 	virtual void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects);
 	void setStairDirection(int direction) { this->stairDirection = direction; };
 	int getStairDirection() { return this->stairDirection; };
-
+	virtual void Render();
 	void setCenter(int cen) { this->center = cen; }
 	int getCenter() { return this->center; }
 

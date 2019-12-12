@@ -58,6 +58,9 @@
     <Filter Include="GameObject\Effect">
       <UniqueIdentifier>{9c0e1092-e0cf-48e4-8d03-275b6c242a70}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Framework\Grid">
+      <UniqueIdentifier>{e050092d-67a1-400b-a4ed-e2f824d16717}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="debug.h">
@@ -199,6 +202,9 @@
     <ClInclude Include="Splash.h">
       <Filter>GameObject\Effect</Filter>
     </ClInclude>
+    <ClInclude Include="Grid.h">
+      <Filter>Framework\Grid</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
@@ -339,6 +345,9 @@
     </ClCompile>
     <ClCompile Include="Splash.cpp">
       <Filter>GameObject\Effect</Filter>
+    </ClCompile>
+    <ClCompile Include="Grid.cpp">
+      <Filter>Framework\Grid</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

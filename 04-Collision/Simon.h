@@ -216,12 +216,12 @@ public:
 	bool isCollisionWithItem(CItem* item);
 	bool getIsHit() { return this->isHit; };
 	bool getIsHitFinish() { return this->isHitFinish; };
-	int getTypeHiddenCollision(vector<CHidden*> listHidden);
+	int getTypeHiddenCollision(vector<CGameObject*> listHidden);
 	void collisionWithEnemy(vector<LPGAMEOBJECT> listEnemy);
 	void setIsGoToStair(bool stair) { this->isGoToStair = stair; };
 	bool getIsGoToStair() { return this->isGoToStair; };
 
-	CStairPoint* checkCollisionStartStair(vector<CStairPoint*> listObj);
+	CStairPoint* checkCollisionStartStair(vector<CGameObject*> listObj);
 
 	void goOnStair(CStairPoint* listObj);
 	void setTypeMovingStair(int type) { this->typeMovingStair = type; }

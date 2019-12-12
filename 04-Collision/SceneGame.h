@@ -4,6 +4,8 @@
 #define ID_MAP_1 1
 #define ID_MAP_2 2
 #define ID_MAP_3 3
+#define ID_MAP_4 4
+
 #define VX_CAMERA 0.02;
 #define TIME_CORSS_EFFECT 3000
 #define TIME_STOP_WATCH 2500
@@ -113,6 +115,8 @@ public:
 	void checkCollisionOfEnemy();
 	void checkCollisionSimonWithHidden();
 	void updateCamAutoGo(DWORD dt);
+
+	void loadObjectToGrid();
 
 
 	void createBat();

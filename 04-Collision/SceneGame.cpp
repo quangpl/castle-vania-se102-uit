@@ -10,12 +10,18 @@ CWeapon* backupSubWeapon;
 CSceneGame* CSceneGame::__instance = NULL;
 vector<CItem*> listItem;
 vector<CEffect*> listEffect;
-vector<CHidden*> listHidden;
+
+vector<CGameObject*> listHidden;
 vector<CGameObject*> listBrick;
-vector<CStairPoint*> listStairPoint;
+
+vector<CGameObject*> listStairPoint;
 vector<CDoor*> listDoor;
+
+
 vector<CGameObject*> listEnemy;
 CDoor* currentDoor;
+CGrid* grid = new CGrid();
+
 
 CSceneGame::CSceneGame()
 {
@@ -148,7 +154,7 @@ void CSceneGame::LoadResources() {
 					{
 						float l, t, r, b;
 						CBrick* brick = new CBrick();
-						brick->SetPosition(0 + i * 16.0f, SCREEN_HEIGHT - 45); //Anhr huong vi tri simon
+						brick->SetPosition(0 + i * 16.0f, SCREEN_HEIGHT - 85); //Anhr huong vi tri simon
 						objects.push_back(brick);
 						listBrick.push_back(brick);
 					}
@@ -335,7 +341,7 @@ void CSceneGame::LoadResources() {
 						stairPoint->setCenter(center);
 						stairPoint->setCenter(center);
 						stairPoint->setHasThrough(isThroughBrick);
-						objects.push_back(stairPoint);
+						//objects.push_back(stairPoint);
 						listStairPoint.push_back(stairPoint);
 					}
 				}
@@ -356,7 +362,8 @@ void CSceneGame::LoadResources() {
 			money->SetState(100);
 			objects.push_back(money);*/
 			CHidden* hiddenTunnel = new CHidden(1592, 222, 14, 5, HIDDEN_TYPE_GO_TUNNEL);
-			objects.push_back(hiddenTunnel);
+			listHidden.push_back(hiddenTunnel);
+
 
 		 
 			
@@ -569,11 +576,20 @@ void CSceneGame::LoadResources() {
 					CStairPoint* stairPoint = new CStairPoint(x, y, Width, Height, direction);
 					stairPoint->setCenter(center);
 					stairPoint->setHasThrough(isThroughBrick);
-					objects.push_back(stairPoint);
+					//objects.push_back(stairPoint);
 					listStairPoint.push_back(stairPoint);
 				}
 			}
 		}
+
+
+		CHidden* hiddenChangeScene32 = new CHidden(38, 50, 14, 5, HIDDEN_TYPE_CHANGE_STAGE_FROM_3_TO_2_TYPE_1);
+		listHidden.push_back(hiddenChangeScene32);
+		//objects.push_back(hiddenChangeScene32);
+
+		CHidden* hiddenChangeScene33 = new CHidden(368, 57, 14, 5, HIDDEN_TYPE_CHANGE_STAGE_FROM_3_TO_2_TYPE_2);
+		listHidden.push_back(hiddenChangeScene33);
+		//objects.push_back(hiddenChangeScene33);
 
 		/*CFishMen* fish = new CFishMen(100, 400, 1, simon);
 		objects.push_back(fish);
@@ -617,10 +633,211 @@ void CSceneGame::LoadResources() {
 		maps->Add(ID_MAP_3, map);
 		currentIdMap = ID_MAP_3;
 		}
+		else if (getStage() == 4) {
+		cout << "load stage 4" << endl;
+		objects.clear();
+		listBrick.clear();
+		listHidden.clear();
+		listStairPoint.clear();
+		listDoor.clear();
+		/*	for (int i = 0; i < objects.size(); i++) {
+					objects.erase(objects.begin() + i);
+			}*/
+
+			//listHidden.clear();
+		CTextures* textures = CTextures::GetInstance();
+
+		textures->Add(ID_TEX_MAP_3, "Map\\tileset_map2.png", D3DCOLOR_XRGB(255, 255, 255));
+		textures->Add(ID_TEX_BBOX, "textures\\bbox.png", D3DCOLOR_XRGB(255, 255, 255));
+		textures->Add(ID_TEX_SIMON, "textures\\TexturesV4.png", D3DCOLOR_XRGB(34, 177, 76));
+		textures->Add(ID_TEX_CANDLE, "textures\\object.png", D3DCOLOR_XRGB(34, 177, 76));
+		textures->Add(ID_TEX_ITEM, "textures\\Items.png", D3DCOLOR_XRGB(128, 0, 0));
+
+
+
+
+		CMap* map = new CMap(ID_TEX_MAP_3, "Map\\tileset_map2.png", D3DCOLOR_XRGB(255, 255, 255));
+		map->ReadMapTXT("Map\\Map4.txt");
+		map->LoadTile();
+
+		CSprites* sprites = CSprites::GetInstance();
+		CAnimations* animations = CAnimations::GetInstance();
+
+		LPDIRECT3DTEXTURE9 texSimon = textures->Get(ID_TEX_SIMON);
+		LPDIRECT3DTEXTURE9 texCandle = textures->Get(ID_TEX_CANDLE);
+
+		//Load tất cả animations
+		LPDIRECT3DTEXTURE9 directTexture;
+		TiXmlDocument doc("XML/Textures.xml");
+		if (!doc.LoadFile())
+		{
+			DebugOut(L"Can't read XML file");
+			MessageBox(NULL, L"Can't Read XML File", L"Error", MB_OK);
+			return;
+		}
+		else
+		{
+			DebugOut(L"[INFO]Read XML success\n");
+		}
+		// get info root
+		TiXmlElement* root = doc.RootElement();
+		TiXmlElement* sprite = nullptr;
+		TiXmlElement* animation = nullptr;
+		TiXmlElement* texture = nullptr;
+		LPANIMATION ani;
+		int nItem = 1;
+		// gameObjectId = 0 -- Simon
+		for (texture = root->FirstChildElement(); texture != NULL; texture = texture->NextSiblingElement())
+		{
+			int textureId;
+			int gameObjectId;
+			texture->QueryIntAttribute("textureId", &textureId);
+			texture->QueryIntAttribute("gameObjectId", &gameObjectId);
+
+			directTexture = textures->Get(textureId);
+			for (animation = texture->FirstChildElement(); animation != NULL; animation = animation->NextSiblingElement())
+			{
+				int aniId, frameTime;
+				animation->QueryIntAttribute("frameTime", &frameTime);
+
+				ani = new CAnimation(frameTime);
+				for (sprite = animation->FirstChildElement(); sprite != NULL; sprite = sprite->NextSiblingElement())
+				{
+					int left, top, right, bottom, id;
+					sprite->QueryIntAttribute("id", &id);
+					sprite->QueryIntAttribute("top", &top);
+					sprite->QueryIntAttribute("left", &left);
+					sprite->QueryIntAttribute("right", &right);
+					sprite->QueryIntAttribute("bottom", &bottom);
+					sprites->Add(id, left, top, right, bottom, directTexture);
+					ani->Add(id);
+				}
+				animation->QueryIntAttribute("aniId", &aniId);
+				animations->Add(aniId, ani);
+				if (gameObjectId == 0)
+				{
+					simon->AddAnimation(aniId);
+				}
+				/*else if (gameObjectId == 28) {
+					for (int i = 0; i < NUMBER_OF_BRICK; i++)
+					{
+						float l, t, r, b;
+						CBrick* brick = new CBrick();
+						brick->SetPosition(0 + i * 16.0f, SCREEN_HEIGHT - 30);
+						objects.push_back(brick);
+						listBrick.push_back(brick);
+					}
+				}*/
+			};
+
+
+		}
+
+		//Load new object
+		TiXmlDocument Map2Object("XML/Map4_Objects.xml");
+		if (!Map2Object.LoadFile())
+		{
+			DebugOut(L"Can't read XML file: %s");
+			MessageBox(NULL, L"Can't Read XML File", L"Error", MB_OK);
+			return;
+		}
+		// get info root
+		root = Map2Object.RootElement();
+		TiXmlElement* Objects = nullptr;
+		TiXmlElement* Object = nullptr;
+		for (Objects = root->FirstChildElement(); Objects != NULL; Objects = Objects->NextSiblingElement())
+		{
+			int id;
+			float x, y, Width, Height, direction, center;
+			float isThroughBrick;
+			Objects->QueryIntAttribute("id", &id);
+			for (Object = Objects->FirstChildElement(); Object != NULL; Object = Object->NextSiblingElement())
+			{
+				Object->QueryFloatAttribute("x", &x);
+				Object->QueryFloatAttribute("y", &y);
+				Object->QueryFloatAttribute("width", &Width);
+				Object->QueryFloatAttribute("height", &Height);
+				Object->QueryFloatAttribute("direction", &direction);
+				Object->QueryFloatAttribute("center", &center);
+				Object->QueryFloatAttribute("isThroughBrick", &isThroughBrick);
+
+				if (id == 0)
+				{
+					CBrick* newBrick = new CBrick();
+					newBrick->setSize(Width, Height);
+					newBrick->SetPosition(x, y);
+					listBrick.push_back(newBrick);
+					objects.push_back(newBrick);
+				}
+
+				if (id == 2) {
+					CSmallCandle* smallCandle = new CSmallCandle();
+					smallCandle->SetPosition(x, y);
+					objects.push_back(smallCandle);
+				}
+				//else if (id == -1) {
+				//	CDoor* door = new CDoor(x, y, 2); //2: id stage 2 , stage cua cua dang dung
+				//	door->SetState(DOOR_STATE_STATIC);
+				//	objects.push_back(door);
+				//	listDoor.push_back(door);
+				//}
+				else if (id == -3)
+				{
+					CStairPoint* stairPoint = new CStairPoint(x, y, Width, Height, direction);
+					stairPoint->setCenter(center);
+					stairPoint->setHasThrough(isThroughBrick);
+					//objects.push_back(stairPoint);
+					listStairPoint.push_back(stairPoint);
+				}
+			}
+		}
+
+
+	
+		/*CFishMen* fish = new CFishMen(100, 400, 1, simon);
+		objects.push_back(fish);
+		listEnemy.push_back(fish);
+
+		  fish = new CFishMen(23000, 400, -1, simon);
+		objects.push_back(fish);
+		listEnemy.push_back(fish);*/
+		//Simon
+		//simon->setWeapon(simon->getWeapon());
+		//simon->setSubWeapon(simon->getSubWeapon());
+		simon->setDirection(1);
+		//simon->SetPosition(100, 0); //simon
+		objects.push_back(simon);
+
+
+	
+		/*	CMonneyEffect* money = new CMonneyEffect(200, 60);
+			money->SetState(100);
+			objects.push_back(money);*/
+			//CHidden* hiddenTunnel = new CHidden(1592, 222, 14, 5, HIDDEN_TYPE_GO_TUNNEL);
+			//objects.push_back(hiddenTunnel);
+
+			//Whip
+		objects.push_back(simon->getWeapon());
+		if (simon->getSubWeapon()) {
+			simon->setSubWeapon(simon->getSubWeapon());
+			objects.push_back(simon->getSubWeapon());
+		}
+
+
+		//Map
+
+	/*CFishMen* fish = new  CFishMen(100, 400, 1, simon);
+	listEnemy.push_back(fish);
+	objects.push_back(fish);*/
+
+		maps->Add(ID_MAP_4, map);
+		currentIdMap = ID_MAP_4;
+		}
 	
 	else {
 			cout << "CANNOT SET STAGE or STAGE NULL" << endl;
 	}
+	loadObjectToGrid();
 }
 void CSceneGame::checkUpdateScene() {
 	switch (getStage())
@@ -639,7 +856,29 @@ void CSceneGame::checkUpdateScene() {
 		break;
 	}
 }
+
 void CSceneGame::Update(DWORD dt) {
+	/*Get objects from grid*/
+
+	vector<CGameObject*> listObjectFromGrid;
+	grid->getAllObjects(listObjectFromGrid);
+
+	listStairPoint.clear();
+	listHidden.clear();
+
+	for (int i = 0; i < listObjectFromGrid.size(); i++) {
+		if (listObjectFromGrid[i]->isShow()) {
+			if (dynamic_cast<CStairPoint*>(listObjectFromGrid[i])) {
+				listStairPoint.push_back(listObjectFromGrid[i]);
+			}
+			else if (dynamic_cast<CHidden*>(listObjectFromGrid[i])) {
+				listHidden.push_back(listObjectFromGrid[i]);
+			}
+		}
+	}
+
+	/*Get objects from grid*/
+
 	
 	if (getStage() ==2) {
 		
@@ -677,12 +916,16 @@ void CSceneGame::Update(DWORD dt) {
 			listEnemy[i]->Update(dt, &listBrick);
 		}
 	}
-
+	//simon->Update(dt, &listBrick);
 	for (int i = 0; i < listDoor.size(); i++) {
 		if (listDoor[i]->isShow()) {
 			listDoor[i]->Update(dt);
 		}
 	}
+
+	/*for (int i = 0; i < listSimonWeapon.size(); i++) {
+			listSimonWeapon[i]->Update(dt,&listCandle);
+	}*/
 	/*for (int i = 0; i < listStairPoint.size(); i++) {
 		listStairPoint[i]->Update(dt, &coPlayerAndBackground);
 	}*/
@@ -859,8 +1102,21 @@ void CSceneGame::Render() {
 	{
 		listHidden[i]->Render();
 	}
+	for (int i = 0; i < listStairPoint.size(); i++)
+	{
+		listStairPoint[i]->Render();
+	}
 
 }
+void CSceneGame::loadObjectToGrid() {
+	for (int i = 0; i < listStairPoint.size(); i++) {
+		grid->addToGrid(listStairPoint[i]);
+	}
+	for (int i = 0; i < listHidden.size(); i++) {
+		grid->addToGrid(listHidden[i]);
+	}
+}
+
 //void CSceneGame::checkCollisonOfSimon() {
 //	LPCOLLISIONEVENT colEventWithItem = simon->getCollisionEventWithItem();
 //	if (colEventWithItem) {
@@ -897,8 +1153,10 @@ void CSceneGame::checkCollisionOfSimon() {
 				game->setAutoGo(true, 1380);
 			}
 		}
-		if (dynamic_cast<CHidden*>(objects[i])) {
-			if (simon->checkAABBWithObject(objects[i])&& (dynamic_cast<CHidden*>(objects[i])->getTypeHidden()== HIDDEN_TYPE_GO_TUNNEL)){
+		
+	}
+	for (int i = 0; i < listHidden.size(); i++) {
+			if (simon->checkAABBWithObject(listHidden[i]) && (dynamic_cast<CHidden*>(listHidden[i])->getTypeHidden() == HIDDEN_TYPE_GO_TUNNEL)) {
 				cout << "chuyen qua stage 3" << endl;
 				CScenes::GetInstance()->Get(SCENE_GAME_ID)->setStage(3);
 				LoadResources();
@@ -907,10 +1165,9 @@ void CSceneGame::checkCollisionOfSimon() {
 				simon->setIsThroughBrick(0);
 				cout << "update" << endl;
 			}
-		}
 	}
 }
-void CSceneGame::checkCollisonOfWeapon(vector<LPGAMEOBJECT> &listObjects) {
+void CSceneGame::checkCollisonOfWeapon(vector<LPGAMEOBJECT> &listObjects) { //Truyền vào đây những listObject mà weapon đánh được
 	CWeapon* weapon = simon->getWeapon();
 	CWeapon* subWeapon = simon->getSubWeapon();
 	if (subWeapon) {
@@ -919,52 +1176,56 @@ void CSceneGame::checkCollisonOfWeapon(vector<LPGAMEOBJECT> &listObjects) {
 		}
 		if (subWeapon->getCanDestroy()) { //Vu khi dang hoat dong moi xet va cham
 			for (int i = 0; i < listObjects.size(); i++) {
-				if (dynamic_cast<CCandle*>(listObjects[i]) && subWeapon->checkAABBWithObjectAABBEx(listObjects[i])) {
-					subWeapon->setFinish(true);
-					objects.push_back(new CFire(listObjects[i]->GetPositionX(), listObjects[i]->GetPositionY()));
-					objects.push_back(getItem(dynamic_cast<CCandle*>(listObjects[i])->getId(), listObjects[i]->GetPositionX(), listObjects[i]->GetPositionY()));
-					subWeapon->setCurrentFrame(-1);
-					subWeapon->setCanDestroy(false);
-					//deleteObject(objects, i);
-					subWeapon->setFinish(true);
-					listObjects[i]->hide();
-					//objects.push_back(new CFire(subWeapon->GetPositionX(), subWeapon->GetPositionY(), FIRE_STATE_POND));
-				}
-				else if (dynamic_cast<CSmallCandle*>(listObjects[i]) && subWeapon->checkAABBWithObject(listObjects[i])) {
-					objects.push_back(new CFire(listObjects[i]->GetPositionX(), listObjects[i]->GetPositionY()));
-					objects.push_back(getItem(rand() % (21) + 1, listObjects[i]->GetPositionX(), listObjects[i]->GetPositionY()));
-					subWeapon->setCurrentFrame(-1);
-					subWeapon->setCanDestroy(false);
-					//deleteObject(objects, i);
-					listObjects[i]->hide();
-					subWeapon->setFinish(true);
-					//objects.push_back(new CFire(subWeapon->GetPositionX(), subWeapon->GetPositionY(), FIRE_STATE_POND));
+				if (listObjects[i]->isShow()) {
+					if (dynamic_cast<CCandle*>(listObjects[i]) && subWeapon->checkAABBWithObjectAABBEx(listObjects[i])) {
+						subWeapon->setFinish(true);
+						objects.push_back(new CFire(listObjects[i]->GetPositionX(), listObjects[i]->GetPositionY()));
+						objects.push_back(getItem(dynamic_cast<CCandle*>(listObjects[i])->getId(), listObjects[i]->GetPositionX(), listObjects[i]->GetPositionY()));
+						subWeapon->setCurrentFrame(-1);
+						subWeapon->setCanDestroy(false);
+						//deleteObject(objects, i);
+						subWeapon->setFinish(true);
+						listObjects[i]->hide();
+						//objects.push_back(new CFire(subWeapon->GetPositionX(), subWeapon->GetPositionY(), FIRE_STATE_POND));
+					}
+					else if (dynamic_cast<CSmallCandle*>(listObjects[i]) && subWeapon->checkAABBWithObject(listObjects[i])) {
+						objects.push_back(new CFire(listObjects[i]->GetPositionX(), listObjects[i]->GetPositionY()));
+						objects.push_back(getItem(rand() % (21) + 1, listObjects[i]->GetPositionX(), listObjects[i]->GetPositionY()));
+						subWeapon->setCurrentFrame(-1);
+						subWeapon->setCanDestroy(false);
+						//deleteObject(objects, i);
+						listObjects[i]->hide();
+						subWeapon->setFinish(true);
+						//objects.push_back(new CFire(subWeapon->GetPositionX(), subWeapon->GetPositionY(), FIRE_STATE_POND));
+					}
 				}
 			}
 		}
 	}
 	if (weapon->getCanDestroy()) { //Vu khi dang hoat dong moi xet va cham
 		for (int i = 0; i < listObjects.size(); i++) {
-			if (dynamic_cast<CCandle*>(listObjects[i]) && weapon->checkAABBWithObject(listObjects[i])) {
-				objects.push_back(new CFire(listObjects[i]->GetPositionX(), listObjects[i]->GetPositionY()));
-				objects.push_back(getItem(dynamic_cast<CCandle*>(listObjects[i])->getId(), listObjects[i]->GetPositionX(), listObjects[i]->GetPositionY()));
+			if (listObjects[i]->isShow()) {
+				if (dynamic_cast<CCandle*>(listObjects[i]) && weapon->checkAABBWithObject(listObjects[i])) {
+					objects.push_back(new CFire(listObjects[i]->GetPositionX(), listObjects[i]->GetPositionY()));
+					objects.push_back(getItem(dynamic_cast<CCandle*>(listObjects[i])->getId(), listObjects[i]->GetPositionX(), listObjects[i]->GetPositionY()));
 					weapon->setCurrentFrame(-1);
 					weapon->setCanDestroy(false);
 					//deleteObject(objects, i);
 					listObjects[i]->hide();
 					weapon->setFinish(true);
-			}
-			else if (dynamic_cast<CSmallCandle*>(listObjects[i]) && weapon->checkAABBWithObject(listObjects[i])) {
-				objects.push_back(new CFire(listObjects[i]->GetPositionX(), listObjects[i]->GetPositionY()));
-				objects.push_back(getItem(1 + rand() % (11), listObjects[i]->GetPositionX(), listObjects[i]->GetPositionY()));
-				weapon->setCurrentFrame(-1);
-				weapon->setCanDestroy(false);
-				//deleteObject(objects, i);
-				listObjects[i]->hide();
-				weapon->setFinish(true);
-			}
-			else {
-				weapon->setCanDestroy(false);
+				}
+				else if (dynamic_cast<CSmallCandle*>(listObjects[i]) && weapon->checkAABBWithObject(listObjects[i])) {
+					objects.push_back(new CFire(listObjects[i]->GetPositionX(), listObjects[i]->GetPositionY()));
+					objects.push_back(getItem(1 + rand() % (11), listObjects[i]->GetPositionX(), listObjects[i]->GetPositionY()));
+					weapon->setCurrentFrame(-1);
+					weapon->setCanDestroy(false);
+					//deleteObject(objects, i);
+					listObjects[i]->hide();
+					weapon->setFinish(true);
+				}
+				else {
+					weapon->setCanDestroy(false);
+				}
 			}
 		}
 	}
@@ -1322,6 +1583,23 @@ void CSceneGame::checkCollisionSimonWithHidden() {
 	case HIDDEN_TYPE_START_CREATE_BAT:
 		isAllowCreateBat = true;
 		cout << "Aloow creawte bat" << endl;
+		break;
+	case HIDDEN_TYPE_CHANGE_STAGE_FROM_3_TO_2_TYPE_1:
+		if (simon->getDirection() < 0) {
+			CScenes::GetInstance()->Get(SCENE_GAME_ID)->setStage(2);
+			CScenes::GetInstance()->Get(SCENE_GAME_ID)->LoadResources();
+			simon->setDirection(-1);
+			game->SetCamPos(1500, game->GetCamPos_y());
+			simon->SetPosition(1569, 192);
+		}
+		break;
+	case HIDDEN_TYPE_CHANGE_STAGE_FROM_3_TO_2_TYPE_2:
+		if (simon->getDirection() < 0) {
+			CScenes::GetInstance()->Get(SCENE_GAME_ID)->setStage(2);
+			CScenes::GetInstance()->Get(SCENE_GAME_ID)->LoadResources();
+			simon->setDirection(-1);
+			simon->SetPosition(1700, 192);
+		}
 		break;
 	default:
 		isUpdateCreatePantherStatus = false;

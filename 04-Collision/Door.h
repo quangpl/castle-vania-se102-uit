@@ -15,14 +15,14 @@
 #define DOOR_BBOX_HEIGHT 40
 #define DOOR_BBOX_WIDTH 20
 
-#define DOOR_BBOX_PULL_LEFT 40
+#define DOOR_BBOX_PULL_LEFT 10
 #define TIME_TO_FINISH_ANI 400
 
 class CDoor : public CGround
 {
 	virtual void GetBoundingBox(float& left, float& top, float& right, float& bottom);
 	
-	virtual void Render();
+	
 	bool isComplete;
 	DWORD timeStartAni;
 	int id; //Id stage se qua
@@ -34,6 +34,7 @@ public:
 		y = _y;
 		id = _id;
 	};
+	virtual void Render();
 	void Update(DWORD dt);
 	void SetState(int state);
 	int getId() { return this->id; }

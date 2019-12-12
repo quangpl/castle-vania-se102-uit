@@ -136,6 +136,7 @@
     <ClInclude Include="FireBall.h" />
     <ClInclude Include="FishMen.h" />
     <ClInclude Include="Ghost.h" />
+    <ClInclude Include="Grid.h" />
     <ClInclude Include="Ground.h" />
     <ClInclude Include="Hidden.h" />
     <ClInclude Include="HolyWater.h" />
@@ -184,6 +185,7 @@
     <ClCompile Include="FireBall.cpp" />
     <ClCompile Include="FishMen.cpp" />
     <ClCompile Include="Ghost.cpp" />
+    <ClCompile Include="Grid.cpp" />
     <ClCompile Include="Ground.cpp" />
     <ClCompile Include="Hidden.cpp" />
     <ClCompile Include="HolyWater.cpp" />
