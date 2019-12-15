@@ -14,6 +14,7 @@ CPanther::CPanther(float X, float Y, int Direction, CSimon* simon)
 	isRunning = false;
 	isJumping = false;
 	this->simon = simon;
+	setType(TYPE_OBJECT_ENEMY);
 
 }
 
@@ -150,7 +151,7 @@ if(!isShow()) { //distance kich hoat
 		ani = PANTHER_ANI_SITTING;
 		break;
 	}
-	CAnimations::GetInstance()->Get(ani)->RenderFlip(nx, x, y, 9, 255);
+	CAnimations::GetInstance()->Get(ani)->RenderFlip(nx, x, y, 15, 255);
 	
 	if (CGame::GetInstance()->getDebug())
 		RenderBoundingBox();

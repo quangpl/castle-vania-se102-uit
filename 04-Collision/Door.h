@@ -15,7 +15,7 @@
 #define DOOR_BBOX_HEIGHT 40
 #define DOOR_BBOX_WIDTH 20
 
-#define DOOR_BBOX_PULL_LEFT 10
+#define DOOR_BBOX_PULL_LEFT 20
 #define TIME_TO_FINISH_ANI 400
 
 class CDoor : public CGround

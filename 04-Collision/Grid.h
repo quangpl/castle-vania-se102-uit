@@ -13,6 +13,7 @@ public:
 	void getObjectsInGrid(int rowIndex, int colIndex, vector<CGameObject*>& listObjects);
 
 	void getAllObjects(vector<CGameObject*>& listObjects);
+	void clear();
 
 	~CGrid();
 private:

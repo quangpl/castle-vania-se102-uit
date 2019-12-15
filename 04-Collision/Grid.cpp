@@ -78,3 +78,9 @@ void CGrid::getAllObjects(vector<CGameObject*>& listObjects)
 	}
 }
 
+void CGrid::clear()
+{
+	for (unsigned int i = 0; i < 10; i++)
+		for (unsigned int j = 0; j < 200; j++)
+			cells[i][j].clear();
+}
