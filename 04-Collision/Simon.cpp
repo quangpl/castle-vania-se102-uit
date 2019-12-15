@@ -68,8 +68,8 @@ void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	// Calculate dx, dy 
 	CGameObject::Update(dt);
 	checkBlink();
-	//cout <<"y: " <<y << endl;
-	//cout << "x: "<<x << endl;
+	cout <<"y: " <<y << endl;
+	cout << "x: "<<x << endl;
 	//if(currentStair) {
 	//	cout << currentStair->getStairDirection() << endl;
 	//}
@@ -344,7 +344,6 @@ void CSimon::Render()
 void CSimon::collisionWithEnemy(vector<LPGAMEOBJECT> listEnemy) {
 	for (int i = 0; i < listEnemy.size(); i++) {
 		if (checkAABBWithObject(listEnemy[i])&&isTouchable&& listEnemy[i]->isShow()) {
-			cout << "va cham" << endl;
 				isHurt = true;
 				isTouchable = false;
 				timeTouchable = GetTickCount();
@@ -878,6 +877,9 @@ void CSimon::movingOutStair() {
 				state = SIMON_STATE_IDLE;
 
 				isGoToStartOnStair = false;
+				if (isAttunnel) {
+					isAttunnel = false;
+				}
 			}
 			break;
 		default:

@@ -94,7 +94,6 @@ class CSceneGame : public CScene
 	DWORD TimeWaitCreateFishmen;
 	DWORD timeTest;
 
-
 public:
 	CSceneGame();
 	~CSceneGame();

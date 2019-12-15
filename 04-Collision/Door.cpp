@@ -11,14 +11,12 @@ void CDoor::GetBoundingBox(float& left, float& top, float& right, float& bottom)
 
 void CDoor::Update(DWORD dt)
 {
-	cout << "Update" << endl;
 	CGameObject::Update(dt);
 	/*if (CAnimations::GetInstance()->Get(DOOR_ANI_OPEN)->getCurrentFrame() == 3|| CAnimations::GetInstance()->Get(DOOR_ANI_CLOSE)->getCurrentFrame() == 3)
 	{
 		isComplete = true;
 	}*/
 	if (GetTickCount() - timeStartAni >= TIME_TO_FINISH_ANI) {
-		cout << "Set finish door" << endl;
 		isComplete = true;
 	}
 }

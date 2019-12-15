@@ -162,6 +162,8 @@ class CSimon : public CGameObject
 	bool isBlink;
 	DWORD timeStartBlinking;
 	int alpha;
+
+	bool isAttunnel = false;
 	//CItem* itemCollision;
 public: 
 	CSimon() : CGameObject()
@@ -236,6 +238,9 @@ public:
 
 	void setIsThroughBrick(bool isThrough) { this->isThroughBrick = isThrough; }
 	bool getIsThroughBrick() { return this->isThroughBrick; }
+
+	bool getIsAtTunnel() { return this->isAttunnel; }
+	void setIsAtTunnel(bool at) { this->isAttunnel = at; }
 };
 
 #endif
