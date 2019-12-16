@@ -58,13 +58,13 @@ void CSceneGame::LoadResources() {
 	if (getStage() == 1) {
 		objects.clear();
 		CTextures* textures = CTextures::GetInstance();
-
+/*
 		textures->Add(ID_TEX_MAP_1, "Map\\tileset_map1.png", D3DCOLOR_XRGB(255, 0, 255));
 		textures->Add(ID_TEX_BBOX, "textures\\bbox.png", D3DCOLOR_XRGB(255, 255, 255));
 		textures->Add(ID_TEX_SIMON, "textures\\TexturesV4.png", D3DCOLOR_XRGB(34, 177, 76));
 		textures->Add(ID_TEX_CANDLE, "textures\\object.png", D3DCOLOR_XRGB(34, 177, 76));
 		textures->Add(ID_TEX_ITEM, "textures\\Items.png", D3DCOLOR_XRGB(128, 0, 0));
-		textures->Add(ID_TEX_ENEMY, "textures\\enemy.png", D3DCOLOR_XRGB(96, 68, 106));
+		textures->Add(ID_TEX_ENEMY, "textures\\enemy.png", D3DCOLOR_XRGB(96, 68, 106));*/
 
 
 
@@ -221,11 +221,11 @@ void CSceneGame::LoadResources() {
 			listHidden.clear();
 			CTextures* textures = CTextures::GetInstance();
 
-			textures->Add(ID_TEX_MAP_2, "Map\\tileset_map2.png", D3DCOLOR_XRGB(255, 255, 255));
+			/*textures->Add(ID_TEX_MAP_2, "Map\\tileset_map2.png", D3DCOLOR_XRGB(255, 255, 255));
 			textures->Add(ID_TEX_BBOX, "textures\\bbox.png", D3DCOLOR_XRGB(255, 255, 255));
 			textures->Add(ID_TEX_SIMON, "textures\\TexturesV4.png", D3DCOLOR_XRGB(34, 177, 76));
 			textures->Add(ID_TEX_CANDLE, "textures\\object.png", D3DCOLOR_XRGB(34, 177, 76));
-			textures->Add(ID_TEX_ITEM, "textures\\Items.png", D3DCOLOR_XRGB(128, 0, 0));
+			textures->Add(ID_TEX_ITEM, "textures\\Items.png", D3DCOLOR_XRGB(128, 0, 0));*/
 
 
 
@@ -455,16 +455,16 @@ void CSceneGame::LoadResources() {
 		//listHidden.clear();
 		CTextures* textures = CTextures::GetInstance();
 
-		textures->Add(ID_TEX_MAP_3, "Map\\tileset_map2.png", D3DCOLOR_XRGB(255, 255, 255));
+		/*textures->Add(ID_TEX_MAP_2, "Map\\tileset_map2.png", D3DCOLOR_XRGB(255, 255, 255));
 		textures->Add(ID_TEX_BBOX, "textures\\bbox.png", D3DCOLOR_XRGB(255, 255, 255));
 		textures->Add(ID_TEX_SIMON, "textures\\TexturesV4.png", D3DCOLOR_XRGB(34, 177, 76));
 		textures->Add(ID_TEX_CANDLE, "textures\\object.png", D3DCOLOR_XRGB(34, 177, 76));
-		textures->Add(ID_TEX_ITEM, "textures\\Items.png", D3DCOLOR_XRGB(128, 0, 0));
+		textures->Add(ID_TEX_ITEM, "textures\\Items.png", D3DCOLOR_XRGB(128, 0, 0));*/
 
 
 
 
-		CMap* map = new CMap(ID_TEX_MAP_3, "Map\\tileset_map2.png", D3DCOLOR_XRGB(255, 255, 255));
+		CMap* map = new CMap(ID_TEX_MAP_2, "Map\\tileset_map2.png", D3DCOLOR_XRGB(255, 255, 255));
 		map->ReadMapTXT("Map\\Map3.txt");
 		map->LoadTile();
 
@@ -668,16 +668,16 @@ void CSceneGame::LoadResources() {
 		//listHidden.clear();
 	CTextures* textures = CTextures::GetInstance();
 
-	textures->Add(ID_TEX_MAP_3, "Map\\tileset_map2.png", D3DCOLOR_XRGB(255, 255, 255));
+	/*textures->Add(ID_TEX_MAP_2, "Map\\tileset_map2.png", D3DCOLOR_XRGB(255, 255, 255));
 	textures->Add(ID_TEX_BBOX, "textures\\bbox.png", D3DCOLOR_XRGB(255, 255, 255));
 	textures->Add(ID_TEX_SIMON, "textures\\TexturesV4.png", D3DCOLOR_XRGB(34, 177, 76));
 	textures->Add(ID_TEX_CANDLE, "textures\\object.png", D3DCOLOR_XRGB(34, 177, 76));
-	textures->Add(ID_TEX_ITEM, "textures\\Items.png", D3DCOLOR_XRGB(128, 0, 0));
+	textures->Add(ID_TEX_ITEM, "textures\\Items.png", D3DCOLOR_XRGB(128, 0, 0));*/
 
 
 
 
-	CMap* map = new CMap(ID_TEX_MAP_3, "Map\\tileset_map2.png", D3DCOLOR_XRGB(255, 255, 255));
+	CMap* map = new CMap(ID_TEX_MAP_2, "Map\\tileset_map2.png", D3DCOLOR_XRGB(255, 255, 255));
 	map->ReadMapTXT("Map\\Map4.txt");
 	map->LoadTile();
 

@@ -31,14 +31,14 @@ void CPanther::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		this->hide();
 	}*/
 
-	float camX = CGame::GetInstance()->GetCamPos_x();
-	//Xoa khi ghost đi khoi camera 
-	if ((x + PANTHER_BBOX_WIDTH > camX + SCREEN_WIDTH && nx == 1) || (x + PANTHER_BBOX_HEIGHT < camX && nx == -1)) {
-		hide();
-	}
-	if (!isShow()) {
-		return;
-	}
+	//float camX = CGame::GetInstance()->GetCamPos_x();
+	////Xoa khi ghost đi khoi camera 
+	//if ((x + PANTHER_BBOX_WIDTH > camX + SCREEN_WIDTH && nx == 1) || (x + PANTHER_BBOX_HEIGHT < camX && nx == -1)) {
+	//	hide();
+	//}
+	//if (!isShow()) {
+	//	return;
+	//}
 
 
 	if (x- simon->GetPositionX() <25 && isSitting) { //distance kich hoat
