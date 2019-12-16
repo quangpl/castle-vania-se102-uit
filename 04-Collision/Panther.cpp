@@ -27,18 +27,19 @@ void CPanther::GetBoundingBox(float& left, float& top, float& right, float& bott
 
 void CPanther::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
-	/*if (x > 1500) {
+	if (x > BREAK_POINT_DIE_STAGE_2) {
 		this->hide();
-	}*/
+	}
 
 	//float camX = CGame::GetInstance()->GetCamPos_x();
 	////Xoa khi ghost đi khoi camera 
 	//if ((x + PANTHER_BBOX_WIDTH > camX + SCREEN_WIDTH && nx == 1) || (x + PANTHER_BBOX_HEIGHT < camX && nx == -1)) {
 	//	hide();
 	//}
-	//if (!isShow()) {
-	//	return;
-	//}
+
+	if (!isShow()) {
+		return;
+	}
 
 
 	if (x- simon->GetPositionX() <25 && isSitting) { //distance kich hoat

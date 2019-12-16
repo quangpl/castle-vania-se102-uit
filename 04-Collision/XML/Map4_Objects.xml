@@ -41,5 +41,13 @@
     <CheckStair x="678" y="176" width="16" height="4" ny="1" nx="1" direction="4" center="598" isThroughBrick="0"/>
     <CheckStair x="708" y="146" width="16" height="4" ny="-1" nx="-1" direction="4" center="598" isThroughBrick="0"/> -->
   </CheckStairs>
+  <Hiddens id="9">
+    <Hidden x="33" y="220" width="14" height="5" typeHidden="3"/>
+    <Hidden x="355" y="225" width="14" height="5" typeHidden="32"/>
 
+  </Hiddens>
+   <SoftBricks id="20">
+    <SoftBrick x="256" y="180"/>
+  </SoftBricks>
+  
 </Objects>

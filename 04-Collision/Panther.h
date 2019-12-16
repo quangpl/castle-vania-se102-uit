@@ -20,6 +20,8 @@
 #define PANTHER_BBOX_WIDTH 32
 #define PANTHER_BBOX_HEIGHT 16
 
+#define BREAK_POINT_DIE_STAGE_2 1500
+
 #include "Simon.h"
 #include "Brick.h"
 

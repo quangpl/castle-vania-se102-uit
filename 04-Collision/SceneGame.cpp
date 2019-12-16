@@ -169,10 +169,40 @@ void CSceneGame::LoadResources() {
 			};
 		}
 		
-
+		//Load new object
+		TiXmlDocument Map2Object("XML/Map1_Objects.xml");
+		if (!Map2Object.LoadFile())
+		{
+			DebugOut(L"Can't read XML file: %s");
+			MessageBox(NULL, L"Can't Read XML File", L"Error", MB_OK);
+			return;
+		}
+		// get info root
+		root = Map2Object.RootElement();
+		TiXmlElement* Objects = nullptr;
+		TiXmlElement* Object = nullptr;
+		for (Objects = root->FirstChildElement(); Objects != NULL; Objects = Objects->NextSiblingElement())
+		{
+			int id;
+			float x, y, Width, Height, direction, center;
+			float typeHidden;
+			Objects->QueryIntAttribute("id", &id);
+			for (Object = Objects->FirstChildElement(); Object != NULL; Object = Object->NextSiblingElement())
+			{
+				Object->QueryFloatAttribute("x", &x);
+				Object->QueryFloatAttribute("y", &y);
+				Object->QueryFloatAttribute("width", &Width);
+				Object->QueryFloatAttribute("height", &Height);
+				Object->QueryFloatAttribute("typeHidden", &typeHidden);
+				if (id == 9) {
+					CHidden* hidden = new CHidden(x, y, Width, Height, typeHidden);
+					listHidden.push_back(hidden);
+				}
+			}
+		}
 		
-		CHidden* hidden = new CHidden(685,130,10, 80, HIDDEN_TYPE_DOOR);
-		listHidden.push_back(hidden);
+		//CHidden* hidden = new CHidden(685,130,10, 80, HIDDEN_TYPE_DOOR);
+		//listHidden.push_back(hidden);
 
 		simon->SetPosition(50.0f, 0); //simon
 		simon->setWeapon(whip);
@@ -313,7 +343,7 @@ void CSceneGame::LoadResources() {
 			{
 				int id;
 				float x, y, Width, Height,direction,center;
-				float isThroughBrick;
+				float isThroughBrick, typeHidden;
 				Objects->QueryIntAttribute("id", &id);
 				for (Object = Objects->FirstChildElement(); Object != NULL; Object = Object->NextSiblingElement())
 				{
@@ -324,6 +354,7 @@ void CSceneGame::LoadResources() {
 					Object->QueryFloatAttribute("direction", &direction);
 					Object->QueryFloatAttribute("center", &center);
 					Object->QueryFloatAttribute("isThroughBrick", &isThroughBrick);
+					Object->QueryFloatAttribute("typeHidden", &typeHidden);
 
 					if (id == 0)
 					{
@@ -355,11 +386,16 @@ void CSceneGame::LoadResources() {
 						//objects.push_back(stairPoint);
 						listStairPoint.push_back(stairPoint);
 					}
+					else if (id == 9)
+					 {
+						 CHidden* hidden = new CHidden(x, y, Width, Height, typeHidden);
+						 listHidden.push_back(hidden);
+					 }
 				}
 			}
 
-			CHidden* hidden = new CHidden(1142, 180, 20, 35, HIDDEN_TYPE_STOP_CREATE_GHOST);
-			listHidden.push_back(hidden);
+			/*CHidden* hidden = new CHidden(1142, 180, 20, 35, HIDDEN_TYPE_STOP_CREATE_GHOST);
+			listHidden.push_back(hidden);*/
 
 			//Simon
 			simon->stopAutoGoX();
@@ -372,8 +408,10 @@ void CSceneGame::LoadResources() {
 		/*	CMonneyEffect* money = new CMonneyEffect(200, 60);
 			money->SetState(100);
 			objects.push_back(money);*/
-			CHidden* hiddenTunnel = new CHidden(1592, 222, 14, 5, HIDDEN_TYPE_GO_TUNNEL);
-			listHidden.push_back(hiddenTunnel);
+
+
+			/*CHidden* hiddenTunnel = new CHidden(1592, 222, 14, 5, HIDDEN_TYPE_GO_TUNNEL);
+			listHidden.push_back(hiddenTunnel);*/
 
 
 		 
@@ -385,30 +423,6 @@ void CSceneGame::LoadResources() {
 				simon->setSubWeapon(simon->getSubWeapon());
 				objects.push_back(simon->getSubWeapon());
 			}
-
-			CHidden* hiddenPanther1 = new CHidden(468, 180, 20, 25, HIDDEN_TYPE_SWITCH_START_STOP_CREATE_PANTHER);
-			listHidden.push_back(hiddenPanther1);
-
-			CHidden* hiddenPanther2 = new CHidden(1240, 180, 20, 25, HIDDEN_TYPE_SWITCH_START_STOP_CREATE_PANTHER);
-			listHidden.push_back(hiddenPanther2);
-
-
-			CHidden* hiddenCreateBat = new CHidden(1600, 86, 5, 25, HIDDEN_TYPE_START_CREATE_BAT);
-			listHidden.push_back(hiddenCreateBat);
-
-			CHidden* hiddenCreateBat1 = new CHidden(1673, 121, 5, 25, HIDDEN_TYPE_START_CREATE_BAT);
-			listHidden.push_back(hiddenCreateBat1);
-			CHidden* hiddenCreateBat2 = new CHidden(1728, 183, 5, 25, HIDDEN_TYPE_START_CREATE_BAT);
-			listHidden.push_back(hiddenCreateBat2);
-			CHidden* hiddenCreateBat3 = new CHidden(1661, 183, 5, 25, HIDDEN_TYPE_START_CREATE_BAT);
-			listHidden.push_back(hiddenCreateBat3);
-			CHidden* hiddenCreateBat4 = new CHidden(1536, 183, 5, 25, HIDDEN_TYPE_START_CREATE_BAT);
-			listHidden.push_back(hiddenCreateBat4);
-			CHidden* hiddenCreateBat5 = new CHidden(1606, 183, 5, 25, HIDDEN_TYPE_START_CREATE_BAT);
-			listHidden.push_back(hiddenCreateBat5);
-
-			CHidden* hiddenLoadStage4 = new CHidden(1650, 86, 5, 25, HIDDEN_TYPE_LOAD_STAGE_4);
-			listHidden.push_back(hiddenLoadStage4);
 
 
 		/*	CPanther* panther1 = new CPanther(691, 40, -1, simon);
@@ -557,7 +571,7 @@ void CSceneGame::LoadResources() {
 		{
 			int id;
 			float x, y, Width, Height, direction, center;
-			float isThroughBrick;
+			float isThroughBrick, typeHidden;
 			Objects->QueryIntAttribute("id", &id);
 			for (Object = Objects->FirstChildElement(); Object != NULL; Object = Object->NextSiblingElement())
 			{
@@ -568,6 +582,8 @@ void CSceneGame::LoadResources() {
 				Object->QueryFloatAttribute("direction", &direction);
 				Object->QueryFloatAttribute("center", &center);
 				Object->QueryFloatAttribute("isThroughBrick", &isThroughBrick);
+				Object->QueryFloatAttribute("typeHidden", &typeHidden);
+
 
 				if (id == 0)
 				{
@@ -598,16 +614,21 @@ void CSceneGame::LoadResources() {
 					//objects.push_back(stairPoint);
 					listStairPoint.push_back(stairPoint);
 				}
+				else if (id == 9)
+				{
+					CHidden* hidden = new CHidden(x, y, Width, Height, typeHidden);
+					listHidden.push_back(hidden);
+				}
 			}
 		}
 
 
-		CHidden* hiddenChangeScene32 = new CHidden(38, 50, 14, 5, HIDDEN_TYPE_CHANGE_STAGE_FROM_3_TO_2_TYPE_1);
-		listHidden.push_back(hiddenChangeScene32);
+		//CHidden* hiddenChangeScene32 = new CHidden(38, 50, 14, 5, HIDDEN_TYPE_CHANGE_STAGE_FROM_3_TO_2_TYPE_1);
+		//listHidden.push_back(hiddenChangeScene32);
 		//objects.push_back(hiddenChangeScene32);
 
-		CHidden* hiddenChangeScene33 = new CHidden(365, 53, 14, 5, HIDDEN_TYPE_CHANGE_STAGE_FROM_3_TO_2_TYPE_2);
-		listHidden.push_back(hiddenChangeScene33);
+		//CHidden* hiddenChangeScene33 = new CHidden(365, 53, 14, 5, HIDDEN_TYPE_CHANGE_STAGE_FROM_3_TO_2_TYPE_2);
+		//.push_back(hiddenChangeScene33);
 		//objects.push_back(hiddenChangeScene33);
 
 		/*CFishMen* fish = new CFishMen(100, 400, 1, simon);
@@ -625,8 +646,8 @@ void CSceneGame::LoadResources() {
 		objects.push_back(simon);
 
 
-		CHidden* waterHidden = new CHidden(0, 200, 447, 4, HIDDEN_TYPE_SIMON_DIE);
-		listHidden.push_back(waterHidden);
+		//CHidden* waterHidden = new CHidden(0, 200, 447, 4, HIDDEN_TYPE_SIMON_DIE);
+		//listHidden.push_back(waterHidden);
 
 
 		/*	CMonneyEffect* money = new CMonneyEffect(200, 60);
@@ -661,6 +682,8 @@ void CSceneGame::LoadResources() {
 	listStairPoint.clear();
 	listDoor.clear();
 	listEnemy.clear();
+	listSoftBrick.clear();
+	isAllowCreateFishmen = false;
 	/*	for (int i = 0; i < objects.size(); i++) {
 				objects.erase(objects.begin() + i);
 		}*/
@@ -770,7 +793,7 @@ void CSceneGame::LoadResources() {
 	{
 		int id;
 		float x, y, Width, Height, direction, center;
-		float isThroughBrick;
+		float isThroughBrick, typeHidden;
 		Objects->QueryIntAttribute("id", &id);
 		for (Object = Objects->FirstChildElement(); Object != NULL; Object = Object->NextSiblingElement())
 		{
@@ -781,6 +804,8 @@ void CSceneGame::LoadResources() {
 			Object->QueryFloatAttribute("direction", &direction);
 			Object->QueryFloatAttribute("center", &center);
 			Object->QueryFloatAttribute("isThroughBrick", &isThroughBrick);
+			Object->QueryFloatAttribute("typeHidden", &typeHidden);
+
 
 			if (id == 0)
 			{
@@ -811,6 +836,18 @@ void CSceneGame::LoadResources() {
 				//objects.push_back(stairPoint);
 				listStairPoint.push_back(stairPoint);
 			}
+			else if (id == 9)
+			{
+				CHidden* hidden = new CHidden(x, y, Width, Height, typeHidden);
+				listHidden.push_back(hidden);
+			}
+			else if (id == 20)
+			{
+
+				CSoftBrick* softBrick = new CSoftBrick(x, y);
+				listSoftBrick.push_back(softBrick);
+
+			}
 		}
 	}
 
@@ -822,19 +859,19 @@ void CSceneGame::LoadResources() {
 	//simon->SetPosition(100, 0); //simon
 	objects.push_back(simon);
 
-	CHidden* hiddenTunnel = new CHidden(33, 220, 14, 5, HIDDEN_TYPE_GO_TUNNEL);
-	listHidden.push_back(hiddenTunnel);
+	//CHidden* hiddenTunnel = new CHidden(33, 220, 14, 5, HIDDEN_TYPE_GO_TUNNEL);
+	//listHidden.push_back(hiddenTunnel);
 
 
 
 
-	CHidden* hiddenTunnel2 = new CHidden(355, 225, 14, 5, HIDDEN_TYPE_GO_TUNNEL_2);
-	listHidden.push_back(hiddenTunnel2);
+	//CHidden* hiddenTunnel2 = new CHidden(355, 225, 14, 5, HIDDEN_TYPE_GO_TUNNEL_2);
+	//listHidden.push_back(hiddenTunnel2);
 	
 	
-	
+	/*
 	CSoftBrick* softBrick = new CSoftBrick(256,180);
-	listSoftBrick.push_back(softBrick);
+	listSoftBrick.push_back(softBrick);*/
 
 		//Whip
 	objects.push_back(simon->getWeapon());
@@ -1407,10 +1444,10 @@ CItem* CSceneGame::getItem(int id, float x, float y) {
 		return new CDaggerItem(x, y);
 		break;
 	case 6:
-		return new CCross(x, y);
+		return new CMoney(x, y, valueMoney[rand() % (4)]);
 		break;
 	case 7:
-		return new CHolyWaterItem(x, y);
+		return new CMoney(x, y, valueMoney[rand() % (4)]);
 		break;
 	case 8:
 		return new CLargeHeart(x, y);
@@ -1440,7 +1477,7 @@ CItem* CSceneGame::getItem(int id, float x, float y) {
 		return new CSmallHeart(x, y);
 		break;
 	case 17:
-		return new CStopWatch(x, y);
+		return new CSmallHeart(x, y);
 		break;
 	case 18:
 		return new CSmallHeart(x, y);
@@ -1512,30 +1549,30 @@ void CSceneGame::checkCollisionOfEnemy() {
 }
 void CSceneGame::createBat() {
 
-	if (isAllowCreateBat) {
-	
-		int nBat = 0;
-		for (int i = 0; i < objects.size(); i++) {
-			if (dynamic_cast<CBat*>(objects[i]) && objects[i]->isShow()) {
-				nBat++;
-			}
-		}
+	//if (isAllowCreateBat) {
+	//
+	//	int nBat = 0;
+	//	for (int i = 0; i < objects.size(); i++) {
+	//		if (dynamic_cast<CBat*>(objects[i]) && objects[i]->isShow()) {
+	//			nBat++;
+	//		}
+	//	}
 
-		if (nBat == 0) {
-			int randomInt = game->getRandomInt(1, 3);
-			if (randomInt % 2 == 0) {
-				CBat* bat = new CBat(game->GetCamPos_x(), simon->GetPositionY() /*+ game->getRandomInt(-4, 20)*/, 1);
-				listEnemy.push_back(bat);
-				objects.push_back(bat);
-			}
-			else {
-				CBat* bat = new CBat(game->GetCamPos_x() + SCREEN_WIDTH, simon->GetPositionY()/* + game->getRandomInt(-4, 20)*/, -1);
-				listEnemy.push_back(bat);
-				objects.push_back(bat);
-			}
-			isAllowCreateBat = false;
-		}
-	}
+	//	if (nBat == 0) {
+	//		int randomInt = game->getRandomInt(1, 3);
+	//		if (randomInt % 2 == 0) {
+	//			CBat* bat = new CBat(game->GetCamPos_x(), simon->GetPositionY() /*+ game->getRandomInt(-4, 20)*/, 1);
+	//			listEnemy.push_back(bat);
+	//			objects.push_back(bat);
+	//		}
+	//		else {
+	//			CBat* bat = new CBat(game->GetCamPos_x() + SCREEN_WIDTH, simon->GetPositionY()/* + game->getRandomInt(-4, 20)*/, -1);
+	//			listEnemy.push_back(bat);
+	//			objects.push_back(bat);
+	//		}
+	//		isAllowCreateBat = false;
+	//	}
+	//}
 }
 void CSceneGame::createGhost() {
 	

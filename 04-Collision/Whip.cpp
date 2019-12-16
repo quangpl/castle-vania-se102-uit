@@ -17,7 +17,7 @@ void CWhip::Render()
 		ani = ROPE_ANI_LEVEL_3;
 		break;
 	default:
-		ani = ROPE_ANI_LEVEL_1;
+		ani = ROPE_ANI_LEVEL_3;
 		break;
 	}
 	CAnimations::GetInstance()->Get(ani)->RenderFlip(-getDirection(), x, y, 24, 255);

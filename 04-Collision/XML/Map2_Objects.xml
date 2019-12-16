@@ -63,6 +63,21 @@
     <Spawn x="1300" y="0" spawnerId="0" enemyId="0" xEnemy="0" yEnemy="0" quantityEachSpawn ="3" timeEachSpawn="1000" delaySpawnTime="2000" width="8" height="300"/>
 
   </Spawns>
+   <Hiddens id="9">
+    <Hidden x="1142" y="180" width="20" height="35" typeHidden="4"/>
+    <Hidden x="1592" y="222" width="14" height="5" typeHidden="3"/>
+    <Hidden x="468" y="180" width="20" height="25" typeHidden="5"/>
+    <Hidden x="1240" y="180" width="20" height="25" typeHidden="5"/>
+    <Hidden x="1600" y="86" width="5" height="25" typeHidden="7"/>
+    <Hidden x="1673" y="121" width="5" height="25" typeHidden="7"/>
+    <Hidden x="1728" y="183" width="5" height="25" typeHidden="7"/>
+    <Hidden x="1661" y="183" width="5" height="25" typeHidden="7"/>
+    <Hidden x="1536" y="183" width="5" height="25" typeHidden="7"/>
+    <Hidden x="1606" y="183" width="5" height="25" typeHidden="7"/>
+    <Hidden x="1650" y="86" width="5" height="25" typeHidden="10"/>
+
+
+  </Hiddens>
   <StairPoints id="-3">
     <StairPoint x="614" y="208" width="16" height="4" ny="1" nx="1" direction="1" center="598" isThroughBrick="0"/>
     <StairPoint x="695" y="115" width="5" height="4" ny="-1" nx="-1" direction="2" center="000" isThroughBrick="0"/>

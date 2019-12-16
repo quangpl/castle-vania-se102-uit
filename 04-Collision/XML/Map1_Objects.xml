@@ -10,6 +10,10 @@
     <LargeCandle x="480" y="168"/>
     <LargeCandle x="600" y="168"/>
   </LargeCandles>
+  <Hiddens id="9">
+    <Hidden x="685" y="130" width="10" height="80" typeHidden="1"/>
+  </Hiddens>
+
   <ChangeScenes id="-1" width="16" height="30">
     <ChangeScene x="675" y="168" sceneId="1"
      simonAutoGo="1" simonAutoGoDistance="35"
