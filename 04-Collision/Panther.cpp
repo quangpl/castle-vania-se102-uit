@@ -27,18 +27,19 @@ void CPanther::GetBoundingBox(float& left, float& top, float& right, float& bott
 
 void CPanther::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
-	if (x > 1500) {
+	/*if (x > 1500) {
 		this->hide();
+	}*/
+
+	float camX = CGame::GetInstance()->GetCamPos_x();
+	//Xoa khi ghost đi khoi camera 
+	if ((x + PANTHER_BBOX_WIDTH > camX + SCREEN_WIDTH && nx == 1) || (x + PANTHER_BBOX_HEIGHT < camX && nx == -1)) {
+		hide();
 	}
 	if (!isShow()) {
 		return;
 	}
-	float camX = CGame::GetInstance()->GetCamPos_x();
 
-	//Xoa khi ghost đi khoi camera 
-	if ((x + PANTHER_BBOX_WIDTH > camX + SCREEN_WIDTH && nx == 1) || (x + PANTHER_BBOX_WIDTH < camX && nx == -1)) {
-		hide();
-	}
 
 	if (x- simon->GetPositionX() <25 && isSitting) { //distance kich hoat
 		isRunning = true;
@@ -55,6 +56,7 @@ void CPanther::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		isRunning = false;
 	}
 	if (isRunning) {
+		hasStart = true;
 		vx = -PANTHER_SPEED_RUNNING;
 		if (isLanding)
 			vx = -vx;
@@ -132,9 +134,12 @@ void CPanther::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 
 void CPanther::Render()
 {
-if(!isShow()) { //distance kich hoat
-	return;
-}
+	
+	if (!isShow()) {
+		cout << "hide panther" << endl;
+		return;
+	}
+
 	int ani;
 	switch (state)
 	{

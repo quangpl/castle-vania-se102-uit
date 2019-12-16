@@ -31,7 +31,7 @@ private:
 	bool isJumping;
 	CSimon* simon;
 	bool isLanding;
-
+	bool hasStart;
 public:
 	CPanther(float X, float Y, int Direction, CSimon* simon);
 	virtual ~CPanther();

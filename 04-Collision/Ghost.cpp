@@ -25,18 +25,20 @@ void CGhost::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
 	// Calculate dx, dy 
 	CGameObject::Update(dt);
-	if (x > 1500) {
-		this->hide();
+	//if (x > 1500) {
+	//	this->hide();
+	//}
+	float camX = CGame::GetInstance()->GetCamPos_x();
+	//Xoa khi ghost đi khoi camera 
+	if ((x + GHOST_BBOX_WIDTH > camX + SCREEN_WIDTH && nx == 1) || (x + GHOST_BBOX_WIDTH < camX && nx == -1)) {
+		hide();
 	}
 	if (!isShow()) {
 		return;
 	}
-	float camX = CGame::GetInstance()->GetCamPos_x();
 
-	//Xoa khi ghost đi khoi camera 
-	if ((x + GHOST_BBOX_WIDTH > camX+SCREEN_WIDTH && nx==1)|| (x + GHOST_BBOX_WIDTH < camX && nx == -1)) {
-		hide();
-	}
+
+	
 	
 	// Simple fall down
 	vy += GHOST_FALLDOWN_SPEED * dt;

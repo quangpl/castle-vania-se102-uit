@@ -210,6 +210,7 @@ void CSceneGame::LoadResources() {
 			listHidden.clear();
 			listStairPoint.clear();
 			listDoor.clear();
+			listEnemy.clear();
 			listCandle.clear();
 			listBrick.clear();
 			grid->clear();
@@ -443,6 +444,9 @@ void CSceneGame::LoadResources() {
 		listHidden.clear();
 		listStairPoint.clear();
 		listDoor.clear();
+		listEnemy.clear();
+		grid->clear();
+		listCandle.clear();
 		isAllowCreateFishmen = false;
 		/*	for (int i = 0; i < objects.size(); i++) {
 					objects.erase(objects.begin() + i);
@@ -919,7 +923,6 @@ void CSceneGame::Update(DWORD dt) {
 	}
 	else if (getStage() == 3) {
 		isAllowCreateFishmen = true;
-	
 	}
 	CStairPoint* stairPoint = simon->checkCollisionStartStair(listStairPoint);
 	createFishMan();
@@ -1055,6 +1058,9 @@ void CSceneGame::Update(DWORD dt) {
 	checkCollisionSimonWithHidden();
 	simon->collisionWithEnemy(listEnemy);
 	// Update camera to follow SIMON
+
+
+#pragma region Camera Control
 	float cx, cy, camX, camY;
 	simon->GetPosition(cx, cy);
 
@@ -1133,6 +1139,7 @@ void CSceneGame::Update(DWORD dt) {
 			CGame::GetInstance()->SetCamPos(BOUNDARY_CAMERA_STAGE_3, CAM_Y_DEFAULT_STAGE_2);
 		}
 	}
+#pragma endregion
 
 }
 void CSceneGame::Render() {
