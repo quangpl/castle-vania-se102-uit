@@ -881,6 +881,7 @@ void CSceneGame::Update(DWORD dt) {
 
 	listStairPoint.clear();
 	listHidden.clear();
+	listSoftBrick.clear();
 	/*listBrick.clear();*/
 	for (int i = 0; i < listObjectFromGrid.size(); i++) {
 		if (listObjectFromGrid[i]->isShow()) {
@@ -892,6 +893,9 @@ void CSceneGame::Update(DWORD dt) {
 			}
 			else if (dynamic_cast<CSmallCandle*>(listObjectFromGrid[i])|| dynamic_cast<CCandle*>(listObjectFromGrid[i])) {
 				objects.push_back(listObjectFromGrid[i]);
+			}
+			else if (dynamic_cast<CSoftBrick*>(listObjectFromGrid[i])) {
+				listSoftBrick.push_back(listObjectFromGrid[i]);
 			}
 			/*else if (dynamic_cast<CBrick*>(listObjectFromGrid[i])) {
 				listBrick.push_back(listObjectFromGrid[i]);
@@ -1168,6 +1172,9 @@ void CSceneGame::loadObjectToGrid() {
 	}
 	for (int i = 0; i < listBrick.size(); i++) {
 		grid->addToGrid(listBrick[i]);
+	}
+	for (int i = 0; i < listSoftBrick.size(); i++) {
+		grid->addToGrid(listSoftBrick[i]);
 	}
 }
 
