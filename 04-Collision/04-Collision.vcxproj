@@ -152,6 +152,8 @@
     <ClInclude Include="Scenes.h" />
     <ClInclude Include="SmallCandle.h" />
     <ClInclude Include="SmallHeart.h" />
+    <ClInclude Include="SoftBrick.h" />
+    <ClInclude Include="SoftBrickEffect.h" />
     <ClInclude Include="Splash.h" />
     <ClInclude Include="StairPoint.h" />
     <ClInclude Include="StopWatch.h" />
@@ -200,6 +202,8 @@
     <ClCompile Include="Scenes.cpp" />
     <ClCompile Include="SmallCandle.cpp" />
     <ClCompile Include="SmallHeart.cpp" />
+    <ClCompile Include="SoftBrick.cpp" />
+    <ClCompile Include="SoftBrickEffect.cpp" />
     <ClCompile Include="Splash.cpp" />
     <ClCompile Include="StairPoint.cpp" />
     <ClCompile Include="StopWatch.cpp" />

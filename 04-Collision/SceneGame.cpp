@@ -13,6 +13,9 @@ vector<CEffect*> listEffect;
 
 vector<CGameObject*> listHidden;
 vector<CGameObject*> listBrick;
+vector<CGameObject*> listSoftBrick;
+
+
 vector<CGameObject*> listCandle;
 
 vector<CGameObject*> listStairPoint;
@@ -403,7 +406,7 @@ void CSceneGame::LoadResources() {
 			CHidden* hiddenCreateBat5 = new CHidden(1606, 183, 5, 25, HIDDEN_TYPE_START_CREATE_BAT);
 			listHidden.push_back(hiddenCreateBat5);
 
-			CHidden* hiddenLoadStage4 = new CHidden(1630, 86, 5, 25, HIDDEN_TYPE_LOAD_STAGE_4);
+			CHidden* hiddenLoadStage4 = new CHidden(1650, 86, 5, 25, HIDDEN_TYPE_LOAD_STAGE_4);
 			listHidden.push_back(hiddenLoadStage4);
 
 
@@ -821,8 +824,13 @@ void CSceneGame::LoadResources() {
 
 
 
-		CHidden* hiddenTunnel2 = new CHidden(355, 225, 14, 5, HIDDEN_TYPE_GO_TUNNEL_2);
-		listHidden.push_back(hiddenTunnel2);
+	CHidden* hiddenTunnel2 = new CHidden(355, 225, 14, 5, HIDDEN_TYPE_GO_TUNNEL_2);
+	listHidden.push_back(hiddenTunnel2);
+	
+	
+	
+	CSoftBrick* softBrick = new CSoftBrick(256,180);
+	listSoftBrick.push_back(softBrick);
 
 		//Whip
 	objects.push_back(simon->getWeapon());
@@ -931,7 +939,7 @@ void CSceneGame::Update(DWORD dt) {
 			listEnemy[i]->Update(dt, &listBrick);
 		}
 	}
-	//simon->Update(dt, &listBrick);
+	//simon->Update(dt, &listSoftBrick);
 	for (int i = 0; i < listDoor.size(); i++) {
 		if (listDoor[i]->isShow()) {
 			listDoor[i]->Update(dt);
@@ -1031,6 +1039,9 @@ void CSceneGame::Update(DWORD dt) {
 		listCollisionWithWeapon.push_back(listEnemy[i]);
 
 	}
+	for (int i = 0; i < listSoftBrick.size(); i++) {
+		listCollisionWithWeapon.push_back(listSoftBrick[i]);
+	}
 	//listCollisionWithWeapon = coWeaponAndCandle.swap(listEnemy);
 	checkCollisonOfWeapon(listCollisionWithWeapon);
 	//checkCollisonOfWeapon(listEnemy);
@@ -1126,6 +1137,10 @@ void CSceneGame::Render() {
 	{
 		listEnemy[i]->Render();
 	}
+	for (int i = 0; i < listSoftBrick.size(); i++)
+	{
+		listSoftBrick[i]->Render();
+	}
 	for (int i = 0; i < objects.size(); i++)
 	{
 			objects[i]->Render();
@@ -1138,6 +1153,7 @@ void CSceneGame::Render() {
 	{
 		listStairPoint[i]->Render();
 	}
+	
 
 }
 void CSceneGame::loadObjectToGrid() {
@@ -1274,6 +1290,17 @@ void CSceneGame::checkCollisonOfWeapon(vector<LPGAMEOBJECT> &listObjects) { //Tr
 				}
 				else if (listObjects[i]->getType() == TYPE_OBJECT_ENEMY&& weapon->checkAABBWithObjectAABBEx(listObjects[i])) {
 					objects.push_back(new CFire(listObjects[i]->GetPositionX(), listObjects[i]->GetPositionY()));
+					objects.push_back(getItem(1 + rand() % (11), listObjects[i]->GetPositionX(), listObjects[i]->GetPositionY()));
+					weapon->setCurrentFrame(-1);
+					weapon->setCanDestroy(false);
+					weapon->setCurrentFrame(-1);
+					cout << "Va cham enemy" << endl;
+					//deleteObject(objects, i);
+					listObjects[i]->hide();
+					weapon->setFinish(true);
+				}
+				else if (dynamic_cast<CSoftBrick*>(listObjects[i]) && weapon->checkAABBWithObjectAABBEx(listObjects[i])) {
+					objects.push_back(new CSoftBrickEffect(listObjects[i]->GetPositionX(), listObjects[i]->GetPositionY()));
 					objects.push_back(getItem(1 + rand() % (11), listObjects[i]->GetPositionX(), listObjects[i]->GetPositionY()));
 					weapon->setCurrentFrame(-1);
 					weapon->setCanDestroy(false);
@@ -1665,6 +1692,7 @@ void CSceneGame::checkCollisionSimonWithHidden() {
 		CScenes::GetInstance()->Get(SCENE_GAME_ID)->setStage(4);
 		CScenes::GetInstance()->Get(SCENE_GAME_ID)->LoadResources();
 		simon->SetPosition(77, 86);
+		simon->stopAutoGoX();
 		break;
 	case HIDDEN_TYPE_GO_TUNNEL:
 		if (!simon->getIsAtTunnel()) {

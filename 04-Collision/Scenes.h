@@ -45,6 +45,8 @@
 #include "FireBall.h"
 #include "Splash.h"
 #include "Grid.h"
+#include "SoftBrick.h"
+#include "SoftBrickEffect.h"
 using namespace std;
 
 class CScene

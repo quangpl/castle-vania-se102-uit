@@ -54,6 +54,11 @@ void CSampleKeyHander::OnKeyDown(int KeyCode)
 			simonKey->setIsGoToStair(true);
 		}
 		break;
+	case DIK_F1:
+		CScenes::GetInstance()->Get(SCENE_GAME_ID)->setStage(2);
+		CScenes::GetInstance()->Get(SCENE_GAME_ID)->LoadResources();
+		simonKey->SetPosition(1600, simonKey->GetPositionY());
+		break;
 	/*case DIK_Z:
 		simonKey->attack();
 		simonKey->SetState(SIMON_STATE_HIT);

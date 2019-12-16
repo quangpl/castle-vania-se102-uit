@@ -205,6 +205,12 @@
     <ClInclude Include="Grid.h">
       <Filter>Framework\Grid</Filter>
     </ClInclude>
+    <ClInclude Include="SoftBrick.h">
+      <Filter>GameObject\Ground</Filter>
+    </ClInclude>
+    <ClInclude Include="SoftBrickEffect.h">
+      <Filter>GameObject\Effect</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
@@ -348,6 +354,12 @@
     </ClCompile>
     <ClCompile Include="Grid.cpp">
       <Filter>Framework\Grid</Filter>
+    </ClCompile>
+    <ClCompile Include="SoftBrick.cpp">
+      <Filter>GameObject\Ground</Filter>
+    </ClCompile>
+    <ClCompile Include="SoftBrickEffect.cpp">
+      <Filter>GameObject\Effect</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
