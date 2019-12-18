@@ -133,29 +133,6 @@ void CSceneGame::LoadResources() {
 					whip->AddAnimation(aniId);
 					whip->setLevel(1);
 				}
-				
-				else if (gameObjectId == 211) {
-					for (int i = 1; i <= NUMBER_OF_CANDLE; i++) {
-						CCandle* candle = new CCandle();
-						candle->AddAnimation(aniId);
-						candle->SetState(CANDLE_STATE_SHOW);
-						candle->SetPosition(i * DISTANCE_BETWEEN_CANDLE, Y_BASE);
-						candle->setId(i);
-						//candles->Add(candle);
-						listCandle.push_back(candle);
-						//objects.push_back(candle);
-					}
-				}
-				else if (gameObjectId == 282) {
-					for (int i = 0; i < NUMBER_OF_BRICK; i++)
-					{
-						float l, t, r, b;
-						CBrick* brick = new CBrick();
-						brick->SetPosition(0 + i * 16.0f, SCREEN_HEIGHT - 85); //Anhr huong vi tri simon
-						objects.push_back(brick);
-						listBrick.push_back(brick);
-					}
-				}
 			};
 		}
 		
@@ -175,7 +152,7 @@ void CSceneGame::LoadResources() {
 		{
 			int id;
 			float x, y, Width, Height, direction, center;
-			float typeHidden;
+			float typeHidden, idCandle;
 			Objects->QueryIntAttribute("id", &id);
 			for (Object = Objects->FirstChildElement(); Object != NULL; Object = Object->NextSiblingElement())
 			{
@@ -184,9 +161,27 @@ void CSceneGame::LoadResources() {
 				Object->QueryFloatAttribute("width", &Width);
 				Object->QueryFloatAttribute("height", &Height);
 				Object->QueryFloatAttribute("typeHidden", &typeHidden);
+				Object->QueryFloatAttribute("idCandle", &idCandle);
+
 				if (id == 9) {
 					CHidden* hidden = new CHidden(x, y, Width, Height, typeHidden);
 					listHidden.push_back(hidden);
+				}
+				else if (id == 0)
+				{
+					CBrick* newBrick = new CBrick();
+					newBrick->setSize(Width, Height);
+					newBrick->SetPosition(x, y);
+					listBrick.push_back(newBrick);
+					objects.push_back(newBrick);
+				}
+				else if (id == 1) {
+					CCandle* candle = new CCandle();
+					candle->SetState(CANDLE_STATE_SHOW);
+					candle->SetPosition(x, y);
+					candle->setId(idCandle);
+					//listCandle.push_back(candle);
+					objects.push_back(candle);
 				}
 			}
 		}
@@ -338,7 +333,8 @@ void CSceneGame::LoadResources() {
 					 if (id == 2) {
 						CSmallCandle* smallCandle = new CSmallCandle();
 						smallCandle->SetPosition(x, y);
-						listCandle.push_back(smallCandle);
+						objects.push_back(smallCandle);
+						//listCandle.push_back(smallCandle);
 					}
 					else if (id == -1) {
 						CDoor* door = new CDoor(x, y,2); //2: id stage 2 , stage cua cua dang dung
@@ -473,7 +469,7 @@ void CSceneGame::LoadResources() {
 				{
 					simon->AddAnimation(aniId);
 				}
-				else if (gameObjectId == 28) {
+				/*else if (gameObjectId == 28) {
 					for (int i = 0; i < NUMBER_OF_BRICK; i++)
 					{
 						float l, t, r, b;
@@ -482,7 +478,7 @@ void CSceneGame::LoadResources() {
 						objects.push_back(brick);
 						listBrick.push_back(brick);
 					}
-				}
+				}*/
 			};
 
 
@@ -530,7 +526,8 @@ void CSceneGame::LoadResources() {
 				if (id == 2) {
 					CSmallCandle* smallCandle = new CSmallCandle();
 					smallCandle->SetPosition(x, y);
-					listCandle.push_back(smallCandle);
+					//listCandle.push_back(smallCandle);
+					objects.push_back(smallCandle);
 				}
 				
 				else if (id == -3)
@@ -703,7 +700,8 @@ void CSceneGame::LoadResources() {
 			if (id == 2) {
 				CSmallCandle* smallCandle = new CSmallCandle();
 				smallCandle->SetPosition(x, y);
-				listCandle.push_back(smallCandle);
+				objects.push_back(smallCandle);
+				//listCandle.push_back(smallCandle);
 			}
 			else if (id == -3)
 			{
@@ -772,10 +770,32 @@ void CSceneGame::checkUpdateScene() {
 
 void CSceneGame::Update(DWORD dt) {
 	/*Get objects from grid*/
-
+	cout << objects.size() << endl;
+	/*for (int i = 0; i < objects.size(); i++) {
+		if (dynamic_cast<CCandle*>(objects[i])) {
+			cout << "candle" << endl;
+		}
+		else if (dynamic_cast<CBrick*>(objects[i])) {
+			cout << "CBrick" << endl;
+		}
+		else if (dynamic_cast<CDoor*>(objects[i])) {
+			cout << "CDoor" << endl;
+		}
+		else if (dynamic_cast<CHidden*>(objects[i])) {
+			cout << "CHidden" << endl;
+		}
+		else if (dynamic_cast<CSmallCandle*>(objects[i])) {
+			cout << "CSmallCandle" << endl;
+		}
+		else if (dynamic_cast<CSoftBrick*>(objects[i])) {
+			cout << "CSoftBrick" << endl;
+		}
+		else if (dynamic_cast<CStairPoint*>(objects[i])) {
+			cout << "CStairPoint" << endl;
+		}
+	}*/
 	vector<CGameObject*> listObjectFromGrid;
 	grid->getAllObjects(listObjectFromGrid);
-
 	listStairPoint.clear();
 	listHidden.clear();
 	listSoftBrick.clear();
@@ -838,13 +858,13 @@ void CSceneGame::Update(DWORD dt) {
 		}
 	}
 
-	
+	/*
 	for (int i = 0; i < objects.size(); i++)
 	{
 		if (!objects[i]->isShow()) {
 			deleteObject(objects, i);
 		}
-	}
+	}*/
 	
 	for (int i = 0; i < objects.size(); i++)
 	{
@@ -1005,7 +1025,9 @@ void CSceneGame::Render() {
 	}
 	for (int i = 0; i < objects.size(); i++)
 	{
+		if (objects[i]->isShow()) {
 			objects[i]->Render();
+		}
 	}
 	for (int i = 0; i < listHidden.size(); i++)
 	{
@@ -1043,6 +1065,7 @@ void CSceneGame::checkCollisionOfSimon() {
 				if (simon->isCollisionWithItem(dynamic_cast<CItem*>(objects[i]))) {
 					getBonusFromItem(dynamic_cast<CItem*>(objects[i]));
 					objects[i]->hide();
+					cout << "Cham item" << endl;
 				}
 			}
 			
@@ -1336,8 +1359,8 @@ void CSceneGame::createGhost() {
 	 }
 	
 	int ghost = 0;
-	for (int i = 0; i < objects.size(); i++) {
-		if (dynamic_cast<CGhost*>(objects[i])&&objects[i]->isShow()) {
+	for (int i = 0; i < listEnemy.size(); i++) {
+		if (dynamic_cast<CGhost*>(listEnemy[i])&& listEnemy[i]->isShow()) {
 			ghost++;
 		}
 	}
@@ -1351,13 +1374,13 @@ void CSceneGame::createGhost() {
 				if (rand() % 2) {
 					CGhost* newGhost = new CGhost(game->GetCamPos_x() - i * 30, 170, 1); // Direction: 1 la di qua phai, -1 la di qua trai
 					listEnemy.push_back(newGhost);
-					objects.push_back(newGhost);
+					//objects.push_back(newGhost);
 					//cout << "Tao ghost phai" << endl;
 				}
 				else {
 					CGhost* newGhost = new CGhost(game->GetCamPos_x() + SCREEN_WIDTH + i * 30, 170, -1); // Direction: 1 la di qua phai, -1 la di qua trai
 					listEnemy.push_back(newGhost);
-					objects.push_back(newGhost);
+					//objects.push_back(newGhost);
 					//cout << "Tao ghost phai" << endl;
 				}
 
@@ -1440,7 +1463,7 @@ void CSceneGame::createFishMan() {
 
 			CFishMen* newFishMan = new CFishMen(xFishmen, yFishmen, directionFishmen, simon, &listEnemy);
 			listEnemy.push_back(newFishMan);
-			objects.push_back(newFishMan);
+			//objects.push_back(newFishMan);
 			createSplash(xFishmen, yFishmen);
 			
 			TimeWaitCreateFishmen = 2000 + (rand() % 2000);
@@ -1525,8 +1548,8 @@ void CSceneGame::createPanther()
 		return;
 	}
 	int panther = 0;
-	for (int i = 0; i < objects.size(); i++) {
-		if (dynamic_cast<CPanther*>(objects[i]) && objects[i]->isShow()) {
+	for (int i = 0; i < listEnemy.size(); i++) {
+		if (dynamic_cast<CPanther*>(listEnemy[i]) && listEnemy[i]->isShow()) {
 			panther++;
 		}
 	}
@@ -1534,17 +1557,17 @@ void CSceneGame::createPanther()
 		//cout << "Create panther" << endl;
 		CPanther* panther1 = new CPanther(691, 40, -1, simon);
 		panther1 = new CPanther(691, 40, -1, simon);
-		objects.push_back(panther1);
+		//objects.push_back(panther1);
 		listEnemy.push_back(panther1);
 
 		CPanther* panther2 = new CPanther(691, 40, -1, simon);
 		panther2 = new CPanther(855, 40, -1, simon);
-		objects.push_back(panther2);
+		//objects.push_back(panther2);
 		listEnemy.push_back(panther2);
 
 		CPanther* panther3 = new CPanther(691, 40, -1, simon);
 		panther3 = new CPanther(921, 40, -1, simon);
-		objects.push_back(panther3);
+		//objects.push_back(panther3);
 		listEnemy.push_back(panther3);
 
 		isAllowToCreatePanther = false;
