@@ -116,10 +116,10 @@ void CWeapon::attack(float x, float y,int _direction)
 	this->direction = _direction;
 	isFinish = false;
 	lastTimeAttack = GetTickCount(); // lưu lại
-	cout << "attack weapon" << endl;
+	//cout << "attack weapon" << endl;
 }
 CWeapon::~CWeapon() {
-	cout << "Weapon xoa" << endl;
+	//cout << "Weapon xoa" << endl;
 }
 //bool CWeapon::canAttack()
 //{

@@ -13,7 +13,7 @@ CFishMen::CFishMen(float X, float Y, int Direction, CSimon* simon, vector<CGameO
 	yInit = y;
 	xInit = x;
 	xAccumulationAttack = 0;
-	cout << "tao fish CONSTRCUTOR" << endl;
+	//cout << "tao fish CONSTRCUTOR" << endl;
 	isRunning = 0;
 	isAttacking = false;
 	SetState(FISHMEN_STATE_IDLE);

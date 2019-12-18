@@ -97,7 +97,7 @@ void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 
 	//Simon hurt effect 
 	if (isHurt) {
-		cout << "hurt" << endl;
+		//cout << "hurt" << endl;
 		if (GetTickCount() - timeStartHurt >= TIME_HURT) {
 			vx = 0;
 			//SetState(SIMON_STATE_SIT);
@@ -106,11 +106,11 @@ void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 			//y = y - 70;
 			hasGravity = true;
 			setFreeze(false);
-			cout << "Vo if" << endl;
+			//cout << "Vo if" << endl;
 
 		}
 		else {
-				cout << "Vo else" << endl;
+				//cout << "Vo else" << endl;
 				hasGravity = false;
 				setFreeze(true);
 				if (!isMovingOnStair) {
@@ -123,7 +123,7 @@ void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	}
 	// Simple fall down - Gravity of simon
 	if (isThroughBrick) {
-		cout << "through all" << endl;
+		//cout << "through all" << endl;
 	}
 	if (hasGravity) {
 		vy += SIMON_GRAVITY * dt;
@@ -137,7 +137,7 @@ void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 				setFreeze(false);
 				isAutoGoXComplete = true; 
 				vx = 0;
-				cout << "finish right" << endl;
+				//cout << "finish right" << endl;
 			}
 		}
 		else {
@@ -146,7 +146,7 @@ void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 				setFreeze(false);
 				isAutoGoXComplete = true;
 				vx = 0;
-				cout << "finish left" << endl;
+				//cout << "finish left" << endl;
 			}
 		}
 	}
@@ -212,7 +212,7 @@ void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 				if (isMovingOnStair&&isThroughBrick) {
 					x += dx;
 					y += dy;
-					cout << "Through all" << endl;
+					//cout << "Through all" << endl;
 				}
 			}
 
@@ -505,7 +505,7 @@ void CSimon::attack() {
 	}
 	timeStartHit = GetTickCount();
 	if (isMovingOnStair) {
-		cout << "Set type" << endl;
+		//cout << "Set type" << endl;
 		typeMovingStair = 3;
 	}
 	isHit = true;
@@ -834,7 +834,7 @@ void CSimon::movingOutStair() {
 		switch (directionStair)
 		{
 		case 1:
-			cout << "Out stair" << endl;
+			//cout << "Out stair" << endl;
 			if (nx < 0) {
 				isMovingOnStair = false;
 				hasGravity = true;
@@ -843,7 +843,7 @@ void CSimon::movingOutStair() {
 			}
 			break;
 		case 2:
-			cout << "Out stair" << endl;
+			//cout << "Out stair" << endl;
 			if (nx > 0) {
 				y = y - 200; // kéo simon lên cao, để tạo va chạm giả xuống mặt đất, tránh overlaping. tính thời gian tiếp đất
 				vy = 9999999999.0f; // vận tốc kéo xuống lớn để chạm đất ngay trong 1 frame
@@ -857,7 +857,7 @@ void CSimon::movingOutStair() {
 			}
 			break;
 		case 3:
-			cout << "Out stair 3" << endl;
+			//cout << "Out stair 3" << endl;
 			if (nx > 0) {
 				isMovingOnStair = false;
 				hasGravity = true;
@@ -866,7 +866,7 @@ void CSimon::movingOutStair() {
 			}
 			break;
 		case 4:
-			cout << "Out stair 4" << endl;
+			//cout << "Out stair 4" << endl;
 			if (nx < 0) {
 				y = y - 50; // kéo simon lên cao, để tạo va chạm giả xuống mặt đất, tránh overlaping. tính thời gian tiếp đất
 				vy = 9999999999.0f; // vận tốc kéo xuống lớn để chạm đất ngay trong 1 frame

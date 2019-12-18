@@ -91,7 +91,7 @@ void CHolyWater::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		{
 			LPCOLLISIONEVENT e = coEventsResult[i];
 			if (dynamic_cast<CBrick*>(e->obj)) {
-				cout << "cahm brick" << endl;
+				//cout << "cahm brick" << endl;
 			}
 		}
 		//Xử lý sau khi nhảy 

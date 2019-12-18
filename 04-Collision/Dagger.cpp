@@ -1,7 +1,7 @@
 #include "Dagger.h"
 void CDagger::Render()
 {
-	cout << "Render dagger" << endl;
+	//cout << "Render dagger" << endl;
 	int ani = DAGGER_ANI;
 	if (getFinish()) {
 		return;
@@ -34,7 +34,7 @@ void CDagger::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 
 {
 	//To moving
-	cout << "Update dagger" << endl;
+	//cout << "Update dagger" << endl;
 	CGameObject::Update(dt);
 	if (getFinish()) {
 		return;

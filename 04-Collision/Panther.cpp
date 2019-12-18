@@ -120,7 +120,7 @@ void CPanther::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 			if (this->nx != 1) {
 				(this->nx) *= -1;
 			}
-			cout << "Set nx =1" << endl;
+			//cout << "Set nx =1" << endl;
 		}
 
 		 //Collision logic with Object
@@ -137,7 +137,7 @@ void CPanther::Render()
 {
 	
 	if (!isShow()) {
-		cout << "hide panther" << endl;
+		//cout << "hide panther" << endl;
 		return;
 	}
 

@@ -9,7 +9,7 @@ void CSampleKeyHander::OnKeyDown(int KeyCode)
 	if (simonKey->getFreeze()) {
 		return;
 	}
-	DebugOut(L"[INFO] KeyDown: %d\n", KeyCode);
+	//DebugOut(L"[INFO] KeyDown: %d\n", KeyCode);
 	switch (KeyCode)
 	{
 	case DIK_SPACE:
@@ -48,9 +48,9 @@ void CSampleKeyHander::OnKeyDown(int KeyCode)
 		simonKey->SetPosition(77, 86.5);
 		break;
 	case DIK_DOWN: // debug mode
-		cout << "Dang nhan down" << endl;
+		//cout << "Dang nhan down" << endl;
 		if (simonKey->getCanGoStair()) {
-			cout << "Set is go true" << endl;
+			//cout << "Set is go true" << endl;
 			simonKey->setIsGoToStair(true);
 		}
 		break;
@@ -73,7 +73,7 @@ void CSampleKeyHander::OnKeyUp(int KeyCode)   //short event
 	if (simonKey->getFreeze()) {
 		return;
 	}
-	DebugOut(L"[INFO] KeyUp: %d\n", KeyCode);
+	//DebugOut(L"[INFO] KeyUp: %d\n", KeyCode);
 	switch (KeyCode)
 	{
 	case DIK_DOWN:
@@ -113,7 +113,7 @@ void CSampleKeyHander::KeyState(BYTE* states)   //long event
 		if (simonKey->getCanGoStair()) {
 			return;
 		}
-		cout<<"vuot ngoai" << endl;
+		//cout<<"vuot ngoai" << endl;
 		if (simonKey->GetState() == SIMON_STATE_HIT) {
 			simonKey->SetState(SIMON_STATE_HIT);
 		}

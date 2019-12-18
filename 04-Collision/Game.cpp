@@ -91,7 +91,7 @@ void CGame::InitKeyboard(LPKEYEVENTHANDLER handler)
 
 	if (hr != DI_OK)
 	{
-		DebugOut(L"[ERROR] DirectInput8Create failed!\n");
+		//DebugOut(L"[ERROR] DirectInput8Create failed!\n");
 		return;
 	}
 
@@ -100,7 +100,7 @@ void CGame::InitKeyboard(LPKEYEVENTHANDLER handler)
 	// TO-DO: put in exception handling
 	if (hr != DI_OK) 
 	{
-		DebugOut(L"[ERROR] CreateDevice failed!\n");
+		//DebugOut(L"[ERROR] CreateDevice failed!\n");
 		return;
 	}
 
@@ -139,13 +139,13 @@ void CGame::InitKeyboard(LPKEYEVENTHANDLER handler)
 	hr = didv->Acquire();
 	if (hr != DI_OK)
 	{
-		DebugOut(L"[ERROR] DINPUT8::Acquire failed!\n");
+		//DebugOut(L"[ERROR] DINPUT8::Acquire failed!\n");
 		return;
 	}
 
 	this->keyHandler = handler;
 
-	DebugOut(L"[INFO] Keyboard has been initialized successfully\n");
+	//DebugOut(L"[INFO] Keyboard has been initialized successfully\n");
 }
 
 void CGame::ProcessKeyboard()
@@ -162,7 +162,7 @@ void CGame::ProcessKeyboard()
 			HRESULT h = didv->Acquire();
 			if (h==DI_OK)
 			{ 
-				DebugOut(L"[INFO] Keyboard re-acquired!\n");
+				//DebugOut(L"[INFO] Keyboard re-acquired!\n");
 			}
 			else return;
 		}

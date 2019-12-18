@@ -23,7 +23,7 @@ void CDoor::Update(DWORD dt)
 void CDoor::SetState(int state) {
 	CGameObject::SetState(state);
 	isComplete = false;
-	cout << "Set state door: "<< state << endl;
+	//cout << "Set state door: "<< state << endl;
 	switch (state)
 	{
 	case DOOR_STATE_OPEN:
