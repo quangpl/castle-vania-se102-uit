@@ -933,42 +933,8 @@ void CSceneGame::Update(DWORD dt) {
 	else if (getStage() == 2) {
 		
 		CGame::GetInstance()->SetCamPos(cx, CAM_Y_DEFAULT_STAGE_2); //Khoảng cách để Simon đứng ngay giữa màn hình không bị lệch 
-		if (camX  >= 1235 && cx >= 1235) {
+		if (camX >= 1235 && cx >= 1235) {
 			CGame::GetInstance()->SetCamPos(camX, CAM_Y_DEFAULT_STAGE_2);
-		}
-	 
-		if (isStageMoving) {
-			simon->setFreeze(true);
-			CGame::GetInstance()->SetCamPos(CGame::GetInstance()->GetCamPos_x() +1.75 , CAM_Y_DEFAULT_STAGE_2);
-			if (round(CGame::GetInstance()->GetCamPos_x()) >= game->getTargetAutoGo()) {
-				CGame::GetInstance()->SetCamPos(game->getTargetAutoGo(), CAM_Y_DEFAULT_STAGE_2);
-				isStageMoving = false;
-			/*	setStage(3);
-				LoadResources();*/
-			}
-		}
-
-		//check chuyen qua cua stage 2
-		if (isProcessStageChange && !isStageMoving) {
-			for (int i = 0; i < objects.size(); i++) {
-				if (dynamic_cast<CDoor*>(objects[i])) {
-					if (dynamic_cast<CDoor*>(objects[i])->getId() == 2&!isWaitSimonThroughScene) //dang xu ly cua o stage 2
-					{
-						simon->setFreeze(true);
-						isWaitSimonThroughScene = true;
-						objects[i]->SetState(DOOR_STATE_OPEN);
-						currentDoor = dynamic_cast<CDoor*>(objects[i]);
-						simon->autoGoX(1, SIMON_WALKING_SPEED_AUTO, 1600);
-					}
-				}
-			}
-		}
-
-		if (!isChangeSceneComplete&&isWaitSimonThroughScene && !simon->getAutoGoX()) {
-			simon->setFreeze(true);
-			game->setAutoGo(true, 1537);
-			isChangeSceneComplete = true;
-			currentDoor->SetState(DOOR_STATE_CLOSE);
 		}
 	}
 	else if (getStage() == 3) {
@@ -983,6 +949,38 @@ void CSceneGame::Update(DWORD dt) {
 			CGame::GetInstance()->SetCamPos(BOUNDARY_CAMERA_STAGE_3, CAM_Y_DEFAULT_STAGE_2);
 		}
 	}
+
+	//Change scene processing
+	if (isStageMoving) {
+		CGame::GetInstance()->SetCamPos(CGame::GetInstance()->GetCamPos_x() + 1.75, CAM_Y_DEFAULT_STAGE_2);
+		if (round(CGame::GetInstance()->GetCamPos_x()) >= game->getTargetAutoGo()) {
+			CGame::GetInstance()->SetCamPos(game->getTargetAutoGo(), CAM_Y_DEFAULT_STAGE_2);
+			isStageMoving = false;
+		}
+	}
+
+	if (isProcessStageChange && !isStageMoving) {
+		for (int i = 0; i < objects.size(); i++) {
+			if (dynamic_cast<CDoor*>(objects[i])) {
+				if (dynamic_cast<CDoor*>(objects[i])->getId() == 2 & !isWaitSimonThroughScene) //dang xu ly cua o stage 2
+				{
+					simon->setFreeze(true);
+					isWaitSimonThroughScene = true;
+					objects[i]->SetState(DOOR_STATE_OPEN);
+					currentDoor = dynamic_cast<CDoor*>(objects[i]);
+					simon->autoGoX(1, SIMON_WALKING_SPEED_AUTO, 1600); //breakpoint 1
+				}
+			}
+		}
+	}
+
+	if (!isChangeSceneComplete && isWaitSimonThroughScene && !simon->getAutoGoX()) {
+		simon->setFreeze(true);
+		game->setAutoGo(true, 1537); //breakpoint 2
+		isChangeSceneComplete = true;
+		currentDoor->SetState(DOOR_STATE_CLOSE);
+	}
+
 #pragma endregion
 
 }

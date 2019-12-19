@@ -139,6 +139,9 @@ void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 				vx = 0;
 				//cout << "finish right" << endl;
 			}
+			else {
+				setFreeze(true);
+			}
 		}
 		else {
 			if (round(x) <= targetAutoGoX) {
@@ -147,6 +150,9 @@ void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 				isAutoGoXComplete = true;
 				vx = 0;
 				//cout << "finish left" << endl;
+			}
+			else {
+				setFreeze(true);
 			}
 		}
 	}
