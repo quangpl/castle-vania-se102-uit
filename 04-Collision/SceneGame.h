@@ -97,13 +97,13 @@ class CSceneGame : public CScene
 public:
 	CSceneGame();
 	~CSceneGame();
-
+	static CSceneGame* GetInstance();
 	void LoadResources();
 	void Update(DWORD dt);
 	void Render();
 	void checkUpdateScene();
-	static CSceneGame* GetInstance();
-	void clearObjects() { this->objects.clear(); };
+	
+
 	//void checkCollisonOfSimon();
 	void checkCollisonOfWeapon(vector<LPGAMEOBJECT> &objects);
 	CItem* getItem(int id, float x, float y);
@@ -111,12 +111,13 @@ public:
 	void checkCollisionOfSimon();
 	void getBonusFromItem(CItem* item);
 	
-	void checkCollisionOfEnemy();
+	//void checkCollisionOfEnemy();
+
 	void checkCollisionSimonWithHidden();
 	void updateCamAutoGo(DWORD dt);
 
 	void loadObjectToGrid();
-
+	void clearObjects() { this->objects.clear(); };
 
 	void createBat();
 	void createFishMan();

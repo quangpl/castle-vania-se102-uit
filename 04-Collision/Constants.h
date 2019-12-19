@@ -8,7 +8,7 @@
 #define BOARD_HEIGHT 60
 
 
-#define MAX_FRAME_RATE 120
+#define MAX_FRAME_RATE 150
 
 #define ID_TEX_MARIO 0
 #define ID_TEX_ENEMY 10

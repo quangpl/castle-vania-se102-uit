@@ -54,6 +54,7 @@ void CSceneGame::LoadResources() {
 	grid->clear();
 	if (getStage() == 1) {
 		objects.clear();
+		grid->clear();
 		CTextures* textures = CTextures::GetInstance();
 /*
 		textures->Add(ID_TEX_MAP_1, "Map\\tileset_map1.png", D3DCOLOR_XRGB(255, 0, 255));
@@ -393,9 +394,11 @@ void CSceneGame::LoadResources() {
 		listDoor.clear();
 		listEnemy.clear();
 		grid->clear();
+		listSoftBrick.clear();
 		listCandle.clear();
-		isAllowCreateFishmen = false;
 
+		//isAllowCreateFishmen = false;
+		isAllowCreateFishmen = true;
 		CTextures* textures = CTextures::GetInstance();
 
 		/*textures->Add(ID_TEX_MAP_2, "Map\\tileset_map2.png", D3DCOLOR_XRGB(255, 255, 255));
@@ -469,16 +472,6 @@ void CSceneGame::LoadResources() {
 				{
 					simon->AddAnimation(aniId);
 				}
-				/*else if (gameObjectId == 28) {
-					for (int i = 0; i < NUMBER_OF_BRICK; i++)
-					{
-						float l, t, r, b;
-						CBrick* brick = new CBrick();
-						brick->SetPosition(0 + i * 16.0f, SCREEN_HEIGHT - 30);
-						objects.push_back(brick);
-						listBrick.push_back(brick);
-					}
-				}*/
 			};
 
 
@@ -546,15 +539,10 @@ void CSceneGame::LoadResources() {
 			}
 		}
 
-
-
 		
 		//Simon
 		simon->setDirection(1);
 		objects.push_back(simon);
-
-
-
 
 
 		//Whip
@@ -576,6 +564,7 @@ void CSceneGame::LoadResources() {
 	listCandle.clear();
 	listStairPoint.clear();
 	listDoor.clear();
+	grid->clear();
 	listEnemy.clear();
 	listSoftBrick.clear();
 	isAllowCreateFishmen = false;
@@ -731,7 +720,7 @@ void CSceneGame::LoadResources() {
 	simon->setDirection(1);
 	objects.push_back(simon);
 
-		//Whip
+	//Whip
 	objects.push_back(simon->getWeapon());
 	if (simon->getSubWeapon()) {
 		simon->setSubWeapon(simon->getSubWeapon());
@@ -770,30 +759,8 @@ void CSceneGame::checkUpdateScene() {
 
 void CSceneGame::Update(DWORD dt) {
 	/*Get objects from grid*/
-	cout << objects.size() << endl;
-	/*for (int i = 0; i < objects.size(); i++) {
-		if (dynamic_cast<CCandle*>(objects[i])) {
-			cout << "candle" << endl;
-		}
-		else if (dynamic_cast<CBrick*>(objects[i])) {
-			cout << "CBrick" << endl;
-		}
-		else if (dynamic_cast<CDoor*>(objects[i])) {
-			cout << "CDoor" << endl;
-		}
-		else if (dynamic_cast<CHidden*>(objects[i])) {
-			cout << "CHidden" << endl;
-		}
-		else if (dynamic_cast<CSmallCandle*>(objects[i])) {
-			cout << "CSmallCandle" << endl;
-		}
-		else if (dynamic_cast<CSoftBrick*>(objects[i])) {
-			cout << "CSoftBrick" << endl;
-		}
-		else if (dynamic_cast<CStairPoint*>(objects[i])) {
-			cout << "CStairPoint" << endl;
-		}
-	}*/
+	//cout << objects.size() << endl;
+	
 	vector<CGameObject*> listObjectFromGrid;
 	grid->getAllObjects(listObjectFromGrid);
 	listStairPoint.clear();
@@ -819,14 +786,14 @@ void CSceneGame::Update(DWORD dt) {
 
 	/*Get objects from grid*/
 
-	
+	/*
 	if (getStage() ==2) {
 		
 		
 	}
 	else if (getStage() == 3) {
 		isAllowCreateFishmen = true;
-	}
+	}*/
 
 	CStairPoint* stairPoint = simon->checkCollisionStartStair(listStairPoint);
 
@@ -887,7 +854,7 @@ void CSceneGame::Update(DWORD dt) {
 	{
 		if (objects[i]->getHealth() > 0 && objects[i]->isShow()) {
 
-			if (dynamic_cast<CBrick*>(objects[i]) || dynamic_cast<CSimon*>(objects[i]) || dynamic_cast<CItem*>(objects[i])) {
+			if (dynamic_cast<CBrick*>(objects[i])|| dynamic_cast<CSimon*>(objects[i]) || dynamic_cast<CItem*>(objects[i])) {
 				objects[i]->Update(dt, &coPlayerAndBackground);
 			}
 
@@ -899,12 +866,17 @@ void CSceneGame::Update(DWORD dt) {
 			}
 		}
 	}
-	//Process cross effect
+
+
+#pragma region Process Cross Effect
 	if (GetTickCount() - timeStartCrossEffect >= TIME_CORSS_EFFECT) {
 		hasCrossEffect = false;
 		game->setIsBlinkScene(false);
 	}
+#pragma endregion
 
+
+#pragma region Process Stopwatch Effect
 	if (isStopWatch) {
 		if (GetTickCount() - timeStartStopWatch >= TIME_STOP_WATCH) {
 			isStopWatch = false;
@@ -917,20 +889,19 @@ void CSceneGame::Update(DWORD dt) {
 		}
 	}
 
-	//Check collision area
-	vector<CGameObject*> listCollisionWithWeapon;
-	listCollisionWithWeapon.clear();
-	for (int i = 0; i < coWeaponAndCandle.size(); i++) {
-		listCollisionWithWeapon.push_back(coWeaponAndCandle[i]);
+#pragma endregion
+	if (simon->getFreeze()) {
+		cout << "Freeze true" << endl;
 	}
-	for (int i = 0; i < listEnemy.size(); i++) {
-		listCollisionWithWeapon.push_back(listEnemy[i]);
+	else {
+	}
 
-	}
-	for (int i = 0; i < listSoftBrick.size(); i++) {
-		listCollisionWithWeapon.push_back(listSoftBrick[i]);
-	}
-	checkCollisonOfWeapon(listCollisionWithWeapon);
+	//Append all objects which weapon can destroy 
+	coWeaponAndCandle.reserve(coWeaponAndCandle.size() + listEnemy.size() + listSoftBrick.size()); // Reserve space first
+	coWeaponAndCandle.insert(coWeaponAndCandle.end(), listEnemy.begin(), listEnemy.end());
+	coWeaponAndCandle.insert(coWeaponAndCandle.end(), listSoftBrick.begin(), listSoftBrick.end());
+
+	checkCollisonOfWeapon(coWeaponAndCandle);
 
 	checkCollisionOfSimon();
 	checkCollisionSimonWithHidden();
@@ -967,7 +938,8 @@ void CSceneGame::Update(DWORD dt) {
 		}
 	 
 		if (isStageMoving) {
-			CGame::GetInstance()->SetCamPos(CGame::GetInstance()->GetCamPos_x() +1 , CAM_Y_DEFAULT_STAGE_2);
+			simon->setFreeze(true);
+			CGame::GetInstance()->SetCamPos(CGame::GetInstance()->GetCamPos_x() +1.75 , CAM_Y_DEFAULT_STAGE_2);
 			if (round(CGame::GetInstance()->GetCamPos_x()) >= game->getTargetAutoGo()) {
 				CGame::GetInstance()->SetCamPos(game->getTargetAutoGo(), CAM_Y_DEFAULT_STAGE_2);
 				isStageMoving = false;
@@ -982,6 +954,7 @@ void CSceneGame::Update(DWORD dt) {
 				if (dynamic_cast<CDoor*>(objects[i])) {
 					if (dynamic_cast<CDoor*>(objects[i])->getId() == 2&!isWaitSimonThroughScene) //dang xu ly cua o stage 2
 					{
+						simon->setFreeze(true);
 						isWaitSimonThroughScene = true;
 						objects[i]->SetState(DOOR_STATE_OPEN);
 						currentDoor = dynamic_cast<CDoor*>(objects[i]);
@@ -1017,7 +990,9 @@ void CSceneGame::Render() {
 	maps->Get(currentIdMap)->Render();
 	for (int i = 0; i < listEnemy.size(); i++)
 	{
-		listEnemy[i]->Render();
+		if (listEnemy[i]->isShow()) {
+			listEnemy[i]->Render();
+	}
 	}
 	for (int i = 0; i < listSoftBrick.size(); i++)
 	{
@@ -1158,6 +1133,7 @@ void CSceneGame::checkCollisonOfWeapon(vector<LPGAMEOBJECT> &listObjects) { //Tr
 				}
 				else {
 					weapon->setCanDestroy(false);
+						weapon->setCurrentFrame(-1);
 				}
 			}
 		}
@@ -1284,47 +1260,47 @@ void CSceneGame::deleteObject(vector<LPGAMEOBJECT> &listObj, int index) {
 	listObj.erase(listObj.begin() + index);
 }
 
-void CSceneGame::checkCollisionOfEnemy() {
-	CWeapon* weapon = simon->getWeapon();
-	CWeapon* subWeapon = simon->getSubWeapon();
-	if (subWeapon) {
-		if (subWeapon->getCanDestroy()) { //Vu khi dang hoat dong moi xet va cham
-			for (int i = 0; i < listEnemy.size(); i++) {
-				if (listEnemy[i]->isShow() && listEnemy[i]->getType() == TYPE_OBJECT_ENEMY && subWeapon->checkAABBWithObjectAABBEx(listEnemy[i])) {
-					objects.push_back(new CFire(listEnemy[i]->GetPositionX(), listEnemy[i]->GetPositionY()));
-					objects.push_back(getItem(1 + rand() % (11), listEnemy[i]->GetPositionX(), listEnemy[i]->GetPositionY()));
-					subWeapon->setCurrentFrame(-1);
-					subWeapon->setCanDestroy(false);
-					subWeapon->setCurrentFrame(-1);
-					subWeapon->setFinish(true);
-					listEnemy[i]->hide();
-				}
-			}
-		}
-	}
-	if (weapon->getCanDestroy()) {
-		if (weapon->getCurrentFrame() == 3) { //Vu khi dang hoat dong moi xet va cham
-			for (int i = 0; i < listEnemy.size(); i++) {
-				if (listEnemy[i]->isShow() && listEnemy[i]->getType() == TYPE_OBJECT_ENEMY && weapon->checkAABBWithObjectAABBEx(listEnemy[i])) {
-					objects.push_back(new CFire(listEnemy[i]->GetPositionX(), listEnemy[i]->GetPositionY()));
-					objects.push_back(getItem(1 + rand() % (11), listEnemy[i]->GetPositionX(), listEnemy[i]->GetPositionY()));
-					weapon->setCurrentFrame(-1);
-					weapon->setCanDestroy(false);
-					weapon->setCurrentFrame(-1);
-					listEnemy[i]->hide();
-					weapon->setFinish(true);
-				}
-				else {
-					weapon->setCanDestroy(false);
-				}
-			}
-
-		}
-}
-	else {
-		//cout << "Undame" << endl;
-	}
-}
+//void CSceneGame::checkCollisionOfEnemy() {
+//	CWeapon* weapon = simon->getWeapon();
+//	CWeapon* subWeapon = simon->getSubWeapon();
+//	if (subWeapon) {
+//		if (subWeapon->getCanDestroy()) { //Vu khi dang hoat dong moi xet va cham
+//			for (int i = 0; i < listEnemy.size(); i++) {
+//				if (listEnemy[i]->isShow() && listEnemy[i]->getType() == TYPE_OBJECT_ENEMY && subWeapon->checkAABBWithObjectAABBEx(listEnemy[i])) {
+//					objects.push_back(new CFire(listEnemy[i]->GetPositionX(), listEnemy[i]->GetPositionY()));
+//					objects.push_back(getItem(1 + rand() % (11), listEnemy[i]->GetPositionX(), listEnemy[i]->GetPositionY()));
+//					subWeapon->setCurrentFrame(-1);
+//					subWeapon->setCanDestroy(false);
+//					subWeapon->setCurrentFrame(-1);
+//					subWeapon->setFinish(true);
+//					listEnemy[i]->hide();
+//				}
+//			}
+//		}
+//	}
+//	if (weapon->getCanDestroy()) {
+//		if (weapon->getCurrentFrame() == 3) { //Vu khi dang hoat dong moi xet va cham
+//			for (int i = 0; i < listEnemy.size(); i++) {
+//				if (listEnemy[i]->isShow() && listEnemy[i]->getType() == TYPE_OBJECT_ENEMY && weapon->checkAABBWithObjectAABBEx(listEnemy[i])) {
+//					objects.push_back(new CFire(listEnemy[i]->GetPositionX(), listEnemy[i]->GetPositionY()));
+//					objects.push_back(getItem(1 + rand() % (11), listEnemy[i]->GetPositionX(), listEnemy[i]->GetPositionY()));
+//					weapon->setCurrentFrame(-1);
+//					weapon->setCanDestroy(false);
+//					weapon->setCurrentFrame(-1);
+//					listEnemy[i]->hide();
+//					weapon->setFinish(true);
+//				}
+//				else {
+//					weapon->setCanDestroy(false);
+//				}
+//			}
+//
+//		}
+//}
+//	else {
+//		//cout << "Undame" << endl;
+//	}
+//}
 void CSceneGame::createBat() {
 
 	//if (isAllowCreateBat) {

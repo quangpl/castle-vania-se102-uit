@@ -9,7 +9,7 @@
   </Walls>
   <Grounds id="0">
     <Ground x="-200" y="212" width="1000" height="8" />
-    <Ground x="0" y="115" width="111" height="1" />
+    <Ground x="0" y="115" width="125" height="6" />
     <Ground x="130" y="147" width="45" height="1" />
     <!-- <Ground x="721" y="147"  width="47" height="1"/> -->
     <!-- <Ground x="686" y="180"  width="12" height="1"/>  -->
