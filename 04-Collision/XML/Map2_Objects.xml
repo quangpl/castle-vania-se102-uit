@@ -49,9 +49,7 @@
     <Wall x="1392" y="116"  width="142" height="13"/>
   </Walls>
   <ChangeSceneObjects id="-1">
-    <ChangeScene x="1529" y="65" sceneId="2"
-    simonAutoGo="0" simonAutoGoDistance="35"
-    camAutoGo="1" isDoor="1" width="8" height="14"/>
+    <ChangeScene x="1529" y="65" width="8" height="14"/>
   </ChangeSceneObjects>
   <Spawns id="-2" >
     <Spawn x="84" y="0" spawnerId="0" enemyId="0" xEnemy="0" yEnemy="0" quantityEachSpawn ="3" timeEachSpawn="1000" delaySpawnTime="2000" width="8" height="300"/>

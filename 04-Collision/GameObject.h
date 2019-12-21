@@ -34,6 +34,8 @@ class CGameObject
 {
 public:
 
+
+	bool isActive; //de check doi tuong da hoat dong trong camera
 	float x; 
 	float y;
 
@@ -141,6 +143,7 @@ public:
 	}
 	};
 	int getAlphaRandom();
+	bool isInCamera(float x, float y, float w, float h);
 	~CGameObject();
 };
 

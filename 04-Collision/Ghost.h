@@ -15,6 +15,7 @@ class CGhost : public CGameObject
 	virtual void Render();
 
 	float xInit;
+
 public:
 	CGhost(float _x,float _y, int direction):CGameObject(){
 		x = _x;

@@ -16,6 +16,13 @@ CGameObject::CGameObject()
 	health = 1;
 }
 
+bool CGameObject::isInCamera(float x, float y, float w, float h) {
+	if (x + w < CGame::GetInstance()->GetCamPos_x() || CGame::GetInstance()->GetCamPos_x() + SCREEN_WIDTH < x)
+		return false;
+	if (y + h < CGame::GetInstance()->GetCamPos_y() || CGame::GetInstance()->GetCamPos_y() + SCREEN_HEIGHT < y)
+		return false;
+	return true;
+}
 bool CGameObject::checkAABB(float left_a, float top_a, float right_a, float bottom_a, float left_b, float top_b, float right_b, float bottom_b)
 {
 	return left_a < right_b && right_a > left_b && top_a < bottom_b && bottom_a > top_b;

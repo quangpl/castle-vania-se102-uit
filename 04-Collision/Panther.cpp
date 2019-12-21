@@ -30,12 +30,10 @@ void CPanther::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	if (x > BREAK_POINT_DIE_STAGE_2) {
 		this->hide();
 	}
-
-	//float camX = CGame::GetInstance()->GetCamPos_x();
-	////Xoa khi ghost đi khoi camera 
-	//if ((x + PANTHER_BBOX_WIDTH > camX + SCREEN_WIDTH && nx == 1) || (x + PANTHER_BBOX_HEIGHT < camX && nx == -1)) {
-	//	hide();
-	//}
+	
+	if (isActive && !this->isInCamera(x, y, PANTHER_BBOX_WIDTH, PANTHER_BBOX_HEIGHT)) {
+		hide();
+	}
 
 	if (!isShow()) {
 		return;
@@ -57,6 +55,7 @@ void CPanther::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		isRunning = false;
 	}
 	if (isRunning) {
+		isActive = true;
 		hasStart = true;
 		vx = -PANTHER_SPEED_RUNNING;
 		if (isLanding)
@@ -137,7 +136,7 @@ void CPanther::Render()
 {
 	
 	if (!isShow()) {
-		//cout << "hide panther" << endl;
+		cout << "hide panther" << endl;
 		return;
 	}
 

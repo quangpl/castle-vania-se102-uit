@@ -31,26 +31,7 @@
     <SmallCandle x="412" y="54" width="8" height="14" itemId="4" nameItem="CROSS"/>
     <SmallCandle x="477" y="84" width="8" height="14" itemId ="-1" name="RAND"/>
   </SmallCandles>
-  <ChangeSceneObjects id="-1">
-    <ChangeScene x="48" y="224" sceneId="-2"
-    simonAutoGo="0" simonAutoGoDistance="35"
-    camAutoGo="0" isDoor="0" width="32" height="4"
-      simonStartPosX="50" simonStartPosY="46"
-       isLoadBlackScene="1" timeLoadBlackScene="400"/>
-    
-    <ChangeScene x="362" y="224" sceneId="-2"
-    simonAutoGo="0" simonAutoGoDistance="35"
-    camAutoGo="0" isDoor="0" width="32" height="4"
-    simonStartPosX="379" simonStartPosY="52"
-    isLoadBlackScene="1" timeLoadBlackScene="400"/>
-    
-    <ChangeScene x="504" y="65" sceneId="3"
-    simonAutoGo="0" simonAutoGoDistance="64"
-    camAutoGo="1" isDoor="1" width="8" height="50"
-    simonStartPosX="28" simonStartPosY="84"
-    isLoadBlackScene="0" timeLoadBlackScene="0"/>
-    
-  </ChangeSceneObjects>
+
 
 
   <CheckStairs id="-3">

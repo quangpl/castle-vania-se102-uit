@@ -10,9 +10,17 @@
   <Grounds id="0">
     <Ground x="-200" y="212" width="1000" height="8" />
     <Ground x="0" y="115" width="125" height="6" />
-    <Ground x="130" y="147" width="44" height="1" />
-    <!-- <Ground x="721" y="147"  width="47" height="1"/> -->
-    <!-- <Ground x="686" y="180"  width="12" height="1"/>  -->
+    <Ground x="130" y="147" width="44" height="1" /> 
+
+    <Ground x="260" y="130" width="93" height="1" /> 
+
+    <Ground x="350" y="147" width="48" height="4" /> 
+    <Ground x="418" y="115" width="205" height="1" /> 
+
+
+
+
+
   </Grounds>
   
   <SmallCandles id="2" >
@@ -36,7 +44,11 @@
     <CheckStair x="235" y="210" width="5" height="4" ny="-1" nx="1"  direction="3" center="221" isThroughBrick="0"/>
     <CheckStair x="35" y="210" width="5" height="4" ny="-1" nx="1"  direction="4" center="000" isThroughBrick="1"/>
 
-    <CheckStair x="360" y="180" width="3" height="4" ny="-1" nx="1"  direction="4" center="345" isThroughBrick="1"/>
+    
+  <CheckStair x="360" y="180" width="4" height="4" ny="-1" nx="1"  direction="4" center="345" isThroughBrick="1"/>
+  
+    <CheckStair x="455" y="203" width="10" height="4" ny="-1" nx="1"  direction="3" center="445" isThroughBrick="0"/>
+    <CheckStair x="390" y="118" width="4" height="4" ny="-1" nx="1"  direction="4" center="380" isThroughBrick="0"/>
     
     <!-- <CheckStair x="138" y="144" width="16" height="4" ny="1" nx="-1" direction="4" center="598" isThroughBrick="0"/>
     <CheckStair x="298" y="146" width="18" height="4" ny="-1" nx="1" direction="4" center="598" isThroughBrick="0"/>
@@ -52,5 +64,7 @@
    <SoftBricks id="20">
     <SoftBrick x="256" y="180"/>
   </SoftBricks>
-  
+    <ChangeSceneObjects id="-1">
+    <ChangeScene x="492" y="65"  width="32" height="4"/>
+  </ChangeSceneObjects>
 </Objects>

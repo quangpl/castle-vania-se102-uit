@@ -25,19 +25,22 @@ void CGhost::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
 	// Calculate dx, dy 
 	CGameObject::Update(dt);
-	//if (x > 1500) {
-	//	this->hide();
-	//}
-	float camX = CGame::GetInstance()->GetCamPos_x();
-	//Xoa khi ghost đi khoi camera 
-	if ((x + GHOST_BBOX_WIDTH > camX + SCREEN_WIDTH && nx == 1) || (x + GHOST_BBOX_WIDTH < camX && nx == -1)) {
+	if (x > 1490) {
+		this->nx = -1;
+
+
+
+	}
+	if (this->isInCamera(x, y, GHOST_BBOX_WIDTH, GHOST_BBOX_HEIGHT)) {
+		isActive = true;
+	}
+	if (isActive&& !this->isInCamera(x, y, GHOST_BBOX_WIDTH, GHOST_BBOX_HEIGHT)) {
 		hide();
 	}
+
 	if (!isShow()) {
 		return;
 	}
-
-
 	
 	
 	// Simple fall down

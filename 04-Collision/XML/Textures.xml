@@ -501,16 +501,16 @@
  <!-- Animation WOLF -->
   <Texture  textureId ="3" gameObjectId ="27">
     <Animation aniId="566" frameTime="100" name="WOLF_IDLE">
-      <sprite id="10167" left="68" top="19" right="92" bottom="34" frameTime="100"/>
+      <sprite id="10167" left="61" top="19" right="85" bottom="34" frameTime="100"/>
     </Animation>
     <Animation aniId="567" frameTime="50" name="WOLF_RUN">
-      <sprite id="10169" left="98" top="18" right="126" bottom="34" frameTime="1000"/>
-      <sprite id="10169" left="98" top="18" right="126" bottom="34" frameTime="1000"/>
-      <sprite id="10169" left="98" top="18" right="126" bottom="34" frameTime="1000"/>
+      <sprite id="10169" left="100" top="18" right="128" bottom="34" frameTime="1000"/>
+      <sprite id="10169" left="100" top="18" right="128" bottom="34" frameTime="1000"/>
+      <sprite id="10169" left="100" top="18" right="128" bottom="34" frameTime="1000"/>
 
-      <sprite id="10170" left="133" top="18" right="163" bottom="34" frameTime="1000"/>
-      <sprite id="10170" left="133" top="18" right="163" bottom="34" frameTime="1000"/>
-      <sprite id="10170" left="133" top="18" right="163" bottom="34" frameTime="1000"/>
+      <sprite id="10170" left="136" top="18" right="166" bottom="34" frameTime="1000"/>
+       <sprite id="10170" left="136" top="18" right="166" bottom="34" frameTime="1000"/>
+         <sprite id="10170" left="136" top="18" right="166" bottom="34" frameTime="1000"/>
 
     </Animation>
     <Animation aniId="568" frameTime="100" name="WOLF_JUMP">
