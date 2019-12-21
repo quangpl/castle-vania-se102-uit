@@ -211,6 +211,9 @@
     <ClInclude Include="SoftBrickEffect.h">
       <Filter>GameObject\Effect</Filter>
     </ClInclude>
+    <ClInclude Include="Batman.h">
+      <Filter>GameObject\Enemy</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
@@ -360,6 +363,9 @@
     </ClCompile>
     <ClCompile Include="SoftBrickEffect.cpp">
       <Filter>GameObject\Effect</Filter>
+    </ClCompile>
+    <ClCompile Include="Batman.cpp">
+      <Filter>GameObject\Enemy</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

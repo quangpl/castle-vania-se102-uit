@@ -68,8 +68,8 @@ void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	// Calculate dx, dy 
 	CGameObject::Update(dt);
 	checkBlink();
-	/*cout <<"y: " <<y << endl;
-	cout << "x: "<<x << endl;*/
+	//cout <<"y: " <<y << endl;
+	//cout << "x: "<<x << endl;
 	//if(currentStair) {
 	//	cout << currentStair->getStairDirection() << endl;
 	//}
@@ -445,13 +445,20 @@ void CSimon::goToStartOnStair() {
 		break;
 	case 2:
 		setFreeze(true);
-		//vx = 0;
-		nx = -1;
-		vx = -SIMON_SPEED_ONSTAIR;
-		vy = SIMON_SPEED_ONSTAIR;
-		isGoToStair = false;
-		isGoToStartOnStair = true;
-		timeToGoToStartOnStair = GetTickCount();
+		if (round(x) > point) {
+			nx = -1;
+			vx = -SIMON_SPEED_ONSTAIR;
+		}
+		else {
+			nx = -1;
+			vx = -SIMON_SPEED_ONSTAIR;
+			vy = SIMON_SPEED_ONSTAIR;
+			isGoToStair = false;
+			isGoToStartOnStair = true;
+			timeToGoToStartOnStair = GetTickCount();
+		}
+		
+		
 		break;
 	case 3:
 		setFreeze(true);
@@ -475,13 +482,20 @@ void CSimon::goToStartOnStair() {
 		break;
 	case 4:
 		setFreeze(true);
-		//vx = 0;
-		nx = 1;
-		vx = SIMON_SPEED_ONSTAIR;
-		vy = SIMON_SPEED_ONSTAIR;
-		isGoToStair = false;
-		isGoToStartOnStair = true;
-		timeToGoToStartOnStair = GetTickCount();
+		if (round(x) < point) {
+			nx = 1;
+			vx = SIMON_SPEED_ONSTAIR;
+			vx = SIMON_SPEED_ONSTAIR;
+		}
+		else {
+			//vx = 0;
+			nx = 1;
+			vx = SIMON_SPEED_ONSTAIR;
+			vy = SIMON_SPEED_ONSTAIR;
+			isGoToStair = false;
+			isGoToStartOnStair = true;
+			timeToGoToStartOnStair = GetTickCount();
+		}
 		break;
 	default:
 		break;
@@ -721,7 +735,7 @@ CStairPoint* CSimon::checkCollisionStartStair(vector<CGameObject*> listObj) {
 			centerPointStair = currentStair->getCenter();
 			currentStairTypeCollision = currentStair->getStairDirection();
 			isThroughBrick = currentStair->getHasThrough();
-			cout << currentStairTypeCollision << endl;
+		//	cout << currentStairTypeCollision << endl;
 			return  dynamic_cast<CStairPoint*>(listObj[i]);
 		}
 	}

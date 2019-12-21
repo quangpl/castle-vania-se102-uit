@@ -37,7 +37,7 @@
       <sprite id="10009" left="443" top="166" right="521" bottom="196" frameTime="100"/>
     </Animation>
     <!-- Animation THROW -->
-   <Animation aniId="507" frameTime="100" name="THROW">
+    <Animation aniId="507" frameTime="100" name="THROW">
       <sprite id="10010" left="5" top="24" right="83" bottom="54" frameTime="100"/>
       <sprite id="10011" left="5" top="73" right="83" bottom="103" frameTime="100"/>
       <sprite id="10012" left="87" top="73" right="165" bottom="103" frameTime="100"/>
@@ -80,31 +80,40 @@
   </Texture>
   <Texture textureId ="30" gameObjectId ="100">
   <!-- Animation LEVEL_ONE_ATTACK_STAND -->
-    <Animation aniId="509" frameTime="100" name="LEVEL_ONE_ATTACK_STAND">
+    <Animation aniId="509" frameTime="50" name="LEVEL_ONE_ATTACK_STAND">
       <sprite id="99999" left="0" top="0" right="0" bottom="0" frameTime="100"/>
       <sprite id="10019" left="5" top="159" right="83" bottom="189" frameTime="100"/>
+
+
       <sprite id="10020" left="87" top="159" right="165" bottom="189" frameTime="100"/>
+
       <sprite id="10021" left="170" top="159" right="248" bottom="189" frameTime="100"/>
+
       <sprite id="100212" left="170" top="159" right="248" bottom="189" frameTime="100"/>
     </Animation>
     <!-- Animation LEVEL_TWO_ATTACK_STAND -->
-    <Animation aniId="510" frameTime="100" name="LEVEL_TWO_ATTACK_STAND">
+    <Animation aniId="510" frameTime="50" name="LEVEL_TWO_ATTACK_STAND">
       <sprite id="99999" left="0" top="0" right="0" bottom="0" frameTime="100"/>
+
       <sprite id="10028" left="6" top="339" right="84" bottom="367" frameTime="100"/>
+
       <sprite id="10032" left="88" top="339" right="166" bottom="367" frameTime="100"/>
+
       <sprite id="10036" left="171" top="339" right="249" bottom="367" frameTime="100"/>
-      <sprite id="100362" left="171" top="339" right="249" bottom="367" frameTime="100"/>
+
     </Animation>
     <!-- Animation LEVEL_THREE_ATTACK_STAND -->
-    <Animation aniId="511" frameTime="100" name="LEVEL_THREE_ATTACK_STAND">
+    <Animation aniId="511" frameTime="50" name="LEVEL_THREE_ATTACK_STAND">
       <sprite id="99999" left="0" top="0" right="0" bottom="0" frameTime="100"/>
+
       <sprite id="10022" left="5" top="200" right="83" bottom="230" frameTime="100"/>
+
       <sprite id="10023" left="87" top="200" right="165" bottom="230" frameTime="100"/>
-      <sprite id="10024" left="170" top="200" right="248" bottom="230" frameTime="100"/>
+
       <sprite id="100242" left="170" top="200" right="248" bottom="230" frameTime="100"/>
      </Animation>
     <!-- Animation LEVEL_ONE_ATTACK_SIT -->
-    <Animation aniId="512" frameTime="100" name="LEVEL_ONE_ATTACK_SIT">
+    <Animation aniId="512" frameTime="30" name="LEVEL_ONE_ATTACK_SIT">
       <sprite id="10037" left="4" top="118" right="82" bottom="148"/>
       <sprite id="10038" left="86" top="118" right="164" bottom="148"/>
       <sprite id="10039" left="169" top="118" right="247" bottom="148"/>
@@ -114,7 +123,7 @@
 
     </Animation>
     <!-- Animation LEVEL_TWO_ATTACK_SIT -->
-    <Animation aniId="513" frameTime="100" name="LEVEL_TWO_ATTACK_SIT">
+    <Animation aniId="513" frameTime="30" name="LEVEL_TWO_ATTACK_SIT">
       <sprite id="10040" left="6" top="529" right="82" bottom="560"/>
       <sprite id="10041" left="88" top="529" right="164" bottom="560"/>
       <sprite id="10042" left="174" top="529" right="250" bottom="560"/>
@@ -123,7 +132,7 @@
 
     </Animation>
     <!-- Animation LEVEL_THREE_ATTACK_SIT -->
-    <Animation aniId="514" frameTime="100" name="LEVEL_THREE_ATTACK_SIT">
+    <Animation aniId="514" frameTime="30" name="LEVEL_THREE_ATTACK_SIT">
       <sprite id="10043" left="6" top="444" right="82" bottom="475"/>
       <sprite id="10044" left="6" top="488" right="82" bottom="519"/>
       <sprite id="10045" left="6" top="572" right="82" bottom="603"/>
@@ -532,6 +541,16 @@
     </Animation>
      <Animation aniId="574" frameTime="100" name="UGLY_FISH_ATTACK">
       <sprite id="101728" left="9" top="53" right="25" bottom="83" frameTime="100"/>
+    </Animation>
+
+      <!-- Animation BOSS -->
+    <Animation aniId="701" frameTime="100" name="BOSS_IDLE">
+      <sprite id="1017117" left="269" top="17" right="285" bottom="33" frameTime="100"/>
+    </Animation>
+    
+    <Animation aniId="702" frameTime="100" name="BOSS_ACTIVE">
+      <sprite id="1012278" left="296" top="16" right="344" bottom="38" frameTime="100"/>
+      <sprite id="1014477" left="304" top="42" right="336" bottom="65" frameTime="100"/>
     </Animation>
 
   <!-- Animation FireBall-->

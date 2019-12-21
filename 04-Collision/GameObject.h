@@ -64,7 +64,17 @@ public:
 
 public: 
 	void SetPosition(float x, float y) { this->x = x, this->y = y; }
-
+	RECT GetBound()
+	{
+		RECT rect;
+		float l, t, r, b;
+		GetBoundingBox(l, t, r, b);
+		rect.left = l;
+		rect.top = t;
+		rect.right = r;
+		rect.bottom = b;
+		return rect;
+	}
 	void setPositionCustom(float x, float y) { this->xRender = x, this->yRender = y; }
 	void getPositionCustom(float& x, float& y) { x = this->xRender;  y = this->yRender; }
 

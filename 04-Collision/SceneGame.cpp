@@ -186,11 +186,22 @@ void CSceneGame::LoadResources() {
 				}
 			}
 		}
+
+		/* 
+		CBatMan* bat = new CBatMan();
+
+		listEnemy.push_back(bat);*/
 		
 
 		simon->SetPosition(50.0f, 0); //simon
 		simon->setWeapon(whip);
 		objects.push_back(simon);
+
+
+		//simon->SetPosition(50.0f, 0); //simon
+		//simon->setWeapon(whip);
+		//objects.push_back(simon);
+		//
 
 
 		objects.push_back(whip);
@@ -1118,6 +1129,7 @@ void CSceneGame::checkCollisonOfWeapon(vector<LPGAMEOBJECT> &listObjects) { //Tr
 					weapon->setCanDestroy(false);
 					weapon->setCurrentFrame(-1);
 					listObjects[i]->hide();
+					cout << "Va cham boss" << endl;
 					weapon->setFinish(true);
 				}
 				else if (dynamic_cast<CSoftBrick*>(listObjects[i]) && weapon->checkAABBWithObjectAABBEx(listObjects[i])) {
@@ -1328,40 +1340,40 @@ void CSceneGame::createBat() {
 }
 void CSceneGame::createGhost() {
 	
-	if (!isAllowToCreateGhost) {
-		return;
-	 }
-	
-	int ghost = 0;
-	for (int i = 0; i < listEnemy.size(); i++) {
-		if (dynamic_cast<CGhost*>(listEnemy[i])&& listEnemy[i]->isShow()) {
-			ghost++;
-		}
-	}
+	//if (!isAllowToCreateGhost) {
+	//	return;
+	// }
+	//
+	//int ghost = 0;
+	//for (int i = 0; i < listEnemy.size(); i++) {
+	//	if (dynamic_cast<CGhost*>(listEnemy[i])&& listEnemy[i]->isShow()) {
+	//		ghost++;
+	//	}
+	//}
 
-	if (ghost == 0&&!isWaitingToCreateGhost) {
-		timeStartCreateGhost = GetTickCount();
-		isWaitingToCreateGhost = true;
-	}
-	if (GetTickCount() - timeStartCreateGhost >= TIME_DELAY_CREATE_GHOST&& isWaitingToCreateGhost) {
-			for (int i = 0; i < 3; i++) {
-				if (rand() % 2) {
-					CGhost* newGhost = new CGhost(game->GetCamPos_x() - i * 30, 170, 1); // Direction: 1 la di qua phai, -1 la di qua trai
-					listEnemy.push_back(newGhost);
-					//objects.push_back(newGhost);
-					//cout << "Tao ghost phai" << endl;
-				}
-				else {
-					CGhost* newGhost = new CGhost(game->GetCamPos_x() + SCREEN_WIDTH + i * 30, 170, -1); // Direction: 1 la di qua phai, -1 la di qua trai
-					listEnemy.push_back(newGhost);
-					//objects.push_back(newGhost);
-					//cout << "Tao ghost phai" << endl;
-				}
+	//if (ghost == 0&&!isWaitingToCreateGhost) {
+	//	timeStartCreateGhost = GetTickCount();
+	//	isWaitingToCreateGhost = true;
+	//}
+	//if (GetTickCount() - timeStartCreateGhost >= TIME_DELAY_CREATE_GHOST&& isWaitingToCreateGhost) {
+	//		for (int i = 0; i < 3; i++) {
+	//			if (rand() % 2) {
+	//				CGhost* newGhost = new CGhost(game->GetCamPos_x() - i * 30, 170, 1); // Direction: 1 la di qua phai, -1 la di qua trai
+	//				listEnemy.push_back(newGhost);
+	//				//objects.push_back(newGhost);
+	//				//cout << "Tao ghost phai" << endl;
+	//			}
+	//			else {
+	//				CGhost* newGhost = new CGhost(game->GetCamPos_x() + SCREEN_WIDTH + i * 30, 170, -1); // Direction: 1 la di qua phai, -1 la di qua trai
+	//				listEnemy.push_back(newGhost);
+	//				//objects.push_back(newGhost);
+	//				//cout << "Tao ghost phai" << endl;
+	//			}
 
-			}
-			
-			isWaitingToCreateGhost = false;
-	}
+	//		}
+	//		
+	//		isWaitingToCreateGhost = false;
+	//}
 }
 
 void CSceneGame::updateCamAutoGo(DWORD dt) {
@@ -1491,6 +1503,7 @@ void CSceneGame::checkCollisionSimonWithHidden() {
 		CScenes::GetInstance()->Get(SCENE_GAME_ID)->LoadResources();
 		simon->SetPosition(77, 86);
 		simon->stopAutoGoX();
+		simon->setIsAtTunnel(false);
 		break;
 	case HIDDEN_TYPE_GO_TUNNEL:
 		if (!simon->getIsAtTunnel()) {
@@ -1502,10 +1515,13 @@ void CSceneGame::checkCollisionSimonWithHidden() {
 		}
 		break;
 	case HIDDEN_TYPE_GO_TUNNEL_2:
-		if (!simon->getIsAtTunnel()&&simon->getDirection()>0) {
+		cout << "prepard" << endl;
+		if (simon->getDirection()>0) {
+			cout << "go tunnel" << endl;
+
 			CScenes::GetInstance()->Get(SCENE_GAME_ID)->setStage(3);
 			LoadResources();
-			simon->SetPosition(352, 32);
+			simon->SetPosition(355, 32);
 			simon->setIsThroughBrick(0);
 			simon->setIsAtTunnel(true);
 		}
@@ -1518,34 +1534,34 @@ void CSceneGame::checkCollisionSimonWithHidden() {
 
 void CSceneGame::createPanther()
 {
-	if (!isAllowToCreatePanther) {
-		return;
-	}
-	int panther = 0;
-	for (int i = 0; i < listEnemy.size(); i++) {
-		if (dynamic_cast<CPanther*>(listEnemy[i]) && listEnemy[i]->isShow()) {
-			panther++;
-		}
-	}
-	if (panther == 0) {
-		//cout << "Create panther" << endl;
-		CPanther* panther1 = new CPanther(691, 40, -1, simon);
-		panther1 = new CPanther(691, 40, -1, simon);
-		//objects.push_back(panther1);
-		listEnemy.push_back(panther1);
+	//if (!isAllowToCreatePanther) {
+	//	return;
+	//}
+	//int panther = 0;
+	//for (int i = 0; i < listEnemy.size(); i++) {
+	//	if (dynamic_cast<CPanther*>(listEnemy[i]) && listEnemy[i]->isShow()) {
+	//		panther++;
+	//	}
+	//}
+	//if (panther == 0) {
+	//	//cout << "Create panther" << endl;
+	//	CPanther* panther1 = new CPanther(691, 40, -1, simon);
+	//	panther1 = new CPanther(691, 40, -1, simon);
+	//	//objects.push_back(panther1);
+	//	listEnemy.push_back(panther1);
 
-		CPanther* panther2 = new CPanther(691, 40, -1, simon);
-		panther2 = new CPanther(855, 40, -1, simon);
-		//objects.push_back(panther2);
-		listEnemy.push_back(panther2);
+	//	CPanther* panther2 = new CPanther(691, 40, -1, simon);
+	//	panther2 = new CPanther(855, 40, -1, simon);
+	//	//objects.push_back(panther2);
+	//	listEnemy.push_back(panther2);
 
-		CPanther* panther3 = new CPanther(691, 40, -1, simon);
-		panther3 = new CPanther(921, 40, -1, simon);
-		//objects.push_back(panther3);
-		listEnemy.push_back(panther3);
+	//	CPanther* panther3 = new CPanther(691, 40, -1, simon);
+	//	panther3 = new CPanther(921, 40, -1, simon);
+	//	//objects.push_back(panther3);
+	//	listEnemy.push_back(panther3);
 
-		isAllowToCreatePanther = false;
-	}
+	//	isAllowToCreatePanther = false;
+	//}
 }
 
 void CSceneGame::createSplash(float x,float y) {

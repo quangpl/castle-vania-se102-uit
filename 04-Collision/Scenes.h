@@ -47,6 +47,7 @@
 #include "Grid.h"
 #include "SoftBrick.h"
 #include "SoftBrickEffect.h"
+#include "Batman.h"
 using namespace std;
 
 class CScene

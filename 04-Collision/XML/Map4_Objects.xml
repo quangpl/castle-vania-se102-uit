@@ -10,17 +10,19 @@
   <Grounds id="0">
     <Ground x="-200" y="212" width="1000" height="8" />
     <Ground x="0" y="115" width="125" height="6" />
-    <Ground x="130" y="147" width="45" height="1" />
+    <Ground x="130" y="147" width="44" height="1" />
     <!-- <Ground x="721" y="147"  width="47" height="1"/> -->
     <!-- <Ground x="686" y="180"  width="12" height="1"/>  -->
   </Grounds>
   
   <SmallCandles id="2" >
-    <SmallCandle x="30" y="148" width="8" height="14" itemId ="0" name="LARGE_HEART" />
-    <SmallCandle x="92" y="84" width="8" height="14" itemId ="-1" name="RAND"/>
-    <SmallCandle x="156" y="118" width="8" height="14" itemId ="-1" name="RAND"/>
+    <SmallCandle x="29" y="150" width="8" height="14" itemId ="0" name="LARGE_HEART" />
+    <SmallCandle x="94" y="85" width="8" height="14" itemId ="-1" name="RAND"/>
+    <SmallCandle x="158" y="120" width="8" height="14" itemId ="-1" name="RAND"/>
     <!-- <SmallCandle x="218" y="86" width="8" height="14"  itemId ="5" name="INVISIBLE"/> -->
-    <SmallCandle x="284" y="182" width="8" height="14" itemId ="-1" name="RAND"/>
+    <SmallCandle x="280" y="182" width="8" height="14" itemId ="-1" name="RAND"/>
+
+
     <SmallCandle x="348" y="150" width="8" height="14" itemId ="6" name="AXE"/>
     <SmallCandle x="412" y="182" width="8" height="14" itemId ="-1" name="RAND"/>
     <SmallCandle x="474" y="182" width="8" height="14" itemId ="-1" name="RAND"/>
@@ -30,10 +32,11 @@
     <SmallCandle x="732" y="150" width="8" height="14" itemId ="-1" name="RAND"/>
   </SmallCandles>
   <CheckStairs id="-3">
-    <CheckStair x="157" y="115" width="16" height="4" ny="-1" nx="1"  direction="4" center="000" isThroughBrick="0"/>
-    <CheckStair x="235" y="210" width="16" height="4" ny="-1" nx="1"  direction="3" center="220" isThroughBrick="0"/>
-    <CheckStair x="27" y="210" width="16" height="4" ny="-1" nx="1"  direction="4" center="000" isThroughBrick="1"/>
-    <CheckStair x="350" y="180" width="3" height="4" ny="-1" nx="1"  direction="4" center="000" isThroughBrick="1"/>
+    <CheckStair x="164" y="115" width="5" height="4" ny="-1" nx="1"  direction="4" center="152" isThroughBrick="0"/>
+    <CheckStair x="235" y="210" width="5" height="4" ny="-1" nx="1"  direction="3" center="221" isThroughBrick="0"/>
+    <CheckStair x="35" y="210" width="5" height="4" ny="-1" nx="1"  direction="4" center="000" isThroughBrick="1"/>
+
+    <CheckStair x="360" y="180" width="3" height="4" ny="-1" nx="1"  direction="4" center="345" isThroughBrick="1"/>
     
     <!-- <CheckStair x="138" y="144" width="16" height="4" ny="1" nx="-1" direction="4" center="598" isThroughBrick="0"/>
     <CheckStair x="298" y="146" width="18" height="4" ny="-1" nx="1" direction="4" center="598" isThroughBrick="0"/>
@@ -43,7 +46,7 @@
   </CheckStairs>
   <Hiddens id="9">
     <Hidden x="33" y="220" width="14" height="5" typeHidden="3"/>
-    <Hidden x="355" y="225" width="14" height="5" typeHidden="32"/>
+    <Hidden x="362" y="224" width="14" height="5" typeHidden="32"/>
 
   </Hiddens>
    <SoftBricks id="20">

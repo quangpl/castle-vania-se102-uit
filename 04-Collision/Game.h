@@ -79,6 +79,10 @@ public:
 	void SetCamPos(float x, float y) { cam_x = x; cam_y = y; }
 	float GetCamPos_x() { return cam_x; }
 	float GetCamPos_y() { return cam_y; }
+	D3DXVECTOR2 cameraTranform(float x_world, float y_world)
+	{
+		return D3DXVECTOR2(x_world - cam_x, y_world - cam_y);
+	}
 	static CGame * GetInstance();
 	void setDebug(bool _debug) { this->isDebug = _debug; };
 	bool getDebug() { return this->isDebug; };

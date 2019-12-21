@@ -51,17 +51,21 @@
     isLoadBlackScene="0" timeLoadBlackScene="0"/>
     
   </ChangeSceneObjects>
+
+
   <CheckStairs id="-3">
-    <CheckStair x="47" y="56" width="14" height="4" ny="-1" nx="1"  direction="4" center="598" isThroughBrick="0"/>
+    <CheckStair x="47" y="56" width="6" height="4" ny="-1" nx="1"  direction="4" center="598" isThroughBrick="0"/>
     
-    <CheckStair x="95" y="100" width="14" height="4" ny="-1" nx="1" direction="3" center="598" isThroughBrick="0"/>
-    <CheckStair x="232" y="209" width="14" height="4" ny="1" nx="-1" direction="1" center="598" isThroughBrick="0"/>
+    <CheckStair x="105" y="100" width="6" height="4" ny="-1" nx="1" direction="3" center="75" isThroughBrick="0"/>
+    <CheckStair x="232" y="209" width="6" height="4" ny="1" nx="-1" direction="1" center="598" isThroughBrick="0"/>
 
-    <CheckStair x="397" y="145.5" width="14" height="4" ny="-1" nx="1" direction="1" center="598" isThroughBrick="0"/>
-    <CheckStair x="456" y="209" width="14" height="4" ny="1" nx="-1" direction="1" center="598" isThroughBrick="0"/>
+    <CheckStair x="397" y="145.5" width="6" height="4" ny="-1" nx="1" direction="1" center="598" isThroughBrick="0"/>
+    <CheckStair x="456" y="209" width="6" height="4" ny="1" nx="-1" direction="1" center="598" isThroughBrick="0"/>
 
-    <CheckStair x="364" y="209" width="16" height="4" ny="-1" nx="1" direction="1" center="598" isThroughBrick="0"/>
+    <CheckStair x="364" y="209" width="6" height="4" ny="-1" nx="1" direction="1" center="598" isThroughBrick="0"/>
   </CheckStairs>
+
+
   <HiddenWalls id="-4">
     <HiddenWall x="256" y="195" width="16" height="16" type ="1" itemId="1"/>
     <HiddenWall x="256" y="179" width="16" height="12" type ="0" itemId="0"/>

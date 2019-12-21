@@ -1,22 +1,12 @@
 #ifndef __SIMON_H__
 #define	__SIMON_H__
 #pragma once
-//#include "GameObject.h"
 #include "Constants.h"
 #include "Weapon.h"
 #include "Whip.h"
-//#include "Scenes.h"
 #include "Hidden.h"
-//#include "Candles.h"
-//#include "LargeHeart.h"
-//#include "DaggerItem.h"
-//#include "WhipUpgrade.h"
 #include "Items.h"
 #include "StairPoint.h"
-//#include <algorithm>
-//#include "debug.h"
-//#include "Constants.h"
-//#include "Game.h"
 
 #define SIMON_WALKING_SPEED		0.25f//Spped simon walking , default : 0.1f
 #define SIMON_WALKING_SPEED_AUTO	0.05f //Spped simon walking , default : 0.1f
@@ -24,7 +14,7 @@
 //0.1f
 #define SIMON_JUMP_SPEED_Y		0.4f
 #define SIMON_JUMP_DEFLECT_SPEED 0.2f
-#define SIMON_GRAVITY			0.002f
+#define SIMON_GRAVITY			0.001f
 #define SIMON_DIE_DEFLECT_SPEED	 0.5f
 
 #define SIMON_STATE_IDLE			0
@@ -85,7 +75,7 @@
 
 #define	SIMON_LEVEL	2
 
-#define SIMON_BBOX_WIDTH  35
+#define SIMON_BBOX_WIDTH  32
 #define SIMON_BBOX_HEIGHT 28
 #define SIMON_SIT_BBOX_HEIGHT 20
 
@@ -99,7 +89,7 @@
 #define DEFAULT_OFFSET_X 24
 
 #define SIMON_BBOX_MARGIN_LEFT 15
-#define TIME_AUTO_GO_STAIR 200
+#define TIME_AUTO_GO_STAIR 300
 #define TIME_HURT 250
 #define TIME_BLINK 1300
 #define STAGE_1_TARGET_DOOR 665
@@ -216,6 +206,7 @@ public:
 	void collectDagger();
 	void collectWhipUpgrade(CWhip* &_whip);
 	bool isCollisionWithItem(CItem* item);
+	bool getIsJump() { return this->isJump; };
 	bool getIsHit() { return this->isHit; };
 	bool getIsHitFinish() { return this->isHitFinish; };
 	int getTypeHiddenCollision(vector<CGameObject*> listHidden);
