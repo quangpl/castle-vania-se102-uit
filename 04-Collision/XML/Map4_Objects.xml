@@ -64,7 +64,7 @@
    <SoftBricks id="20">
     <SoftBrick x="256" y="180"/>
   </SoftBricks>
-    <ChangeSceneObjects id="-1">
-    <ChangeScene x="492" y="65"  width="32" height="4"/>
-  </ChangeSceneObjects>
+    <Doors id="-1">
+    <Door x="492" y="65" width="32" height="14" target1="317" target2="499" targetSimon="530"/>
+  </Doors>
 </Objects>

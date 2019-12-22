@@ -68,8 +68,8 @@ void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	// Calculate dx, dy 
 	CGameObject::Update(dt);
 	checkBlink();
-	cout <<"y: " <<y << endl;
-	cout << "x: "<<x << endl;
+	//cout <<"y: " <<y << endl;
+	//cout << "x: "<<x << endl;
 	//if(currentStair) {
 	//	cout << currentStair->getStairDirection() << endl;
 	//}

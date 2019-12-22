@@ -48,9 +48,9 @@
     <Wall x="927" y="148"  width="100" height="13"/>
     <Wall x="1392" y="116"  width="142" height="13"/>
   </Walls>
-  <ChangeSceneObjects id="-1">
-    <ChangeScene x="1529" y="65" width="8" height="14"/>
-  </ChangeSceneObjects>
+  <Doors id="-1">
+    <Door x="1529" y="65" width="8" height="14" target1="1380" target2="1537" targetSimon="1600"/>
+  </Doors>
   <Spawns id="-2" >
     <Spawn x="84" y="0" spawnerId="0" enemyId="0" xEnemy="0" yEnemy="0" quantityEachSpawn ="3" timeEachSpawn="1000" delaySpawnTime="2000" width="8" height="300"/>
     <Spawn x="528" y="0" spawnerId="1" enemyId="1" xEnemy="700" yEnemy="80" quantityEachSpawn ="1" timeEachSpawn="0" delaySpawnTime="0" width="8" height="300"/>

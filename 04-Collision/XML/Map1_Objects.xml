@@ -15,8 +15,6 @@
   </Hiddens>
 
   <ChangeScenes id="-1" width="16" height="30">
-    <ChangeScene x="675" y="168" sceneId="1"
-     simonAutoGo="1" simonAutoGoDistance="35"
-     camAutoGo="0" isDoor="0"/>
+    <ChangeScene x="675" y="168" target1="0" target2="0" targetSimon="0"/>
   </ChangeScenes>
 </Objects>

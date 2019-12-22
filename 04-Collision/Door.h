@@ -26,16 +26,33 @@ class CDoor : public CGround
 	bool isComplete;
 	DWORD timeStartAni;
 	int id; //Id stage se qua
+	float target1, target2, targetSimon;
 
 public:
-	CDoor(float _x, float _y, int _id) : CGround() {
+	CDoor(float _x, float _y, int _id, float _target1,float _target2,float _targetSimon) : CGround() {
 		setType(TYPE_OBJECT_HIDDEN);
 		x = _x;
 		y = _y;
 		id = _id;
+		target1 = _target1;
+		target2 = _target2;
+		targetSimon = _targetSimon;
+
 	};
 	virtual void Render();
 	void Update(DWORD dt);
 	void SetState(int state);
 	int getId() { return this->id; }
+
+	float getTarget1() {
+		return this->target1;
+	}
+
+	float getTarget2() {
+		return this->target2;
+	}
+
+	float getTargetSimon() {
+		return this->targetSimon;
+	}
 };

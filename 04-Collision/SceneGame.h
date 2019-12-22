@@ -63,6 +63,7 @@
 class CSceneGame : public CScene
 {	
 	int currentIdMap;
+	CDoor* currentDoor;
 	vector<CGameObject*> objects;
 	bool isUpdateScene;
 	static CSceneGame* __instance;
@@ -71,6 +72,7 @@ class CSceneGame : public CScene
 	bool isWaitSimonThroughScene;
 	bool isProcessStageChange ;
 	bool isChangeSceneComplete;
+	bool isCamAutoGo;
 
 	bool hasCrossEffect = false;
 	DWORD timeStartCrossEffect;
@@ -96,6 +98,8 @@ class CSceneGame : public CScene
 	DWORD TimeCreateFishmen;
 	DWORD TimeWaitCreateFishmen;
 	DWORD timeTest;
+
+	float deltaCamX;
 
 public:
 	CSceneGame();
