@@ -754,6 +754,186 @@ void CSceneGame::LoadResources() {
 	maps->Add(ID_MAP_4, map);
 	currentIdMap = ID_MAP_4;
 	}
+	else if (getStage() == 5) {
+	//cout << "load stage 4" << endl;
+	objects.clear();
+	listBrick.clear();
+	listHidden.clear();
+	listCandle.clear();
+	listStairPoint.clear();
+	listDoor.clear();
+	grid->clear();
+	listEnemy.clear();
+	listSoftBrick.clear();
+	isAllowCreateFishmen = false;
+
+	CTextures* textures = CTextures::GetInstance();
+
+	/*textures->Add(ID_TEX_MAP_2, "Map\\tileset_map2.png", D3DCOLOR_XRGB(255, 255, 255));
+	textures->Add(ID_TEX_BBOX, "textures\\bbox.png", D3DCOLOR_XRGB(255, 255, 255));
+	textures->Add(ID_TEX_SIMON, "textures\\TexturesV4.png", D3DCOLOR_XRGB(34, 177, 76));
+	textures->Add(ID_TEX_CANDLE, "textures\\object.png", D3DCOLOR_XRGB(34, 177, 76));
+	textures->Add(ID_TEX_ITEM, "textures\\Items.png", D3DCOLOR_XRGB(128, 0, 0));*/
+
+
+
+
+	CMap* map = new CMap(ID_TEX_MAP_2, "Map\\tileset_map2.png", D3DCOLOR_XRGB(255, 255, 255));
+	map->ReadMapTXT("Map\\Map5.txt");
+	map->LoadTile();
+
+	CSprites* sprites = CSprites::GetInstance();
+	CAnimations* animations = CAnimations::GetInstance();
+
+	LPDIRECT3DTEXTURE9 texSimon = textures->Get(ID_TEX_SIMON);
+	LPDIRECT3DTEXTURE9 texCandle = textures->Get(ID_TEX_CANDLE);
+
+	//Load tất cả animations
+	LPDIRECT3DTEXTURE9 directTexture;
+	TiXmlDocument doc("XML/Textures.xml");
+	if (!doc.LoadFile())
+	{
+		//DebugOut(L"Can't read XML file");
+		MessageBox(NULL, L"Can't Read XML File", L"Error", MB_OK);
+		return;
+	}
+	else
+	{
+		//DebugOut(L"[INFO]Read XML success\n");
+	}
+	// get info root
+	TiXmlElement* root = doc.RootElement();
+	TiXmlElement* sprite = nullptr;
+	TiXmlElement* animation = nullptr;
+	TiXmlElement* texture = nullptr;
+	LPANIMATION ani;
+	// gameObjectId = 0 -- Simon
+	for (texture = root->FirstChildElement(); texture != NULL; texture = texture->NextSiblingElement())
+	{
+		int textureId;
+		int gameObjectId;
+		texture->QueryIntAttribute("textureId", &textureId);
+		texture->QueryIntAttribute("gameObjectId", &gameObjectId);
+
+		directTexture = textures->Get(textureId);
+		for (animation = texture->FirstChildElement(); animation != NULL; animation = animation->NextSiblingElement())
+		{
+			int aniId, frameTime;
+			animation->QueryIntAttribute("frameTime", &frameTime);
+
+			ani = new CAnimation(frameTime);
+			for (sprite = animation->FirstChildElement(); sprite != NULL; sprite = sprite->NextSiblingElement())
+			{
+				int left, top, right, bottom, id;
+				sprite->QueryIntAttribute("id", &id);
+				sprite->QueryIntAttribute("top", &top);
+				sprite->QueryIntAttribute("left", &left);
+				sprite->QueryIntAttribute("right", &right);
+				sprite->QueryIntAttribute("bottom", &bottom);
+				sprites->Add(id, left, top, right, bottom, directTexture);
+				ani->Add(id);
+			}
+			animation->QueryIntAttribute("aniId", &aniId);
+			animations->Add(aniId, ani);
+			if (gameObjectId == 0)
+			{
+				simon->AddAnimation(aniId);
+			}
+		};
+
+
+	}
+
+	//Load new object
+	TiXmlDocument Map2Object("XML/Map42_Objects.xml");
+	if (!Map2Object.LoadFile())
+	{
+		//DebugOut(L"Can't read XML file: %s");
+		MessageBox(NULL, L"Can't Read XML File", L"Error", MB_OK);
+		return;
+	}
+	// get info root
+	root = Map2Object.RootElement();
+	TiXmlElement* Objects = nullptr;
+	TiXmlElement* Object = nullptr;
+	for (Objects = root->FirstChildElement(); Objects != NULL; Objects = Objects->NextSiblingElement())
+	{
+		int id;
+		float x, y, Width, Height, direction, center;
+		float isThroughBrick, typeHidden;
+		Objects->QueryIntAttribute("id", &id);
+		for (Object = Objects->FirstChildElement(); Object != NULL; Object = Object->NextSiblingElement())
+		{
+			Object->QueryFloatAttribute("x", &x);
+			Object->QueryFloatAttribute("y", &y);
+			Object->QueryFloatAttribute("width", &Width);
+			Object->QueryFloatAttribute("height", &Height);
+			Object->QueryFloatAttribute("direction", &direction);
+			Object->QueryFloatAttribute("center", &center);
+			Object->QueryFloatAttribute("isThroughBrick", &isThroughBrick);
+			Object->QueryFloatAttribute("typeHidden", &typeHidden);
+
+
+			if (id == 0)
+			{
+				CBrick* newBrick = new CBrick();
+				newBrick->setSize(Width, Height);
+				newBrick->SetPosition(x, y);
+				listBrick.push_back(newBrick);
+				objects.push_back(newBrick);
+			}
+
+			if (id == 2) {
+				CSmallCandle* smallCandle = new CSmallCandle();
+				smallCandle->SetPosition(x, y);
+				objects.push_back(smallCandle);
+				//listCandle.push_back(smallCandle);
+			}
+			else if (id == -3)
+			{
+				CStairPoint* stairPoint = new CStairPoint(x, y, Width, Height, direction);
+				stairPoint->setCenter(center);
+				stairPoint->setHasThrough(isThroughBrick);
+				//objects.push_back(stairPoint);
+				listStairPoint.push_back(stairPoint);
+			}
+			else if (id == 20)
+			{
+
+				CSoftBrick* softBrick = new CSoftBrick(x, y);
+				listSoftBrick.push_back(softBrick);
+
+			}
+			else if (id == -1) {
+				CDoor* door = new CDoor(x, y, 2); //2: id stage 2 , stage cua cua dang dung
+				door->SetState(DOOR_STATE_STATIC);
+				objects.push_back(door);
+				listDoor.push_back(door);
+			}
+		}
+	}
+
+	CBatMan* batman = new CBatMan();
+	listEnemy.push_back(batman);
+
+	//Simon
+	simon->setDirection(1);
+	objects.push_back(simon);
+
+	//Whip
+	objects.push_back(simon->getWeapon());
+	if (simon->getSubWeapon()) {
+		simon->setSubWeapon(simon->getSubWeapon());
+		objects.push_back(simon->getSubWeapon());
+	}
+
+
+	//Map
+
+
+	maps->Add(ID_MAP_5, map);
+	currentIdMap = ID_MAP_5;
+	}
 	
 	else {
 			//cout << "CANNOT SET STAGE or STAGE NULL" << endl;
@@ -964,6 +1144,12 @@ void CSceneGame::Update(DWORD dt) {
 		}
 	}
 	else if (getStage() == 4) {
+		CGame::GetInstance()->SetCamPos(cx, CAM_Y_DEFAULT_STAGE_2); //Khoảng cách để Simon đứng ngay giữa màn hình không bị lệch 
+		if (camX >= BOUNDARY_CAMERA_STAGE_3 && cx >= BOUNDARY_CAMERA_STAGE_3) {
+			CGame::GetInstance()->SetCamPos(BOUNDARY_CAMERA_STAGE_3, CAM_Y_DEFAULT_STAGE_2);
+		}
+	}
+	else if (getStage() == 5) {
 		CGame::GetInstance()->SetCamPos(cx, CAM_Y_DEFAULT_STAGE_2); //Khoảng cách để Simon đứng ngay giữa màn hình không bị lệch 
 		if (camX >= BOUNDARY_CAMERA_STAGE_3 && cx >= BOUNDARY_CAMERA_STAGE_3) {
 			CGame::GetInstance()->SetCamPos(BOUNDARY_CAMERA_STAGE_3, CAM_Y_DEFAULT_STAGE_2);

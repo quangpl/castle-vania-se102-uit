@@ -5,6 +5,8 @@
 #define ID_MAP_2 2
 #define ID_MAP_3 3
 #define ID_MAP_4 4
+#define ID_MAP_5 5
+
 
 #define VX_CAMERA 0.02;
 #define TIME_CORSS_EFFECT 3000
@@ -48,6 +50,7 @@
 
 
 #define BOUNDARY_CAMERA_STAGE_3 427
+#define BOUNDARY_CAMERA_STAGE_4 194.75
 #define BOUNDARY_CAMERA_STAGE_2 1506
 
 #define TIME_DELAY_CREATE_GHOST 3000

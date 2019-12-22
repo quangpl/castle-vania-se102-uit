@@ -47,6 +47,11 @@ void CSampleKeyHander::OnKeyDown(int KeyCode)
 		CScenes::GetInstance()->Get(SCENE_GAME_ID)->LoadResources();
 		simonKey->SetPosition(77, 86.5);
 		break;
+	case DIK_5:
+		CScenes::GetInstance()->Get(SCENE_GAME_ID)->setStage(5);
+		CScenes::GetInstance()->Get(SCENE_GAME_ID)->LoadResources();
+		simonKey->SetPosition(77, 50);
+		break;
 	case DIK_DOWN: // debug mode
 		//cout << "Dang nhan down" << endl;
 		if (simonKey->getCanGoStair()) {

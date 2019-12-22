@@ -12,7 +12,7 @@
 #define SIMON_WALKING_SPEED_AUTO	0.05f //Spped simon walking , default : 0.1f
 
 //0.1f
-#define SIMON_JUMP_SPEED_Y		0.4f
+#define SIMON_JUMP_SPEED_Y		0.3f
 #define SIMON_JUMP_DEFLECT_SPEED 0.2f
 #define SIMON_GRAVITY			0.001f
 #define SIMON_DIE_DEFLECT_SPEED	 0.5f
