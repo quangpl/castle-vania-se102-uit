@@ -59,12 +59,14 @@
   <Hiddens id="9">
     <Hidden x="33" y="220" width="14" height="5" typeHidden="3"/>
     <Hidden x="362" y="224" width="14" height="5" typeHidden="32"/>
+    <Hidden x="578" y="86" width="14" height="25" typeHidden="11"/>
+
 
   </Hiddens>
    <SoftBricks id="20">
     <SoftBrick x="256" y="180"/>
   </SoftBricks>
     <Doors id="-1">
-    <Door x="492" y="65" width="32" height="14" target1="317" target2="499" targetSimon="530"/>
+    <Door x="492" y="65" width="32" height="14" target1="317" target2="513" targetSimon="530"/>
   </Doors>
 </Objects>

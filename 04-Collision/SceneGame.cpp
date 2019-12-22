@@ -596,6 +596,7 @@ void CSceneGame::LoadResources() {
 		isProcessStageChange = false;
 		isStageMoving = false;
 		game->setAutoGo(false, 0);
+		isCompleteMoveCamPharse1 = false;
 		CTextures* textures = CTextures::GetInstance();
 
 		/*textures->Add(ID_TEX_MAP_2, "Map\\tileset_map2.png", D3DCOLOR_XRGB(255, 255, 255));
@@ -785,7 +786,10 @@ void CSceneGame::LoadResources() {
 		listEnemy.clear();
 		listSoftBrick.clear();
 		isAllowCreateFishmen = false;
-
+		isProcessStageChange = false;
+		isStageMoving = false;
+		game->setAutoGo(false, 0);
+		isCompleteMoveCamPharse1 = false;
 		CTextures* textures = CTextures::GetInstance();
 
 		/*textures->Add(ID_TEX_MAP_2, "Map\\tileset_map2.png", D3DCOLOR_XRGB(255, 255, 255));
@@ -1109,11 +1113,6 @@ void CSceneGame::Update(DWORD dt) {
 	}
 
 #pragma endregion
-	if (simon->getFreeze()) {
-		cout << "Freeze true" << endl;
-	}
-	else {
-	}
 
 	//Append all objects which weapon can destroy 
 	coWeaponAndCandle.reserve(coWeaponAndCandle.size() + listEnemy.size() + listSoftBrick.size()); // Reserve space first
@@ -1133,6 +1132,7 @@ void CSceneGame::Update(DWORD dt) {
 
 	camX = CGame::GetInstance()->GetCamPos_x();
 	camY = CGame::GetInstance()->GetCamPos_y();
+
 	//Khoảng cách để Simon vô giữa màn hình
 
 	updateCamAutoGo(dt);
@@ -1163,10 +1163,14 @@ void CSceneGame::Update(DWORD dt) {
 		}
 	}
 	else if (getStage() == 4) {
-		CGame::GetInstance()->SetCamPos(cx, CAM_Y_DEFAULT_STAGE_2); //Khoảng cách để Simon đứng ngay giữa màn hình không bị lệch 
-		if (camX >= BOUNDARY_CAMERA_STAGE_4 && cx >= BOUNDARY_CAMERA_STAGE_4) {
+	
+		if (!isCompleteMoveCamPharse1) {
+			CGame::GetInstance()->SetCamPos(cx, CAM_Y_DEFAULT_STAGE_2); //Khoảng cách để Simon đứng ngay giữa màn hình không bị lệch 
+			if (camX >= BOUNDARY_CAMERA_STAGE_4 && cx >= BOUNDARY_CAMERA_STAGE_4) {
 			CGame::GetInstance()->SetCamPos(BOUNDARY_CAMERA_STAGE_4, CAM_Y_DEFAULT_STAGE_2);
 		}
+		}
+		
 	}
 	else if (getStage() == 5) {
 		CGame::GetInstance()->SetCamPos(cx, CAM_Y_DEFAULT_STAGE_2); //Khoảng cách để Simon đứng ngay giữa màn hình không bị lệch 
@@ -1174,13 +1178,15 @@ void CSceneGame::Update(DWORD dt) {
 			CGame::GetInstance()->SetCamPos(BOUNDARY_CAMERA_STAGE_3, CAM_Y_DEFAULT_STAGE_2);
 		}
 	}
-
+	//cout << "camx: " << camX << endl;
 	//Change scene processing
 	if (isStageMoving) {
-		CGame::GetInstance()->SetCamPos(++deltaCamX, CAM_Y_DEFAULT_STAGE_2);
-		if (round(CGame::GetInstance()->GetCamPos_x()) >= game->getTargetAutoGo()) {
+			CGame::GetInstance()->SetCamPos(++deltaCamX, CAM_Y_DEFAULT_STAGE_2);
+		
+		if (round(CGame::GetInstance()->GetCamPos_x()) == game->getTargetAutoGo()) {
 			CGame::GetInstance()->SetCamPos(game->getTargetAutoGo(), CAM_Y_DEFAULT_STAGE_2);
 			isStageMoving = false;
+			isCompleteMoveCamPharse1 = true;
 		}
 	}
 
@@ -1188,12 +1194,13 @@ void CSceneGame::Update(DWORD dt) {
 	if (isProcessStageChange && !isStageMoving) {
 		for (int i = 0; i < objects.size(); i++) {
 			if (dynamic_cast<CDoor*>(objects[i])) {
-				if (dynamic_cast<CDoor*>(objects[i])->getId() == 2 & !isWaitSimonThroughScene) //dang xu ly cua o stage 2
+				if (dynamic_cast<CDoor*>(objects[i])->getId() == 2 && !isWaitSimonThroughScene) //dang xu ly cua o stage 2
 				{
 					simon->setFreeze(true);
 					isWaitSimonThroughScene = true;
 					objects[i]->SetState(DOOR_STATE_OPEN);
-					currentDoor = dynamic_cast<CDoor*>(objects[i]);
+					
+					//currentDoor = dynamic_cast<CDoor*>(objects[i]);
 					simon->autoGoX(1, SIMON_WALKING_SPEED_AUTO, currentDoor->getTargetSimon()); //breakpoint 1
 				}
 			}
@@ -1594,7 +1601,7 @@ void CSceneGame::createGhost() {
 
 void CSceneGame::updateCamAutoGo(DWORD dt) {
 	float camX = CGame::GetInstance()->GetCamPos_x();
-	if (game->getAutoGo() && camX!=game->getTargetAutoGo()) {
+	if (game->getAutoGo() && camX<game->getTargetAutoGo()) {
 		isStageMoving = true;
 	}
 }
@@ -1715,6 +1722,12 @@ void CSceneGame::checkCollisionSimonWithHidden() {
 		simon->SetPosition(77, 86);
 		simon->stopAutoGoX();
 		simon->setIsAtTunnel(false);
+		break;
+	case HIDDEN_TYPE_LOAD_STAGE_5:
+		CScenes::GetInstance()->Get(SCENE_GAME_ID)->setStage(5);
+		CScenes::GetInstance()->Get(SCENE_GAME_ID)->LoadResources();
+		simon->stopAutoGoX();
+		simon->SetPosition(31, 86);
 		break;
 	case HIDDEN_TYPE_GO_TUNNEL:
 		if (!simon->getIsAtTunnel()) {

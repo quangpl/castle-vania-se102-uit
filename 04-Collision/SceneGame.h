@@ -64,6 +64,7 @@ class CSceneGame : public CScene
 {	
 	int currentIdMap;
 	CDoor* currentDoor;
+
 	vector<CGameObject*> objects;
 	bool isUpdateScene;
 	static CSceneGame* __instance;
@@ -73,6 +74,7 @@ class CSceneGame : public CScene
 	bool isProcessStageChange ;
 	bool isChangeSceneComplete;
 	bool isCamAutoGo;
+	bool isCompleteMoveCamPharse1;
 
 	bool hasCrossEffect = false;
 	DWORD timeStartCrossEffect;
