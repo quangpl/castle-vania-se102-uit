@@ -42,6 +42,8 @@
       <sprite id="10011" left="5" top="73" right="83" bottom="103" frameTime="100"/>
       <sprite id="10012" left="87" top="73" right="165" bottom="103" frameTime="100"/>
       <sprite id="10013" left="171" top="73" right="249" bottom="103" frameTime="100"/>
+      <sprite id="100135" left="171" top="73" right="249" bottom="103" frameTime="100"/>
+
     </Animation>
     <!-- Animation THROW_INVISIBLE -->
     <Animation aniId="508" frameTime="100" name="THROW_INVISIBLE">
@@ -90,6 +92,8 @@
       <sprite id="10021" left="170" top="159" right="248" bottom="189" frameTime="100"/>
 
       <sprite id="100212" left="170" top="159" right="248" bottom="189" frameTime="100"/>
+      <sprite id="1002992" left="170" top="159" right="248" bottom="189" frameTime="100"/>
+
     </Animation>
     <!-- Animation LEVEL_TWO_ATTACK_STAND -->
     <Animation aniId="510" frameTime="50" name="LEVEL_TWO_ATTACK_STAND">
@@ -100,6 +104,8 @@
       <sprite id="10032" left="88" top="339" right="166" bottom="367" frameTime="100"/>
 
       <sprite id="10036" left="171" top="339" right="249" bottom="367" frameTime="100"/>
+      <sprite id="1008836" left="171" top="339" right="249" bottom="367" frameTime="100"/>
+
 
     </Animation>
     <!-- Animation LEVEL_THREE_ATTACK_STAND -->

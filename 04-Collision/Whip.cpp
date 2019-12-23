@@ -1,5 +1,5 @@
 ﻿#include "Whip.h"
-void CWhip::Render()
+void CWhip::Render(int currentId)
 {
 	int ani;
 	if (getFinish()) {
@@ -20,7 +20,7 @@ void CWhip::Render()
 		ani = ROPE_ANI_LEVEL_3;
 		break;
 	}
-	CAnimations::GetInstance()->Get(ani)->RenderFlip(-getDirection(), x, y, 24, 255);
+	CAnimations::GetInstance()->Get(ani)->RenderWhip(currentId,-getDirection(), x, y, 24, 255);
 	setCurrentAni(ani);
 	if (CGame::GetInstance()->getDebug()) {
 		RenderBoundingBox();

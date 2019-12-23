@@ -68,6 +68,8 @@ public:
 	void Add(int spriteId, DWORD time = 0);
 	void Render(float x, float y, int alpha=255);
 	void RenderFlip(int nx, float x, float y, float offsetX, int alpha);// nx là hướng render của simon
+	void RenderWhip(int currentId,int nx, float x, float y, float offsetX, int alpha);// nx là hướng render của simon
+
 	int getNumberOfFrame() { return this->frames.size(); };
 	int getCurrentFrame() { return this->currentFrame; };
 	void setCurrentFrame(int _currentFrame) { this->currentFrame = _currentFrame; };

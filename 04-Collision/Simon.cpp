@@ -250,10 +250,8 @@ bool CSimon::isCollisionWithItem(CItem* objItem)
 
 void CSimon::Render()
 {
-	int ani = SIMON_ANI_IDLE;
-	if (isHit) {
-		//cout << "hit" << endl;
-	}
+	int ani = 0;
+	
 	switch (state)
 	{
 	case SIMON_STATE_DIE:
@@ -334,12 +332,16 @@ void CSimon::Render()
 		}
 		else {
 			ani = SIMON_ANI_JUMP;
+			if (isHit) {
+				ani = SIMON_ANI_HIT;
+			}
 		}
 	break;
 	}
 	//cout << typeMovingStair << endl;
-	CAnimations::GetInstance()->Get(ani)->RenderFlip(-nx,x, y, DEFAULT_OFFSET_X, alpha);
 	setCurrentAni(ani);
+	CAnimations::GetInstance()->Get(ani)->RenderFlip(-nx,x, y, DEFAULT_OFFSET_X, alpha);
+	
 
 	if (CGame::GetInstance()->getDebug()) {
 		RenderBoundingBox();

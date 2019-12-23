@@ -52,7 +52,7 @@ class CWhip : public CWeapon
 {
 	virtual void GetBoundingBox(float& left, float& top, float& right, float& bottom);
 	virtual void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects);
-	virtual void Render();
+	
 
 	int WhipLevel;
 	bool wasHit;
@@ -71,6 +71,8 @@ public:
 	}
 	int getCurrentFrame() { return this->currentFrame; };
 	void setCurrentFrame(int fr) { this->currentFrame = fr; };
+
+	virtual void Render(int currentId);
 };
 
 #endif

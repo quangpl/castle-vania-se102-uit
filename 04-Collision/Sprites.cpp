@@ -119,6 +119,27 @@ void CAnimation::RenderFlip(int nx, float x, float y, float offsetX, int alpha)
 	}
 	frames[currentFrame]->GetSprite()->DrawFlip(nx, x, y, offsetX, alpha);
 }
+void CAnimation::RenderWhip(int currentId,int nx, float x, float y, float offsetX, int alpha)
+{
+	DWORD now = GetTickCount();
+	if (currentFrame == -1)
+	{
+		currentFrame = 0;
+		lastFrameTime = now;
+	}
+	else
+	{
+		DWORD t = frames[currentFrame]->GetTime();
+		if (now - lastFrameTime > t)
+		{
+			currentFrame++;
+			lastFrameTime = now;
+			if (currentFrame == frames.size()) currentFrame = 0;
+		}
+
+	}
+	frames[currentId]->GetSprite()->DrawFlip(nx, x, y, offsetX, alpha);
+}
 
 
 CAnimations * CAnimations::__instance = NULL;

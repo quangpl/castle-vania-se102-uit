@@ -1027,8 +1027,7 @@ void CSceneGame::Update(DWORD dt) {
 	createPanther();
 	checkUpdateScene();
 
-	//bug khong co whip cho simon
-	whip->SetPosition(simon->GetPositionX(), simon->GetPositionY());
+	
 	vector<LPGAMEOBJECT> coPlayerAndBackground;
 	vector<LPGAMEOBJECT> coWeaponAndCandle;
 	vector<LPGAMEOBJECT> coEffects;
@@ -1089,6 +1088,8 @@ void CSceneGame::Update(DWORD dt) {
 			}
 		}
 	}
+	//update whip theo simon
+	whip->SetPosition(simon->GetPositionX(), simon->GetPositionY()+2);
 
 
 #pragma region Process Cross Effect
@@ -1232,7 +1233,13 @@ void CSceneGame::Render() {
 	for (int i = 0; i < objects.size(); i++)
 	{
 		if (objects[i]->isShow()) {
-			objects[i]->Render();
+			if (dynamic_cast<CWhip*>(objects[i])) {
+				int id = CAnimations::GetInstance()->Get(simon->getCurrentAni())->getCurrentFrame();
+				dynamic_cast<CWhip*>(objects[i])->Render(id);
+			}
+			else {
+				objects[i]->Render();
+			}
 		}
 	}
 	for (int i = 0; i < listHidden.size(); i++)
