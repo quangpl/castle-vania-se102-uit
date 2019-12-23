@@ -20,8 +20,9 @@ void CWhip::Render(int currentId)
 		ani = ROPE_ANI_LEVEL_3;
 		break;
 	}
-	CAnimations::GetInstance()->Get(ani)->RenderWhip(currentId,-getDirection(), x, y, 24, 255);
 	setCurrentAni(ani);
+	CAnimations::GetInstance()->Get(ani)->RenderWhip(currentId,-getDirection(), x, y, 24, 255);
+
 	if (CGame::GetInstance()->getDebug()) {
 		RenderBoundingBox();
 	}
@@ -80,9 +81,9 @@ void CWhip::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	//CGameObject::Update(dt);
 	CWeapon::Update(dt, coObjects);
 	CAnimations* listAnimation = CAnimations::GetInstance();
-	if (getFinish()) {
+	/*if (getFinish()) {
 		return;
-	}
+	}*/
 	/*if (GetTickCount() - getTimeStartWaitItem() >= 4000) {
 		setIsWaitItem(false);
 	}*/
@@ -91,14 +92,15 @@ void CWhip::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		setFinish(true);
 		wasHit = true;
 	}*/
-	//cout << listAnimation->Get(ROPE_ANI_LEVEL_1)->getCurrentFrame() << endl;
+	//cout << listAnimation->Get(getCurrentAni())->getCurrentFrame() << endl;
 	if (getCurrentAni()) {
 		currentFrame = listAnimation->Get(getCurrentAni())->getCurrentFrame();
 	}
-	if (currentFrame == 3) {
-		setFinish(true);
+	if (currentFrame ==4) {
+		//setFinish(true);
 		setCanDestroy(true);
 		listAnimation->Get(getCurrentAni())->setCurrentFrame(-1);
+		setFinish(true);
 	}
 	else {
 		setCanDestroy(false);

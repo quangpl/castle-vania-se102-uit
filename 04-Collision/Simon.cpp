@@ -1,7 +1,7 @@
 ﻿#include "Simon.h"
 
 CSimon* CSimon::__instance = NULL;
-
+int ani = 0;
 
 CSimon* CSimon::GetInstance()
 {
@@ -68,8 +68,8 @@ void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	// Calculate dx, dy 
 	CGameObject::Update(dt);
 	checkBlink();
-	cout <<"y: " <<y << endl;
-	cout << "x: "<<x << endl;
+	/*cout <<"y: " <<y << endl;
+	cout << "x: "<<x << endl;*/
 	//if(currentStair) {
 	//	cout << currentStair->getStairDirection() << endl;
 	//}
@@ -160,13 +160,26 @@ void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	vector<LPCOLLISIONEVENT> coEventsResult;
  
 	coEvents.clear();
+
+	//if (isHit) {
+	//	if (GetTickCount()-timeStartHit>=400) {
+	//		isHit = false;
+	//		isHitFinish = true;
+	//		//cout << "Set hit false" << endl;
+	//	}
+	//}
+
 	if (isHit) {
-		if (GetTickCount()-timeStartHit>=400) {
+		if (CAnimations::GetInstance()->Get(getCurrentAni())->getCurrentFrame()==3) {
 			isHit = false;
 			isHitFinish = true;
+			CAnimations::GetInstance()->Get(getCurrentAni())->setCurrentFrame(0);
 			//cout << "Set hit false" << endl;
 		}
 	}
+
+
+
 	CalcPotentialCollisions(coObjects, coEvents);
 
 	// reset untouchable timer if untouchable time has passed
@@ -250,7 +263,7 @@ bool CSimon::isCollisionWithItem(CItem* objItem)
 
 void CSimon::Render()
 {
-	int ani = 0;
+
 	
 	switch (state)
 	{
@@ -338,10 +351,10 @@ void CSimon::Render()
 		}
 	break;
 	}
-	//cout << typeMovingStair << endl;
-	setCurrentAni(ani);
-	CAnimations::GetInstance()->Get(ani)->RenderFlip(-nx,x, y, DEFAULT_OFFSET_X, alpha);
+	//cout << ani << endl;
 	
+	CAnimations::GetInstance()->Get(ani)->RenderFlip(-nx,x, y, DEFAULT_OFFSET_X, alpha);
+	setCurrentAni(ani);
 
 	if (CGame::GetInstance()->getDebug()) {
 		RenderBoundingBox();
@@ -522,7 +535,7 @@ void CSimon::jumpReset() {
 }
 void CSimon::attack() {
 	
-	if (!this->weapon->getFinish()) {  //Ngan chan khong cho su dung vu khi lien tuc
+	if (isHit) {  //Ngan chan khong cho su dung vu khi lien tuc
 		return;
 	}
 	timeStartHit = GetTickCount();
@@ -530,6 +543,9 @@ void CSimon::attack() {
 		//cout << "Set type" << endl;
 		typeMovingStair = 3;
 	}
+	/*cout << getCurrentAni() << endl;
+	cout << CAnimations::GetInstance()->Get(getCurrentAni())->getCurrentFrame() << endl;*/
+	CAnimations::GetInstance()->Get(getCurrentAni())->setCurrentFrame(0);
 	isHit = true;
 	this->weapon->attack(x,y,nx);
 	this->lastTimeAttack = GetTickCount();

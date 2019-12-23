@@ -69,8 +69,8 @@ public:
 	bool getIsCanAttack() {
 		return this->isCanAttack;
 	}
-	int getCurrentFrame() { return this->currentFrame; };
-	void setCurrentFrame(int fr) { this->currentFrame = fr; };
+	//int getCurrentFrame() { return this->currentFrame; };
+	//void setCurrentFrame(int fr) { this->currentFrame = fr; };
 
 	virtual void Render(int currentId);
 };

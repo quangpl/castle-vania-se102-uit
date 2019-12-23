@@ -790,6 +790,7 @@ void CSceneGame::LoadResources() {
 		isStageMoving = false;
 		game->setAutoGo(false, 0);
 		isCompleteMoveCamPharse1 = false;
+		simon->stopAutoGoX();
 		CTextures* textures = CTextures::GetInstance();
 
 		/*textures->Add(ID_TEX_MAP_2, "Map\\tileset_map2.png", D3DCOLOR_XRGB(255, 255, 255));
@@ -1230,18 +1231,7 @@ void CSceneGame::Render() {
 	{
 		listSoftBrick[i]->Render();
 	}
-	for (int i = 0; i < objects.size(); i++)
-	{
-		if (objects[i]->isShow()) {
-			if (dynamic_cast<CWhip*>(objects[i])) {
-				int id = CAnimations::GetInstance()->Get(simon->getCurrentAni())->getCurrentFrame();
-				dynamic_cast<CWhip*>(objects[i])->Render(id);
-			}
-			else {
-				objects[i]->Render();
-			}
-		}
-	}
+
 	for (int i = 0; i < listHidden.size(); i++)
 	{
 		listHidden[i]->Render();
@@ -1250,7 +1240,18 @@ void CSceneGame::Render() {
 	{
 		listStairPoint[i]->Render();
 	}
-	
+	for (int i = 0; i < objects.size(); i++)
+	{
+		if (objects[i]->isShow()) {
+			if (dynamic_cast<CWhip*>(objects[i]) && simon->getIsHit()) {
+				int id = CAnimations::GetInstance()->Get(simon->getCurrentAni())->getCurrentFrame();
+				dynamic_cast<CWhip*>(objects[i])->Render(id);
+			}
+			else {
+				objects[i]->Render();
+			}
+		}
+	}
 
 }
 void CSceneGame::loadObjectToGrid() {
@@ -1308,7 +1309,7 @@ void CSceneGame::checkCollisonOfWeapon(vector<LPGAMEOBJECT> &listObjects) { //Tr
 						subWeapon->setFinish(true);
 						objects.push_back(new CFire(listObjects[i]->GetPositionX(), listObjects[i]->GetPositionY()));
 						objects.push_back(getItem(dynamic_cast<CCandle*>(listObjects[i])->getId(), listObjects[i]->GetPositionX(), listObjects[i]->GetPositionY()));
-						subWeapon->setCurrentFrame(-1);
+						//subWeapon->setCurrentFrame(-1);
 						subWeapon->setCanDestroy(false);
 						subWeapon->setFinish(true);
 						listObjects[i]->hide();
@@ -1316,7 +1317,7 @@ void CSceneGame::checkCollisonOfWeapon(vector<LPGAMEOBJECT> &listObjects) { //Tr
 					else if (dynamic_cast<CSmallCandle*>(listObjects[i]) && subWeapon->checkAABBWithObject(listObjects[i])) {
 						objects.push_back(new CFire(listObjects[i]->GetPositionX(), listObjects[i]->GetPositionY()));
 						objects.push_back(getItem(rand() % (21) + 1, listObjects[i]->GetPositionX(), listObjects[i]->GetPositionY()));
-						subWeapon->setCurrentFrame(-1);
+						//subWeapon->setCurrentFrame(-1);
 						subWeapon->setCanDestroy(false);
 						listObjects[i]->hide();
 						subWeapon->setFinish(true);
@@ -1324,7 +1325,7 @@ void CSceneGame::checkCollisonOfWeapon(vector<LPGAMEOBJECT> &listObjects) { //Tr
 					else if (listObjects[i]->getType() == TYPE_OBJECT_ENEMY&& subWeapon->checkAABBWithObjectAABBEx(listObjects[i])) {
 						objects.push_back(new CFire(listObjects[i]->GetPositionX(), listObjects[i]->GetPositionY()));
 						objects.push_back(getItem(1 + rand() % (11), listObjects[i]->GetPositionX(), listObjects[i]->GetPositionY()));
-						subWeapon->setCurrentFrame(-1);
+						//subWeapon->setCurrentFrame(-1);
 						subWeapon->setCanDestroy(false);
 						listObjects[i]->hide();
 						subWeapon->setFinish(true);
@@ -1339,41 +1340,39 @@ void CSceneGame::checkCollisonOfWeapon(vector<LPGAMEOBJECT> &listObjects) { //Tr
 				if (dynamic_cast<CCandle*>(listObjects[i]) && weapon->checkAABBWithObject(listObjects[i])) {
 					objects.push_back(new CFire(listObjects[i]->GetPositionX(), listObjects[i]->GetPositionY()));
 					objects.push_back(getItem(dynamic_cast<CCandle*>(listObjects[i])->getId(), listObjects[i]->GetPositionX(), listObjects[i]->GetPositionY()));
-					weapon->setCurrentFrame(-1);
+					//CAnimations::GetInstance()->Get(weapon->getCurrentAni())->setCurrentFrame(3);
 					weapon->setCanDestroy(false);
 					listObjects[i]->hide();
-					weapon->setFinish(true);
+					//weapon->setFinish(true);
 				}
 				else if (dynamic_cast<CSmallCandle*>(listObjects[i]) && weapon->checkAABBWithObject(listObjects[i])) {
 					objects.push_back(new CFire(listObjects[i]->GetPositionX(), listObjects[i]->GetPositionY()));
 					objects.push_back(getItem(1 + rand() % (11), listObjects[i]->GetPositionX(), listObjects[i]->GetPositionY()));
-					weapon->setCurrentFrame(-1);
+					//weapon->setCurrentFrame(-1);
 					weapon->setCanDestroy(false);
 					listObjects[i]->hide();
-					weapon->setFinish(true);
+					//weapon->setFinish(true);
 				}
 				else if (listObjects[i]->getType() == TYPE_OBJECT_ENEMY&& weapon->checkAABBWithObjectAABBEx(listObjects[i])) {
 					objects.push_back(new CFire(listObjects[i]->GetPositionX(), listObjects[i]->GetPositionY()));
 					objects.push_back(getItem(1 + rand() % (11), listObjects[i]->GetPositionX(), listObjects[i]->GetPositionY()));
-					weapon->setCurrentFrame(-1);
 					weapon->setCanDestroy(false);
-					weapon->setCurrentFrame(-1);
+					//weapon->setCurrentFrame(-1);
 					listObjects[i]->hide();
 					cout << "Va cham boss" << endl;
-					weapon->setFinish(true);
+					//weapon->setFinish(true);
 				}
 				else if (dynamic_cast<CSoftBrick*>(listObjects[i]) && weapon->checkAABBWithObjectAABBEx(listObjects[i])) {
 					objects.push_back(new CSoftBrickEffect(listObjects[i]->GetPositionX(), listObjects[i]->GetPositionY()));
 					objects.push_back(getItem(1 + rand() % (11), listObjects[i]->GetPositionX(), listObjects[i]->GetPositionY()));
-					weapon->setCurrentFrame(-1);
 					weapon->setCanDestroy(false);
-					weapon->setCurrentFrame(-1);
+					//weapon->setCurrentFrame(-1);
 					listObjects[i]->hide();
-					weapon->setFinish(true);
+					//weapon->setFinish(true);
 				}
 				else {
 					weapon->setCanDestroy(false);
-						weapon->setCurrentFrame(-1);
+					//	weapon->setCurrentFrame(-1);
 				}
 			}
 		}

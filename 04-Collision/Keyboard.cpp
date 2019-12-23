@@ -33,6 +33,14 @@ void CSampleKeyHander::OnKeyDown(int KeyCode)
 		simonKey->attack();
 		simonKey->SetState(SIMON_STATE_HIT);
 		break;
+	case DIK_X:
+		if (simonKey->getSubWeapon()) {
+			if (simonKey->getWeapon()->getFinish()) {
+				simonKey->attackSub();
+				simonKey->SetState(SIMON_STATE_HIT);
+			}
+		}
+		break;
 	case DIK_2:
 		CScenes::GetInstance()->Get(SCENE_GAME_ID)->setStage(2);
 		CScenes::GetInstance()->Get(SCENE_GAME_ID)->LoadResources();
@@ -132,9 +140,11 @@ void CSampleKeyHander::KeyState(BYTE* states)   //long event
 	}
 	if (gameKey->IsKeyDown(DIK_X))
 	{
-		if (simonKey->getSubWeapon()) {
-			simonKey->attackSub();
-			simonKey->SetState(SIMON_STATE_HIT);
+		/*if (simonKey->getSubWeapon()) {
+			if (simonKey->getWeapon()->getFinish()) {
+				simonKey->attackSub();
+				simonKey->SetState(SIMON_STATE_HIT);
 		}
+		}*/
 	}
 }
