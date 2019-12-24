@@ -2,12 +2,12 @@
 #define __BAT_H__
 
 #include "GameObject.h" 
+#include <iostream>
+#define BAT_SPEED_X 0.08f 
+#define BAT_SPEED_Y 0.08f
 
-#define BAT_SPEED_X 0.05f 
-#define BAT_SPEED_Y 0.05f
-
-#define DeltaY 20 // Biên giao động trục y
-#define BAT_ANI 569
+#define DeltaY 20 
+#define BAT_ANI 570
 #define BAT_BBOX_WIDTH 20
 #define BAT_BBOX_HEIGHT 20
 

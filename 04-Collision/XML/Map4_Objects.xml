@@ -42,7 +42,7 @@
   <CheckStairs id="-3">
     <CheckStair x="164" y="115" width="5" height="4" ny="-1" nx="1"  direction="4" center="152" isThroughBrick="0"/>
     <CheckStair x="235" y="210" width="5" height="4" ny="-1" nx="1"  direction="3" center="221" isThroughBrick="0"/>
-    <CheckStair x="35" y="210" width="5" height="4" ny="-1" nx="1"  direction="4" center="000" isThroughBrick="1"/>
+    <CheckStair x="35" y="210" width="10" height="4" ny="-1" nx="1"  direction="4" center="24" isThroughBrick="1"/>
 
     
   <CheckStair x="360" y="180" width="4" height="4" ny="-1" nx="1"  direction="4" center="345" isThroughBrick="1"/>
@@ -57,11 +57,16 @@
     <CheckStair x="708" y="146" width="16" height="4" ny="-1" nx="-1" direction="4" center="598" isThroughBrick="0"/> -->
   </CheckStairs>
   <Hiddens id="9">
-    <Hidden x="33" y="220" width="14" height="5" typeHidden="3"/>
+    <Hidden x="33" y="220" width="25" height="5" typeHidden="3"/>
     <Hidden x="362" y="224" width="14" height="5" typeHidden="32"/>
     <Hidden x="578" y="86" width="14" height="25" typeHidden="11"/>
 
 
+    <Hidden x="86" y="86" width="5" height="25" typeHidden="7"/>
+    <Hidden x="142" y="118" width="5" height="25" typeHidden="7"/>
+    <Hidden x="172" y="183" width="5" height="25" typeHidden="7"/>
+    <Hidden x="83" y="183" width="5" height="25" typeHidden="7"/>
+    <Hidden x="30" y="183" width="5" height="25" typeHidden="7"/>
   </Hiddens>
    <SoftBricks id="20">
     <SoftBrick x="256" y="180"/>

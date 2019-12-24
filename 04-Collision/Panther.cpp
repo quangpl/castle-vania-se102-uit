@@ -40,7 +40,7 @@ void CPanther::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	}
 
 
-	if (x- simon->GetPositionX() <25 && isSitting) { //distance kich hoat
+	if (x- simon->GetPositionX() < DISTANCE_TO_ACTIVE && isSitting) { //distance kich hoat
 		isRunning = true;
 		isSitting = false;
 	}

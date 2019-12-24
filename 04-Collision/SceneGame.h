@@ -126,6 +126,7 @@ public:
 	void updateCamAutoGo(DWORD dt);
 
 	void loadObjectToGrid();
+	void loadObjectFromGrid();
 	void clearObjects() { this->objects.clear(); };
 
 	void createBat();

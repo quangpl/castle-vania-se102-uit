@@ -124,6 +124,8 @@
       <sprite id="10023" left="87" top="200" right="165" bottom="230" frameTime="100"/>
 
       <sprite id="100242" left="170" top="200" right="248" bottom="230" frameTime="100"/>
+      <sprite id="100242" left="170" top="200" right="248" bottom="230" frameTime="100"/>
+
      </Animation>
     <!-- Animation LEVEL_ONE_ATTACK_SIT -->
     <Animation aniId="512" frameTime="30" name="LEVEL_ONE_ATTACK_SIT">

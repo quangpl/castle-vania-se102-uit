@@ -28,7 +28,8 @@ void CBat::Update(DWORD dt, vector<LPGAMEOBJECT>* listObject)
 	if ((x > camX + SCREEN_WIDTH && nx > 0) || (x < camX && nx < 0)) {
 		hide();
 	}
-	if (isShow()) {
+
+	if (!isShow()) {
 		return;
 	}
 	
