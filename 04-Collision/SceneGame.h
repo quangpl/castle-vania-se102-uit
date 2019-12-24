@@ -51,7 +51,7 @@
 
 #define BOUNDARY_CAMERA_STAGE_3 427
 #define BOUNDARY_CAMERA_STAGE_4 194.75
-#define BOUNDARY_CAMERA_STAGE_2 1506
+#define BOUNDARY_CAMERA_STAGE_2 1235
 
 #define TIME_DELAY_CREATE_GHOST 3000
 #define TIME_DELAY_CREATE_PANTHER 3000
@@ -111,13 +111,13 @@ public:
 	void Update(DWORD dt);
 	void Render();
 	void checkUpdateScene();
-	
+	void updateSimon();
 
 	//void checkCollisonOfSimon();
-	void checkCollisonOfWeapon(vector<LPGAMEOBJECT> &objects);
+	void updateWeapon(vector<LPGAMEOBJECT> &objects);
 	CItem* getItem(int id, float x, float y);
 	void deleteObject(vector<LPGAMEOBJECT> &objects, int index);
-	void checkCollisionOfSimon();
+	void simonCollisionWithOrther();
 	void getBonusFromItem(CItem* item);
 	
 	//void checkCollisionOfEnemy();

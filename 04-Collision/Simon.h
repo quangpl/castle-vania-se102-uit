@@ -8,7 +8,7 @@
 #include "Items.h"
 #include "StairPoint.h"
 
-#define SIMON_WALKING_SPEED		0.25f//Spped simon walking , default : 0.1f
+#define SIMON_WALKING_SPEED		0.1f//Spped simon walking , default : 0.1f
 #define SIMON_WALKING_SPEED_AUTO	0.05f //Spped simon walking , default : 0.1f
 
 //0.1f

@@ -34,6 +34,8 @@ private:
 	float yInit; // vị trí y lúc khởi tạo
 	float xInit;
 
+	bool isActive;
+
 	float xBefore;
 	float xAfter;
 	float xAccumulationAttack; // quãng đường đã đi tích lũy, để khi đi đủ giới hạn sẽ attack

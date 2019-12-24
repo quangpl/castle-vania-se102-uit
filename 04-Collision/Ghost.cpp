@@ -27,9 +27,6 @@ void CGhost::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	CGameObject::Update(dt);
 	if (x > 1490) {
 		this->nx = -1;
-
-
-
 	}
 	if (this->isInCamera(x, y, GHOST_BBOX_WIDTH, GHOST_BBOX_HEIGHT)) {
 		isActive = true;

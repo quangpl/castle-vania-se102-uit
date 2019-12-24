@@ -37,7 +37,7 @@ void CFishMen::Update(DWORD dt, vector<LPGAMEOBJECT>* listObject)
 {
 	float camX = CGame::GetInstance()->GetCamPos_x();
 	//Xoa khi ghost đi khoi camera 
-	if ((x + FISHMEN_BBOX_WIDTH > camX + SCREEN_WIDTH && nx == 1) || (x + FISHMEN_BBOX_HEIGHT < camX && nx == -1)) {
+	if (!this->isInCamera(x,y, FISHMEN_BBOX_WIDTH, FISHMEN_BBOX_HEIGHT)&&isActive) {
 		hide();
 	}
 	if (!isShow()) {
@@ -47,12 +47,11 @@ void CFishMen::Update(DWORD dt, vector<LPGAMEOBJECT>* listObject)
 	if (y >= BREAK_POINT_DIE_Y&&vy>0) {
 		hide();
 	}
-	if (!isShow()) {
-		return;
-	}
+	
 	if (y <= yInit - FISHMEN_DY_JUMP)
 	{
 		vy = FISHMEN_SPEED_Y_DOWN;
+		isActive = true;
 	}
 
 

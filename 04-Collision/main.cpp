@@ -60,24 +60,7 @@ void LoadResources()
 {
 	CTextures* textures = CTextures::GetInstance();
 
-	//textures->Add(ID_TEX_MAP_2, "Map\\tileset_map2.png", D3DCOLOR_XRGB(255, 255, 255));
-	//textures->Add(ID_TEX_MAP_1, "Map\\tileset_map1.png", D3DCOLOR_XRGB(255, 0, 255));
-	//textures->Add(ID_TEX_BBOX, "textures\\bbox.png", D3DCOLOR_XRGB(255, 255, 255));
-	//textures->Add(ID_TEX_SIMON, "textures\\TexturesV4.png", D3DCOLOR_XRGB(34, 177, 76));
-	//textures->Add(ID_TEX_CANDLE, "textures\\object.png", D3DCOLOR_XRGB(34, 177, 76));
-	//textures->Add(ID_TEX_ITEM, "textures\\Items.png", D3DCOLOR_XRGB(128, 0, 0));
-	//textures->Add(ID_TEX_ENEMY, "textures\\enemy.png", D3DCOLOR_XRGB(96, 68, 106));
-	
-	ifstream fileTextures("textures\\Textures.txt", ios::in);
-	int texId, nTexture, R, G, B;
-	string texFilePath;
-	fileTextures >> nTexture;
-	for (int i = 0; i < nTexture; i++)
-	{
-		fileTextures >> texId >> texFilePath >> R >> G >> B;
-		textures->Add(texId, texFilePath.c_str(), D3DCOLOR_XRGB(R, G, B));
-	}
-	scenes->Get(SCENE_GAME_ID)->LoadResources();
+	scenes->Get(scenes->getCurrentSceneId())->LoadResources();
 }
 
 /*
@@ -86,7 +69,7 @@ void LoadResources()
 */
 void Update(DWORD dt)
 {
-	scenes->Get(SCENE_GAME_ID)->Update(dt);
+	scenes->Get(scenes->getCurrentSceneId())->Update(dt);
 }
 
 /*
@@ -111,7 +94,7 @@ void Render()
 		
 		//tao ao giac - cross
 		spriteHandler->Begin(D3DXSPRITE_ALPHABLEND);
-		scenes->Get(SCENE_GAME_ID)->Render();
+		scenes->Get(scenes->getCurrentSceneId())->Render();
 		spriteHandler->End();
 		d3ddv->EndScene();
 	}
@@ -211,6 +194,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	HWND hWnd = CreateGameWindow(hInstance, nCmdShow, SCREEN_WIDTH, SCREEN_HEIGHT);
 	
 	scenes->Add(SCENE_GAME_ID, sceneGame);
+	scenes->setCurrentSceneId(SCENE_GAME_ID);
 	scenes->Get(SCENE_GAME_ID)->setStage(1);
 	CGame::GetInstance()->Init(hWnd);
 	

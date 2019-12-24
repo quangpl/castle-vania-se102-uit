@@ -71,10 +71,14 @@ class CScenes
 {
 	static CScenes* __instance;
 	unordered_map<int, LPSCENE> scenes;
+	int currentId;
 
 public:
 	void Add(int id,LPSCENE scene);
 	LPSCENE Get(int id);
 	static CScenes* GetInstance();
+	int getCurrentSceneId() { return this->currentId; }
+	void setCurrentSceneId(int id) {   this->currentId =id; }
+
 };
 
