@@ -583,7 +583,7 @@ void CSimon::idle() {
 		else {
 		
 			if (isHit) {
-				nx > 0 ? typeMovingStair = 3 : typeMovingStair = 4;
+				nx > 0 ? typeMovingStair = 4 : typeMovingStair =3;
 			}
 			else {
 				nx < 0 ? typeMovingStair = 5 : typeMovingStair = 6;
