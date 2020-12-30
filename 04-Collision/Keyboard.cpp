@@ -1,6 +1,5 @@
 ﻿#include "Keyboard.h"
 CGame* gameKey = CGame::GetInstance();
-CWeapon* weaponKey = CWeapon::GetInstance();
 CSimon* simonKey = CSimon::GetInstance();
 
 
@@ -10,7 +9,7 @@ void CSampleKeyHander::OnKeyDown(int KeyCode)
 	if (simonKey->getFreeze()) {
 		return;
 	}
-	DebugOut(L"[INFO] KeyDown: %d\n", KeyCode);
+	//DebugOut(L"[INFO] KeyDown: %d\n", KeyCode);
 	switch (KeyCode)
 	{
 	case DIK_SPACE:
@@ -25,6 +24,58 @@ void CSampleKeyHander::OnKeyDown(int KeyCode)
 	case DIK_D: // debug mode
 		gameKey->setDebug(!gameKey->getDebug());
 		break;
+	case DIK_UP: // debug mode
+		if (simonKey->getCanGoStair()) {
+			simonKey->setIsGoToStair(true);
+		}
+		break;
+	case DIK_Z:
+		simonKey->attack();
+		simonKey->SetState(SIMON_STATE_HIT);
+		break;
+	case DIK_X:
+		if (simonKey->getSubWeapon()) {
+			if (simonKey->getWeapon()->getFinish()) {
+				simonKey->attackSub();
+				simonKey->SetState(SIMON_STATE_HIT);
+			}
+		}
+		break;
+	case DIK_2:
+		CScenes::GetInstance()->Get(SCENE_GAME_ID)->setStage(2);
+		CScenes::GetInstance()->Get(SCENE_GAME_ID)->LoadResources();
+		break;
+	case DIK_3:
+		CScenes::GetInstance()->Get(SCENE_GAME_ID)->setStage(3);
+		CScenes::GetInstance()->Get(SCENE_GAME_ID)->LoadResources();
+		simonKey->SetPosition(50, 100);
+		break;
+	case DIK_4:
+		CScenes::GetInstance()->Get(SCENE_GAME_ID)->setStage(4);
+		CScenes::GetInstance()->Get(SCENE_GAME_ID)->LoadResources();
+		simonKey->SetPosition(77, 86.5);
+		break;
+	case DIK_5:
+		CScenes::GetInstance()->Get(SCENE_GAME_ID)->setStage(5);
+		CScenes::GetInstance()->Get(SCENE_GAME_ID)->LoadResources();
+		simonKey->SetPosition(77, 50);
+		break;
+	case DIK_DOWN: // debug mode
+		//cout << "Dang nhan down" << endl;
+		if (simonKey->getCanGoStair()) {
+			//cout << "Set is go true" << endl;
+			simonKey->setIsGoToStair(true);
+		}
+		break;
+	case DIK_F1:
+		CScenes::GetInstance()->Get(SCENE_GAME_ID)->setStage(2);
+		CScenes::GetInstance()->Get(SCENE_GAME_ID)->LoadResources();
+		simonKey->SetPosition(1600, simonKey->GetPositionY());
+		break;
+	/*case DIK_Z:
+		simonKey->attack();
+		simonKey->SetState(SIMON_STATE_HIT);
+		break;*/
 	}
 
 }
@@ -35,18 +86,18 @@ void CSampleKeyHander::OnKeyUp(int KeyCode)   //short event
 	if (simonKey->getFreeze()) {
 		return;
 	}
-	DebugOut(L"[INFO] KeyUp: %d\n", KeyCode);
+	//DebugOut(L"[INFO] KeyUp: %d\n", KeyCode);
 	switch (KeyCode)
 	{
 	case DIK_DOWN:
 		simonKey->SetState(SIMON_STATE_SIT_RELEASE);
 		break;
 	case DIK_Z:
-		simonKey->SetState(SIMON_STATE_HIT_RELEASE);
-		//weapon->SetState(WEAPON_STATE_NO_WEAPON);
+		/*simonKey->SetState(SIMON_STATE_HIT_RELEASE);
+		weapon->SetState(WEAPON_STATE_NO_WEAPON);*/
 		break;
 	case DIK_X:
-		simonKey->SetState(SIMON_STATE_HIT_RELEASE);
+		/*simonKey->SetState(SIMON_STATE_HIT_RELEASE);*/
 		break;
 	default:
 		break;
@@ -72,8 +123,11 @@ void CSampleKeyHander::KeyState(BYTE* states)   //long event
 		simonKey->SetState(SIMON_STATE_IDLE);
 	if (gameKey->IsKeyDown(DIK_DOWN))
 	{
+		if (simonKey->getCanGoStair()) {
+			return;
+		}
+		//cout<<"vuot ngoai" << endl;
 		if (simonKey->GetState() == SIMON_STATE_HIT) {
-			weaponKey->SetState(WEAPON_STATE_ROPE);
 			simonKey->SetState(SIMON_STATE_HIT);
 		}
 		simonKey->SetState(SIMON_STATE_SIT);
@@ -81,14 +135,16 @@ void CSampleKeyHander::KeyState(BYTE* states)   //long event
 
 	if (gameKey->IsKeyDown(DIK_Z))
 	{
-		weaponKey->SetState(WEAPON_STATE_ROPE);
-		simonKey->SetState(SIMON_STATE_HIT);
+	/*	simonKey->attack();
+		simonKey->SetState(SIMON_STATE_HIT);*/
 	}
-	if (gameKey->IsKeyDown(DIK_X) && weaponKey->getHasDagger() && !weaponKey->isShow())
+	if (gameKey->IsKeyDown(DIK_X))
 	{
-		//weapon->show();
-		weaponKey->setTypeWeapon(WEAPON_TYPE_DAGGER);
-		weaponKey->SetState(WEAPON_STATE_DAGGER);
-		simonKey->SetState(SIMON_STATE_HIT);
+		/*if (simonKey->getSubWeapon()) {
+			if (simonKey->getWeapon()->getFinish()) {
+				simonKey->attackSub();
+				simonKey->SetState(SIMON_STATE_HIT);
+		}
+		}*/
 	}
 }

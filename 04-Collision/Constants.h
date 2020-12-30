@@ -4,21 +4,24 @@
 
 #define BACKGROUND_COLOR D3DCOLOR_XRGB(0,0,0)
 #define SCREEN_WIDTH 320
-#define SCREEN_HEIGHT 240
+#define SCREEN_HEIGHT 280
 #define BOARD_HEIGHT 60
 
 
-#define MAX_FRAME_RATE 120
+#define MAX_FRAME_RATE 150
 
 #define ID_TEX_MARIO 0
 #define ID_TEX_ENEMY 10
 #define ID_TEX_MISC 20
 #define ID_TEX_MAP_1 1000
 #define ID_TEX_MAP_2 2000
+#define ID_TEX_MAP_3 3000
 #define ID_TEX_SIMON 30
 #define ID_TEX_CANDLE 2
 #define ID_TEX_ITEM 1
 #define ID_TEX_HIDDEN 5
+#define ID_TEX_ENEMY 3
+
 
 
 

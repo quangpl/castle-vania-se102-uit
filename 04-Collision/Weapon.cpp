@@ -1,217 +1,128 @@
 ﻿#include "Weapon.h"
-CWeapon* CWeapon::__instance = NULL;
-CItems* list_items = CItems::GetInstance();
-CCandles* list_candles = CCandles::GetInstance();
-CAnimations* list_animations = CAnimations::GetInstance();
 
-CWeapon* CWeapon::GetInstance()
-{
-	if (__instance == NULL) __instance = new CWeapon();
-	return __instance;
-}
-void CWeapon::GetBoundingBox(float& left, float& top, float& right, float& bottom)
-{
-	
-	
-	top = y;
-	if(typeWeapon == WEAPON_TYPE_ROPE) {
-		switch (level)
-		{
-		case 1:
-			if (nx > 0) {
-				left = x + ROPE_LEVEL_1_LEFT_LTR;
-				right = x + ROPE_LEVEL_1_RIGHT_LTR;
-			}
-			else {
-				left = x - ROPE_LEVEL_1_RIGHT_RTL;
-				right = x + ROPE_LEVEL_1_LEFT_RTL;
-			}
-			break;
-		case 2:
-			if (nx > 0) {
-				left = x + ROPE_LEVEL_2_LEFT_LTR;
-				right = x + ROPE_LEVEL_2_RIGHT_LTR;
-			}
-			else {
-				left = x - ROPE_LEVEL_2_LEFT_RTL;
-				right = x + ROPE_LEVEL_2_RIGHT_RTL;
-			}
-			break;
-		default:
-			if (nx > 0) {
-				left = x + ROPE_LEVEL_3_LEFT_LTR;
-				right = x + ROPE_LEVEL_3_RIGHT_LTR;
-			}
-			else {
-				left = x - ROPE_LEVEL_3_RIGHT_RTL;
-				right = x + ROPE_LEVEL_3_LEFT_RTL;
-			}
-			break;
-		}
-	}
-	else if(typeWeapon== WEAPON_TYPE_DAGGER) {
-		left = x + DAGGER_LEFT;
-		right = x + DAGGER_RIGHT;
-		if (x <= 0) {
-			this->hide();
-		}
-	}
-	
-	bottom = y + ROPE_BBOX_HEIGHT;
-	setPositionCustom(left, top);
-}
+//void CWeapon::GetBoundingBox(float& left, float& top, float& right, float& bottom)
+//{
+//	
+//	
+//	top = y;
+//	if(typeWeapon == WEAPON_TYPE_ROPE) {
+//		switch (level)
+//		{
+//		case 1:
+//			if (nx > 0) {
+//				left = x + ROPE_LEVEL_1_LEFT_LTR;
+//				right = x + ROPE_LEVEL_1_RIGHT_LTR;
+//			}
+//			else {
+//				left = x - ROPE_LEVEL_1_RIGHT_RTL;
+//				right = x + ROPE_LEVEL_1_LEFT_RTL;
+//			}
+//			break;
+//		case 2:
+//			if (nx > 0) {
+//				left = x + ROPE_LEVEL_2_LEFT_LTR;
+//				right = x + ROPE_LEVEL_2_RIGHT_LTR;
+//			}
+//			else {
+//				left = x - ROPE_LEVEL_2_LEFT_RTL;
+//				right = x + ROPE_LEVEL_2_RIGHT_RTL;
+//			}
+//			break;
+//		default:
+//			if (nx > 0) {
+//				left = x + ROPE_LEVEL_3_LEFT_LTR;
+//				right = x + ROPE_LEVEL_3_RIGHT_LTR;
+//			}
+//			else {
+//				left = x - ROPE_LEVEL_3_RIGHT_RTL;
+//				right = x + ROPE_LEVEL_3_LEFT_RTL;
+//			}
+//			break;
+//		}
+//	}
+//	else if(typeWeapon== WEAPON_TYPE_DAGGER) {
+//		left = x + DAGGER_LEFT;
+//		right = x + DAGGER_RIGHT;
+//		if (x <= 0) {
+//			this->hide();
+//		}
+//	}
+//	
+//	bottom = y + ROPE_BBOX_HEIGHT;
+//	setPositionCustom(left, top);
+//}
 
-void CWeapon::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
-{
-	// Calculate dx, dy 
-
-	CGameObject::Update(dt);
-	vector<LPCOLLISIONEVENT> coEvents;
-	vector<LPCOLLISIONEVENT> coEventsResult;
-
-	coEvents.clear();
-
-	float lWeapon, tWeapon, rWeapon, bWeapon, lCandle, tCandle, rCandle, bCandle;
-	this->GetBoundingBox(lWeapon, tWeapon, rWeapon, bWeapon);
-	//isFinishThrowRope();
-	if (typeWeapon == WEAPON_TYPE_ROPE) {
-
-		if (list_animations->Get(ROPE_ANI_LEVEL_1)->getCurrentFrame() == 3 || list_animations->Get(ROPE_ANI_LEVEL_2)->getCurrentFrame() == 3 || list_animations->Get(ROPE_ANI_LEVEL_3)->getCurrentFrame() == 3) {
-			
-			for (int i = 0; i < list_candles->getSize(); i++) {
-				list_candles->getByIndex(i)->GetBoundingBox(lCandle, tCandle, rCandle, bCandle);
-				if (checkAABB(lWeapon, tWeapon, rWeapon, bWeapon, lCandle, tCandle, rCandle, bCandle) && list_candles->getByIndex(i)->isShow()) {
-					
-					list_candles->getByIndex(i)->hide();
-					list_candles->getByIndex(i)->hit(GetTickCount());
-					int idCandle = list_candles->getByIndex(i)->getId();
-					float xCandle, yCandle;
-					list_candles->getByIndex(i)->GetPosition(xCandle, yCandle);
-					list_items->Get(idCandle)->setTypeItem(list_items->getTypItemFromIndex(idCandle));
-					list_items->Get(idCandle)->SetPosition(xCandle, yCandle);
-					list_items->Get(idCandle)->SetState(ITEM_STATE_SHOW);
-					list_items->Get(idCandle)->setTimeAppear(GetTickCount());
-				}
-			}
-			SetState(WEAPON_STATE_NO_WEAPON);
-			list_animations->Get(getCurrentAni())->setCurrentFrame(-1);
-		}
-}
-	else {
-			for (int i = 0; i < list_candles->getSize(); i++) {
-				list_candles->getByIndex(i)->GetBoundingBox(lCandle, tCandle, rCandle, bCandle);
-				if (checkAABB(lWeapon, tWeapon, rWeapon, bWeapon, lCandle, tCandle, rCandle, bCandle) && list_candles->getByIndex(i)->isShow()) {
-
-					list_candles->getByIndex(i)->hide();
-					list_candles->getByIndex(i)->hit(GetTickCount());
-					int idCandle = list_candles->getByIndex(i)->getId();
-					float xCandle, yCandle;
-					list_candles->getByIndex(i)->GetPosition(xCandle, yCandle);
-					list_items->Get(idCandle)->setTypeItem(list_items->getTypItemFromIndex(idCandle));
-					list_items->Get(idCandle)->SetPosition(xCandle, yCandle);
-					list_items->Get(idCandle)->SetState(ITEM_STATE_SHOW);
-					list_items->Get(idCandle)->setTimeAppear(GetTickCount());
-					if (typeWeapon == WEAPON_TYPE_DAGGER) {
-						this->setTypeWeapon(WEAPON_TYPE_NO_WEAPON);
-						this->hide();
-					}
-				}
-			}
-	}
-	//Nếu là roi thì roi sẽ dính vào simon
-	if (typeWeapon==WEAPON_TYPE_ROPE) {
-		CSimon* simon = CSimon::GetInstance();
-		this->nx = simon->getDirection();
-		simon->GetPosition(this->x, this->y);
-	}
-	else {
-		//WEAPON di chuyển
-		x += dx;
-	}
-
-}
+//void CWeapon::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
+//{
+//	// Calculate dx, dy 
+//	CGameObject::Update(dt);
+//	vector<LPCOLLISIONEVENT> coEvents;
+//	vector<LPCOLLISIONEVENT> coEventsResult;
+//
+//	coEvents.clear();
+//	if (GetTickCount() - timeStartWaitItem >= 4000) {
+//		isWaitItem = false;
+//	}
+//	CalcPotentialCollisions(coObjects, coEvents);
+//
+//	// reset untouchable timer if untouchable time has passed
+//
+//	// No collision occured, proceed normally
+//	if (coEvents.size() == 0)
+//	{
+//		x += dx;
+//		y += dy;
+//	}
+//	else
+//	{
+//		float min_tx, min_ty, nx = 0, ny;
+//
+//		FilterCollision(coEvents, coEventsResult, min_tx, min_ty, nx, ny);
+//
+//		// block 
+//		x += min_tx * dx + nx * 0.4f;		// nx*0.4f : need to push out a bit to avoid overlapping next frame
+//		y += min_ty * dy + ny * 0.4f;
+//
+//		if (nx != 0) vx = 0;
+//		if (ny != 0) vy = 0;
+//
+//		// Collision logic with Object
+//		for (UINT i = 0; i < coEventsResult.size(); i++)
+//		{
+//			LPCOLLISIONEVENT e = coEventsResult[i];
+//			if (dynamic_cast<CCandle*>(e->obj)) {
+//				timeStartWaitItem = GetTickCount();
+//				cout << "Va cham" << endl;
+//			}
+//		}
+//	}
+//	// clean up collision events
+//	for (UINT i = 0; i < coEvents.size(); i++) delete coEvents[i];
+//}
 
 void CWeapon::Render()
 {	
-	int ani;
-	
-	if (typeWeapon == WEAPON_TYPE_ROPE) {
-		switch (level)
-		{
-		case 1:
-			ani = ROPE_ANI_LEVEL_1;
-			break;
-		case 2:
-			ani = ROPE_ANI_LEVEL_2;
-			break;	
-		case 3:
-				ani = ROPE_ANI_LEVEL_3;
-				break;
-		default:
-			ani = ROPE_ANI_LEVEL_1;
-			break;
-		}
+	if (getFinish()) {
+		return;
 	}
-	else if (typeWeapon == WEAPON_TYPE_DAGGER) {
-		ani = WEAPON_ANI_DAGGER;
-	}
-	if (typeWeapon) {
-		CAnimations::GetInstance()->Get(ani)->RenderFlip(-nx, x, y, 24, 128); // 128 : default alpha
-		setCurrentAni(ani);
-		if (CGame::GetInstance()->getDebug()) {
-			RenderBoundingBox();
-		}
+	//cout << CAnimations::GetInstance()->Get(getCurrentAni())->getCurrentFrame() << endl;
+	if (CGame::GetInstance()->getDebug()) {
+		RenderBoundingBox();
 	}
 }
-
-
-
-void CWeapon::SetState(int state)
-{
-	CGameObject::SetState(state);
-	switch (state)
-	{
-	case WEAPON_STATE_ROPE:
-		typeWeapon = WEAPON_TYPE_ROPE;
-		isFinishThrow = true;
-		break;
-	case WEAPON_STATE_DAGGER:
-		typeWeapon = WEAPON_TYPE_DAGGER;
-		cout << "Set state dagger" << endl;
-		throwDagger();
-		break;
-	default:
-		typeWeapon = WEAPON_TYPE_NO_WEAPON;
-		break;
-	}
-
-}
-void CWeapon::throwDagger()
-{
-	CSimon* simon = CSimon::GetInstance();
-	this->nx = simon->getDirection();
-	simon->GetPosition(this->x, this->y);
-	cout << "throw" << endl;
-	vx = nx * DAGGER_THROW_SPEED; //Lấy chiều phóng của Simon áp dụng Dagger 
-}
-
-bool CWeapon::isFinishThrowRope()
+void CWeapon::attack(float x, float y,int _direction)
 {	
-
-	cout << list_animations->Get(ROPE_ANI_LEVEL_1)->getCurrentFrame() << endl;
-	if (isFinishThrow && typeWeapon == WEAPON_TYPE_ROPE) {
-		if ( (list_animations->Get(ROPE_ANI_LEVEL_1)->getCurrentFrame() == list_animations->Get(ROPE_ANI_LEVEL_1)->getNumberOfFrame() - 1 || list_animations->Get(ROPE_ANI_LEVEL_2)->getCurrentFrame() == list_animations->Get(ROPE_ANI_LEVEL_2)->getNumberOfFrame() - 1 || list_animations->Get(ROPE_ANI_LEVEL_3)->getCurrentFrame() == list_animations->Get(ROPE_ANI_LEVEL_3)->getNumberOfFrame() - 1)) {
-			//setType(WEAPON_TYPE_NO_WEAPON);
-			/*if (isFinishThrow) {
-				this->SetState(WEAPON_STATE_NO_WEAPON);
-			}*/
-			//this->setFinishThrow(true);
-			SetState(WEAPON_STATE_NO_WEAPON);
-			cout << "Da het thoi gian danh" << endl;
-			isFinishThrow = false;
-			return true;
-		}
-	}
-	return false;
+	SetPosition(x, y);
+	this->direction = _direction;
+	isFinish = false;
+	lastTimeAttack = GetTickCount(); // lưu lại
+	//cout << "attack weapon" << endl;
 }
-
+CWeapon::~CWeapon() {
+	//cout << "Weapon xoa" << endl;
+}
+//bool CWeapon::canAttack()
+//{
+//	return  canTa
+//}
+//

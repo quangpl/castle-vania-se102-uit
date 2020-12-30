@@ -38,11 +38,12 @@
     </Animation>
     <!-- Animation THROW -->
     <Animation aniId="507" frameTime="100" name="THROW">
-      <sprite id="10010" left="4" top="24" right="82" bottom="54" frameTime="100"/>
-      <sprite id="10011" left="4" top="73" right="82" bottom="103" frameTime="100"/>
-      <sprite id="10012" left="86" top="73" right="164" bottom="103" frameTime="100"/>
-      <sprite id="10013" left="169" top="73" right="247" bottom="103" frameTime="100"/>
-      <sprite id="100132" left="169" top="73" right="247" bottom="103" frameTime="100"/>
+      <sprite id="10010" left="5" top="24" right="83" bottom="54" frameTime="100"/>
+      <sprite id="10011" left="5" top="73" right="83" bottom="103" frameTime="100"/>
+      <sprite id="10012" left="87" top="73" right="165" bottom="103" frameTime="100"/>
+      <sprite id="10013" left="171" top="73" right="249" bottom="103" frameTime="100"/>
+      <!-- <sprite id="100135" left="171" top="73" right="249" bottom="103" frameTime="100"/> -->
+
     </Animation>
     <!-- Animation THROW_INVISIBLE -->
     <Animation aniId="508" frameTime="100" name="THROW_INVISIBLE">
@@ -81,31 +82,53 @@
   </Texture>
   <Texture textureId ="30" gameObjectId ="100">
   <!-- Animation LEVEL_ONE_ATTACK_STAND -->
-    <Animation aniId="509" frameTime="100" name="LEVEL_ONE_ATTACK_STAND">
-      <sprite id="99999" left="0" top="0" right="0" bottom="0" frameTime="100"/>
+    <Animation aniId="509" frameTime="50" name="LEVEL_ONE_ATTACK_STAND">
+      <!-- <sprite id="99999" left="0" top="0" right="0" bottom="0" frameTime="100"/>
+      <sprite id="10019" left="5" top="159" right="83" bottom="189" frameTime="100"/>
+
+
+      <sprite id="10020" left="87" top="159" right="165" bottom="189" frameTime="100"/>
+
+      <sprite id="10021" left="170" top="159" right="248" bottom="189" frameTime="100"/>
+
+      <sprite id="100212" left="170" top="159" right="248" bottom="189" frameTime="100"/>
+      <sprite id="1002992" left="170" top="159" right="248" bottom="189" frameTime="100"/> -->
+       <sprite id="99999" left="0" top="0" right="0" bottom="0" frameTime="100"/>
       <sprite id="10019" left="5" top="159" right="83" bottom="189" frameTime="100"/>
       <sprite id="10020" left="87" top="159" right="165" bottom="189" frameTime="100"/>
       <sprite id="10021" left="170" top="159" right="248" bottom="189" frameTime="100"/>
-      <sprite id="100212" left="170" top="159" right="248" bottom="189" frameTime="100"/>
+      <sprite id="10021" left="170" top="159" right="248" bottom="189" frameTime="100"/>
+
+
+
     </Animation>
     <!-- Animation LEVEL_TWO_ATTACK_STAND -->
-    <Animation aniId="510" frameTime="100" name="LEVEL_TWO_ATTACK_STAND">
+    <Animation aniId="510" frameTime="50" name="LEVEL_TWO_ATTACK_STAND">
       <sprite id="99999" left="0" top="0" right="0" bottom="0" frameTime="100"/>
+
       <sprite id="10028" left="6" top="339" right="84" bottom="367" frameTime="100"/>
+
       <sprite id="10032" left="88" top="339" right="166" bottom="367" frameTime="100"/>
+
       <sprite id="10036" left="171" top="339" right="249" bottom="367" frameTime="100"/>
-      <sprite id="100362" left="171" top="339" right="249" bottom="367" frameTime="100"/>
+      <sprite id="1008836" left="171" top="339" right="249" bottom="367" frameTime="100"/>
+
+
     </Animation>
     <!-- Animation LEVEL_THREE_ATTACK_STAND -->
-    <Animation aniId="511" frameTime="100" name="LEVEL_THREE_ATTACK_STAND">
+    <Animation aniId="511" frameTime="50" name="LEVEL_THREE_ATTACK_STAND">
       <sprite id="99999" left="0" top="0" right="0" bottom="0" frameTime="100"/>
+
       <sprite id="10022" left="5" top="200" right="83" bottom="230" frameTime="100"/>
+
       <sprite id="10023" left="87" top="200" right="165" bottom="230" frameTime="100"/>
-      <sprite id="10024" left="170" top="200" right="248" bottom="230" frameTime="100"/>
+
       <sprite id="100242" left="170" top="200" right="248" bottom="230" frameTime="100"/>
+      <sprite id="100242" left="170" top="200" right="248" bottom="230" frameTime="100"/>
+
      </Animation>
     <!-- Animation LEVEL_ONE_ATTACK_SIT -->
-    <Animation aniId="512" frameTime="100" name="LEVEL_ONE_ATTACK_SIT">
+    <Animation aniId="512" frameTime="30" name="LEVEL_ONE_ATTACK_SIT">
       <sprite id="10037" left="4" top="118" right="82" bottom="148"/>
       <sprite id="10038" left="86" top="118" right="164" bottom="148"/>
       <sprite id="10039" left="169" top="118" right="247" bottom="148"/>
@@ -115,15 +138,16 @@
 
     </Animation>
     <!-- Animation LEVEL_TWO_ATTACK_SIT -->
-    <Animation aniId="513" frameTime="100" name="LEVEL_TWO_ATTACK_SIT">
+    <Animation aniId="513" frameTime="30" name="LEVEL_TWO_ATTACK_SIT">
       <sprite id="10040" left="6" top="529" right="82" bottom="560"/>
       <sprite id="10041" left="88" top="529" right="164" bottom="560"/>
       <sprite id="10042" left="174" top="529" right="250" bottom="560"/>
       <sprite id="100422" left="174" top="529" right="250" bottom="560"/>
+        <sprite id="100422" left="174" top="529" right="250" bottom="560"/>
 
     </Animation>
     <!-- Animation LEVEL_THREE_ATTACK_SIT -->
-    <Animation aniId="514" frameTime="100" name="LEVEL_THREE_ATTACK_SIT">
+    <Animation aniId="514" frameTime="30" name="LEVEL_THREE_ATTACK_SIT">
       <sprite id="10043" left="6" top="444" right="82" bottom="475"/>
       <sprite id="10044" left="6" top="488" right="82" bottom="519"/>
       <sprite id="10045" left="6" top="572" right="82" bottom="603"/>
@@ -153,6 +177,40 @@
       <sprite id="10060" left="442" top="248" right="521" bottom="278" frameTime="100"/>
       <sprite id="100602" left="442" top="248" right="521" bottom="278" frameTime="100"/>
 
+    </Animation>
+
+     <!-- Animation STAIR -->
+
+    <Animation aniId="5000" frameTime="100" name="STAIR_UP">
+      <sprite id="10005" left="86" top="24" right="164" bottom="54" frameTime="200"/>
+      <sprite id="50001" left="526" top="24" right="604" bottom="54" frameTime="25"/>
+    </Animation>
+
+     <Animation aniId="5004" frameTime="100" name="STAIR_DOWN">
+      <sprite id="10005" left="86" top="24" right="164" bottom="54" frameTime="200"/>
+      <sprite id="50007" left="611" top="24" right="687" bottom="54" frameTime="25"/>
+    </Animation>
+
+    <Animation aniId="5001" frameTime="100" name="STAIR_ATTACK_UP">
+      <sprite id="50001" left="526" top="24" right="604" bottom="54" frameTime="100"/>
+      <sprite id="50003" left="526" top="73" right="604" bottom="103" frameTime="100"/>
+      <sprite id="50004" left="609" top="73" right="687" bottom="103" frameTime="100"/>
+      <sprite id="50009" left="526" top="122" right="604" bottom="152" frameTime="100"/>
+    </Animation>
+    
+    <Animation aniId="5005" frameTime="100" name="STAIR_ATTACK_DOWN">
+      <sprite id="50007" left="611" top="24" right="687" bottom="54" frameTime="100"/>
+      <sprite id="50008" left="609" top="122" right="687" bottom="152" frameTime="100"/>
+      <sprite id="50009" left="526" top="166" right="604" bottom="193" frameTime="100"/>
+      <sprite id="50010" left="609" top="166" right="687" bottom="193" frameTime="100"/>
+    </Animation>
+
+    <Animation aniId="5002" frameTime="100" name="STAIR_IDLE_DOWN">
+      <sprite id="50007" left="611" top="24" right="687" bottom="54" frameTime="100"/>
+    </Animation>
+
+    <Animation aniId="5003" frameTime="100" name="STAIR_IDLE_UP">
+      <sprite id="50001" left="526" top="24" right="604" bottom="54" frameTime="100"/>
     </Animation>
   </Texture>
   
@@ -221,26 +279,26 @@
   </Texture>
   <!-- Animation GRAY_MONEYBAG -->
   <Texture  textureId ="1" gameObjectId ="9">
-    <Animation aniId="547" frameTime="100" name="GRAY_MONEYBAG">
+    <Animation aniId="5472" frameTime="100" name="GRAY_MONEYBAG">
       <sprite id="10121" left="378" top="92" right="392" bottom="107"/>
     </Animation>
   </Texture>
   <!-- Animation STOP_WATCH -->
   <Texture  textureId ="1" gameObjectId ="10">
     <Animation aniId="548" frameTime="100" name="STOP_WATCH">
-      <sprite id="10122" left="40" top="105" right="55" bottom="111"/>
+      <sprite id="10122" left="40" top="105" right="55" bottom="121"/>
     </Animation>
   </Texture>
   <!-- Animation HOLY_WATER_BOTTLE -->
   <Texture  textureId ="1" gameObjectId ="11">
     <Animation aniId="549" frameTime="100" name="HOLY_WATER_BOTTLE">
-      <sprite id="10123" left="102" top="105" right="118" bottom="111"/>
+      <sprite id="10123" left="102" top="105" right="118" bottom="121"/>
     </Animation>
   </Texture>
   <!-- Animation HOLY_WATER_SMALL_BOTTLE -->
   <Texture  textureId ="1" gameObjectId ="12">
     <Animation aniId="550" frameTime="100" name="HOLY_WATER_SMALL_BOTTLE">
-      <sprite id="10124" left="143" top="113" right="144" bottom="121"/>
+      <sprite id="10124" left="134" top="113" right="142" bottom="121"/>
     </Animation>
   </Texture>
   <!-- Animation HOLY_WATER -->
@@ -253,6 +311,7 @@
   <Texture  textureId ="1" gameObjectId ="14">
     <Animation aniId="552" frameTime="100" name="HOLY_WATER_POND">
       <sprite id="10126" left="131" top="155" right="147" bottom="168"/>
+      <sprite id="10126" left="105" top="153" right="113" bottom="168"/>
     </Animation>
   </Texture>
   <!-- Animation CROSS -->
@@ -302,7 +361,7 @@
     </Animation>
   </Texture>
   <!-- Animation LARGE_CANDLE -->
-  <Texture  textureId ="2" gameObjectId ="21">
+  <Texture  textureId ="2" gameObjectId ="211">
     <Animation aniId="560" frameTime="100" name="LARGE_CANDLE">
       <sprite id="10136" left="48" top="26" right="64" bottom="56"/>
       <sprite id="10137" left="75" top="26" right="91" bottom="56"/>
@@ -310,23 +369,51 @@
   </Texture>
 
    <!-- Animation LARGE_CANDLE -->
-  <Texture  textureId ="2" gameObjectId ="21">
+  <!-- <Texture  textureId ="2" gameObjectId ="21">
     <Animation aniId="5601" frameTime="100" name="LARGE_CANDLE">
       <sprite id="10136" left="0" top="0" right="0" bottom="0"/>
     </Animation>
-  </Texture>
-  <!-- Animation DOORS -->
+  </Texture> -->
+ <!-- Animation DOORS -->
   <Texture  textureId ="2" gameObjectId ="22">
-    <Animation aniId="561" frameTime="100" name="DOORS">
-      <sprite id="10138" left="24" top="121" right="32" bottom="171"/>
-      <sprite id="10139" left="36" top="121" right="52" bottom="171"/>
-      <sprite id="10149" left="55" top="121" right="78" bottom="171"/>
+    <Animation aniId="561" frameTime="200" name="DOORS">
+      <sprite id="10140" left="24" top="121" right="32" bottom="171"  frameTime="200"/>
+      <sprite id="10141" left="36" top="121" right="52" bottom="171"  frameTime="200"/>
+      <sprite id="10142" left="55" top="121" right="78" bottom="171"  frameTime="200"/>
+      <sprite id="10143" left="55" top="121" right="78" bottom="171"  frameTime="200"/>
+    </Animation>
+  </Texture>
+    <Texture  textureId ="2" gameObjectId ="22">
+    <Animation aniId="56123" frameTime="200" name="DOORS_OPEN_COMPLETE">
+      <!-- <sprite id="10140" left="24" top="121" right="32" bottom="171"  frameTime="200"/> -->
+      <!-- <sprite id="10141" left="36" top="121" right="52" bottom="171"  frameTime="200"/> -->
+      <sprite id="10142" left="55" top="121" right="78" bottom="171"  frameTime="200"/>
+      <!-- <sprite id="10143" left="55" top="121" right="78" bottom="171"  frameTime="200"/> -->
+    </Animation>
+  </Texture>
+  <Texture  textureId ="2" gameObjectId ="22">
+    <Animation aniId="5612" frameTime="200" name="DOORS_STATIC">
+      <sprite id="101402" left="24" top="121" right="32" bottom="171"  frameTime="200"/>
+    </Animation>
+  </Texture>
+  <Texture  textureId ="2" gameObjectId ="22">
+    <Animation aniId="5611" frameTime="200" name="DOORS">
+      <sprite id="10144" left="55" top="121" right="78" bottom="171"  frameTime="200"/>
+      <sprite id="10145" left="36" top="121" right="52" bottom="171"  frameTime="200"/>
+      <sprite id="10146" left="24" top="121" right="32" bottom="171"  frameTime="200"/> 
+      <sprite id="10147" left="24" top="121" right="32" bottom="171"  frameTime="200"/>
+    </Animation>
+  </Texture>
+    <Texture  textureId ="2" gameObjectId ="22">
+    <Animation aniId="56112" frameTime="200" name="DOORS_CLOSE_COMPLETE">
+      <sprite id="101472" left="24" top="121" right="32" bottom="171"  frameTime="200"/>
     </Animation>
   </Texture>
   <!-- Animation BREAKING_WALL -->
   <Texture  textureId ="2" gameObjectId ="23">
     <Animation aniId="562" frameTime="100" name="BREAKING_WALL">
-      <sprite id="10159" left="138" top="80" right="145" bottom="88"/>
+      <sprite id="10159" left="138" top="80" right="145" bottom="88" frameTime="500"/>
+      <sprite id="10159" left="138" top="80" right="145" bottom="88" frameTime="500"/>
     </Animation>
   </Texture>
   <!-- Animation SPLASH_EFFECT -->
@@ -344,28 +431,151 @@
       <sprite id="10164" left="56" top="76" right="64" bottom="91"/>
     </Animation>
   </Texture>
+    <Texture  textureId ="2" gameObjectId ="19">
+   <Animation aniId="5624" frameTime="80" name="HIT_EFFECT_BRICK">
+      <sprite id="10161" left="331" top="48" right="362" bottom="90"/>
+      <sprite id="10162" left="298" top="28" right="414" bottom="59"/>
+      <sprite id="10163" left="251" top="13" right="419" bottom="90"/>
+    </Animation>
+    </Texture>
+ <!-- Animation BRICK_EFFECT -->
+
+    <Texture  textureId ="2" gameObjectId ="19">
+    <Animation aniId="16248" frameTime="100" name="SOFT_BRICK_EFFECT">
+      <sprite id="101329" left="26" top="210" right="42" bottom="241" frameTime="500"/>
+      <sprite id="101329" left="26" top="210" right="42" bottom="241" frameTime="500"/>
+      <sprite id="101329" left="26" top="210" right="42" bottom="241" frameTime="500"/>
+
+    </Animation>
+  </Texture>
+  <!-- Animation money-->
+  <Texture  textureId ="1" gameObjectId ="17">
+    <Animation aniId="601" frameTime="80" name="MONEY_100">
+      <sprite id="20033" left="407" top="44" right="460" bottom="58"/>
+    </Animation>
+  </Texture>
+
+    <Texture  textureId ="1" gameObjectId ="17">
+    <Animation aniId="602" frameTime="80" name="MONEY_400">
+      <sprite id="20034" left="407" top="69" right="460" bottom="83"/>
+    </Animation>
+  </Texture>
+
+    <Texture  textureId ="1" gameObjectId ="17">
+    <Animation aniId="603" frameTime="80" name="MONEY_700">
+      <sprite id="20035" left="407" top="93" right="460" bottom="107"/>
+    </Animation>
+  </Texture>
+
+    <Texture  textureId ="1" gameObjectId ="17">
+    <Animation aniId="604" frameTime="80" name="MONEY_1000">
+      <sprite id="20036" left="407" top="123" right="466" bottom="137"/>
+    </Animation>
+  </Texture>
+
+    
+  <!-- Animation RED_MONEYBAG_EFFECT 100 -->
+  <Texture  textureId ="1" gameObjectId ="19">
+    <Animation aniId="1546" frameTime="100" name="RED_MONEYBAG_EFFECT">
+      <sprite id="10133" left="407" top="44" right="422" bottom="52" frameTime="500"/>
+      <sprite id="10133" left="407" top="44" right="422" bottom="52" frameTime="500"/>
+    </Animation>
+  </Texture>
+  <!-- Animation PURPLE_MONEYBAG_EFFECT 400 -->
+  <Texture  textureId ="1" gameObjectId ="19">
+    <Animation aniId="1547" frameTime="100" name="PURPLE_MONEYBAG_EFFECT">
+      <sprite id="10133" left="407" top="69" right="422" bottom="77" frameTime="500"/>
+      <sprite id="10133" left="407" top="69" right="422" bottom="77" frameTime="500"/>
+    </Animation>
+  </Texture>
+  <!-- Animation WHITE_MONEYBAG_EFFECT 700-->
+  <Texture  textureId ="1" gameObjectId ="19">
+    <Animation aniId="1647" frameTime="100" name="WHITE_MONEYBAG_EFFECT">
+      <sprite id="10133" left="407" top="93" right="422" bottom="100" frameTime="500"/>
+      <sprite id="10133" left="407" top="93" right="422" bottom="100" frameTime="500"/>
+    </Animation>
+  </Texture>
+
+    <!-- Animation SOFT_BRICK-->
+  <Texture  textureId ="1" gameObjectId ="19">
+    <Animation aniId="16247" frameTime="100" name="SOFT_BRICK">
+      <sprite id="101323" left="26" top="210" right="42" bottom="241" frameTime="500"/>
+    </Animation>
+  </Texture>
+
+
   
             <!--Texture Object and Effect -->
   <!-- Animation GHOST -->
   <Texture  textureId ="3" gameObjectId ="26">
-    <Animation aniId="565" frameTime="100" name="GHOST">
+    <Animation aniId="5655" frameTime="100" name="GHOST">
       <sprite id="10165" left="12" top="7" right="28" bottom="39"/>
       <sprite id="10166" left="37" top="7" right="53" bottom="39"/>
     </Animation>
   </Texture>
-  <!-- Animation WOLF -->
+ <!-- Animation WOLF -->
   <Texture  textureId ="3" gameObjectId ="27">
-    <Animation aniId="566" frameTime="100" name="WOLF_RUN">
-      <sprite id="20163" left="68" top="19" right="92" bottom="34"/>
-      <sprite id="20164" left="98" top="19" right="126" bottom="34"/>
-      <sprite id="20165" left="133" top="19" right="163" bottom="34"/>
+    <Animation aniId="566" frameTime="100" name="WOLF_IDLE">
+      <sprite id="10167" left="61" top="19" right="85" bottom="34" frameTime="100"/>
     </Animation>
-    <Animation aniId="567" frameTime="100" name="WOLF_JUMP">
-      <sprite id="20166" left="168" top="19" right="200" bottom="32"/>
+    <Animation aniId="567" frameTime="50" name="WOLF_RUN">
+      <sprite id="10169" left="100" top="18" right="128" bottom="34" frameTime="1000"/>
+      <sprite id="10169" left="100" top="18" right="128" bottom="34" frameTime="1000"/>
+      <sprite id="10169" left="100" top="18" right="128" bottom="34" frameTime="1000"/>
+
+      <sprite id="10170" left="136" top="18" right="166" bottom="34" frameTime="1000"/>
+       <sprite id="10170" left="136" top="18" right="166" bottom="34" frameTime="1000"/>
+         <sprite id="10170" left="136" top="18" right="166" bottom="34" frameTime="1000"/>
+
+    </Animation>
+    <Animation aniId="568" frameTime="100" name="WOLF_JUMP">
+      <sprite id="10171" left="168" top="19" right="200" bottom="32"/>
+    </Animation>
+  </Texture>
+
+<!-- Animation BAT -->
+  <Texture textureId ="3" gameObjectId ="28">
+    <Animation aniId="569" frameTime="100" name="BAT_IDLE">
+      <sprite id="10172" left="94" top="46" right="106" bottom="60" frameTime="100"/>
+    </Animation>
+    <Animation aniId="570" frameTime="100" name="BAT_FLY">
+      <sprite id="10173" left="116" top="46" right="132" bottom="60" frameTime="100"/>
+      <sprite id="10174" left="143" top="48" right="159" bottom="60" frameTime="100"/>
+      <sprite id="10175" left="169" top="44" right="185" bottom="60" frameTime="100"/>
+    </Animation>
+  </Texture>
+  <!-- Animation UGLY_FISH -->
+  <Texture  textureId ="3" gameObjectId ="29">
+    <Animation aniId="571" frameTime="100" name="UGLY_FISH_IDLE">
+      <sprite id="10177" left="36" top="51" right="50" bottom="83" frameTime="100"/>
+    </Animation>
+    
+    <Animation aniId="572" frameTime="100" name="UGLY_FISH_MOVING">
+      <sprite id="10178" left="64" top="51" right="80" bottom="83" frameTime="350"/>
+      <sprite id="10177" left="36" top="51" right="50" bottom="83" frameTime="350"/>
+    </Animation>
+     <Animation aniId="574" frameTime="100" name="UGLY_FISH_ATTACK">
+      <sprite id="101728" left="9" top="53" right="25" bottom="83" frameTime="100"/>
+    </Animation>
+
+      <!-- Animation BOSS -->
+    <Animation aniId="701" frameTime="100" name="BOSS_IDLE">
+      <sprite id="1017117" left="269" top="17" right="285" bottom="33" frameTime="100"/>
+    </Animation>
+    
+    <Animation aniId="702" frameTime="100" name="BOSS_ACTIVE">
+      <sprite id="1012278" left="296" top="16" right="344" bottom="38" frameTime="100"/>
+      <sprite id="1014477" left="304" top="42" right="336" bottom="65" frameTime="100"/>
+    </Animation>
+
+  <!-- Animation FireBall-->
+    
+    <Animation aniId="573" frameTime="100" name="UGLY_FISH_WEAPON">
+      <sprite id="101729" left="100" top="224" right="107" bottom="230" frameTime="100"/>
     </Animation>
   </Texture>
    <!-- Animation BRICKS -->
-  <Texture  textureId ="2" gameObjectId ="28">
+  <Texture  textureId ="2" gameObjectId ="282">
     <Animation aniId="565" frameTime="100" name="BRICKS">
       <sprite id="10165" left="1" top="1" right="1" bottom="1"/>
     </Animation>
@@ -438,4 +648,21 @@
       <sprite id="20032" left="174" top="377" right="250" bottom="407"/>
     </Animation>
   </Texture>
+   <Texture  textureId ="200000" gameObjectId ="-1000">
+    <!-- Animation HIDDEN_WALL_WITH_HOLD -->
+    <Animation aniId="4000" frameTime="100" name="HIDDEN_WALL_WITH_HOLD">
+      <sprite id="40000" left="320" top="64" right="336" bottom="80" frameTime="100"/>
+    </Animation>
+    <!-- Animation HIDDEN_WALL -->
+    <Animation aniId="4001" frameTime="100" name="HIDDEN_WALL">
+      <sprite id="40001" left="336" top="64" right="352" bottom="80" frameTime="100"/>
+    </Animation>
+      <!-- Animation HIDDEN_GROUND -->
+    <Animation aniId="4002" frameTime="100" name="HIDDEN_GROUND">
+      <sprite id="40002" left="352" top="64" right="368" bottom="80" frameTime="100"/>
+    </Animation>
+  </Texture>
 </Textures>
+
+
+

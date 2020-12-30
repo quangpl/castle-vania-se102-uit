@@ -123,16 +123,41 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Bat.h" />
+    <ClInclude Include="Batman.h" />
     <ClInclude Include="Brick.h" />
     <ClInclude Include="Candles.h" />
     <ClInclude Include="Constants.h" />
+    <ClInclude Include="Cross.h" />
+    <ClInclude Include="Dagger.h" />
+    <ClInclude Include="DaggerItem.h" />
+    <ClInclude Include="Door.h" />
+    <ClInclude Include="Effect.h" />
+    <ClInclude Include="Fire.h" />
+    <ClInclude Include="FireBall.h" />
+    <ClInclude Include="FishMen.h" />
+    <ClInclude Include="Ghost.h" />
+    <ClInclude Include="Grid.h" />
+    <ClInclude Include="Ground.h" />
     <ClInclude Include="Hidden.h" />
+    <ClInclude Include="HolyWater.h" />
+    <ClInclude Include="HolyWaterItem.h" />
     <ClInclude Include="Items.h" />
     <ClInclude Include="Keyboard.h" />
+    <ClInclude Include="LargeHeart.h" />
+    <ClInclude Include="Money.h" />
+    <ClInclude Include="MonneyEffect.h" />
+    <ClInclude Include="PotRoast.h" />
     <ClInclude Include="resource1.h" />
     <ClInclude Include="SceneGame.h" />
     <ClInclude Include="Scenes.h" />
     <ClInclude Include="SmallCandle.h" />
+    <ClInclude Include="SmallHeart.h" />
+    <ClInclude Include="SoftBrick.h" />
+    <ClInclude Include="SoftBrickEffect.h" />
+    <ClInclude Include="Splash.h" />
+    <ClInclude Include="StairPoint.h" />
+    <ClInclude Include="StopWatch.h" />
     <ClInclude Include="Tile.h" />
     <ClInclude Include="Maps.h" />
     <ClInclude Include="debug.h" />
@@ -146,16 +171,44 @@
     <ClInclude Include="tinystr.h" />
     <ClInclude Include="tinyxml.h" />
     <ClInclude Include="Weapon.h" />
+    <ClInclude Include="WhipUpgrade.h" />
+    <ClInclude Include="Whip.h" />
+    <ClInclude Include="Panther.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Bat.cpp" />
+    <ClCompile Include="Batman.cpp" />
     <ClCompile Include="Brick.cpp" />
     <ClCompile Include="Candles.cpp" />
+    <ClCompile Include="Cross.cpp" />
+    <ClCompile Include="Dagger.cpp" />
+    <ClCompile Include="DaggerItem.cpp" />
+    <ClCompile Include="Door.cpp" />
+    <ClCompile Include="Effect.cpp" />
+    <ClCompile Include="Fire.cpp" />
+    <ClCompile Include="FireBall.cpp" />
+    <ClCompile Include="FishMen.cpp" />
+    <ClCompile Include="Ghost.cpp" />
+    <ClCompile Include="Grid.cpp" />
+    <ClCompile Include="Ground.cpp" />
     <ClCompile Include="Hidden.cpp" />
+    <ClCompile Include="HolyWater.cpp" />
+    <ClCompile Include="HolyWaterItem.cpp" />
     <ClCompile Include="Items.cpp" />
     <ClCompile Include="Keyboard.cpp" />
+    <ClCompile Include="LargeHeart.cpp" />
+    <ClCompile Include="Money.cpp" />
+    <ClCompile Include="MonneyEffect.cpp" />
+    <ClCompile Include="PotRoast.cpp" />
     <ClCompile Include="SceneGame.cpp" />
     <ClCompile Include="Scenes.cpp" />
     <ClCompile Include="SmallCandle.cpp" />
+    <ClCompile Include="SmallHeart.cpp" />
+    <ClCompile Include="SoftBrick.cpp" />
+    <ClCompile Include="SoftBrickEffect.cpp" />
+    <ClCompile Include="Splash.cpp" />
+    <ClCompile Include="StairPoint.cpp" />
+    <ClCompile Include="StopWatch.cpp" />
     <ClCompile Include="Tile.cpp" />
     <ClCompile Include="Maps.cpp" />
     <ClCompile Include="debug.cpp" />
@@ -171,6 +224,9 @@
     <ClCompile Include="tinyxmlerror.cpp" />
     <ClCompile Include="tinyxmlparser.cpp" />
     <ClCompile Include="Weapon.cpp" />
+    <ClCompile Include="Whip.cpp" />
+    <ClCompile Include="WhipUpgrade.cpp" />
+    <ClCompile Include="Panther.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="CastleVania1.rc" />

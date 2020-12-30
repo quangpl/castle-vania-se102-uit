@@ -14,5 +14,5 @@ void DebugOut(wchar_t *fmt, ...)
 void showConsole() {
 	AllocConsole();
 	freopen_s((FILE**)stdout, "CONOUT$", "w", stdout);
-	std::cout << "- GAME CONSOLE DEBUGGING -" << std::endl;
+	//std::cout << "- GAME CONSOLE DEBUGGING -" << std::endl;
 }

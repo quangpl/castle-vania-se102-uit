@@ -47,7 +47,8 @@ void CSprite::DrawFlip(int nx, float x, float y, float offsetX, int alpha)
 	D3DXMATRIX newTransform = oldTransform * middleTransform;
 
 	spriteHandler->SetTransform(&newTransform);
-	spriteHandler->Draw(texture, &r, NULL, &p, D3DCOLOR_XRGB(255, 255, 255));
+
+	spriteHandler->Draw(texture, &r, NULL, &p, D3DCOLOR_ARGB(alpha,255,255,255));
 	spriteHandler->SetTransform(&oldTransform);
 }
 
@@ -117,6 +118,27 @@ void CAnimation::RenderFlip(int nx, float x, float y, float offsetX, int alpha)
 
 	}
 	frames[currentFrame]->GetSprite()->DrawFlip(nx, x, y, offsetX, alpha);
+}
+void CAnimation::RenderWhip(int currentId,int nx, float x, float y, float offsetX, int alpha)
+{
+	DWORD now = GetTickCount();
+	if (currentFrame == -1)
+	{
+		currentFrame = 0;
+		lastFrameTime = now;
+	}
+	else
+	{
+		DWORD t = frames[currentFrame]->GetTime();
+		if (now - lastFrameTime > t)
+		{
+			currentFrame++;
+			lastFrameTime = now;
+			if (currentFrame == frames.size()) currentFrame = 0;
+		}
+
+	}
+	frames[currentId]->GetSprite()->DrawFlip(nx, x, y, offsetX, alpha);
 }
 
 

@@ -1,4 +1,4 @@
-#include <d3dx9.h>
+﻿#include <d3dx9.h>
 #include <algorithm>
 
 
@@ -13,8 +13,16 @@ CGameObject::CGameObject()
 	x = y = 0;
 	vx = vy = 0;
 	nx = 1;	
+	health = 1;
 }
 
+bool CGameObject::isInCamera(float x, float y, float w, float h) {
+	if (x + w < CGame::GetInstance()->GetCamPos_x() || CGame::GetInstance()->GetCamPos_x() + SCREEN_WIDTH < x)
+		return false;
+	if (y + h < CGame::GetInstance()->GetCamPos_y() || CGame::GetInstance()->GetCamPos_y() + SCREEN_HEIGHT < y)
+		return false;
+	return true;
+}
 bool CGameObject::checkAABB(float left_a, float top_a, float right_a, float bottom_a, float left_b, float top_b, float right_b, float bottom_b)
 {
 	return left_a < right_b && right_a > left_b && top_a < bottom_b && bottom_a > top_b;
@@ -84,6 +92,27 @@ void CGameObject::CalcPotentialCollisions(
 	std::sort(coEvents.begin(), coEvents.end(), CCollisionEvent::compare);
 }
 
+bool CGameObject::checkAABBWithObject(CGameObject *obj)
+{
+		float l, t, r, b;
+		float l1, t1, r1, b1;
+		this->GetBoundingBox(l, t, r, b);
+		obj->GetBoundingBox(l1, t1, r1, b1);
+
+		if (this->checkAABB(l, t, r, b, l1, t1, r1, b1))
+		{
+			return true;
+		}
+		return false;
+}
+bool CGameObject::checkAABBWithObjectAABBEx(CGameObject* obj) {
+		if (checkAABBWithObject(obj)) // kiểm tra va chạm bằng AABB trước
+			return true;
+
+		LPCOLLISIONEVENT e = SweptAABBEx(obj); // kt va chạm giữa 2 object bằng sweptAABB
+		bool res = e->t > 0 && e->t <= 1.0f; // ĐK va chạm
+		return res;
+}
 void CGameObject::FilterCollision(
 	vector<LPCOLLISIONEVENT> &coEvents,
 	vector<LPCOLLISIONEVENT> &coEventsResult,
@@ -148,7 +177,24 @@ void CGameObject::AddAnimation(int aniId)
 	animations.push_back(ani);
 }
 
+int CGameObject::getAlphaRandom() {
+	int a = 0,b=255;
+	return a + rand() % (b - a + 1);
+}
+
+bool CGameObject::isInCamera(float width, float height ) {
+	float x = this->GetPositionX();
+	float y = this->GetPositionY();
+	float xCam = CGame::GetInstance()->GetCamPos_x();
+	float yCam = CGame::GetInstance()->GetCamPos_y();
+	if (x + width < xCam || xCam + SCREEN_WIDTH < x)
+		return false;
+	if (y + height < yCam || yCam + SCREEN_HEIGHT < y)
+		return false;
+	return true;
+}
+
 CGameObject::~CGameObject()
 {
-
+	//cout << "Da xoa" << endl;
 }

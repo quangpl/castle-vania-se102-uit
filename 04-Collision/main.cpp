@@ -25,9 +25,18 @@
 
 using namespace std;
 CScenes* scenes = CScenes::GetInstance();
+
 CSceneGame* sceneGame = CSceneGame::GetInstance();
 CSampleKeyHander* keyHandler = new CSampleKeyHander();
-
+D3DCOLOR createBlinkColor() {
+	int randomInt = 1 + rand() % (2);
+	if (randomInt % 2 == 0) {
+		return  D3DCOLOR_XRGB(0, 0, 0);
+	}
+	else {
+		return  D3DCOLOR_XRGB(255, 255, 255);
+	}
+}
 LRESULT CALLBACK WinProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
 	switch (message) {
@@ -49,7 +58,9 @@ LRESULT CALLBACK WinProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 */
 void LoadResources()
 {
-	scenes->Get(SCENE_GAME_ID)->LoadResources();
+	CTextures* textures = CTextures::GetInstance();
+
+	scenes->Get(scenes->getCurrentSceneId())->LoadResources();
 }
 
 /*
@@ -58,7 +69,7 @@ void LoadResources()
 */
 void Update(DWORD dt)
 {
-	scenes->Get(SCENE_GAME_ID)->Update(dt);
+	scenes->Get(scenes->getCurrentSceneId())->Update(dt);
 }
 
 /*
@@ -74,10 +85,16 @@ void Render()
 	if (d3ddv->BeginScene())
 	{
 		// Clear back buffer with a color
-		d3ddv->ColorFill(bb, NULL, BACKGROUND_COLOR);
-
+		if (game->getIsBlinkScene()) {
+			d3ddv->ColorFill(bb, NULL, createBlinkColor());
+		}
+		else {
+			d3ddv->ColorFill(bb, NULL, BACKGROUND_COLOR);
+		}
+		
+		//tao ao giac - cross
 		spriteHandler->Begin(D3DXSPRITE_ALPHABLEND);
-		scenes->Get(SCENE_GAME_ID)->Render();
+		scenes->Get(scenes->getCurrentSceneId())->Render();
 		spriteHandler->End();
 		d3ddv->EndScene();
 	}
@@ -139,8 +156,7 @@ int Run()
 	int done = 0;
 	DWORD frameStart = GetTickCount();
 	DWORD tickPerFrame = 1000 / MAX_FRAME_RATE;
-
-	while (!done)
+ 	while (!done)
 	{
 		if (PeekMessage(&msg, NULL, 0, 0, PM_REMOVE))
 		{
@@ -178,17 +194,18 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	HWND hWnd = CreateGameWindow(hInstance, nCmdShow, SCREEN_WIDTH, SCREEN_HEIGHT);
 	
 	scenes->Add(SCENE_GAME_ID, sceneGame);
+	scenes->setCurrentSceneId(SCENE_GAME_ID);
 	scenes->Get(SCENE_GAME_ID)->setStage(1);
 	CGame::GetInstance()->Init(hWnd);
 	
 	CGame::GetInstance()->InitKeyboard(keyHandler);
 	
-	showConsole();
+	//showConsole();
 	LoadResources();
 
 	SetWindowPos(hWnd, 0, 0, 0, SCREEN_WIDTH*2, SCREEN_HEIGHT*2, SWP_NOMOVE | SWP_NOOWNERZORDER | SWP_NOZORDER);
 	
 	Run();
 	
-	return 0;
+ 	return 0;
 }

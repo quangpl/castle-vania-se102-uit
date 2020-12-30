@@ -6,7 +6,7 @@ CMap::CMap(int texId, LPCSTR filePath, D3DCOLOR color)
 	HRESULT result = D3DXGetImageInfoFromFileA(filePath, &info);
 	if (result != D3D_OK)
 	{
-		DebugOut(L"[ERROR] GetImageInfoFromFile failed: %s\n", filePath);
+		//DebugOut(L"[ERROR] GetImageInfoFromFile failed: %s\n", filePath);
 		return;
 	}
 
@@ -49,7 +49,7 @@ void CMap::Render() {
 	int endColumn = cx + SCREEN_WIDTH / frameWidth + 1; //SCREEN_WIDTH
 	for (int i = 0; i < rowMap; i++) {
 		for (int j = 0; j < columnMap; j++) {
-			DebugOut(L"\ntiles: %d", tileMap[i][j]);
+			//DebugOut(L"\ntiles: %d", tileMap[i][j]);
 			tiles[tileMap[i][j]]->Draw(j*frameWidth + drawPositionX, i*frameHeight + drawPositionY);
 		}
 	}

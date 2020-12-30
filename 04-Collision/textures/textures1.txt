@@ -1,0 +1,7 @@
+6
+2000 Map\\tileset_map2.png 255 255 255
+1000 Map\\tileset_map1.png 255 0 255
+-100 textures\\bbox.png 255 255 255
+30 textures\\TexturesV4.png 34 177 76
+2 textures\\object.png 34 177 76
+1 textures\\Items.png 128 0 0
